@@ -54,8 +54,8 @@ Route::group(['middleware' => ['auth']], function() {
 	Route::patch('account/{id}',['as'=>'account.update','uses'=>'AccountController@update']);
 
 	//Preferences
-	Route::get('preferences',['as'=>'preferences.index','uses'=>'PreferenceController@index', 'middleware' => ['permission:Preferences']]);
-	Route::post('preferences',['as'=>'preferences.update','uses'=>'PreferenceController@update', 'middleware' => ['permission:Preferences']]);
+	Route::get('preferences',['as'=>'preferences.index','uses'=>'admin\PreferenceController@index', 'middleware' => ['permission:Preferences']]);
+	Route::post('preferences',['as'=>'preferences.update','uses'=>'admin\PreferenceController@update', 'middleware' => ['permission:Preferences']]);
 
 	// FAQ
 	Route::get('admin/documentation', function () {

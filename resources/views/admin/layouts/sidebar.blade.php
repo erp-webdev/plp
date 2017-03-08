@@ -32,8 +32,8 @@ function setWrapperStatus(){
 					</a>
 				@endrole
 				@permission('Preferences')
-					<!-- <a class="btn btn-primary sidebar-submenu <?php if(Session::get('menu')=='preferences') echo 'active'?>" href="{{ route('preferences.index') }}">
-					    Preferences<i class="fa fa-gear pull-right"></i> -->
+					<a class="btn btn-primary sidebar-submenu <?php if(Session::get('menu')=='preferences') echo 'active'?>" href="{{ route('preferences.index') }}">
+					    Preferences<i class="fa fa-gear pull-right"></i>
 					</a>
 				@endpermission
 					<a class="btn btn-primary sidebar-submenu <?php if(Session::get('menu')=='faq') echo 'active'?>" href="{{ url('admin/documentation') }}">
