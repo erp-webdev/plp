@@ -12,6 +12,7 @@ use Log;
 use DB;
 use Auth;
 use eFund\job;
+use eFund\Endorser;
 
 class DashboardController extends Controller
 {

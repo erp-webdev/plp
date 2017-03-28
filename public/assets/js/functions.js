@@ -16,9 +16,9 @@ $("#menu-toggle").click(function(e) {
    	$("#wrapper").toggleClass("active");
 });
 //Auto Alert Close
-$(".alert").fadeTo(5000, 3600).slideUp(500, function(){
-    $(".alert").alert('close');
-});
+// $(".alert").fadeTo(5000, 3600).slideUp(500, function(){
+//     $(".alert").alert('close');
+// });
 //Basic Modal
 $('#btnShowModal').on('shown.bs.modal', function () {
   $('#accessionNo').focus()

@@ -309,3 +309,10 @@ td form{
         -webkit-transform: rotate(-360deg);
     }
 } 
+
+.modal{
+  z-index: 16000;
+}
+.modal-backdrop{
+  z-index: 15000;
+}

@@ -13,8 +13,8 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $listen = [
-        'eFund\Events\SomeEvent' => [
-            'eFund\Listeners\EventListener',
+        'eFund\Events\CheckSigned' => [
+            'eFund\Listeners\SendSignedCheckNotif',
         ],
     ];
 

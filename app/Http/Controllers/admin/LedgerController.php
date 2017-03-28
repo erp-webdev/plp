@@ -1,0 +1,57 @@
+<?php
+
+namespace eFund\Http\Controllers\admin;
+
+use Illuminate\Http\Request;
+
+use Log;
+use Session;
+use eFund\Employee;
+use eFund\Ledger;
+use eFund\Http\Requests;
+use eFund\Utilities\Utils;
+use eFund\Http\Controllers\Controller;
+
+class LedgerController extends Controller
+{
+    private $utils;
+
+	function __construct()
+	{
+        Session::set('menu', 'ledger');
+		$this->utils = new Utils();
+	}
+
+    public function index()
+    {
+    	$employees = Employee::whereRaw('EmpID in (SELECT DISTINCT EmpID FROM eFundData)')
+    				->orderBy('LName')
+    				->paginate(10);
+
+    	return view('admin.ledger.index')
+    		->withEmployees($employees)
+    		->withUtils($this->utils);
+    }
+
+    public function show($EmpID, $showBalance = true)
+    {
+        if(isset($_GET['bal']))
+            if($_GET['bal'] == 'true')
+                $showBalance = true;
+            else
+                $showBalance = false;
+
+    	$ledger = Ledger::where('EmpID', $EmpID)
+    		// ->groupBy('ctrl_no', 'id')
+    		->orderBy('ctrl_no', 'asc')
+    		->paginate(50);
+
+    	$employee = Employee::where('EmpID', $EmpID)->first();
+
+    	return view('admin.ledger.show')
+    			->withLedgers($ledger)
+    			->withEmployee($employee)
+    			->withUtils($this->utils)
+                ->with('showBalance', $showBalance);
+    }
+}

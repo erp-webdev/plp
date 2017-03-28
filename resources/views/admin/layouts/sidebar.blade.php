@@ -17,8 +17,41 @@ function setWrapperStatus(){
 				<a class="btn btn-primary sidebar-menu <?php if(Session::get('menu')=='dashboard') echo 'active'?>" role="button" href="{{ route('admin.dashboard') }}">
   					DashBoard <i class="fa fa-tachometer pull-right"></i>
 				</a>
+				@permission(['application_list', 'application_view', 'application_create', 'application_edit', 'application_delete'])
+				<a class="btn btn-primary sidebar-menu <?php if(Session::get('menu')=='myloans') echo 'active'?>" role="button" href="{{ route('applications.index') }}">
+  					My Loans <img src="{{ url('efund_sm.png') }}" width="20px" class="pull-right">
+				</a>
+				@endpermission
+				@permission(['loan_list', 'loan_view', 'loan_edit'])
+				<a class="btn btn-primary sidebar-menu <?php if(Session::get('menu')=='loans') echo 'active'?>" role="button" href="{{ route('admin.loan') }}">
+  					Loans <i class="fa fa-list pull-right"></i>
+				</a>
+				<a class="btn btn-primary sidebar-menu <?php if(Session::get('menu')=='ledger') echo 'active'?>" role="button" href="{{ route('ledger.index') }}">
+  					Ledger <i class="fa fa-calculator pull-right"></i>
+				</a>
+				@endpermission
+				@permission(['treasurer'])
+				<a class="btn btn-primary sidebar-menu <?php if(Session::get('menu')=='treasury') echo 'active'?>" role="button" href="{{ route('treasury.index') }}">
+  					Treasury <i class="fa fa-list pull-right"></i>
+				</a>
+				@endpermission
+				@if(\eFund\Endorser::endorsements()->count() > 0)
+				<a class="btn btn-primary sidebar-menu <?php if(Session::get('menu')=='endorsements') echo 'active'?>" role="button" href="{{ route('endorsements.index') }}">
+  					Endorsements <i class="fa fa-thumbs-up pull-right"></i>
+				</a>
+				@endif
+				@if(\eFund\Guarantor::where('EmpID', Auth::user()->employee_id)->count() > 0)
+				<a class="btn btn-primary sidebar-menu <?php if(Session::get('menu')=='guarantors') echo 'active'?>" role="button" href="{{ route('guarantors.index') }}">
+  					Guarantors <i class="fa fa-money pull-right"></i>
+				</a>
+				@endif
+				@permission(['loan_list', 'loan_view', 'loan_edit'])
+				<a class="btn btn-primary sidebar-menu <?php if(Session::get('menu')=='reports') echo 'active'?>" role="button" href="{{ route('report.index') }}">
+  					Reports <i class="fa fa-book pull-right"></i>
+				</a>
+				@endif
 				<a class="btn btn-primary sidebar-menu <?php if(in_array(Session::get('menu'), ['users', 'myaccount', 'preferences','faq'])) echo 'active'?>" data-toggle="collapse" aria-expanded="false" aria-controls="settings" href="#settings">
-  					Settings <i class="fa fa-gears pull-right"></i>
+  					Settings <i class="fa fa-cogs pull-right"></i>
 				</a>
 				<div class="collapse <?php if(in_array(Session::get('menu'), ['users', 'myaccount', 'preferences','faq'])) echo 'in'?>" id="settings">
 					<!-- submenu -->
@@ -33,7 +66,7 @@ function setWrapperStatus(){
 				@endrole
 				@permission('Preferences')
 					<a class="btn btn-primary sidebar-submenu <?php if(Session::get('menu')=='preferences') echo 'active'?>" href="{{ route('preferences.index') }}">
-					    Preferences<i class="fa fa-gear pull-right"></i>
+					    Preferences<i class="fa fa-sliders pull-right"></i>
 					</a>
 				@endpermission
 					<a class="btn btn-primary sidebar-submenu <?php if(Session::get('menu')=='faq') echo 'active'?>" href="{{ url('admin/documentation') }}">

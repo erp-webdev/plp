@@ -89,7 +89,7 @@ class AuthController extends Controller
 
     public function verifyEmployee()
     {
-        $employee = Employee::where('EmpID', $_GET['employee_id'])->where('Active', 1)->first();
+        $employee = Employee::where('EmpID', $_GET['employee_id'])->active()->regular()->first();
         if(empty($employee)){
             // Employee not found or deactivated
             return 0;
