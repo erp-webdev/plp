@@ -54,4 +54,34 @@ class LedgerController extends Controller
     			->withUtils($this->utils)
                 ->with('showBalance', $showBalance);
     }
+
+    public function printLedger($EmpID, $showBalance = true)
+    {
+        if(isset($_GET['bal']))
+            if($_GET['bal'] == 'true')
+                $showBalance = true;
+            else
+                $showBalance = false;
+
+        $ledger = Ledger::where('EmpID', $EmpID)
+            // ->groupBy('ctrl_no', 'id')
+            ->orderBy('ctrl_no', 'asc')
+            ->paginate(50);
+
+        $employee = Employee::where('EmpID', $EmpID)->first();
+
+        $html = view('admin.ledger.ledger')
+                ->withLedgers($ledger)
+                ->withEmployee($employee)
+                ->withUtils($this->utils)
+                ->with('showBalance', $showBalance);
+       
+        $report = (object)['title' => '', 'html' => $html];
+
+        echo view('admin.reports.layout')
+                ->withHtml($html)
+                ->withReport($report);
+
+        return;
+    }
 }

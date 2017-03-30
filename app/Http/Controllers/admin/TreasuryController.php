@@ -30,7 +30,7 @@ class TreasuryController extends Controller
 
     public function index()
     {
-    	$loans = Loan::notDenied()->where('status', '>', 3)->paginate(20); 
+    	$loans = Loan::notDenied()->where('status', '>', 4)->paginate(10); 
 
     	return view('admin.treasury.index')
     		->withUtils($this->utils)

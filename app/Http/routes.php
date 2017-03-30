@@ -28,6 +28,7 @@ Route::group(['prefix' => '/', 'middleware' => ['auth']], function(){
 	Route::get('loans/show/{id}', ['as' => 'loan.show', 'uses' => 'admin\LoanController@show', 'middleware' => ['permission:loan_view']]);
 	Route::post('loans/deductions', ['as' => 'loan.deduction', 'uses' => 'admin\LoanController@saveDeduction', 'middleware' => ['permission:officer']]);
 	Route::get('loans/complete/{id}', ['as' => 'loan.complete', 'uses' => 'admin\LoanController@complete', 'middleware' => ['permission:officer']]);
+	Route::get('loans/print/{id}', ['as' => 'loan.print', 'uses' => 'admin\LoanController@printForm', 'middleware' => ['permission:officer']]);
 	
 	Route::get('reports', ['as' => 'report.index', 'uses' => 'admin\ReportController@index', 'middleware' => ['permission:custodian|officer']]);
 	Route::get('reports/{type}', ['as' => 'report.show', 'uses' => 'admin\ReportController@show', 'middleware' => ['permission:custodian|officer']]);
@@ -36,6 +37,7 @@ Route::group(['prefix' => '/', 'middleware' => ['auth']], function(){
 	// Ledger
 	Route::get('ledger', ['as' => 'ledger.index', 'uses' => 'admin\LedgerController@index', 'middleware' => ['permission:officer|custodian']]);
 	Route::get('ledger/show/{EmpID}', ['as' => 'ledger.show', 'uses' => 'admin\LedgerController@show', 'middleware' => ['permission:officer|custodian']]);
+	Route::get('ledger/print/{EmpID}', ['as' => 'ledger.print', 'uses' => 'admin\LedgerController@printLedger', 'middleware' => ['permission:officer|custodian']]);
 	
 	// Applications
 	Route::get('applications', ['as' => 'applications.index', 'uses' => 'admin\ApplicationController@index','middleware' => ['permission:application_list']]);
@@ -55,10 +57,15 @@ Route::group(['prefix' => '/', 'middleware' => ['auth']], function(){
 	Route::get('guarantors/show/{id}', ['as' => 'guarantors.show', 'uses' => 'admin\GuarantorController@show']);
 
 	// Treasury
-	Route::get('treasury', ['as' => 'treasury.index', 'uses' => 'admin\TreasuryController@index']);
-	Route::post('treasury/approve', ['as' => 'treasury.approve', 'uses' => 'admin\TreasuryController@approve']);
-	Route::get('treasury/show/{id}', ['as' => 'treasury.show', 'uses' => 'admin\TreasuryController@show']);
+	Route::get('treasury', ['as' => 'treasury.index', 'uses' => 'admin\TreasuryController@index', 'middleware' => ['permission:treasurer']]);
+	Route::post('treasury/approve', ['as' => 'treasury.approve', 'uses' => 'admin\TreasuryController@approve', 'middleware' => ['permission:treasurer']]);
+	Route::get('treasury/show/{id}', ['as' => 'treasury.show', 'uses' => 'admin\TreasuryController@show', 'middleware' => ['permission:treasurer']]);
 
+	// Payroll
+	Route::get('payroll', ['as' => 'payroll.index', 'uses' => 'admin\PayrollController@index', 'middleware' => ['permission:payroll']]);
+	Route::post('payroll/verify', ['as' => 'payroll.verify', 'uses' => 'admin\PayrollController@verify', 'middleware' => ['permission:payroll']]);
+	Route::get('payroll/show/{id}', ['as' => 'payroll.show', 'uses' => 'admin\PayrollController@show', 'middleware' => ['permission:payroll']]);
+	
 	Route::get('getEmployee', ['uses' => 'admin\ApplicationController@getEmployee']);
 });
 

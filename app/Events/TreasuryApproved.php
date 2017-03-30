@@ -2,20 +2,22 @@
 
 namespace eFund\Events;
 
-use eFund\Loan;
 use eFund\Events\Event;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
-class LoanPaid extends Event
+class TreasuryApproved extends Event
 {
     use SerializesModels;
 
-    public $loan; 
-
-    public function __construct(Loan $loan)
+    /**
+     * Create a new event instance.
+     *
+     * @return void
+     */
+    public function __construct()
     {
-        $this->loan = $loan;
+        //
     }
 
     /**

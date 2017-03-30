@@ -13,8 +13,27 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $listen = [
+        
+        'eFund\Events\LoanCreated' => [
+            'eFund\Listeners\NotifyGuarantor',
+        ],
+        'eFund\Events\GuarantorApproved' => [
+            'eFund\Listeners\NotifyEndorser',
+        ],
+        'eFund\Events\EndorsementApproved' => [
+            'eFund\Listeners\NotifyPayroll',
+        ],
+        'eFund\Events\PayrollVerified' => [
+            'eFund\Listeners\NotifyOfficer',
+        ],
+        'eFund\Events\LoanApproved' => [
+            'eFund\Listeners\NotifyTreasury',
+        ],
         'eFund\Events\CheckSigned' => [
             'eFund\Listeners\SendSignedCheckNotif',
+        ],
+        'eFund\Events\LoanPaid' => [
+            'eFund\Listeners\NotifyPaidEmployee',
         ],
     ];
 

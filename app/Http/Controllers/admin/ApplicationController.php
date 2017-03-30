@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use DB;
 use Auth;
+use Event;
 use Session;
 use eFund\Log;
 use eFund\Loan;
@@ -17,6 +18,7 @@ use eFund\Employee;
 use eFund\Preference;
 use eFund\Http\Requests;
 use eFund\Utilities\Utils;
+use eFund\Events\LoanCreated;
 use eFund\Http\Controllers\Controller;
 
 class ApplicationController extends Controller
@@ -64,7 +66,7 @@ class ApplicationController extends Controller
         // Employee Term Limits
         $terms = Terms::getRankLimits($employee->RankDesc);
         // Employee Standing balance
-        $balance = $this->getStandingBalance();
+        $balance = $this->getStandingBalance($loan->id);
         // Allowable # of months
         $months = $this->utils->getTermMonths();
         if($records_this_year == 0)
@@ -208,6 +210,8 @@ class ApplicationController extends Controller
                     $loan->save();
 
                     $msg = trans('loan.application.success');
+
+                    Event::fire(new LoanCreated($loan));
                 }
 
                 DB::commit();
@@ -237,7 +241,7 @@ class ApplicationController extends Controller
         $errors = [];
 
         // Check Standing Balance
-        if($this->getStandingBalance() != NULL || $this->getStandingBalance() > 0)
+        if($this->getStandingBalance($request->id) != NULL || $this->getStandingBalance($request->id) > 0)
             array_push($errors, trans('loan.validation.balance'));
 
         // Application Type
@@ -282,9 +286,12 @@ class ApplicationController extends Controller
     }
 
 
-    public function getStandingBalance()
+    public function getStandingBalance($id  = 0)
     {
-        $balance = Loan::where('EmpID', Auth::user()->employee_id)->whereNotIn('status', [0,8])->sum('balance');
+        $balance = Loan::where('EmpID', Auth::user()->employee_id)
+                    ->whereNotIn('status', [0,9])
+                    ->where('id', '<>', $id)
+                    ->sum('balance');
 
         return $balance;
     }
@@ -363,7 +370,7 @@ class ApplicationController extends Controller
         $emp = Employee::select('RankDesc')->current()->first();
         $terms = Terms::getRankLimits($emp->RankDesc);
 
-        if($amount < $terms->min_amount)
+        if($amount < 1000)//$terms->min_amount)
             return false;
         else
             return true;

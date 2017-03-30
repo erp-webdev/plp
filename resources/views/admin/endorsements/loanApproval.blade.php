@@ -3,7 +3,7 @@
   <input type="number" name="id" value="{{ $loan->id }}" style="display: none">
   <div class="modal-header">
     <div class="col-xs-12 col-sm-8 col-md-8">
-      <h4>Employees Fund Loan <small>{!! $utils->formatApprovalStatus($loan->endorser_status, $loan->status, 2) !!}</small></h4>
+      <h4>Employees Fund Loan <small>{!! $utils->formatApprovalStatus($loan->endorser_status, $loan->status, $utils->getStatusIndex('endorser')) !!}</small></h4>
     </div>
     <div class="col-xs-12 col-sm-4 col-md-4">
       <p class="pull-right"><small>Ctrl No: </small><strong >{{ $loan->ctrl_no }}</strong></p>
@@ -101,7 +101,7 @@
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-default btn-sm" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
-    @if($loan->endorser_status == null && $loan->status == 2)
+    @if($loan->endorser_status == null && $loan->status == $utils->getStatusIndex('endorser'))
     <button type="submit" name="deny" class="btn btn-danger btn-sm"><i class="fa fa-thumbs-down"></i> Deny</button>
     <button type="submit" name="approve" class="btn btn-success btn-sm"><i class="fa fa-thumbs-up"></i> Approve</button>
     @endif

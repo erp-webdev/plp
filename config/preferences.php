@@ -13,7 +13,10 @@ return [
 	'notif_subjects' => [
 		'check_signed' => 'Loan Check is now ready!',
 		'payroll' => 'New Loan Deduction Schedule!', 
-		'approved' => 'New Loan Application has been approved!',
+		'approved' => 'A Loan Application has been approved!',
+		'created'	=> 'A Loan Application has been created!',
+		'verified'	=> 'A Loan Application has been verified',
+		'paid'		=> 'eFund Loan Paid!'
 	],
 
 	// eFund System

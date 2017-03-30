@@ -10,6 +10,12 @@ class Loan extends Model
 {
     protected $table = 'viewLoan';
     protected $dateFormat = 'Y-m-d H:i:s';
+    private $utils;
+
+    function __construct()
+    {
+        $this->utils = new Utils();
+    }
 
     public function scopeEmployee($query)
     {
@@ -18,7 +24,7 @@ class Loan extends Model
 
     public function scopeYearly($query)
     {
-    	return $query->whereRaw('YEAR(created_at) = ' . date('Y'))->where('status', '>', 0);
+    	return $query->whereRaw('YEAR(created_at) = ' . date('Y'))->where('status', '>', $this->utils->getStatusIndex('saved'));
     }
 
     public function scopeView($query, $id)
@@ -64,7 +70,7 @@ class Loan extends Model
 
     public function scopeNotDenied($query)
     {
-        return $query->where('status', '<>', 8);
+        return $query->where('status', '<>', $this->utils->getStatusIndex('denied'));
     }
 
 }

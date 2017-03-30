@@ -8,29 +8,13 @@
 		@else
 			<a href="{{ route('ledger.show', $employee->EmpID) }}?bal=false" class="btn btn-sm btn-default"><i class="fa fa-eye-slash"></i> Hide Balance</a>
 		@endif
+		<a href="{{ route('ledger.print', $employee->EmpID) }}?bal=<?php if(isset($_GET['bal'])) echo $_GET['bal']; ?>" target="_blank" class="btn btn-sm btn-default"><i class="fa fa-print"></i> Print</a>
 		<a href="{{ route('ledger.show', $employee->EmpID) }}" class="btn btn-sm btn-default"><i class="fa fa-reload"></i> Refresh</a>
 		<hr>
-		<table class="table-condensed">
-			<tr>
-				<td>Employee Name</td>
-				<td>{{ $employee->FullName }}</td>
-			</tr>
-			<tr>
-				<td>Employee ID No</td>
-				<td>{{ $employee->EmpID }}</td>
-			</tr>
-			<tr>
-				<td>Date Hired</td>
-				<td>{{ $employee->HireDate }}</td>
-			</tr>
-			<tr>
-				<td>Position/Rank</td>
-				<td>{{ $employee->PositionDesc }} / {{ $employee->RankDesc }}</td>
-			</tr>
-		</table>
-		<hr>
-			@include('admin.ledger.ledger')
-			{{ $ledgers->appends(Input::all())->links() }}
+		<div style="overflow: scroll; height: 60vh">
+				@include('admin.ledger.ledger')
+				{{ $ledgers->appends(Input::all())->links() }}
+			</div>
 		</div>
 	</div>
 </div>

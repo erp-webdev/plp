@@ -1,9 +1,10 @@
 <?php
 
 namespace eFund\Listeners;
+use eFund\Http\Controllers\admin\EmailController;
 
+use DB;
 use Mail;
-use eFund\Log;
 use eFund\Loan;
 use eFund\Employee;
 use eFund\Deduction;
@@ -13,7 +14,7 @@ use eFund\Events\CheckSigned;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class SendSignedCheckNotif
+class SendSignedCheckNotif extends EmailController
 {
     /**
      * Create the event listener.
@@ -40,76 +41,38 @@ class SendSignedCheckNotif
 
     public function notifyEmployee($loan)
     {
-        $emp = Employee::where('EmpID', $loan->EmpID)->first();
-
-        if(empty($emp)){
-            return;
-        }
 
         $deductions = Deduction::where('eFundData_id', $loan->id)->
                     orderBy('date')->get();
 
-        $to = $emp->EmailAdd;
-        $from = config('preferences.email_from');
-        $subject = config('preferences.notif_subjects.check_signed');
-        $body = 'emails.checkSigned_employee';
-        $cc = config('preferences.email_cc');
+        $utils = new Utils();
+        $args = ['loan' => $loan, 'deductions' => $deductions, 'utils' => $utils];
 
-        $args = ['loan' => $loan, 'deductions' => $deductions];
-
-        $this->send($emp, $to, $from, $subject, $body, $cc, $args);
+        $this->send($loan->EmpID, config('preferences.notif_subjects.check_signed', 'Loan Application Notification'), 'emails.checkSigned_employee', $args, $cc = '');
     }
 
     public function notifyGuarantor($loan)
     {
-        $emp = Employee::where('EmpID', $loan->guarantor_EmpID)->first();
+        $utils = new Utils();
+        $args = ['loan' => $loan, 'utils' => $utils];
 
-        if(empty($emp)){
-            return;
-        }
-
-        $to = $emp->EmailAdd;
-        $from = config('preferences.email_from');
-        $subject = config('preferences.notif_subjects.check_signed');
-        $body = 'emails.checkSigned_guarantor';
-        $cc = config('preferences.email_cc');
-
-        $args = ['loan' => $loan];
-
-        $this->send($emp, $to, $from, $subject, $body, $cc, $args);
+        $this->send($loan->guarantor_EmpID, config('preferences.notif_subjects.check_signed', 'Loan Application Notification'), 'emails.checkSigned_guarantor', $args, $cc = '');
     }
 
     public function notifyPayroll($loan)
     {
-        $EmpID = Preference::name('payroll');
-        $emp = Employee::where('EmpID', $EmpID->value)->first();
+        $employees = DB::table('viewUserPermissions')->where('permission', 'payroll')->get();
+        $utils = new Utils();
 
-        if(!empty($emp)){
+        foreach ($employees as $employee) {
+            if(empty($employee->EmailAdd))
+                continue;
+            
+            $args = ['loan' => $loan, 'employee' => $employee, 'utils' => $utils];
 
-            $to = $emp->EmailAdd;
-            $from = config('preferences.email_from');
-            $subject = config('preferences.notif_subjects.payroll');
-            $body = 'emails.payroll';
-            $cc = config('preferences.email_cc');
-
-            $utils = new Utils();
-            $args = ['loan' => $loan, 'utils' => $utils, 'emp' => $emp];
-
-            $this->send($emp, $to, $from, $subject, $body, $cc, $args);
+            $this->send($employee->employee_id, config('preferences.notif_subjects.payroll', 'Loan Application Notification'), 'emails.payroll', $args, $cc = '');
+            
         }
     }
-
-    public function send($emp, $to, $from, $subject, $body, $cc, $args)
-    {
-        Mail::send($body, ['args' => $args], function($message) use ($to, $subject, $from, $cc){
-            $message->to($to);
-            $message->from($from);
-            $message->subject($subject);
-            // $message->cc($cc);
-        });
-
-        $log = new Log();
-        $log->writeOnly('Info', 'email', ['email' => $to, 'subject' => $subject]);
-        
-    }
+   
 }

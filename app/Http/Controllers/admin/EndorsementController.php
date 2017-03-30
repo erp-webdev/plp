@@ -6,11 +6,13 @@ use Illuminate\Http\Request;
 
 use DB;
 use Auth;
+use Event;
 use Session;
 use eFund\Loan;
 use eFund\Endorser;
 use eFund\Http\Requests;
 use eFund\Utilities\Utils;
+use eFund\Events\EndorsementApproved;
 use eFund\Http\Controllers\Controller;
 
 class EndorsementController extends Controller
@@ -23,7 +25,7 @@ class EndorsementController extends Controller
 
      public function index()
     {
-    	$endorsements = Endorser::endorsements()->orderBy('id')->paginate(20);
+    	$endorsements = Endorser::endorsements()->orderBy('id')->paginate(10);
         // for ($i=0; $i < count($endorsements); $i++) { 
         //     $endorsements[$i]->FullName = utf8_encode($endorsements[$i]->FullName);
         //     $endorsements[$i]->guarantor_FullName = utf8_encode($endorsements[$i]->guarantor_FullName);
@@ -53,6 +55,7 @@ class EndorsementController extends Controller
 
     public function approve(Request $request)
     {
+        DB::beginTransaction();
         if(isset($_POST['approve'])){
                 $endorsement = Endorser::findOrFail($request->id);
                 if($endorsement->EmpID != Auth::user()->employee_id)
@@ -66,9 +69,11 @@ class EndorsementController extends Controller
                 $endorsement->save();
 
                 $loan = Loan::findOrFail($endorsement->eFundData_id);
-                $loan->status = $this->utils->setStatus(2);
+                $loan->status = $this->utils->setStatus($this->utils->getStatusIndex('endorser'));
                 $loan->save();
 
+                Event::fire(new EndorsementApproved($loan));
+            DB::commit();
             return redirect()->back()
                     ->withSuccess(trans('loan.application.approved'));
         }else if(isset($_POST['deny'])){
@@ -84,9 +89,10 @@ class EndorsementController extends Controller
                 $endorsement->save();
 
                 $loan = Loan::findOrFail($endorsement->eFundData_id);
-                $loan->status = $this->utils->setStatus(8);
+                $loan->status = $this->utils->setStatus($this->utils->getStatusIndex('denied'));
                 $loan->save();
 
+            DB::commit();
             return redirect()->back()
                     ->withSuccess(trans('loan.application.denied'));
         }else{

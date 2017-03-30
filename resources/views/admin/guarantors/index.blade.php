@@ -58,7 +58,7 @@
 										</td>
 										<td style="text-align: right">{{ number_format($item->loan_amount, 2, '.', ',') }}</td>
 										<td style="text-align: right">{{ number_format($item->total, 2, '.', ',') }}</td>
-										<td>{!! $utils->formatApprovalStatus($item->guarantor_status, $item->status, 1) !!}</td>
+										<td>{!! $utils->formatApprovalStatus($item->guarantor_status, $item->status, $utils->getStatusIndex('guarantor')) !!}</td>
 										<td>{{ $item->signed_at }}</td>
 										<td>
 										@if($item->status > 0)

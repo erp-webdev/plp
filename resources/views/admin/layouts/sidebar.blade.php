@@ -30,6 +30,11 @@ function setWrapperStatus(){
   					Ledger <i class="fa fa-calculator pull-right"></i>
 				</a>
 				@endpermission
+				@permission(['payroll'])
+				<a class="btn btn-primary sidebar-menu <?php if(Session::get('menu')=='payroll') echo 'active'?>" role="button" href="{{ route('payroll.index') }}">
+  					Payroll <i class="fa fa-check-square-o pull-right"></i>
+				</a>
+				@endpermission
 				@permission(['treasurer'])
 				<a class="btn btn-primary sidebar-menu <?php if(Session::get('menu')=='treasury') echo 'active'?>" role="button" href="{{ route('treasury.index') }}">
   					Treasury <i class="fa fa-list pull-right"></i>

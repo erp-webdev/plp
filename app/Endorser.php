@@ -2,6 +2,7 @@
 
 namespace eFund;
 
+use eFund\Utilities\Utils;
 use Auth;
 use Illuminate\Database\Eloquent\Model;
 
@@ -10,6 +11,12 @@ class Endorser extends Model
     protected $table = 'viewEndorser';
     public $timestamps = false;
     protected $fillable = ['eFundData_id'];
+    private $utils;
+
+    function __construct()
+    {
+        $this->utils = new Utils();
+    }
 
     /**
      *
@@ -19,7 +26,7 @@ class Endorser extends Model
      */
     public function scopeEndorsements($query)
     {
-    	return $query->whereRaw('eFundData_id in (select id from eFundData where status > 1)')
+    	return $query->whereRaw('eFundData_id in (select id from eFundData where status > '. $this->utils->getStatusIndex('guarantor') .')')
                 // ->Where(function($query){
                 //     $query->whereRaw('eFundData_id in (SELECT eFundData_id FROM guarantors WHERE status > 0)')
                 //             ->orWhereRaw('(select count(*) from guarantors where guarantors.eFundData_id = viewEndorser.eFundData_id) > 0'); 
@@ -29,7 +36,7 @@ class Endorser extends Model
 
     public function scopeForApproval($query)
     {
-    	return $query->whereRaw('eFundData_id in (select id from eFundData where status > 0)')
+    	return $query->whereRaw('eFundData_id in (select id from eFundData where status > ' . $this->utils->getStatusIndex('saved') .')')
     			->whereNull('signed_at')->whereNull('status');
     }
 

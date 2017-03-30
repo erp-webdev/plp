@@ -11,13 +11,14 @@ class Utils
 {
 	private $stats = [	"Saved"                           , // [0]
 						"For Co-Borrower's Approval"      , // [1]
-						"For Endorser's Approval"         , // [2]
-    					"For Officer's Approval"          , // [3]
-                        "Treasury"                        , // [4]
-                        "For Cheque Release"              , // [5]
-    					"Incomplete"                      , // [6]
-    					"Paid"                            , // [7]
-                        "Denied"                            // [8]
+                        "For Endorser's Approval"         , // [2]
+                        "For Payroll's Verification"      , // [3]
+    					"For Officer's Approval"          , // [4]
+                        "Treasury"                        , // [5]
+                        "For Cheque Release"              , // [6]
+    					"Incomplete"                      , // [7]
+                        "Paid"                            , // [8]
+                        "Denied"                            // [9]
     				 ];
 
     private $types  = [	"New",
@@ -35,6 +36,12 @@ class Utils
                                 "Check Releasing",
                                 "Released",
                                 "Unknown Status"
+                            ];
+
+    private $payrollStat = [
+                                "Denied",
+                                "Verified",
+                                "For Verification"
                             ];
 
 	/**
@@ -68,7 +75,7 @@ class Utils
 
     /**
      *
-     * Get Loan Application Status
+     * Get Loan Application Status Description
      * @param int $index Status index
      * @return string 
      *
@@ -76,6 +83,41 @@ class Utils
     public function getStatus($index)
     {
     	return $this->stats[$index];
+    }
+
+    /**
+     *
+     * Get Loan Application Status index
+     * @param  string $process status description
+     * @return int
+     *
+     */
+    public function getStatusIndex($process)
+    {
+        switch ($process) {
+            case 'saved':
+                return 0;
+            case 'guarantor':
+                return 1;
+            case 'endorser':
+                return 2;
+            case 'payroll':
+                return 3;
+            case 'officer':
+                return 4;
+            case 'treasury':
+                return 5;
+            case 'release':
+                return 6;
+            case 'inc':
+                return 7;
+            case 'paid':
+                return 8;
+            case 'denied':
+                return 9;
+            default: 
+                return 0;
+        }
     }
 
     /**
@@ -129,9 +171,12 @@ class Utils
 
             return 7; 
 
+        }else if($status == 7){
+
+            return 8; 
         }else{
 
-            return 8;
+            return 9;
         }
 
     }
@@ -147,15 +192,15 @@ class Utils
     {
         $label = 'default';
 
-        if(in_array($status, [1,2]))
+        if(in_array($status, [1,2,3]))
             $label = 'info';
-        else if(in_array($status, [3]))
-            $label = 'primary';
         else if(in_array($status, [4]))
+            $label = 'primary';
+        else if(in_array($status, [5]))
             $label = 'warning';
-        else if(in_array($status, [5,7]))
+        else if(in_array($status, [6,8]))
             $label = 'success';
-        else if(in_array($status, [8]))
+        else if(in_array($status, [9]))
             $label = 'danger';
 
 
@@ -215,13 +260,13 @@ class Utils
     {
         $label = 'default';
         
-        if($status == 4){
+       if($status == 5){
             $label = 'primary';
             $status = 0;
-        }else if($status == 5){
+        }else if($status == 6 ){
             $label = 'info';
             $status = 1;
-        }else if($status == 6 || $status == 7){
+        }else if($status == 7 || $status == 8 ){
             $label = 'success';
             $status = 2;
         }else{
@@ -230,6 +275,31 @@ class Utils
         }
 
         return '<label class="label label-'. $label .'">'. $this->treasuryStat[$status] .'</label>';
+    }
+
+    /**
+     *
+     * Format Payroll status
+     * @param int $status eFundStatus
+     *
+     */
+    
+    public function formatPayrollStatus($status)
+    {
+        $label = 'default';
+        
+        if($status == NULL){
+            $label = 'primary';
+            $status = 2;
+        }else if($status == 0){
+            $label = 'danger';
+        }else if($status == 1){
+            $label = 'success';
+        }else{
+            $label = 'default';
+        }
+
+        return '<label class="label label-'. $label .'">'. $this->payrollStat[$status] .'</label>';
     }
 
     /**
@@ -412,6 +482,22 @@ class Utils
         return $value;
     }
 
+    /**
+     *
+     * Get FName from FullName
+     * @param string $FullName fullname separated by ,
+     * @return string
+     *
+     */
+    public function getFName($FullName)
+    {
+        $names = explode(',', $FullName);
+
+        if(count($names) > 0)
+            return ucwords($names[0]);
+        else
+            return '';
+    }
 
 }
 

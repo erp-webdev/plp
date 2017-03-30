@@ -221,7 +221,7 @@ class Log extends Model
 
     public function scopeTable($query, $table)  
     {
-        return $query->where('tbl', $table)->orderBy('id', 'desc');
+        return $query->where('tbl', $table)->orderBy('created_at', 'desc');
     }
 
     public function scopeContent($query, $content)  

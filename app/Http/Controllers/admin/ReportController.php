@@ -139,11 +139,12 @@ class ReportController extends Controller
 
     public function stream($html, $size = 'letter', $orientation = 'landscape')
     {
-        $report = (object)['title' => 'Megaworld eFund Report', 'html' => $html];
-        $html = view('admin.reports.template')
+        $report = (object)['title' => 'Megaworld EFund Payroll Notification', 'html' => $html];
+        $html = view('admin.reports.layout')
                 ->withReport($report);
-        // $this->renderPDF($html, $title = 'OCS_Report', $size = 'letter', $orientation = 'landscape', $warning = false, $paging = true);
-
+      
+        echo $html;
+        return;
 
         $dompdf = new Dompdf();
         $dompdf->loadHTML($html);
@@ -165,13 +166,13 @@ class ReportController extends Controller
 
                     if(!empty($status)){
                         if($status == 1) // Paid
-                            $query->where('status', 7);
+                            $query->where('status', $this->utils->getStatusIndex('paid'));
                         elseif($status == 2)
-                            $query->where('status', 6);
+                            $query->where('status', $this->utils->getStatusIndex('inc'));
                         elseif($status == 3)
-                            $query->where('status', '<', 6);
+                            $query->where('status', '<', $this->utils->getStatusIndex('inc'));
                         elseif($status == 4)
-                            $query->where('status', 8);
+                            $query->where('status', $this->utils->getStatusIndex('denied'));
                     }
                     
                 })->get();

@@ -8,17 +8,22 @@ return [
 
 	/*----------  Loan Application  ----------*/
 	'application' => [
-		'success'	=> 'Loan application has been submitted successfully! Please wait until all approvers approved your request.  Thank You!',
-		'failed' 	=> 'Loan application failed to submit. Please try again!',
-		'delete'	=> 'Loan application was successfully deleted.',
-		'approved'	=> 'Loan application has been approved successfully.',
-		'approved2' => 'Loan application has been approved already.',
-		'denied'	=> 'Loan application has been denied successfully.',
-		'denied2'	=> 'Loan application has been denied already.',
-		'cheque'	=> 'Check saved successfully.',
-		'released'  => 'Check released successfully',
-		'verified' 	=> 'Loan application has been verified successfully! You may now submit this application.', 
-		'deduction' 	=> 'Deductions successfully updated', 
+		'success'			=> 'Loan application has been submitted successfully! Please wait until all approvers approved your request.  Thank You!',
+		'failed' 			=> 'Loan application failed to submit. Please try again!',
+		'delete'			=> 'Loan application was successfully deleted.',
+		'approved'			=> 'Loan application has been approved successfully.',
+		'approved2' 		=> 'Loan application has been approved already.',
+		'denied'			=> 'Loan application has been denied successfully.',
+		'denied2'			=> 'Loan application has been denied already.',
+		'cheque'			=> 'Check saved successfully.',
+		'released'  		=> 'Check released successfully',
+		'verified' 			=> 'Loan application has been verified successfully! You may now submit this application.', 
+		'deduction' 		=> 'Deductions successfully updated', 
+		'payroll_verified'	=> 'Loan amount verification has been verified successfully!',
+		'payroll_denied'	=> 'Loan amount verification has been denied successfully!',
+		'balance'			=> 'Loan application has a remaining balance.',
+		'calculated'		=> 'Loan has been re-calculated successfully!',
+		'paid'				=> 'Loan has been paid successfully!',
 	],
 
 

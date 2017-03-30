@@ -7,7 +7,7 @@ use eFund\Events\Event;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
-class LoanPaid extends Event
+class LoanApproved extends Event
 {
     use SerializesModels;
 

@@ -21,12 +21,12 @@
 		<div class="modal-footer">
 			<div class="btn-group">
 			  	<button type="button" class="btn btn-default" onclick="format = 'pdf'; print()"><i class="fa fa-print"></i> Print</button>
-			  	<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+			  	<!-- <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 			    	<span class="caret"></span>
 			    	<span class="sr-only">PDF (.pdf)</span>
 			    	<span class="sr-only">Excel (.xlsx)</span>
 			    	<span class="sr-only">CSV (.csv)</span>
-			  	</button>
+			  	</button> -->
 			</div>
 			<button type="button" class="btn btn-sm btn-default" data-dismiss="modal" aria-label="Close">Close</button>
 		</div>
@@ -75,12 +75,12 @@
 			<div class="col-xs-12 col-sm-12 col-md-12" style="margin-bottom: 5px">
 				<div class="btn-group">
 				  	<button type="button" class="btn btn-default" onclick="format = 'pdf'; print()"><i class="fa fa-print"></i> Print</button>
-				  	<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				  	<!-- <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 				    	<span class="caret"></span>
 				    	<span class="sr-only">PDF (.pdf)</span>
 				    	<span class="sr-only">Excel (.xlsx)</span>
 				    	<span class="sr-only">CSV (.csv)</span>
-				  	</button>
+				  	</button> -->
 				</div>
 				<a class="btn btn-default btn-sm" href="#reportViewModal" data-toggle="modal" data-target="#reporViewModal" onclick="showFullScreen()"><i class="fa fa-eye"></i> View FullScreen</a>
 			</div>

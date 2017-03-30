@@ -7,12 +7,14 @@ use Illuminate\Http\Request;
 use Log;
 use DB;
 use Auth;
+use Event;
 use Session;
 use eFund\Loan;
 use eFund\Endorser;
 use eFund\Guarantor;
 use eFund\Http\Requests;
 use eFund\Utilities\Utils;
+use eFund\Events\GuarantorApproved;
 use eFund\Http\Controllers\Controller;
 
 class GuarantorController extends Controller
@@ -27,7 +29,7 @@ class GuarantorController extends Controller
 
      public function index()
     {
-    	$guarantors = Guarantor::guarantors()->orderBy('id')->paginate(20);
+    	$guarantors = Guarantor::guarantors()->orderBy('id')->paginate(10);
         
         for ($i=0; $i < count($guarantors); $i++) { 
             $guarantors[$i]->FullName = $guarantors[$i]->FullName;
@@ -58,6 +60,7 @@ class GuarantorController extends Controller
 
     public function approve(Request $request)
     {
+        DB::beginTransaction();
         if(isset($_POST['approve'])){
             $guarantor = Guarantor::findOrFail($request->id);
             if($guarantor->EmpID != Auth::user()->employee_id)
@@ -66,17 +69,17 @@ class GuarantorController extends Controller
             if($guarantor->signed_at != '--')
                 return redirect()->back()->withSuccess(trans('loan.application.approved2'));
 
-            Log::info($request->guaranteed_amount);
-
             $guarantor->signed_at = date('Y-m-d H:i:s');
             $guarantor->guarantor_status = 1;
             $guarantor->guaranteed_amount = $request->guaranteed_amount;
             $guarantor->save();
 
             $loan = Loan::findOrFail($guarantor->eFundData_id);
-            $loan->status = $this->utils->setStatus(1);
+            $loan->status = $this->utils->setStatus($this->utils->getStatusIndex('guarantor'));
             $loan->save();
 
+            Event::fire(new GuarantorApproved($loan));
+            DB::commit();
             return redirect()->back()
                     ->withSuccess(trans('loan.application.approved'));
 
@@ -95,9 +98,10 @@ class GuarantorController extends Controller
 
 
                 $loan = Loan::findOrFail($guarantor->eFundData_id);
-                $loan->status = $this->utils->setStatus(8);
+                $loan->status = $this->utils->setStatus($this->utils->getStatusIndex('denied'));
                 $loan->save();
 
+                DB::commit();
                 DB::table('endorsers')->where('id', $loan->endorser_id)->delete();
 
             return redirect()->back()
