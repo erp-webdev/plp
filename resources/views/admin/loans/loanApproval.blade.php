@@ -2,7 +2,15 @@
 	<div class="modal-header">
 	  <div class="col-xs-12 col-sm-6 col-md-6">
 	  	<h4>Employees Fund Loan 
-	  		<span style="font-size: 14px; font-weight: normal">{!! $utils->formatStatus($loan->status) !!}</span></h4>
+	  		<span style="font-size: 14px; font-weight: normal">{!! $utils->formatStatus($loan->status) !!}</span>
+	  		@if($loan->status == $utils->getStatusIndex('officer'))
+		  		@if($loan->payroll_verified == 1)
+		  		<span style="font-size: 14px; font-weight: normal"><label class="label label-success">Verified by Payroll</label></span>
+		  		@elseif($loan->payroll_verified == 0)
+		  		<span style="font-size: 14px; font-weight: normal"><label class="label label-danger">Denied by Payroll</label></span>
+		  		@endif
+		  	@endif
+	  		</h4>
 	  </div>
 	  <div class="col-xs-12 col-sm-6 col-md-6">
 	  	<p class="pull-right"><small>Ctrl No: </small><strong >{{ $loan->ctrl_no }}</strong></p>
@@ -147,19 +155,46 @@
 		      	<table class="table table-condensed">
 		      		<tr>
 			      		<td>
+			      			<td class="l">Previous Balance</td>
+			      			<td>
+			      			
+			      			Php {{ $utils->formatNumber($balance) }}
+			      			
+			      			</td>
+			      		</td>
+			      		<td>
+			      			<td colspan="2"></td>
+			      		</td>
+			      	</tr>	
+		      		<tr>
+			      		<td>
 			      			<td class="l">Terms</td>
-			      			<td>{{ $loan->terms_month }} (mos)</td>
+			      			<td>
+			      			@if($loan->status == $utils->getStatusIndex('officer'))
+			      				<input type="number" name="terms" min="1" max="{{ $months }}" value="{{ $loan->terms_month }}" class="form-control input-sm">
+			      			@else
+			      				{{ $loan->terms_month }} (mos)
+			      			@endif
+			      			</td>
 			      		</td>
 			      		<td>
 			      			<td class="l">Loan Amount</td>
-			      			<td style="text-align: right">Php {{ number_format($loan->loan_amount, 2, '.', ',') }}</td>
+			      			<td style="text-align: right">
+			      			@if($loan->status == $utils->getStatusIndex('officer'))
+			      				<input type="number" name="loan_amount" value="{{ $loan->loan_amount }}" class="form-control input-sm" min="{{ $terms->min_amount }}" max="{{ $terms->max_amount }}">
+			      			@else
+			      				Php {{ number_format($loan->loan_amount, 2, '.', ',') }}
+			      			@endif
+			      			</td>
 			      		</td>
 			      		
 			      	</tr>	
 			      	<tr>
 			      		<td>
 			      			<td class="l">Deduction/payroll</td>
-			      			<td >Php {{ number_format($loan->deductions, 2, '.', ',') }}</td>
+			      			<td >
+			      				Php {{ number_format($loan->deductions, 2, '.', ',') }}
+			      			</td>
 			      		</td>
 			      		<td>
 			      			<td class="l">Interest ({{ $loan->interest }}%)</td>
@@ -180,18 +215,20 @@
 			      		</td>
 			      	</tr>	
 		      	</table>
-		     
-				@if($loan->status == 3)
+		     	@permission(['officer'])
+				@if($loan->status == $utils->getStatusIndex('officer'))
 				<div class="clearfix"></div>
-				<button type="submit" name="approve" class="btn btn-success btn-sm pull-right"><i class="fa fa-thumbs-up"></i> Approve</button>
 				<button type="submit" name="deny" class="btn btn-danger btn-sm pull-right"><i class="fa fa-thumbs-down"></i> Deny</button>
+				<button type="submit" name="approve" class="btn btn-success btn-sm pull-right"><i class="fa fa-thumbs-up"></i> Approve</button>
+				<button type="submit" name="calculate" class="btn btn-default btn-sm pull-right"><i class="fa fa-calculator"></i> Calculate</button>
+				@endif
 				@endif
 			</form>
 	    </div>
 	    <div role="tabpanel" class="tab-pane table-responsive" id="scheds">
 	    	<form action="{{ route('loan.deduction') }}" method="post">
 	    		<input type="hidden" name="_token" value="{{ csrf_token() }}">
-		    	<fieldset <?php if($loan->status == 7) echo 'disabled'; ?>>
+		    	<fieldset <?php if($loan->status == $utils->getStatusIndex('paid')) echo 'disabled'; ?>>
 	    		<table class="table table-condensed table-hover table-striped">
 		    		<thead>
 		    			<th>Date</th>
@@ -226,9 +263,11 @@
 		    		</tbody>
 		    	</table>
 		    	</fieldset>
-		    	@if($loan->status != 7 && count($deductions) > 0)
+				@permission(['custodian'])
+		    	@if($loan->status != $utils->getStatusIndex('paid') && count($deductions) > 0)
 		    	<button type="submit" name="submit" class="btn btn-sm btn-success pull-right"><i class="fa fa-save"></i> Save</button>
 		    	@endif
+		    	@endpermission
 	    	</form>
 	    	
 	    </div>
@@ -237,8 +276,11 @@
 	    
 	</div>
 	<div class="modal-footer">
-		@if($loan->status == 6)
+		@permission(['custodian'])
+		@if($loan->status == $utils->getStatusIndex('inc'))
 	    <a type="button" class="btn btn-success btn-sm" href="{{ route('loan.complete', $loan->id) }}">Paid</a>
 	    @endif
+	    @endpermission
+	   <a type="button" class="btn btn-default btn-sm" href="{{ route('loan.print', $loan->id) }}" target="_blank"><i class="fa fa-print"></i> Print</a>
 	   <button type="button" class="btn btn-default btn-sm" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
 	</div>

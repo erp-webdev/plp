@@ -81,7 +81,7 @@
 			<div class="col-md-4" >
 				<h4>Loan Information</h4>
 				<div class="form-group" >
-					<span class="col-md-4">Terms</span>
+					<span class="col-md-4">Terms*</span>
 					<div class="col-md-8">
 						<div class="input-group">
 							<input type="number" name="term_mos" min="1" max="{{ $months }}" class="form-control input-sm" ng-model="mos" required>
@@ -94,7 +94,7 @@
 					<div class="col-md-8">
 						<div class="input-group">
 							<span class="input-group-addon">Php</span>
-							<input name="loan_amount" type="number" class="form-control input-sm" min="{{ $terms->min_amount }}" name="loan_amount" ng-model="loan" required ng-change="computeTotal()" ng-keyup="computeTotal()" step="500">
+							<input name="loan_amount" type="number" class="form-control input-sm" name="loan_amount" ng-model="loan" required ng-change="computeTotal()" ng-keyup="computeTotal()" step="500" >
 							<span class="input-group-addon">.00</span>
 						</div>
 						<span class="help-block">Min: {{ $terms->min_amount }} - Max: {{ $terms->max_amount }}</span>
@@ -122,16 +122,20 @@
 				<!-- Deductions Table -->
 				<h4>Deductions</h4>
 				<div class="form-group">
-					<span class="col-md-8"># of payments to be made</span>
+					<span class="col-md-8"># of payments to be made*</span>
 					<div class="col-md-4">
 						<span ng-bind="paymentCtr"></span>
 					</div>
 				</div>
 				<div class="form-group">
-					<span class="col-md-8">Every payroll deductions</span>
+					<span class="col-md-8">Every payroll deductions*</span>
 					<div class="col-md-4">
 						<span ng-bind="deductions | currency: 'Php '"></span>
 					</div>
+				</div>
+				<div class="alert alert-info">
+					*Terms applied are subject to changes by the eFund Custodian, 
+					thus the *no. of payments and *payroll deductions may change as well. <br>
 				</div>
 			</div>
 			<div class="col-xs-12 col-sm-4 col-md-4">
@@ -220,7 +224,7 @@
 
 		</div>
 		@if(isset($loan))
-			@if($loan->status == 0)
+			@if($loan->status == $utils->getStatusIndex('saved'))
 			<div class="row" style="border-top: 1px solid #ccc; padding-top: 10px">
 				<div class="col-md-4">
 					<button id="verify" name="verify" class="btn btn-primary btn-block" ><i class="fa fa-save"></i> Verify</button>
