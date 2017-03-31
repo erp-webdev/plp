@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Mail;
 use eFund\Log;
 use eFund\Employee;
+use eFund\Preference;
 use eFund\Http\Requests;
 use eFund\Utilities\Utils;
 use eFund\Http\Controllers\Controller;
@@ -15,6 +16,9 @@ class EmailController extends Controller
 {
     public function send($toEmpID, $subject, $body, $args, $cc = '')
     {
+        if((Preference::name('email_notifs'))->value != 1)
+            return;
+
         $emp = Employee::where('EmpID', $toEmpID)->first();
         if(!empty($emp)){
         	if(empty($emp->EmailAdd))

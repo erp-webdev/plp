@@ -30,6 +30,11 @@ Route::group(['prefix' => '/', 'middleware' => ['auth']], function(){
 	Route::get('loans/complete/{id}', ['as' => 'loan.complete', 'uses' => 'admin\LoanController@complete', 'middleware' => ['permission:custodian']]);
 	Route::get('loans/print/{id}', ['as' => 'loan.print', 'uses' => 'admin\LoanController@printForm', 'middleware' => ['permission:officer|custodian']]);
 	
+	// Upload
+	Route::get('loans/upload', ['as' => 'upload.show', 'uses' => 'admin\LoanController@showUpload', 'middleware' => ['permission:custodian']]);
+	Route::post('loans/upload', ['as' => 'loan.upload', 'uses' => 'admin\LoanController@upload', 'middleware' => ['permission:custodian']]);
+
+	// Reports
 	Route::get('reports', ['as' => 'report.index', 'uses' => 'admin\ReportController@index', 'middleware' => ['permission:custodian']]);
 	Route::get('reports/{type}', ['as' => 'report.show', 'uses' => 'admin\ReportController@show', 'middleware' => ['permission:custodian']]);
 	Route::get('reports/generate/{type}', ['as' => 'report.print', 'uses' => 'admin\ReportController@generate', 'middleware' => ['permission:custodian']]);

@@ -17,7 +17,7 @@
 				<p class="title">403</p>
 				<h4>FORBIDDEN</h4>
 				<p>You do not have permission to view this resource. <br> 
-				Contact your HR Business Partner if you believe you should have access to this resouce.
+				Contact the system administrator if you believe you should have access to this resouce.
 					</p>
 			</div>
 		</div>

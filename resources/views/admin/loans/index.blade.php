@@ -13,7 +13,9 @@
 			<h1>Loans</h1>
 			<a class="btn btn-sm btn-default" href="{{ route('admin.loan') }}"><i class="fa fa-refresh"></i> 
 			Refresh</a>
-
+			@permission('custodian')
+			<a class="btn btn-sm btn-primary" href="{{ route('upload.show') }}"><i class="fa fa-upload"></i> Import</a>
+			@endpermission
 			<hr>
 			@if ($message = Session::get('success'))
 	            <div class="col-xs-12 col-sm-12 col-md-12">

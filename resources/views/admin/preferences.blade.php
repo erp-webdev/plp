@@ -1,5 +1,10 @@
 @extends('admin.layouts.app')
 @section('content')
+    <style type="text/css">
+        .help-block{
+            font-size: 10px;
+        }
+    </style>
 	<div class="col-md-12">
 		<h1>Preferences</h1>
 		<p>Manage System configurations, settings, and preferences.</p>

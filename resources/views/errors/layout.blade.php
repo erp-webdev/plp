@@ -49,7 +49,7 @@
 	<div class="wrapper">
 		@yield('content')
 		<div class="footer navbar navbar-default navbar-fixed-bottom">
-			eFund (v1.0)<br>
+			{{ config('preferences.app') }} {{ config('preferences.version') }}<br>
 			Megaworld Corporation | ISM Department | All Rights Reserved © <?php echo date('Y'); ?>
 		</div>
 	</div>

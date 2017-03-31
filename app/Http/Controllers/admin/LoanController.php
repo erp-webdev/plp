@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use DB;
 use Auth;
 use Event;
+use Input;
+use Excel;
 use Session;
 use eFund\Loan;
 use eFund\Terms;
@@ -183,5 +185,43 @@ class LoanController extends Controller
                 ->withBalance($balance)
                 ->withUtils(new Utils());
         
+    }
+
+    public function showUpload()
+    {
+        return view('admin.loans.upload');
+    }
+
+    public function previewUpload(Request $request)
+    {
+        $loans = [];
+        $ledgers = [];
+
+        return view('admin.loans.upload')
+                ->withLoans($loans)
+                ->withLedgers($ledgers);
+    }
+
+    public function upload(Request $request)
+    {
+        $loans = [];
+        $ledgers = [];
+
+        if(Input::hasFile('fileToUpload')){
+            $path = Input::file('fileToUpload')->getRealPath();
+            $data = Excel::load($path, function($reader) {})->get();
+            
+            if(!empty($data) && $data->count()){
+                foreach ($data as $key => $value) {
+                    $loan =['date' => $value->CtrlNo];
+                    array_push($loans, $loan);
+                }
+
+            }
+        }
+
+        return view('admin.loans.upload')
+                ->withLoans($loans)
+                ->withLedgers($ledgers);
     }
 }

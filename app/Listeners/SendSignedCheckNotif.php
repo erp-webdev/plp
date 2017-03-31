@@ -41,6 +41,8 @@ class SendSignedCheckNotif extends EmailController
 
     public function notifyEmployee($loan)
     {
+        if((Preference::name('emp_notif'))->value != 1)
+            return;
 
         $deductions = Deduction::where('eFundData_id', $loan->id)->
                     orderBy('date')->get();
@@ -53,6 +55,9 @@ class SendSignedCheckNotif extends EmailController
 
     public function notifyGuarantor($loan)
     {
+        if((Preference::name('guarantor_notif'))->value != 1)
+            return;
+
         $utils = new Utils();
         $args = ['loan' => $loan, 'utils' => $utils];
 
@@ -61,6 +66,9 @@ class SendSignedCheckNotif extends EmailController
 
     public function notifyPayroll($loan)
     {
+        if((Preference::name('payroll_notif'))->value != 1)
+            return;
+        
         $employees = DB::table('viewUserPermissions')->where('permission', 'payroll')->get();
         $utils = new Utils();
 
