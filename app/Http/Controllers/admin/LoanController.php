@@ -30,8 +30,18 @@ class LoanController extends Controller
 
     public function index()
     {
-    	$loans = Loan::orderBy('ctrl_no')->paginate(10);
-    	
+        $show = 10;
+        $search = '';
+        if(isset($_GET['show']))
+            $show = $_GET['show'];
+
+        if(isset($_GET['search']))
+            $search = $_GET['search'];
+
+     	$loans = Loan::orderBy('ctrl_no', 'desc')
+                    ->search($search)
+                    ->paginate($show);
+
     	return view('admin.loans.index')
     			->withLoans($loans)
     			->withUtils($this->utils);

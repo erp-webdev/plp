@@ -72,4 +72,16 @@ class Endorser extends Model
     {
         return date('j F Y', strtotime($value));
     }
+
+    public function scopeSearch($query, $keyword)
+    {
+        if(empty(trim($keyword))){
+            return;
+        }
+
+        return $query->where('refno', 'LIKE', '%' . $keyword . '%')
+                    ->orWhere('ctrl_no', 'LIKE', '%' . $keyword . '%')
+                    ->orWhere('FullName',  'LIKE', '%' . $keyword . '%')
+                    ->orWhere('EmpID', 'LIKE', '%' . $keyword . '%');
+    }
 }

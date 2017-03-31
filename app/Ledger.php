@@ -65,4 +65,6 @@ class Ledger extends Model
     {
     	return $this->utils->formatNumber($value);
     }
+
+   
 }

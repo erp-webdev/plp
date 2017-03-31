@@ -24,9 +24,18 @@ class LedgerController extends Controller
 
     public function index()
     {
+        $show = 10;
+        $search = '';
+        if(isset($_GET['show']))
+            $show = $_GET['show'];
+
+        if(isset($_GET['search']))
+            $search = $_GET['search'];
+
     	$employees = Employee::whereRaw('EmpID in (SELECT DISTINCT EmpID FROM eFundData)')
+                    ->search($search)
     				->orderBy('LName')
-    				->paginate(10);
+    				->paginate($show);
 
     	return view('admin.ledger.index')
     		->withEmployees($employees)

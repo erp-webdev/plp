@@ -35,7 +35,7 @@ class ApplicationController extends Controller
 
     public function index()
     {
-    	$loans = Loan::employee()->orderBy('created_at')->paginate(20);
+    	$loans = Loan::employee()->orderBy('id', 'desc')->paginate(10);
 
     	return view('admin.applications.index')
                 ->withLoans($loans)
@@ -241,7 +241,7 @@ class ApplicationController extends Controller
         $errors = [];
 
         // Check Standing Balance
-        if($this->getStandingBalance($request->id) != NULL || $this->getStandingBalance($request->id) > 0)
+        if($this->getStandingBalance($request->id) != NULL && $this->getStandingBalance($request->id) > 0)
             array_push($errors, trans('loan.validation.balance'));
 
         // Application Type
@@ -416,9 +416,14 @@ class ApplicationController extends Controller
     {
         $valid = true;
 
-        if(!$this->validateEmployeeStatus($EmpID)){
+        if($this->validateEmployeeStatus($EmpID)){
             // TODO:: check balance
-            $valid = false;
+            $balance = Loan::where('EmpID', $EmpID)
+                    ->whereNotIn('status', [0,9])
+                    ->sum('balance');
+
+            if($balance > 0)
+                $valid = false;
         }
 
         if($EmpID == Auth::user()->employee_id)

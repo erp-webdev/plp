@@ -30,7 +30,18 @@ class TreasuryController extends Controller
 
     public function index()
     {
-    	$loans = Loan::notDenied()->where('status', '>', 4)->paginate(10); 
+        $show = 10;
+        $search = '';
+        if(isset($_GET['show']))
+            $show = $_GET['show'];
+
+        if(isset($_GET['search']))
+            $search = $_GET['search'];
+
+
+    	$loans = Loan::notDenied()->where('status', '>', 4)
+                    ->search($search)
+                    ->paginate($show); 
 
     	return view('admin.treasury.index')
     		->withUtils($this->utils)

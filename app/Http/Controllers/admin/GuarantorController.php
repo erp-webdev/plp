@@ -29,7 +29,7 @@ class GuarantorController extends Controller
 
      public function index()
     {
-    	$guarantors = Guarantor::guarantors()->orderBy('id')->paginate(10);
+    	$guarantors = Guarantor::guarantors()->orderBy('id', 'desc')->paginate(10);
         
         for ($i=0; $i < count($guarantors); $i++) { 
             $guarantors[$i]->FullName = $guarantors[$i]->FullName;

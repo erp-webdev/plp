@@ -73,4 +73,18 @@ class Loan extends Model
         return $query->where('status', '<>', $this->utils->getStatusIndex('denied'));
     }
 
+    public function scopeSearch($query, $keyword)
+    {
+        if(empty(trim($keyword))){
+            return;
+        }
+
+        $status = array_search(ucwords($keyword), $this->utils->stats);
+
+        return $query->where('ctrl_no', 'LIKE', '%' . $keyword . '%')
+                    ->orWhere('FullName', 'LIKE', '%' . $keyword . '%')
+                    ->orWhere('status',  $status)
+                    ->orWhere('created_at', 'LIKE', '%' . $keyword . '%');
+    }
+
 }

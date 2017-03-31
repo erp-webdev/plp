@@ -26,13 +26,13 @@ Route::group(['prefix' => '/', 'middleware' => ['auth']], function(){
 	Route::get('loans', ['as' => 'admin.loan', 'uses' => 'admin\LoanController@index', 'middleware' => ['permission:loan_list']]);
 	Route::post('loans', ['as' => 'loan.approve', 'uses' => 'admin\LoanController@approve', 'middleware' => ['permission:officer']]);
 	Route::get('loans/show/{id}', ['as' => 'loan.show', 'uses' => 'admin\LoanController@show', 'middleware' => ['permission:loan_view']]);
-	Route::post('loans/deductions', ['as' => 'loan.deduction', 'uses' => 'admin\LoanController@saveDeduction', 'middleware' => ['permission:officer']]);
-	Route::get('loans/complete/{id}', ['as' => 'loan.complete', 'uses' => 'admin\LoanController@complete', 'middleware' => ['permission:officer']]);
-	Route::get('loans/print/{id}', ['as' => 'loan.print', 'uses' => 'admin\LoanController@printForm', 'middleware' => ['permission:officer']]);
+	Route::post('loans/deductions', ['as' => 'loan.deduction', 'uses' => 'admin\LoanController@saveDeduction', 'middleware' => ['permission:custodian']]);
+	Route::get('loans/complete/{id}', ['as' => 'loan.complete', 'uses' => 'admin\LoanController@complete', 'middleware' => ['permission:custodian']]);
+	Route::get('loans/print/{id}', ['as' => 'loan.print', 'uses' => 'admin\LoanController@printForm', 'middleware' => ['permission:officer|custodian']]);
 	
-	Route::get('reports', ['as' => 'report.index', 'uses' => 'admin\ReportController@index', 'middleware' => ['permission:custodian|officer']]);
-	Route::get('reports/{type}', ['as' => 'report.show', 'uses' => 'admin\ReportController@show', 'middleware' => ['permission:custodian|officer']]);
-	Route::get('reports/generate/{type}', ['as' => 'report.print', 'uses' => 'admin\ReportController@generate', 'middleware' => ['permission:custodian|officer']]);
+	Route::get('reports', ['as' => 'report.index', 'uses' => 'admin\ReportController@index', 'middleware' => ['permission:custodian']]);
+	Route::get('reports/{type}', ['as' => 'report.show', 'uses' => 'admin\ReportController@show', 'middleware' => ['permission:custodian']]);
+	Route::get('reports/generate/{type}', ['as' => 'report.print', 'uses' => 'admin\ReportController@generate', 'middleware' => ['permission:custodian']]);
 
 	// Ledger
 	Route::get('ledger', ['as' => 'ledger.index', 'uses' => 'admin\LedgerController@index', 'middleware' => ['permission:officer|custodian']]);

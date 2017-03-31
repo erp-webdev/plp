@@ -25,12 +25,19 @@ class EndorsementController extends Controller
 
      public function index()
     {
-    	$endorsements = Endorser::endorsements()->orderBy('id')->paginate(10);
-        // for ($i=0; $i < count($endorsements); $i++) { 
-        //     $endorsements[$i]->FullName = utf8_encode($endorsements[$i]->FullName);
-        //     $endorsements[$i]->guarantor_FullName = utf8_encode($endorsements[$i]->guarantor_FullName);
-        // }
+        $show = 10;
+        $search = '';
+        if(isset($_GET['show']))
+            $show = $_GET['show'];
 
+        if(isset($_GET['search']))
+            $search = $_GET['search'];
+
+    	$endorsements = Endorser::endorsements()
+                        ->search($search)
+                        ->orderBy('id', 'desc')
+                        ->paginate($show);
+     
     	return view('admin.endorsements.index')
     			->withEndorsements($endorsements)
     			->withUtils($this->utils);

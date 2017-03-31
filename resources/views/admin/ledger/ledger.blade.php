@@ -49,6 +49,8 @@
 	</tr>
 </table>
 <div class="table-responsive">
+	
+
 			<table class="table-hover">
 				<thead>
 					<th >Date of <br>Availment</th>
@@ -69,17 +71,17 @@
 				<tbody>
 					<?php $ctr = 0;?>
 					@foreach($ledgers as $ledger)
-					<tr class="<?php if($utils->formatLedger($ledger->created_at, $ctr) != '') echo'new' ?>" >
-						<td>{{ $utils->formatLedger($ledger->created_at, $ctr) }}</td>
-						<td>{{ $utils->formatLedger($ledger->ctrl_no, $ctr) }}</td>
-						<td>{{ $utils->formatLedger($ledger->cv_no, $ctr) }}</td>
-						<td>{{ $utils->formatLedger($ledger->cv_date, $ctr) }}</td>
-						<td>{{ $utils->formatLedger($ledger->check_released, $ctr) }}</td>
-						<td style="text-align: right">{{ $utils->formatLedger($ledger->loan_amount, $ctr) }}</td>
-						<td style="text-align: right">{{ $utils->formatLedger($ledger->loan_amount_interest, $ctr) }}</td>
-						<td>{{ $utils->formatLedger($ledger->total, $ctr) }}</td>
-						<td>{{ $utils->formatLedger($ledger->terms_month, $ctr) }}</td>
-						<td style="text-align: right">{{ $utils->formatLedger($ledger->deductions, $ctr) }}</td>
+					<tr class="<?php if($utils->formatLedger($ledger->eFundData_id, $ctr, $ledger->eFundData_id) != '') echo'new' ?>" >
+						<td>{{ $utils->formatLedger($ledger->created_at, $ctr, $ledger->eFundData_id) }}</td>
+						<td>{{ $utils->formatLedger($ledger->ctrl_no, $ctr, $ledger->eFundData_id) }}</td>
+						<td>{{ $utils->formatLedger($ledger->cv_no, $ctr, $ledger->eFundData_id) }}</td>
+						<td>{{ $utils->formatLedger($ledger->cv_date, $ctr, $ledger->eFundData_id) }}</td>
+						<td>{{ $utils->formatLedger($ledger->check_released, $ctr, $ledger->eFundData_id) }}</td>
+						<td style="text-align: right">{{ $utils->formatLedger($ledger->loan_amount, $ctr, $ledger->eFundData_id) }}</td>
+						<td style="text-align: right">{{ $utils->formatLedger($ledger->loan_amount_interest, $ctr, $ledger->eFundData_id) }}</td>
+						<td>{{ $utils->formatLedger($ledger->total, $ctr, $ledger->eFundData_id) }}</td>
+						<td>{{ $utils->formatLedger($ledger->terms_month, $ctr, $ledger->eFundData_id) }}</td>
+						<td style="text-align: right">{{ $utils->formatLedger($ledger->deductions, $ctr, $ledger->eFundData_id) }}</td>
 						<td>{{ $ledger->date }}</td>
 						<td>{{ $ledger->ar_no }}</td>
 						<td style="text-align: right">{{ $ledger->amount }}</td>
@@ -87,10 +89,10 @@
 						@if($showBalance)
 							{{ $ledger->balance }}
 						@else
-							@if($ledger->status == 7)
-							{{ $utils->formatLedger('Paid', $ctr) }}
+							@if($ledger->status == 8)
+							{{ $utils->formatLedger('Paid', $ctr, $ledger->eFundData_id) }}
 							@else
-							{{ $utils->formatLedger('Inc', $ctr) }}
+							{{ $utils->formatLedger('Inc', $ctr, $ledger->eFundData_id) }}
 							@endif
 						@endif
 						</td>

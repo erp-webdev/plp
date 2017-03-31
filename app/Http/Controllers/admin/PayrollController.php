@@ -26,8 +26,19 @@ class PayrollController extends Controller
 
     public function index()
     {
-    	$loans = Loan::notDenied()->where('status', '>=', $this->utils->getStatusIndex('payroll'))
-        ->paginate(10);
+        $show = 10;
+        $search = '';
+        if(isset($_GET['show']))
+            $show = $_GET['show'];
+
+        if(isset($_GET['search']))
+            $search = $_GET['search'];
+
+    	$loans = Loan::notDenied()
+                    ->where('status', '>=', $this->utils->getStatusIndex('payroll'))
+                    ->search($search)
+                    ->orderBy('id', 'desc')
+                    ->paginate($show);
 
     	return view('admin.payroll.index')
     		->withLoans($loans)

@@ -9,7 +9,7 @@ use eFund\Preference;
 use Log;
 class Utils
 {
-	private $stats = [	"Saved"                           , // [0]
+	public $stats = [	"Saved"                           , // [0]
 						"For Co-Borrower's Approval"      , // [1]
                         "For Endorser's Approval"         , // [2]
                         "For Payroll's Verification"      , // [3]
@@ -465,8 +465,10 @@ class Utils
     public $prevValue = ['', '', '', '', '', '', '', '', '', '', '', '', '', ''];
     public $index = 0;
     public $prevCtr = 0;
-    public function formatLedger($value, $ctr)
+    public $prevId = '';
+    public function formatLedger($value, $ctr, $id)
     {
+
         if($this->prevCtr != $ctr){
             $this->index = 0;
             $this->prevCtr = $ctr;

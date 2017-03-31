@@ -50,7 +50,7 @@ function setWrapperStatus(){
   					Guarantors <i class="fa fa-money pull-right"></i>
 				</a>
 				@endif
-				@permission(['loan_list', 'loan_view', 'loan_edit'])
+				@permission(['custodian'])
 				<a class="btn btn-primary sidebar-menu <?php if(Session::get('menu')=='reports') echo 'active'?>" role="button" href="{{ route('report.index') }}">
   					Reports <i class="fa fa-book pull-right"></i>
 				</a>

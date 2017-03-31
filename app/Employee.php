@@ -56,4 +56,16 @@ class Employee extends Model
     {
         return date('j F Y', strtotime($value));
     }
+
+    public function scopeSearch($query, $keyword)
+    {
+        if(empty(trim($keyword))){
+            return;
+        }
+        
+        return $query->where('EmpID', 'LIKE', '%' . $keyword . '%')
+                ->orWhere('FullName', 'LIKE', '%' . $keyword . '%')
+                ->orWhere('PositionDesc', 'LIKE', '%' . $keyword . '%')
+                ->orWhere('RankDesc', 'LIKE', '%' . $keyword . '%');
+    }
 }
