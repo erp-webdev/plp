@@ -16,7 +16,9 @@ class EmailController extends Controller
 {
     public function send($toEmpID, $subject, $body, $args, $cc = '')
     {
-        if((Preference::name('email_notifs'))->value != 1)
+        $EnableEmail = Preference::name('email_notifs');
+
+        if($EnableEmail->value != 1)
             return;
 
         $emp = Employee::where('EmpID', $toEmpID)->first();

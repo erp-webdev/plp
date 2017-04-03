@@ -13,7 +13,10 @@ use Session;
 use eFund\Loan;
 use eFund\Terms;
 use eFund\Employee;
+use eFund\Treasury;
+use eFund\Endorser;
 use eFund\Deduction;
+use eFund\Guarantor;
 use eFund\Http\Requests;
 use eFund\Utilities\Utils;
 use eFund\Events\LoanPaid;
@@ -101,7 +104,7 @@ class LoanController extends Controller
         if(isset($request->approve)){
             
             $loan->approved = 1;
-            $loan->approved_by = Auth::user()->id;
+            $loan->approved_by = Auth::user()->employee_id;
             $loan->approved_at = date('Y-m-d H:i:s');
             $loan->status = $this->utils->setStatus($loan->status);
             $loan->save();
@@ -206,22 +209,201 @@ class LoanController extends Controller
     {
         $loans = [];
         $ledgers = [];
+        $loansWithError = [];
 
         if(Input::hasFile('fileToUpload')){
             $path = Input::file('fileToUpload')->getRealPath();
             $data = Excel::load($path, function($reader) {})->get();
-            
+            $ctr = 0;
             if(!empty($data) && $data->count()){
-                foreach ($data as $key => $value) {
-                    $loan =['date' => $value->CtrlNo];
-                    array_push($loans, $loan);
-                }
+                foreach ($data as $sheet) {
+                    foreach($sheet as $cols){
+                        $ctr++;
+                        //Ignores row with no control number
+                        if(isset($cols->ctrlno))
+                            if(empty($cols->ctrlno))
+                                continue;
 
+                        foreach ($cols as $key => $value) {
+                            // Sheet columns
+                            if($key == 'ctrlno')
+                               if(Loan::where('ctrl_no', $value)->count() > 0)
+                                    array_push($loansWithError, $this->createError('Loan Ctrl No Exists from the database. '.$sheet->getTitle().'.row['. $ctr .'].column[' . $key .'].value[' . $value .']' , $cols));
+
+                            //Process not empty column
+                            if(!empty(trim($key)) && $value != null){
+
+                                if($key != 'loc' && empty($value)){
+                                    array_push($loansWithError, $this->createError('Empty Field. '.$sheet->getTitle().'.row['. $ctr .'].column[' . $key .'].value[' . $value .']' , $cols));
+                                }
+
+                                if($key == 'status'){
+                                    if(!in_array(strtoupper($value), ['PAID', 'INC', 'DENIED']))
+                                        array_push($loansWithError, $this->createError('Invalid Status. '.$sheet->getTitle().'.row['. $ctr .'].column[' . $key .'].value[' . $value .']', $cols));
+                                }
+
+                                if(strtoupper(trim($value)) == 'type')
+                                    if($value != 'NEW' || $value != 'REAVAILMENT')
+                                        array_push($loansWithError, $this->createError('Invalid Type. '.$sheet->getTitle().'.row['. $ctr .'].column[' . $key .'].value[' . $value .']', $cols));
+                            }
+
+                            // Check column data type if it matches required corresponding column
+                            $dates = ['appdate', 'startofdeductions', 'approvedat', 'cvdate', 'cvrelease', 'date'];
+                            $numbers = ['mos', 'amount', 'deductions', 'guaranteedamount', 'balance'];
+                            // Check date format
+                            if(in_array($key, $dates))
+                                if(date('n/d/Y', strtotime($value)) != $value)
+                                    array_push($loansWithError, $this->createError('Invalid Date. '.$sheet->getTitle().'.row['. $ctr .'].column[' . $key .'].value[' . $value .']', $cols));
+
+                             
+                            // Check numeric values
+                            if(in_array($key, $numbers))
+                                if(!is_numeric($value))
+                                    array_push($loansWithError, $this->createError('Invalid Number. '.$sheet->getTitle().'.row['. $ctr .'].column[' . $key .'].value[' . $value .']', $cols));
+
+                        }
+                        
+                        // Sheets 
+                        if($sheet->getTitle() == 'Loans'){
+                            array_push($loans, $cols);
+                        }elseif($sheet->getTitle() == 'Ledger'){
+                            array_push($ledgers, $cols);
+                        }
+                    }
+                }
             }
         }
+        if(count($loansWithError) > 0){
+            return view('admin.loans.upload')
+                ->withLoans($loans)
+                ->withLedgers($ledgers)
+                ->withErrorss($loansWithError)
+                ->withError('Import Failed! Failed to validate records. Please check fields with red background and re-upload the file (or refresh this page).');
+        }
+
+        $successLoans = 0; $successLedger = 0;
+        
+        DB::beginTransaction();
+        // Loans from Excel to Database
+        foreach ($loans as $loan) {
+            // eFundData (Loan)
+            $eFundData = new Loan();
+            $eFundData->ctrl_no = $loan->ctrlno;
+            $eFundData->EmpID = $loan->empid;
+            $eFundData->local_dir_line = $loan->loc;
+            $eFundData->terms_month = $loan->mos;
+            $eFundData->loan_amount = $loan->amount;
+            $eFundData->interest = $loan->interest;
+            $eFundData->deductions = $loan->deductions;
+            $eFundData->start_of_deductions = $loan->startofdeductions;
+            $eFundData->approved_by = $loan->approverempid;
+            $eFundData->approved_at = $loan->approvedat;
+            $eFundData->payroll_verified = 1;
+            // Type
+            if(strtoupper(trim($loan->type)) == 'NEW')
+                $eFundData->type = 0;
+            elseif(strtoupper(trim($loan->type)) == 'REAVAILMENT')
+                $eFundData->type = 1;
+            else{
+                array_push($loansWithError, $this->createError('Invalid Type', $loan));
+                continue;
+            }
+
+            // Status
+            if(strtoupper($loan->status) == 'PAID'){
+                $eFundData->status = $this->utils->getStatusIndex('paid');
+                $eFundData->approved = 1;
+            }
+            elseif(strtoupper($loan->status) == 'DENIED'){
+                $eFundData->status = $this->utils->getStatusIndex('denied');
+                $eFundData->approved = 0;
+            }
+            elseif(strtoupper($loan->status) == 'INC'){
+                $eFundData->status = $this->utils->getStatusIndex('inc');
+                $eFundData->approved = 1;
+            }
+            else{
+                array_push($loansWithError, $this->createError('Invalid Status', $loan));
+                continue;
+            }
+
+            $eFundData->save();
+
+            // Endorser
+            $endorser = DB::table('endorsers')->insertGetId(
+                [
+                    'refno' => $this->utils->generateReference(),
+                    'eFundData_id' => $eFundData->id,
+                    'EmpID' => $loan->endorserempid,
+                    'signed_at' => $loan->approvedat,
+                    'status' => 1
+                ]);
+
+            $eFundData->endorser_id = $endorser;
+
+            // Guarantor
+            
+            $guarantor = DB::table('guarantors')->insertGetId(
+                [
+                    'refno' => $this->utils->generateReference(),
+                    'eFundData_id' => $eFundData->id,
+                    'EmpID' => $loan->guarantorempid,
+                    'signed_at' => $eFundData->approvedat,
+                    'status' => 1,
+                    'guaranteed_amount' => $loan->guaranteedamount
+                ]);
+
+            $eFundData->guarantor_id = $guarantor;
+            $eFundData->save();
+
+            // Treasury
+            $treasury = new Treasury();
+            $treasury->eFundData_id = $eFundData->id;
+            $treasury->created_by = Auth::user()->id;
+            $treasury->cv_no = $loan->cvno;
+            $treasury->cv_date = $loan->cv_date;
+            $treasury->check_no = $loan->checkno;
+            $treasury->check_released = $loan->checkrelease;
+            $treasury->released = $loan->checkrelease;
+            $treasury->save();
+
+            $eFundData->created_at = date('Y-m-d H:i:s', strtotime($loan->appdate));
+            $eFundData->remarks = '[Uploaded: '. date('ymdHis') .']';
+            $eFundData->save();
+            $successLoans++;
+
+             // Ledger from Excel to Database
+            foreach($ledgers as $ledger){
+                if(empty($ledger->ctrlno))
+                    continue;
+
+                if($ledger->ctrlno != $eFundData->ctrl_no)
+                    continue;
+
+                $deduction = new Deduction();
+                $deduction->eFundData_id = $eFundData->id;
+                $deduction->date = $ledger->date;
+                $deduction->ar_no = $ledger->arno;
+                $deduction->amount = $ledger->amount;
+                $deduction->balance = $ledger->balance;
+                $deduction->updated_by = Auth::user()->id;
+                $deduction->updated_at = date('Y-m-d H:i:s');
+                $deduction->save();
+                $successLedger++;
+            } 
+        }
+
+        DB::commit();
 
         return view('admin.loans.upload')
-                ->withLoans($loans)
-                ->withLedgers($ledgers);
+                ->withLoans($loansWithError)
+                ->withLedgers([])
+                ->withSuccess('Upload Successful! But, skipped '. count($loansWithError) . ' record(s) with error. '. $successLoans . ' Loans uploaded. '. $successLedger .' Ledgers uploaded.');
     }
+
+    public function createError($error = '', $data)
+    {
+        return (object)['error' => $error, 'loan' => $data];
+    }
+
 }

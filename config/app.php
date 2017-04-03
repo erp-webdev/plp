@@ -157,7 +157,7 @@ return [
         eFund\Providers\RouteServiceProvider::class,
         Zizaco\Entrust\EntrustServiceProvider::class,
         Barryvdh\DomPDF\ServiceProvider::class,
-
+        'Maatwebsite\Excel\ExcelServiceProvider',
     ],
 
     /*
@@ -206,6 +206,7 @@ return [
         'Entrust'   => Zizaco\Entrust\EntrustFacade::class,
         'Input' => Illuminate\Support\Facades\Input::class,
         'PDF' => Barryvdh\DomPDF\Facade::class,
+        'Excel' => 'Maatwebsite\Excel\Facades\Excel',
     ],
 
 ];
