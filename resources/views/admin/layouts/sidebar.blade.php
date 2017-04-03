@@ -8,7 +8,7 @@ function setWrapperStatus(){
 				<li class="sidebar-brand" style="padding: 0px; margin: 0px; border-bottom: 0px" style="background-color: #fff;">
 					<a style="background-color: #fff;" id="menu-toggle" href="{{ route('account.edit', Auth::user()->id) }}" onclick="setWrapperStatus();">
 						<img src="{{ url('nav-brand.png') }}" height="62px;">
-						<i id="main_icon" class="fa fa-bars" style="color: #004296"></i>
+						<i id="main_icon" class="fa fa-bars" style="color: #003333"></i>
 					</a>
 				</li>
 			</ul>

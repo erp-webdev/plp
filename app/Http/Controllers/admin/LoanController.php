@@ -146,7 +146,7 @@ class LoanController extends Controller
             $deduction->ar_no = $request->ar_no[$i];
             $deduction->amount = $request->amount[$i];
             $balance = $balance - $request->amount[$i];
-            $deduction->balance = $balance;
+            $deduction->balance = round($balance, 2);
             $deduction->updated_by = Auth::user()->id;
             $deduction->save();
         }
