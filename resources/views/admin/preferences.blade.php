@@ -6,7 +6,7 @@
         }
     </style>
 	<div class="col-md-12">
-		<h1>Preferences</h1>
+		<h1>Maintenance</h1>
 		<p>Manage System configurations, settings, and preferences.</p>
 	</div>
 	<div class="col-md-4" style="border: 1px solid #ccc; padding: 10px; margin: 5px;">

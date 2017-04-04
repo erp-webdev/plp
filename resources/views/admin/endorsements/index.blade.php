@@ -82,7 +82,7 @@
 										<th>{!! $utils->formatApprovalStatus($item->endorser_status, $item->status, $utils->getStatusIndex('endorser')) !!}</th>
 										<td>{{ $item->signed_at }}</td>
 										<td>
-										@if($item->status > 1)
+										@if($item->status >= $utils->getStatusIndex('endorser'))
 										<a data-toggle="modal" data-target="#loan" ng-click="loadLoan({{ $item->id }})" class="btn btn-sm btn-info"><i class="fa fa-eye"></i></a>
 										@endif
 										</td>

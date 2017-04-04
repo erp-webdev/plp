@@ -12,6 +12,7 @@ use Excel;
 use Session;
 use eFund\Loan;
 use eFund\Terms;
+use eFund\Ledger;
 use eFund\Employee;
 use eFund\Treasury;
 use eFund\Endorser;
@@ -404,6 +405,50 @@ class LoanController extends Controller
     public function createError($error = '', $data)
     {
         return (object)['error' => $error, 'loan' => $data];
+    }
+
+    /**
+     *
+     * Get list of employees affected on the deduction date
+     * @param date $date Date of deductions
+     * @return array List of employees
+     *
+     */
+    public function getDeductions()
+    {
+        $empList = [];
+
+        if(isset($_GET['deductionDate'])){
+            $date = $_GET['deductionDate'];
+            $empList = Ledger::select('EmpID', 'FullName', 'ctrl_no', 'deductions')->deductionList($date)->get();
+        }
+
+        return view('admin.loans.deductions')->with('empList', $empList);
+    }
+
+    public function applyBatchDeductions(Request $request)
+    {
+        DB::beginTransaction();
+        $empList = Ledger::deductionList($request->deductionDate)->get();
+
+        foreach ($empList as $emp) {
+           
+            Deduction::where('id', $emp->id)->update([
+                'ar_no'         => $request->d_arno,
+                'amount'        => floatval(preg_replace('/[^\d.]/', '', $emp->deductions)),
+                'updated_by'    => Auth::user()->id
+            ]);
+
+            $total_amount = Ledger::where('eFundData_id', $emp->eFundData_id)->sum('amount');
+            // $total_amount += floatval(preg_replace('/[^\d.]/', '', $emp->deductions));
+            Deduction::where('id', $emp->id)->update([
+                'balance'       => round(floatval(preg_replace('/[^\d.]/', '', $emp->total)) - $total_amount, 2)
+            ]);
+        }
+       
+        DB::commit();
+
+        return redirect()->back()->withSuccess('Deductions Applied successfully!');
     }
 
 }

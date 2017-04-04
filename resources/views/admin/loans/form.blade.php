@@ -170,7 +170,11 @@
 		<td>&nbsp;</td>
 		<td>&nbsp;</td>
 		<td><strong>Check Release Date:</strong></td>
-		<td>{{ $utils->formatDate($loan->check_released) }}</td>
+		<td>
+		@if(!empty($loan->check_released))
+			{{ $utils->formatDate($loan->check_released) }}
+		@endif
+		</td>
 	</tr>
 		<tr style="height: 10px">
 		<td colspan="4"></td>

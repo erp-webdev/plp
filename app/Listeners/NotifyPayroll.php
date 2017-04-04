@@ -4,7 +4,7 @@ namespace eFund\Listeners;
 use eFund\Http\Controllers\admin\EmailController;
 
 use DB;
-use eFund\Events\EndorsementApproved;
+use eFund\Events\GuarantorApproved;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
@@ -23,10 +23,10 @@ class NotifyPayroll  extends EmailController
     /**
      * Handle the event.
      *
-     * @param  EndorsementApproved  $event
+     * @param  GuarantorApproved  $event
      * @return void
      */
-    public function handle(EndorsementApproved $event)
+    public function handle(GuarantorApproved $event)
     {
 
         $employees = DB::table('viewUserPermissions')->where('permission', 'payroll')->get();

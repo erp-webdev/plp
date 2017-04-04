@@ -4,7 +4,7 @@ namespace eFund\Listeners;
 
 use eFund\Http\Controllers\admin\EmailController;
 
-use eFund\Events\LoanCreated;
+use eFund\Events\EndorsementApproved;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
@@ -23,10 +23,10 @@ class NotifyGuarantor extends EmailController
     /**
      * Handle the event.
      *
-     * @param  LoanCreated  $event
+     * @param  EndorsementApproved  $event
      * @return void
      */
-    public function handle(LoanCreated $event)
+    public function handle(EndorsementApproved $event)
     {
         $EmpID = $event->loan->guarantor_EmpID;
         $body = 'emails.guarantor';

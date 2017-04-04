@@ -14,13 +14,13 @@ class Guarantor extends Model
 
     public function scopeGuarantors($query)
     {
-    	return $query->whereRaw('eFundData_id in (select id from eFundData where status > 0)')
+    	return $query->whereRaw('eFundData_id in (select id from eFundData where status > 1)')
     			->where('EmpID', Auth::user()->employee_id);
     }
 
     public function scopeForApproval($query)
     {
-    	return $query->whereRaw('eFundData_id in (select id from eFundData where status > 0)')
+    	return $query->whereRaw('eFundData_id in (select id from eFundData where status > 1)')
     			->whereNull('signed_at')->whereNull('status');
     }
 

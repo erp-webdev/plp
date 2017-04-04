@@ -10,8 +10,8 @@ use Log;
 class Utils
 {
 	public $stats = [	"Saved"                           , // [0]
-						"For Co-Borrower's Approval"      , // [1]
-                        "For Endorser's Approval"         , // [2]
+                        "For Endorser's Approval"         , // [1]
+						"For Co-Borrower's Approval"      , // [2]
                         "For Payroll's Verification"      , // [3]
     					"For Officer's Approval"          , // [4]
                         "Treasury"                        , // [5]
@@ -97,9 +97,9 @@ class Utils
         switch ($process) {
             case 'saved':
                 return 0;
-            case 'guarantor':
-                return 1;
             case 'endorser':
+                return 1;
+            case 'guarantor':
                 return 2;
             case 'payroll':
                 return 3;
@@ -141,11 +141,8 @@ class Utils
     		return 0;
 
     	}else if($status == 0){
-
-    		if($withSurety > 0)
-    			return 1;
-    		else
-    			return 2;
+    		
+            return 1;
 
     	}else if($status == 1){
 

@@ -172,7 +172,7 @@ class ApplicationController extends Controller
 
                 // Create Endorser
                 $endorser = Endorser::firstOrNew(['eFundData_id' => $loan->id]);
-                $endorser->refno = $this->utils->generateReference();
+                // $endorser->refno = $this->utils->generateReference();
                 $endorser->eFundData_id = $loan->id;
                 $endorser->EmpID = $request->head;
                 $endorser->save();
@@ -184,7 +184,7 @@ class ApplicationController extends Controller
                 $guarantor = Guarantor::firstOrNew(['eFundData_id' => $loan->id]);
 
                 if($this->validateAboveMinAmount($request->loan_amount)){
-                    $guarantor->refno = $this->utils->generateReference();
+                    // $guarantor->refno = $this->utils->generateReference();
                     $guarantor->eFundData_id = $loan->id;
                     $guarantor->EmpID = $request->surety;
                     $guarantor->save();
@@ -205,7 +205,7 @@ class ApplicationController extends Controller
                     // Save and Submit
                     $loan = Loan::find($request->id);
                     $loan->ctrl_no = $this->utils->generateCtrlNo();
-                    $loan->status = $this->utils->setStatus($loan->status, $loan->guarantor_id);
+                    $loan->status = $this->utils->setStatus($loan->status, $loan->endorser_id);
                     $loan->created_at = date('Y-m-d H:i:s');
                     $loan->save();
 

@@ -45,7 +45,7 @@ function setWrapperStatus(){
   					Endorsements <i class="fa fa-thumbs-up pull-right"></i>
 				</a>
 				@endif
-				@if(\eFund\Guarantor::where('EmpID', Auth::user()->employee_id)->count() > 0)
+				@if(\eFund\Guarantor::guarantors()->count() > 0)
 				<a class="btn btn-primary sidebar-menu <?php if(Session::get('menu')=='guarantors') echo 'active'?>" role="button" href="{{ route('guarantors.index') }}">
   					Guarantors <i class="fa fa-money pull-right"></i>
 				</a>
@@ -71,7 +71,7 @@ function setWrapperStatus(){
 				@endrole
 				@permission('Preferences')
 					<a class="btn btn-primary sidebar-submenu <?php if(Session::get('menu')=='preferences') echo 'active'?>" href="{{ route('preferences.index') }}">
-					    Preferences<i class="fa fa-sliders pull-right"></i>
+					    Maintenance<i class="fa fa-sliders pull-right"></i>
 					</a>
 				@endpermission
 					<a class="btn btn-primary sidebar-submenu <?php if(Session::get('menu')=='faq') echo 'active'?>" href="{{ url('admin/documentation') }}">

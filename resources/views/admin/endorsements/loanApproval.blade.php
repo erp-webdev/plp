@@ -56,7 +56,7 @@
               <td>{{ $loan->DeptDesc }}</td>
             </td>
           </tr>
-          @if($loan->guarantor_id != NULL)
+          @if($loan->guarantor_id != NULL && $loan->status > $utils->getStatusIndex('guarantor'))
           <tr>
             <td>
               <td class="l">Guarantor</td>

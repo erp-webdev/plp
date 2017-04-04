@@ -9,12 +9,45 @@
   </div><!-- /.modal -->
 
 	<div class="row" ng-app="ApprovalApp" ng-controller="ApprovalCtrl">
+		  <div class="modal fade" tabindex="-1" role="dialog" id="deductions">
+		    <div class="modal-dialog" role="document">
+		      	<div class="modal-contents" style="background-color: #fff">
+	                <div class="modal-header">
+	                    <div class="modal-title"><h4>Batch Deductions</h4></div>
+	                    <p>Batch deduction enables posting of deductions per AR # and date specified. All loan applications with the specified deduction date will be updated.</p>
+	                </div>
+	                <form action="{{ route('loan.deduction.batch') }}" method="POST" class="form-horizontal">
+	                    <div class="modal-body">
+	                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+	                        <div class="form-group col-xs-12 col-sm-6 col-md-6">
+	                                <span class="col-xs-12 col-sm-3 col-md-3">Date</span>
+	                                <div class="col-xs-12 col-sm-9 col-md-9">
+	                                      <input type="date" name="deductionDate" class="form-control" ng-change="loadBatchDeduction('{{ route('loan.deduction.list') }}')" ng-model="deductionDate" max="<?php date('Y-m-d'); ?>" required>
+	                                </div>
+	                        </div>
+	                        <div class="form-group col-xs-12 col-sm-6 col-md-6">
+	                                <span class="col-xs-12 col-sm-3 col-md-3">AR #</span>
+	                                <div class="col-xs-12 col-sm-9 col-md-9">
+	                                        <input type="text" name="d_arno" class="form-control" required>
+	                                </div>
+	                        </div>
+							<div id="deductionBatch"></div>
+							<div class="clearfix"></div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" name="save" class="btn btn-sm btn-success"><i class="fa fa-save"></i> Apply Deductions</button>
+                        </div>
+               		</form>
+      			</div><!-- /.modal-content -->
+		    </div><!-- /.modal-dialog -->
+		  </div><!-- /.modal -->
 		<div class="col-xs-12 col-sm-12 col-md-12">
 			<h1>Transactions</h1>
 			<a class="btn btn-sm btn-default" href="{{ route('admin.loan') }}"><i class="fa fa-refresh"></i> 
 			Refresh</a>
 			@permission('custodian')
-			<a class="btn btn-sm btn-primary" href="{{ route('upload.show') }}"><i class="fa fa-upload"></i> Import</a>
+			<a class="btn btn-sm btn-info" data-toggle="modal" data-target="#deductions" ng-click="loadBatchDeduction('{{ route('loan.deduction.list') }}')"> Batch Deductions</a>
+			<a class="btn btn-sm btn-primary pull-right" style="margin-right: 10px" href="{{ route('upload.show') }}"><i class="fa fa-upload"></i> Import</a>
 			@endpermission
 			<hr>
 			@if ($message = Session::get('success'))

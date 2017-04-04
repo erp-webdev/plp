@@ -66,5 +66,8 @@ class Ledger extends Model
     	return $this->utils->formatNumber($value);
     }
 
-   
+   public function scopeDeductionList($query, $date)
+   {
+       return $query->where('date', date('Y-m-d', strtotime($date)));
+   }
 }

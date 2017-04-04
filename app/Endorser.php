@@ -26,7 +26,7 @@ class Endorser extends Model
      */
     public function scopeEndorsements($query)
     {
-    	return $query->whereRaw('eFundData_id in (select id from eFundData where status > '. $this->utils->getStatusIndex('guarantor') .')')
+    	return $query->whereRaw('eFundData_id in (select id from eFundData where status > '. $this->utils->getStatusIndex('saved') .')')
                 // ->Where(function($query){
                 //     $query->whereRaw('eFundData_id in (SELECT eFundData_id FROM guarantors WHERE status > 0)')
                 //             ->orWhereRaw('(select count(*) from guarantors where guarantors.eFundData_id = viewEndorser.eFundData_id) > 0'); 

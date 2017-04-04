@@ -75,6 +75,7 @@ class GuarantorController extends Controller
             if($guarantor->signed_at != '--')
                 return redirect()->back()->withSuccess(trans('loan.application.approved2'));
 
+            $guarantor->refno = $this->utils->generateReference();
             $guarantor->signed_at = date('Y-m-d H:i:s');
             $guarantor->guarantor_status = 1;
             $guarantor->guaranteed_amount = $request->guaranteed_amount;
@@ -98,6 +99,7 @@ class GuarantorController extends Controller
                 if($guarantor->signed_at != '--')
                     return redirect()->back()->withSuccess(trans('loan.application.denied2'));
 
+                $guarantor->refno = $this->utils->generateReference();
                 $guarantor->guarantor_status = 0;
                 $guarantor->signed_at = date('Y-m-d H:i:s');
                 $guarantor->save();

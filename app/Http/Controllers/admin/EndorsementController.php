@@ -71,6 +71,7 @@ class EndorsementController extends Controller
                 if($endorsement->signed_at != '--')
                     return redirect()->back()->withSuccess(trans('loan.application.approved2'));
 
+                $endorsement->refno = $this->utils->generateReference();
                 $endorsement->signed_at = date('Y-m-d H:i:s');
                 $endorsement->endorser_status = 1;
                 $endorsement->save();
@@ -91,6 +92,7 @@ class EndorsementController extends Controller
                 if($endorsement->signed_at != '--')
                     return redirect()->back()->withSuccess(trans('loan.application.denied2'));
 
+                $endorsement->refno = $this->utils->generateReference();
                 $endorsement->endorser_status = 0;
                 $endorsement->signed_at = date('Y-m-d H:i:s');
                 $endorsement->save();
