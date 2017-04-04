@@ -19,12 +19,12 @@ function setWrapperStatus(){
 				</a>
 				@permission(['application_list', 'application_view', 'application_create', 'application_edit', 'application_delete'])
 				<a class="btn btn-primary sidebar-menu <?php if(Session::get('menu')=='myloans') echo 'active'?>" role="button" href="{{ route('applications.index') }}">
-  					My Loans <img src="{{ url('efund_sm.png') }}" width="20px" class="pull-right">
+  					My eFunds <img src="{{ url('efund_sm.png') }}" width="20px" class="pull-right">
 				</a>
 				@endpermission
 				@permission(['loan_list', 'loan_view', 'loan_edit'])
 				<a class="btn btn-primary sidebar-menu <?php if(Session::get('menu')=='loans') echo 'active'?>" role="button" href="{{ route('admin.loan') }}">
-  					Loans <i class="fa fa-list pull-right"></i>
+  					Transactions <i class="fa fa-list pull-right"></i>
 				</a>
 				<a class="btn btn-primary sidebar-menu <?php if(Session::get('menu')=='ledger') echo 'active'?>" role="button" href="{{ route('ledger.index') }}">
   					Ledger <i class="fa fa-calculator pull-right"></i>
@@ -75,7 +75,7 @@ function setWrapperStatus(){
 					</a>
 				@endpermission
 					<a class="btn btn-primary sidebar-submenu <?php if(Session::get('menu')=='faq') echo 'active'?>" href="{{ url('admin/documentation') }}">
-					    FAQ<i class="fa fa-question pull-right"></i>
+					    Documentation<i class="fa fa-question pull-right"></i>
 					</a>
 					<a class="btn btn-primary sidebar-submenu" href="{{ url('/') }}/logout">
 					    Logout<i class="fa fa-sign-out pull-right"></i>

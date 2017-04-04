@@ -268,7 +268,7 @@ class ApplicationController extends Controller
         // Maximum Loan amount
         $allow_over_max = Preference::name('allow_over_max');
         if($allow_over_max->value != 1)
-            if(!$this->validateMaxAmount($request->loan_amount))
+            if($this->validateMaxAmount($request->loan_amount))
                 array_push($errors, trans('loan.validation.maximum'));
 
         // Endorser
@@ -280,8 +280,6 @@ class ApplicationController extends Controller
             if(!$this->validateGuarantor($request->surety))
                 array_push($errors, trans('loan.validation.guarantor'));
 
-        // TODO: Validate Allowed loan amount based on the emp's ave. salary for 2mos 
-        // (ave salary for 2mos is higher than the amount for deduction every payroll period)
         return $errors;
     }
 

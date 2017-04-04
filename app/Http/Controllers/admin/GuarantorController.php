@@ -10,7 +10,9 @@ use Auth;
 use Event;
 use Session;
 use eFund\Loan;
+use eFund\Terms;
 use eFund\Endorser;
+use eFund\Employee;
 use eFund\Guarantor;
 use eFund\Http\Requests;
 use eFund\Utilities\Utils;
@@ -44,6 +46,9 @@ class GuarantorController extends Controller
     {
         try {
             $guarantor = Guarantor::findOrFail($id);
+            $loan = Loan::findOrFail($guarantor->eFundData_id);
+            $employee = Employee::where('EmpID', $loan->EmpID)->first();
+            $terms = Terms::getRankLimits($employee->RankDesc);
 
             if($guarantor->EmpID != Auth::user()->employee_id)
                 abort(403);
@@ -51,6 +56,7 @@ class GuarantorController extends Controller
 
             return view('admin.guarantors.approval')
                 ->withLoan($guarantor)
+                ->withTerms($terms)
                 ->withUtils($this->utils);
         } catch (Exception $e) {
             abort(500);

@@ -10,7 +10,7 @@
 
 	<div class="row" ng-app="ApprovalApp" ng-controller="ApprovalCtrl">
 		<div class="col-xs-12 col-sm-12 col-md-12">
-			<h1>Loans</h1>
+			<h1>Transactions</h1>
 			<a class="btn btn-sm btn-default" href="{{ route('admin.loan') }}"><i class="fa fa-refresh"></i> 
 			Refresh</a>
 			@permission('custodian')
