@@ -43,9 +43,9 @@
 		<tr>
 			<td>
 				@if($loan->type == 0)
-					<u>__x__ </u><i><strong> NEW</strong></i></u>
+					<u>__✓__ </u><i><strong> NEW</strong></i></u>
 				@else
-					<u>__x__ </u><i><strong> REAVAILMENT</strong></i>
+					<u>__✓__ </u><i><strong> REAVAILMENT</strong></i>
 				@endif
 			</td>
 			<td>&nbsp;</td>
@@ -197,7 +197,7 @@
 		<td style="width: 100px; text-align: right"><strong>APPROVED</strong></td>
 		<td style="width: 10px; text-align: center; border: 1px solid black">
 			@if($loan->approved == 1)
-			X
+			✓
 			@endif
 		</td>
 		<td style="width: 100px; border-bottom: 2px solid black">
@@ -210,7 +210,7 @@
 		<td style="width: 100px; text-align: right"><strong>DISAPPROVED</strong></td>
 		<td style="width: 10px; text-align: center; border: 1px solid black">
 			@if($loan->approved == 0)
-			X
+			✓
 			@endif
 		</td>
 		<td style="width: 50px; border-bottom: 2px solid black">

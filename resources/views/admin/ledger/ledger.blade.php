@@ -2,7 +2,7 @@
 	body{
 		font-family: "Arial";
 	}
-	table.table-hover{
+	.table-hover{
 		font-size: 12px;
 		font-family: "Arial";
 		border-collapse: collapse;
@@ -12,7 +12,7 @@
 	tbody{
 		font-size: 12px;
 	}
-	thead{
+	.table-hover thead{
 		border-top: 2px solid black;
 		border-bottom: 2px solid black;
 	}
@@ -49,8 +49,6 @@
 	</tr>
 </table>
 <div class="table-responsive">
-	
-
 			<table class="table-hover">
 				<thead>
 					<th >Date of <br>Availment</th>
@@ -89,10 +87,8 @@
 						@if($showBalance)
 							{{ $ledger->balance }}
 						@else
-							@if($ledger->status == 8)
-							{{ $utils->formatLedger('Paid', $ctr, $ledger->eFundData_id) }}
-							@else
-							{{ $utils->formatLedger('Inc', $ctr, $ledger->eFundData_id) }}
+							@if($ctr == 0)
+								{{ $utils->formatNumber($balance) }}
 							@endif
 						@endif
 						</td>

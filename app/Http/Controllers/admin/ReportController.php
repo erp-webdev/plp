@@ -192,13 +192,13 @@ class ReportController extends Controller
 
                 if(!empty($status)){
                     if($status == 1) // Paid
-                        $query->where('status', 7);
+                        $query->where('status', $this->utils->getStatusIndex('paid'));
                     elseif($status == 2)
-                        $query->where('status', 6);
+                        $query->where('status', $this->utils->getStatusIndex('inc'));
                     elseif($status == 3)
-                        $query->where('status', '<', 6);
+                        $query->where('status', '<', $this->utils->getStatusIndex('inc'));
                     elseif($status == 4)
-                        $query->where('status', 8);
+                        $query->where('status', $this->utils->getStatusIndex('denied'));
                 }
                 
             })->get();

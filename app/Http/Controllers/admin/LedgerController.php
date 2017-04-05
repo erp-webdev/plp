@@ -6,8 +6,9 @@ use Illuminate\Http\Request;
 
 use Log;
 use Session;
-use eFund\Employee;
+use eFund\Loan;
 use eFund\Ledger;
+use eFund\Employee;
 use eFund\Http\Requests;
 use eFund\Utilities\Utils;
 use eFund\Http\Controllers\Controller;
@@ -56,11 +57,13 @@ class LedgerController extends Controller
     		->paginate(50);
 
     	$employee = Employee::where('EmpID', $EmpID)->first();
+        $balance = Loan::where('EmpID', $EmpID)->sum('balance');
 
     	return view('admin.ledger.show')
     			->withLedgers($ledger)
     			->withEmployee($employee)
     			->withUtils($this->utils)
+                ->withBalance($balance)
                 ->with('showBalance', $showBalance);
     }
 

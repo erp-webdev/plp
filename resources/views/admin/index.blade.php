@@ -6,7 +6,6 @@
 
 }
 </style>
-<div class="container">
 	<div class="row">
 		<div class="col-xs-12 col-sm-12 col-md-12">
 			<?php
@@ -37,20 +36,13 @@
 		</div>
 	</div>
 	<div class="row">
-		<!-- Configuration Error and Warning -->
-		@if($error)
-		<div class="col-xs-12 col-sm-4 col-md-4">
-			<div class="alert alert-info">
-
-			</div>
-		</div>
-		@endif
+		@permission(['officer', 'custodian'])
+		
+		@endpermission
 	</div>
-	
 	<div class="row">
 
 	</div>
-</div>
 
 @endsection
 @section('scripts')

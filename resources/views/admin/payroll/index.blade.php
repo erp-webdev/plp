@@ -12,6 +12,7 @@
 		<div class="col-xs-12 col-sm-12 col-md-12">
 			<h1>Loans</h1>
 			<a href="{{ route('payroll.index') }}" class="btn btn-sm btn-default"><i class="fa fa-refresh"></i> Refresh</a>
+			
 			<hr>
 			@if ($message = Session::get('success'))
 	            <div class="col-xs-12 col-sm-12 col-md-12">
