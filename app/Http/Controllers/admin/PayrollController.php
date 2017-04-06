@@ -80,4 +80,16 @@ class PayrollController extends Controller
     	}
     }
 
+    public function getDeductions()
+    {
+        $empList = [];
+
+        if(isset($_GET['deductionDate'])){
+            $date = $_GET['deductionDate'];
+            $empList = Ledger::select('EmpID', 'FullName', 'ctrl_no', 'deductions')->deductionList($date)->get();
+        }
+
+        return view('admin.loans.deductions')->with('empList', $empList);
+    }
+
 }

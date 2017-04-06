@@ -498,5 +498,17 @@ class Utils
             return '';
     }
 
+    /**
+     *
+     * Help Identifier
+     *
+     */
+    public function identifyHelp($helpCode)
+    {
+        $ex = explode('-', $helpCode);
+
+        
+    }
+
 }
 

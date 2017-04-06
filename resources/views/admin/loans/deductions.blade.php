@@ -1,5 +1,4 @@
 
-    Employees
     <div id="deductionList">
            <table class="table table-condensed table-striped table-hover">
                    <thead>

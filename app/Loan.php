@@ -84,7 +84,9 @@ class Loan extends Model
         return $query->where('ctrl_no', 'LIKE', '%' . $keyword . '%')
                     ->orWhere('FullName', 'LIKE', '%' . $keyword . '%')
                     ->orWhere('status',  $status)
-                    ->orWhere('created_at', 'LIKE', '%' . $keyword . '%');
+                    ->orWhere('created_at', 'LIKE', '%' . $keyword . '%')
+                    ->orWhere('start_of_deductions', 'LIKE', '%' . $keyword . '%')
+                    ->orWhere('EmpID', 'LIKE', '%' . $keyword . '%');
     }
 
 }

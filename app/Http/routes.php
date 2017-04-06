@@ -29,7 +29,7 @@ Route::group(['prefix' => '/', 'middleware' => ['auth']], function(){
 	Route::post('loans/deductions', ['as' => 'loan.deduction', 'uses' => 'admin\LoanController@saveDeduction', 'middleware' => ['permission:custodian']]);
 	Route::get('loans/complete/{id}', ['as' => 'loan.complete', 'uses' => 'admin\LoanController@complete', 'middleware' => ['permission:custodian']]);
 	Route::get('loans/print/{id}', ['as' => 'loan.print', 'uses' => 'admin\LoanController@printForm', 'middleware' => ['permission:officer|custodian']]);
-	Route::get('loans/deductions/list', ['as' => 'loan.deduction.list', 'uses' => 'admin\LoanController@getDeductions', 'middleware' => ['permission:custodian']]);
+	Route::get('loans/deductions/list', ['as' => 'loan.deduction.list', 'uses' => 'admin\LoanController@getDeductions', 'middleware' => ['permission:custodian|payroll']]);
 	Route::post('loans/deductions/batch', ['as' => 'loan.deduction.batch', 'uses' => 'admin\LoanController@applyBatchDeductions', 'middleware' => ['permission:custodian']]);
 	
 	// Upload

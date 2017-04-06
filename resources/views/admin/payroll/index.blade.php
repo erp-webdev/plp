@@ -8,10 +8,34 @@
     </div><!-- /.modal-dialog -->
   </div><!-- /.modal -->
 
+   
 	<div class="row" ng-app="ApprovalApp" ng-controller="ApprovalCtrl">
+		<div class="modal fade" tabindex="-1" role="dialog" id="deductions">
+		    <div class="modal-dialog" role="document">
+		      	<div class="modal-contents" style="background-color: #fff">
+	                <div class="modal-header">
+	                    <div class="modal-title"><h4>Deduction List</h4></div>
+	                </div>
+                    <div class="modal-body">
+                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                        <div class="form-group col-xs-12 col-sm-12 col-md-12">
+                                <span class="col-xs-12 col-sm-3 col-md-3">Deduction Date</span>
+                                <div class="col-xs-12 col-sm-5 col-md-5">
+                                      <input type="date" name="deductionDate" class="form-control" ng-change="loadBatchDeduction('{{ route('loan.deduction.list') }}')" ng-model="deductionDate" required>
+                                </div>
+                        </div>
+                        <hr>
+						<div id="deductionBatch"></div>
+						<div class="clearfix"></div>
+                    </div>
+      			</div><!-- /.modal-content -->
+		    </div><!-- /.modal-dialog -->
+		</div><!-- /.modal -->
+
 		<div class="col-xs-12 col-sm-12 col-md-12">
 			<h1>Loans</h1>
 			<a href="{{ route('payroll.index') }}" class="btn btn-sm btn-default"><i class="fa fa-refresh"></i> Refresh</a>
+			<a class="btn btn-sm btn-default" data-toggle="modal" data-target="#deductions">Deductions List</a>
 			
 			<hr>
 			@if ($message = Session::get('success'))
@@ -51,7 +75,7 @@
 						</div>
 					</div>
 				 	<div class="input-group col-xs-12 col-sm-3 col-md-3 pull-right">
-						<input type="search" id="search" class="form-control input-sm"  placeholder="Search" value="<?php if(isset($_GET['search'])) echo $_GET['search']; ?>">
+						<input type="search" id="search" class="form-control input-sm"  placeholder="Control #, FullName, EmpID, Deduction date" value="<?php if(isset($_GET['search'])) echo $_GET['search']; ?>">
 						<a class="input-group-addon btn btn-success btn-sm" onclick="find()"><i class="fa fa-search"></i></a>
 				 	</div>
 			    </div>
@@ -102,6 +126,10 @@
 		var $search = $('#search').val();
 		var $searchUrl = "{{ route('payroll.index') }}" + "?show=" + $show + "&search=" + $search;
 		window.location.href = $searchUrl;
+	}
+
+	function function_name(argument) {
+		// body...
 	}
 </script> 
 @endsection
