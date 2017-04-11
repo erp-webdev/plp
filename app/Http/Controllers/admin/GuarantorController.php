@@ -16,6 +16,7 @@ use eFund\Employee;
 use eFund\Guarantor;
 use eFund\Http\Requests;
 use eFund\Utilities\Utils;
+use eFund\Events\LoanDenied;
 use eFund\Events\GuarantorApproved;
 use eFund\Http\Controllers\Controller;
 
@@ -87,7 +88,7 @@ class GuarantorController extends Controller
 
             Event::fire(new GuarantorApproved($loan));
             DB::commit();
-            return redirect()->back()
+            return redirect()->route('guarantors.index')
                     ->withSuccess(trans('loan.application.approved'));
 
         }else if(isset($_POST['deny'])){
@@ -97,7 +98,7 @@ class GuarantorController extends Controller
                     abort(403);
 
                 if($guarantor->signed_at != '--')
-                    return redirect()->back()->withSuccess(trans('loan.application.denied2'));
+                    return redirect()->route('guarantors.index')->withSuccess(trans('loan.application.denied2'));
 
                 $guarantor->refno = $this->utils->generateReference();
                 $guarantor->guarantor_status = 0;
@@ -109,10 +110,11 @@ class GuarantorController extends Controller
                 $loan->status = $this->utils->setStatus($this->utils->getStatusIndex('denied'));
                 $loan->save();
 
+                Event::fire(new LoanDenied($loan));
                 DB::commit();
                 DB::table('endorsers')->where('id', $loan->endorser_id)->delete();
 
-            return redirect()->back()
+            return redirect()->route('guarantors.index')
                     ->withSuccess(trans('loan.application.denied'));
         }else{
             // unknown function

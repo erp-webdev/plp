@@ -14,48 +14,48 @@ function setWrapperStatus(){
 			</ul>
 			<ul class="sidebar-nav" id="sidebar">
 				<!-- Dashboard -->
-				<a class="btn btn-primary sidebar-menu <?php if(Session::get('menu')=='dashboard') echo 'active'?>" role="button" href="{{ route('admin.dashboard') }}">
+				<a id="dashboardMenu" class="btn btn-primary sidebar-menu <?php if(Session::get('menu')=='dashboard') echo 'active'?>" role="button" href="{{ route('admin.dashboard') }}">
   					DashBoard <i class="fa fa-tachometer pull-right"></i>
 				</a>
 				@permission(['application_list', 'application_view', 'application_create', 'application_edit', 'application_delete'])
-				<a class="btn btn-primary sidebar-menu <?php if(Session::get('menu')=='myloans') echo 'active'?>" role="button" href="{{ route('applications.index') }}">
+				<a id="myEfunds" class="btn btn-primary sidebar-menu <?php if(Session::get('menu')=='myloans') echo 'active'?>" role="button" href="{{ route('applications.index') }}">
   					My eFunds <img src="{{ url('efund_sm.png') }}" width="20px" class="pull-right">
 				</a>
 				@endpermission
 				@permission(['loan_list', 'loan_view', 'loan_edit'])
-				<a class="btn btn-primary sidebar-menu <?php if(Session::get('menu')=='loans') echo 'active'?>" role="button" href="{{ route('admin.loan') }}">
+				<a id="loansMenu" class="btn btn-primary sidebar-menu <?php if(Session::get('menu')=='loans') echo 'active'?>" role="button" href="{{ route('admin.loan') }}">
   					Transactions <i class="fa fa-list pull-right"></i>
 				</a>
-				<a class="btn btn-primary sidebar-menu <?php if(Session::get('menu')=='ledger') echo 'active'?>" role="button" href="{{ route('ledger.index') }}">
+				<a  id="ledgerMenu" class="btn btn-primary sidebar-menu <?php if(Session::get('menu')=='ledger') echo 'active'?>" role="button" href="{{ route('ledger.index') }}">
   					Ledger <i class="fa fa-calculator pull-right"></i>
 				</a>
 				@endpermission
 				@permission(['payroll'])
-				<a class="btn btn-primary sidebar-menu <?php if(Session::get('menu')=='payroll') echo 'active'?>" role="button" href="{{ route('payroll.index') }}">
+				<a id="payrollMenu" class="btn btn-primary sidebar-menu <?php if(Session::get('menu')=='payroll') echo 'active'?>" role="button" href="{{ route('payroll.index') }}">
   					Payroll <i class="fa fa-check-square-o pull-right"></i>
 				</a>
 				@endpermission
 				@permission(['treasurer'])
-				<a class="btn btn-primary sidebar-menu <?php if(Session::get('menu')=='treasury') echo 'active'?>" role="button" href="{{ route('treasury.index') }}">
+				<a id="treasurerMenu" class="btn btn-primary sidebar-menu <?php if(Session::get('menu')=='treasury') echo 'active'?>" role="button" href="{{ route('treasury.index') }}">
   					Treasury <i class="fa fa-list pull-right"></i>
 				</a>
 				@endpermission
 				@if(\eFund\Endorser::endorsements()->count() > 0)
-				<a class="btn btn-primary sidebar-menu <?php if(Session::get('menu')=='endorsements') echo 'active'?>" role="button" href="{{ route('endorsements.index') }}">
+				<a id="endorsementsMenu" class="btn btn-primary sidebar-menu <?php if(Session::get('menu')=='endorsements') echo 'active'?>" role="button" href="{{ route('endorsements.index') }}">
   					Endorsements <i class="fa fa-thumbs-up pull-right"></i>
 				</a>
 				@endif
 				@if(\eFund\Guarantor::guarantors()->count() > 0)
-				<a class="btn btn-primary sidebar-menu <?php if(Session::get('menu')=='guarantors') echo 'active'?>" role="button" href="{{ route('guarantors.index') }}">
+				<a id="guarantorMenu" class="btn btn-primary sidebar-menu <?php if(Session::get('menu')=='guarantors') echo 'active'?>" role="button" href="{{ route('guarantors.index') }}">
   					Guarantors <i class="fa fa-money pull-right"></i>
 				</a>
 				@endif
 				@permission(['custodian'])
-				<a class="btn btn-primary sidebar-menu <?php if(Session::get('menu')=='reports') echo 'active'?>" role="button" href="{{ route('report.index') }}">
+				<a id="reportsMenu" class="btn btn-primary sidebar-menu <?php if(Session::get('menu')=='reports') echo 'active'?>" role="button" href="{{ route('report.index') }}">
   					Reports <i class="fa fa-book pull-right"></i>
 				</a>
 				@endif
-				<a class="btn btn-primary sidebar-menu <?php if(in_array(Session::get('menu'), ['users', 'myaccount', 'preferences','faq'])) echo 'active'?>" data-toggle="collapse" aria-expanded="false" aria-controls="settings" href="#settings">
+				<a id="settingsMenu" class="btn btn-primary sidebar-menu <?php if(in_array(Session::get('menu'), ['users', 'myaccount', 'preferences','faq'])) echo 'active'?>" data-toggle="collapse" aria-expanded="false" aria-controls="settings" href="#settings">
   					Settings <i class="fa fa-cogs pull-right"></i>
 				</a>
 				<div class="collapse <?php if(in_array(Session::get('menu'), ['users', 'myaccount', 'preferences','faq'])) echo 'in'?>" id="settings">
@@ -65,19 +65,22 @@ function setWrapperStatus(){
 					    My Account<i class="fa fa-user pull-right"></i>
 					</a>  -->
 				@role('Admin')
-					<a class="btn btn-primary sidebar-submenu <?php if(Session::get('menu')=='users') echo 'active'?>" href="{{ route('users.index') }}">
+					<a id="usersMenu" class="btn btn-primary sidebar-submenu <?php if(Session::get('menu')=='users') echo 'active'?>" href="{{ route('users.index') }}">
 					    Users<i class="fa fa-group pull-right"></i>
 					</a>
 				@endrole
 				@permission('Preferences')
-					<a class="btn btn-primary sidebar-submenu <?php if(Session::get('menu')=='preferences') echo 'active'?>" href="{{ route('preferences.index') }}">
+					<a id="prefMenu" class="btn btn-primary sidebar-submenu <?php if(Session::get('menu')=='preferences') echo 'active'?>" href="{{ route('preferences.index') }}">
 					    Maintenance<i class="fa fa-sliders pull-right"></i>
 					</a>
 				@endpermission
-					<a class="btn btn-primary sidebar-submenu <?php if(Session::get('menu')=='faq') echo 'active'?>" href="{{ url('admin/documentation') }}">
+					<a id="docMenu" class="btn btn-primary sidebar-submenu <?php if(Session::get('menu')=='faq') echo 'active'?>" href="{{ url('admin/documentation') }}">
 					    Documentation<i class="fa fa-question pull-right"></i>
 					</a>
-					<a class="btn btn-primary sidebar-submenu" href="{{ url('/') }}/logout">
+					<a id="tutMenu" class="btn btn-primary sidebar-submenu" onclick="restartTour()">
+					    Take a tour!<i class="fa fa-map-marker pull-right"></i>
+					</a>
+					<a id="logoutMenu" class="btn btn-primary sidebar-submenu" href="{{ url('/') }}/logout">
 					    Logout<i class="fa fa-sign-out pull-right"></i>
 					</a>
 				</div>

@@ -2,6 +2,7 @@
 
 namespace eFund\Listeners;
 use eFund\Http\Controllers\admin\EmailController;
+use eFund\Http\Controllers\admin\NotificationController;
 
 use DB;
 use Mail;
@@ -52,6 +53,10 @@ class SendSignedCheckNotif extends EmailController
         $args = ['loan' => $loan, 'deductions' => $deductions, 'utils' => $utils];
 
         $this->send($loan->EmpID, config('preferences.notif_subjects.check_signed', 'Loan Application Notification'), 'emails.checkSigned_employee', $args, $cc = '');
+
+        // Notification
+        $notif = new NotificationController();
+        $notif->notifyOnCheckReady($loan);
     }
 
     public function notifyGuarantor($loan)

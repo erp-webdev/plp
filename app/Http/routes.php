@@ -21,6 +21,8 @@ Route::group(['prefix' => '/', 'middleware' => ['auth']], function(){
 
 	// Dashboard
 	Route::get('/', ['as' => 'admin.dashboard', 'uses' => 'admin\DashboardController@index']);
+	Route::get('/notification/seen/{id}', ['as' => 'notif.seen', 'uses' => 'admin\NotificationController@seen']);
+	Route::get('/notifications/{ctr}', ['as' => 'notifs', 'uses' => 'admin\DashboardController@loadNotification']);
 
 	// Loans
 	Route::get('loans', ['as' => 'admin.loan', 'uses' => 'admin\LoanController@index', 'middleware' => ['permission:loan_list']]);

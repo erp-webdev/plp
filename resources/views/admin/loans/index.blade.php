@@ -43,7 +43,7 @@
 		  </div><!-- /.modal -->
 		<div class="col-xs-12 col-sm-12 col-md-12">
 			<h1>Transactions</h1>
-			<a class="btn btn-sm btn-default" href="{{ route('admin.loan') }}"><i class="fa fa-refresh"></i> 
+			<a id="refreshBtn" class="btn btn-sm btn-default" href="{{ route('admin.loan') }}"><i class="fa fa-refresh"></i> 
 			Refresh</a>
 			@permission('custodian')
 			<a class="btn btn-sm btn-info" data-toggle="modal" data-target="#deductions" ng-click="loadBatchDeduction('{{ route('loan.deduction.list') }}')"> Batch Deductions</a>
@@ -139,13 +139,95 @@
 <script type="text/javascript" src="{{ url('/assets/js/ApprovalCtrl.js') }}"></script>
 <script type="text/javascript">
 	var $showUrl = "{{ route('loan.show', 0) }}";
-
 	function find() {
 		var $show = $('#show').val();
 		var $search = $('#search').val();
 		var $searchUrl = "{{ route('admin.loan') }}" + "?show=" + $show + "&search=" + $search;
 		window.location.href = $searchUrl;
 	}
-	
+	var $myEFundPage = true;
+
+	if(tour.ended()){
+		var loansTour = new Tour({
+			name: 'EFund_Tour_loan',
+		});
+
+		loansTour.addStep({
+		    element: "table",
+		    title: "Transactions Listing",
+		    content: "All EFund applications are listed and monitored here. It provides a summary of applications and their status.",
+		    backdrop: true,
+		    backdropContainer : '#app-layout',
+		    placement: 'top',
+		  });
+
+	  	loansTour.addStep({
+		    element: $('#search').closest('div.input-group'),
+		    title: "Search Bar",
+		    content: "You can search transactions here by providing Ctrl No, Employee ID, or Date of application.",
+		    backdrop: true,
+		    backdropContainer : '#app-layout',
+		    placement: 'left',
+		  });
+
+	  if($('a.btn-info:contains(" Batch Deductions")').length){
+	    loansTour.addStep({
+	      element: $('a.btn-info:contains(" Batch Deductions")'),
+	      title: "Batch Processing of Deductions",
+	      content: "You can process deductions of all employees with schedule of deductions on the set date. Click the button!",
+	      backdrop: true,
+	      backdropContainer : '#app-layout',
+	    });
+
+	    // loansTour.addStep({
+	    //   element: $('input[name="deductionDate"]').closest('.form-group'),
+	    //   title: "Deduction Date",
+	    //   content: "Chosee date of deductions. This will retrieve all emloyees with loan deductions on the set date.",
+	    //   backdrop: true,
+	    //   backdropContainer : '#app-layout',
+	    //   onShow: function(){
+	    //     $('.modal').attr('style', 'z-index:5000');
+	    //     $('.modal-backdrop').attr('style', 'z-index:1000');
+	    //   }
+	    // });
+
+	    // loansTour.addStep({
+	    //   element: $('input[name="d_arno"]').closest('.form-group'),
+	    //   title: "AR Number",
+	    //   content: "AR number is required to process the deductions.",
+	    //   backdrop: true,
+	    //   backdropContainer : '#app-layout',
+	    // });
+
+	    // loansTour.addStep({
+	    //   element: $('input[name="save"]'),
+	    //   title: "Applying the Deductions",
+	    //   content: "Clicking this button will apply the deductions with the AR # to all the listed employees. Applied deductions are automatically posted in the employee's ledger respectively.",
+	    //   backdrop: true,
+	    //   backdropContainer : '#app-layout',
+	    // });
+	  }
+
+	if($('i.fa-upload').closest('a').length){
+	  loansTour.addStep({
+	    element: $('i.fa-upload').closest('a'),
+	    title: "Importing Existing Data",
+	    content: "Import existing data to the EFund system. Importing data is critical to the system and must follow proper data formats. Imported data can not be undone.",
+	    backdrop: true,
+	    backdropContainer : '#app-layout',
+	    placement: 'left'
+	  });
+
+
+	}
+
+	loansTour.init();
+	loansTour.start();
+}
+
+
+
+
+
 </script> 
 @endsection

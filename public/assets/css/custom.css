@@ -126,7 +126,7 @@ td form{
     background: #003333; 
     position: fixed;
     height: 100%; 
-    z-index: 10000;
+    z-index: 1000;
     transition: all .4s ease 0s;
     -webkit-box-shadow: 2px 0px 5px 0px rgba(0,0,0,0.51);
     -moz-box-shadow: 2px 0px 5px 0px rgba(0,0,0,0.51);

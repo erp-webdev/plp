@@ -9,11 +9,7 @@ app.controller('ApprovalCtrl', function($scope, $http, $filter) {
 	        $('.modal-content').html(response.data);
 	    }, function myError(response) {
 	        $('.modal-content').html('Something went wrong! Please try again.');
-	        
 	    });
-
-
-
 	};
 		$scope.deductionDate = '';
 

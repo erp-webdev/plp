@@ -60,7 +60,7 @@ class PayrollController extends Controller
             $loan = Loan::findOrFail($request->id);
 
             $loan->payroll_verified = 1;
-            $loan->status = $this->utils->setStatus($loan->status);
+            $loan->status = $this->utils->getStatusIndex('officer');
             $loan->save();
 
             Event::fire(new PayrollVerified($loan));
@@ -71,7 +71,7 @@ class PayrollController extends Controller
     		$loan = Loan::findOrFail($request->id);
 
             $loan->payroll_verified = 0;
-            $loan->status = $this->utils->setStatus($loan->status);
+            $loan->status = $this->utils->getStatusIndex('officer');
             $loan->save();
             
             Event::fire(new PayrollVerified($loan));

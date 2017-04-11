@@ -48,3 +48,31 @@ function copyToClipboard(element) {
   document.body.removeChild(aux);
 
 }
+
+function restartTour() {
+    // General / Sidebar
+    var tour = new Tour({
+      name: 'Efund_Tour_Gen',
+    });
+    tour.restart(); 
+
+    // Application
+    tour = new Tour({
+      name: 'EFund_Tour_App1',
+    });
+    tour.restart(); 
+
+    // Loans
+    tour = new Tour({
+      name: 'EFund_Tour_loan',
+    });
+    tour.restart(); 
+
+    // Loans
+    tour = new Tour({
+      name: 'EFund_Tour_loan',
+    });
+    tour.restart(); 
+    
+    window.location.reload();
+}

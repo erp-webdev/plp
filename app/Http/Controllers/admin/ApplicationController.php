@@ -20,6 +20,7 @@ use eFund\Http\Requests;
 use eFund\Utilities\Utils;
 use eFund\Events\LoanCreated;
 use eFund\Http\Controllers\Controller;
+use eFund\Http\Controllers\admin\NotificationController;
 
 class ApplicationController extends Controller
 {
@@ -210,6 +211,10 @@ class ApplicationController extends Controller
                     $loan->save();
 
                     $msg = trans('loan.application.success');
+
+                    // Notification
+                    $notif = new NotificationController();
+                    $notif->notifyAppSubmission($loan);
 
                     Event::fire(new LoanCreated($loan));
                 }

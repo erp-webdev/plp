@@ -12,6 +12,7 @@ use eFund\Loan;
 use eFund\Endorser;
 use eFund\Http\Requests;
 use eFund\Utilities\Utils;
+use eFund\Events\LoanDenied;
 use eFund\Events\EndorsementApproved;
 use eFund\Http\Controllers\Controller;
 
@@ -81,8 +82,8 @@ class EndorsementController extends Controller
                 $loan->save();
 
                 Event::fire(new EndorsementApproved($loan));
-            DB::commit();
-            return redirect()->back()
+                DB::commit();
+            return redirect()->route('endorsements.index')
                     ->withSuccess(trans('loan.application.approved'));
         }else if(isset($_POST['deny'])){
                 $endorsement = Endorser::findOrFail($request->id);
@@ -101,8 +102,9 @@ class EndorsementController extends Controller
                 $loan->status = $this->utils->setStatus($this->utils->getStatusIndex('denied'));
                 $loan->save();
 
+                Event::fire(new LoanDenied($loan));
             DB::commit();
-            return redirect()->back()
+            return redirect()->route('endorsements.index')
                     ->withSuccess(trans('loan.application.denied'));
         }else{
             // Unknown function

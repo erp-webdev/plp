@@ -41,6 +41,7 @@ class TreasuryController extends Controller
 
     	$loans = Loan::notDenied()->where('status', '>', 4)
                     ->search($search)
+                    ->orderBy('created_at', 'desc')
                     ->paginate($show); 
 
     	return view('admin.treasury.index')

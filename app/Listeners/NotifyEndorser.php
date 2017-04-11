@@ -7,6 +7,7 @@ use eFund\Http\Controllers\admin\EmailController;
 use eFund\Events\LoanCreated;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use eFund\Http\Controllers\admin\NotificationController;
 
 class NotifyEndorser extends EmailController
 {
@@ -29,6 +30,12 @@ class NotifyEndorser extends EmailController
     public function handle(LoanCreated $event)
     {
         $args = ['loan' => $event->loan];
+        // Notification
+        $notif = new NotificationController();
+        $notif->notifyEndorser($event->loan);
+
         $this->send($event->loan->endorser_EmpID, config('preferences.notif_subjects.created', 'Loan Application Notification'), 'emails.endorser', $args, $cc = '');
+
+
     }
 }

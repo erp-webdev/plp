@@ -2,6 +2,7 @@
 
 namespace eFund\Listeners;
 use eFund\Http\Controllers\admin\EmailController;
+use eFund\Http\Controllers\admin\NotificationController;
 
 use DB;
 use eFund\Events\LoanApproved;
@@ -30,6 +31,10 @@ class NotifyTreasury extends EmailController
     {
         $employees = DB::table('viewUserPermissions')->where('permission', 'treasurer')->get();
 
+        // Notification
+        $notif = new NotificationController();
+        $notif->notifyEmployeeOnApproved($event->loan);
+        
         foreach ($employees as $employee) {
             if(empty($employee->EmailAdd))
                 continue;
@@ -37,7 +42,8 @@ class NotifyTreasury extends EmailController
             $args = ['loan' => $event->loan, 'employee' => $employee];
 
             $this->send($employee->employee_id, config('preferences.notif_subjects.approved', 'Loan Application Notification'), 'emails.treasury', $args, $cc = '');
-            
+
+            $notif->notifyTreasury($event->loan, $employee->employee_id);
         }
     }
 }

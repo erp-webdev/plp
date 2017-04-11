@@ -35,6 +35,9 @@ class EventServiceProvider extends ServiceProvider
         'eFund\Events\LoanPaid' => [
             'eFund\Listeners\NotifyPaidEmployee',
         ],
+        'eFund\Events\LoanDenied' => [
+            'eFund\Listeners\NotifyDeniedLoan',
+        ],
     ];
 
     /**

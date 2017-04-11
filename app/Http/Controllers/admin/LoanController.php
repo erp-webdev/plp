@@ -21,6 +21,7 @@ use eFund\Guarantor;
 use eFund\Http\Requests;
 use eFund\Utilities\Utils;
 use eFund\Events\LoanPaid;
+use eFund\Events\LoanDenied;
 use eFund\Events\LoanApproved;
 use eFund\Http\Controllers\Controller;
 
@@ -118,6 +119,7 @@ class LoanController extends Controller
             $loan->status = $this->utils->getStatusIndex('denied');
             $loan->save();
             
+            Event::fire(new LoanDenied($loan));
             DB::commit();
             return redirect()->route('admin.loan')->withSuccess(trans('loan.application.denied'));   
         }elseif(isset($request->calculate)){

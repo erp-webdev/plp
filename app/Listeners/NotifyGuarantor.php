@@ -3,6 +3,7 @@
 namespace eFund\Listeners;
 
 use eFund\Http\Controllers\admin\EmailController;
+use eFund\Http\Controllers\admin\NotificationController;
 
 use eFund\Events\EndorsementApproved;
 use Illuminate\Queue\InteractsWithQueue;
@@ -31,10 +32,14 @@ class NotifyGuarantor extends EmailController
         $EmpID = $event->loan->guarantor_EmpID;
         $body = 'emails.guarantor';
 
-        if($event->loan->guarantor_id == NULL){
-            $EmpID = $event->loan->endorser_EmpID;
-            $body = 'emails.endorser';
-        }
+        // if($event->loan->guarantor_id == NULL){
+        //     // Notification
+        //     $EmpID = $event->loan->endorser_EmpID;
+        //     $body = 'emails.endorser';
+        // }
+        
+        $notif = new NotificationController();
+        $notif->notifyGuarantor($event->loan);
 
         $args = ['loan' => $event->loan];
         $this->send($EmpID, config('preferences.notif_subjects.created', 'Loan Application Notification'), $body, $args, $cc = '');
