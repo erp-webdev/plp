@@ -1,19 +1,23 @@
 <?php
 
 namespace eFund\Http\Controllers\admin;
-use Illuminate\Http\Request;
-use eFund\Http\Requests;
-use eFund\Http\Controllers\Controller;
+
+use DB;
+use Log;
+use Auth;
+use Event;
+use Entrust;
 use Session;
 use Redirect;
-use eFund\Events\SendMail;
-use Event;
-use Log;
-use DB;
-use Auth;
 use eFund\job;
+use eFund\Loan;
 use eFund\Endorser;
-use Entrust;
+use eFund\Notification;
+use eFund\Events\SendMail;
+
+use eFund\Http\Requests;
+use Illuminate\Http\Request;
+use eFund\Http\Controllers\Controller;
 
 class DashboardController extends Controller
 {
@@ -25,21 +29,25 @@ class DashboardController extends Controller
     public function index()
     {
         $data = (object)[];
+        $notifications = Notification::notifications()->take(5)->orderBy('created_at', 'desc')->get();
+        $notifCount = Notification::notifications()->count();
 
         if(Entrust::can(['officer', 'custodian'])){
             // Yearly Application Statistics
             $data->appDatasets = $this->appDatasets();
-
             // Rank Statistics
             $data->rankDatasets = $this->rankDatasets();
-
             $data->stats = DB::table('DashboardView')->first();
+            // Yearly Income (5 years)
+            $data->incomeDatasets = $this->incomeDatasets();
+            
+            // Monthly Income of the current year
+            $data->IncomeMonthlyDatasets = $this->incomeMonthlyDatasets(date('Y'));
         }
-
-        // echo json_encode($data->rankDatasets->yearly); exit;
-
     	return view('admin.index')
-                ->with('data', $data);
+                ->with('data', $data)
+                ->with('notifications', $notifications)
+                ->with('notifCount', $notifCount);
         // ->with('error', $error);
     }
 
@@ -92,11 +100,10 @@ class DashboardController extends Controller
                             '#ca1617'
                         ],
                 ];
-
                 array_push($appDatasets, $prop);
-                return $appDatasets;
             }
         } 
+        return $appDatasets;
     }
 
     public function getMonthData($year)
@@ -141,18 +148,16 @@ class DashboardController extends Controller
         if(Entrust::can(['officer', 'custodian'])){
             $dbRanks = DB::table('viewRankCounts')->get();
             // Yearly
-            $ranks = []; $counts = []; $totalCount = [];
+            $ranks = []; $counts = []; 
+            $bgColors = []; $hoverColors = [];
             foreach ($dbRanks as $rank) {
                 if($rank->Year == date('Y')){
                     array_push($ranks, $rank->RankDesc);
                     array_push($counts, $rank->RankCount);
-                }
-            }
 
-            $bgColors = []; $hoverColors = [];
-            foreach($ranks as $rank){
-                array_push($bgColors, $this->colorPicker($bgColors));
-                array_push($hoverColors, $this->colorPicker($hoverColors));
+                    array_push($bgColors, $this->colorPicker($bgColors));
+                    array_push($hoverColors, $this->colorPicker($hoverColors));
+                }
             }
 
             $prop = (object)[
@@ -165,34 +170,42 @@ class DashboardController extends Controller
                     ],
                 ],
             ];
-
             $rankDatasets->yearly = $prop;
 
             // Total of all years
-            foreach($ranks as $rank){
-                $ctr = 0;
-                foreach ($dbRanks as $dbRank) {
-                    if($rank == $dbRank->RankDesc){
-                        $ctr += $dbRank->RankCount;
+            $ranks = []; $counts = [];
+            $bgColors = []; $hoverColors = [];
+            foreach($dbRanks as $rank){
+                if(!in_array($rank->RankDesc, $ranks)){
+                    $ctr = 0;
+                    array_push($ranks, $rank->RankDesc);
+                    foreach ($dbRanks as $dbRank) {
+                        if($rank->RankDesc == $dbRank->RankDesc){
+                            $ctr += $dbRank->RankCount;
+                        }
                     }
+                    array_push($counts, $ctr);
                 }
-                array_push($totalCount, $ctr);
             }
 
-            
+            foreach ($ranks as $rank) {
+                array_push($bgColors, $this->colorPicker($bgColors));
+                array_push($hoverColors, $this->colorPicker($hoverColors));
+            }
 
             $prop = (object)[
                 'labels'    => $ranks,
                 'datasets'  => [
                     (object)[
-                        'data'  => $totalCount,
+                        'data'  => $counts,
                         'backgroundColor' => $bgColors,
                         'hoverBackgroundColor' => $hoverColors,
                     ]
-                ],
+                ],  
             ];
 
             $rankDatasets->total = $prop;
+
         }
         return $rankDatasets;
     }
@@ -252,7 +265,7 @@ class DashboardController extends Controller
         if(!empty($existingColors)){
             $unique = false;
             do {
-                $rand = rand(0, count($colors));
+                $rand = rand(0, count($colors) - 1);
                 if(!in_array($colors[$rand], $existingColors)){
                     $unique = true;
                 }
@@ -264,6 +277,92 @@ class DashboardController extends Controller
 
     
     /*=====  End of Yearly Applications by Rank Statistics  ======*/
+
+    public function incomeDatasets()
+    {
+        $curYear = date('Y');
+
+        $yearlyIncome = (object)[];
+        $labels = []; $data = [];
+        for($i = 5; $i >= 0; $i--){
+            $year = $curYear - $i;
+            array_push($labels, $year);
+
+            $total = Loan::whereIn('status', [7, 8])->whereRaw('YEAR("approved_at") = ' . $year)->sum('total');
+            $loan = Loan::whereIn('status', [7, 8])->whereRaw('YEAR("approved_at") = ' . $year)->sum('loan_amount');
+
+            array_push($data, $total - $loan);
+        }
+
+        $prop = (object)[
+            'labels' => $labels,
+            'datasets' => [(object)[
+                'label' => "Yearly Income",
+                'fill' => false,
+                'lineTension' => 0.1,
+                'backgroundColor' => "rgba(75,192,192,0.4)",
+                'borderColor' => "rgba(75,192,192,1)",
+                'borderCapStyle' => 'butt',
+                'borderDash' => [],
+                'borderDashOffset' => 0.0,
+                'borderJoinStyle' => 'miter',
+                'pointBorderColor' => "rgba(75,192,192,1)",
+                'pointBackgroundColor' => "#fff",
+                'pointBorderWidth' => 1,
+                'pointHoverRadius' => 5,
+                'pointHoverBackgroundColor' => "rgba(75,192,192,1)",
+                'pointHoverBorderColor' => "rgba(220,220,220,1)",
+                'pointHoverBorderWidth' => 2,
+                'pointRadius' => 1,
+                'pointHitRadius' => 10,
+                'data' => $data,
+                'spanGaps' => false
+            ]],
+        ];
+
+        return $prop;
+    }
+
+    public function incomeMonthlyDatasets($year)
+    {
+        $monthly = DB::table('viewMonthlyIncome')->where('Year', $year)->get();
+
+        $labels = []; $data = [];
+        foreach($monthly as $month){
+            $mos = date('F', strtotime('2017-' . $month->month . '-01'));
+            array_push($labels, $mos);
+
+            array_push($data, $month->income);
+        }
+
+        $prop = (object)[
+            'labels' => $labels,
+            'datasets' => [(object)[
+                'label' => "Monthly Income " . $year,
+                'fill' => false,
+                'lineTension' => 0.1,
+                'backgroundColor' => "rgba(75,192,192,0.4)",
+                'borderColor' => "rgba(75,192,192,1)",
+                'borderCapStyle' => 'butt',
+                'borderDash' => [],
+                'borderDashOffset' => 0.0,
+                'borderJoinStyle' => 'miter',
+                'pointBorderColor' => "rgba(75,192,192,1)",
+                'pointBackgroundColor' => "#fff",
+                'pointBorderWidth' => 1,
+                'pointHoverRadius' => 5,
+                'pointHoverBackgroundColor' => "rgba(75,192,192,1)",
+                'pointHoverBorderColor' => "rgba(220,220,220,1)",
+                'pointHoverBorderWidth' => 2,
+                'pointRadius' => 1,
+                'pointHitRadius' => 10,
+                'data' => $data,
+                'spanGaps' => false
+            ]],
+        ];
+
+        return $prop;
+    }
 
     public function download($filename)
     {
@@ -315,5 +414,27 @@ class DashboardController extends Controller
         $job->save();
 
         return redirect('jobs');
+    }
+
+    public function loadNotification($ctr)
+    {
+        $notifs = Notification::notifications()->skip($ctr * 5)->take(5)->orderBy('created_at', 'desc')->get();
+        $html = '';
+        foreach($notifs as $notif){
+            $style = '';
+            if(empty($notif->seen)) 
+                $style = 'style="font-weight: bold"';
+            else
+                $style = '';
+
+            $html .= '<a onclick="seen(this, '. $notif->id . ')" data-toggle="collapse" href="#notif' .$notif->id . '" class="list-group-item list-group-item-' . $notif->type.'">
+                    <h5 class="list-group-item-heading "' . $style . '>' . $notif->title . '</h5>
+                    <div class="collapse" id="notif'. $notif->id . '">
+                        <p class="list-group-item-text">'. $notif->message .'</p>
+                    </div>
+                  </a>';
+        }
+
+        return $html;
     }
 }
