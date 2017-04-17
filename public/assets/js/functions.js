@@ -62,6 +62,12 @@ function restartTour() {
     });
     tour.restart(); 
 
+    // Application
+    tour = new Tour({
+      name: 'EFund_Tour_App2',
+    });
+    tour.restart(); 
+    
     // Loans
     tour = new Tour({
       name: 'EFund_Tour_loan',

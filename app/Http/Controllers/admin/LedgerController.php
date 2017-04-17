@@ -36,7 +36,7 @@ class LedgerController extends Controller
     	$employees = Employee::whereRaw('EmpID in (SELECT DISTINCT EmpID FROM eFundData)')
                     ->search($search)
     				->orderBy('LName')
-    				->paginate($show);
+                    ->get();
 
     	return view('admin.ledger.index')
     		->withEmployees($employees)
@@ -54,7 +54,8 @@ class LedgerController extends Controller
     	$ledger = Ledger::where('EmpID', $EmpID)
     		// ->groupBy('ctrl_no', 'id')
     		->orderBy('ctrl_no', 'asc')
-    		->paginate(50);
+                    ->get();
+    		// ->paginate(50);
 
     	$employee = Employee::where('EmpID', $EmpID)->first();
         $balance = Loan::where('EmpID', $EmpID)->sum('balance');
@@ -78,7 +79,8 @@ class LedgerController extends Controller
         $ledger = Ledger::where('EmpID', $EmpID)
             // ->groupBy('ctrl_no', 'id')
             ->orderBy('ctrl_no', 'asc')
-            ->paginate(50);
+                    ->get();
+            // ->paginate(50);
 
         $employee = Employee::where('EmpID', $EmpID)->first();
 

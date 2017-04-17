@@ -80,7 +80,7 @@
 					@foreach($notifications as $notification)
 					  <a onclick="seen(this, {{ $notification->id }})" data-toggle="collapse" href="#notif{{ $notification->id }}" class="list-group-item list-group-item-<?php echo $notification->type; ?>">
 					    <h5 class="list-group-item-heading" <?php if(empty($notification->seen)) echo 'style="font-weight: bold"'; ?>>{{ $notification->title }}</h5>
-					    <small>{{ date('j F Y h:i a', strtotime($notification->created_at)) }}</small>
+					    <small><time class="timeago" datetime="{{ $notification->created_at }}" title="{{ date('j F Y h:i a', strtotime($notification->created_at)) }}"></time></small>
 					    <div class="collapse" id="notif{{ $notification->id }}"><br>
 					    	<p class="list-group-item-text">{{ $notification->message }}</p>
 					   	</div>
@@ -125,6 +125,14 @@
 @endsection
 @section('scripts')
 <script type="text/javascript" src="{{ url('/assets/js/Chart.js') }}"></script>
+<!-- Timeago by timeago.yarp.com -->
+<script src="{{ url('/assets/js/jquery.timeago.js') }}" type="text/javascript"></script>
+<script type="text/javascript">
+	jQuery(document).ready(function() {
+	  jQuery("time.timeago").timeago();
+	});
+</script>
+
 <script type="text/javascript">
 	@permission(['officer', 'custodian'])
 	@if(isset($data->appDatasets))

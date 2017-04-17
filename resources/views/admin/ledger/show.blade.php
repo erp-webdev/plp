@@ -13,7 +13,6 @@
 		<hr>
 		<div style="overflow: scroll; height: 60vh">
 				@include('admin.ledger.ledger')
-				{{ $ledgers->appends(Input::all())->links() }}
 			</div>
 		</div>
 	</div>

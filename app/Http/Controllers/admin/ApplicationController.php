@@ -36,7 +36,18 @@ class ApplicationController extends Controller
 
     public function index()
     {
-    	$loans = Loan::employee()->orderBy('id', 'desc')->paginate(10);
+        $show = 10;
+        $search = '';
+        if(isset($_GET['show']))
+            $show = $_GET['show'];
+
+        if(isset($_GET['search']))
+            $search = $_GET['search'];
+
+        $loans = Loan::orderBy('ctrl_no', 'desc')
+                    ->employee()
+                    ->search($search)
+                    ->paginate($show);
 
     	return view('admin.applications.index')
                 ->withLoans($loans)
