@@ -78,7 +78,7 @@ class EndorsementController extends Controller
                 $endorsement->save();
 
                 $loan = Loan::findOrFail($endorsement->eFundData_id);
-                $loan->status = $this->utils->setStatus($this->utils->getStatusIndex('endorser'));
+                $loan->status = $this->utils->setStatus($this->utils->getStatusIndex('endorser'), $loan->guarantor_id);
                 $loan->save();
 
                 Event::fire(new EndorsementApproved($loan));

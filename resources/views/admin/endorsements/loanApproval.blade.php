@@ -29,7 +29,7 @@
           <tr>
             <td>
               <td class="l">Employee Name</td>
-              <td>{{ utf8_encode($loan->FullName) }}</td>
+              <td>{{ $loan->FullName }}</td>
             </td>
             <td>
               <td class="l">Employee ID</td>
@@ -43,7 +43,7 @@
             </td>
             <td>
               <td class="l">Local/Direct Line</td>
-              <td>{{ $loan->loc_dir_line }}</td>
+              <td>{{ $loan->local_dir_line }}</td>
             </td>
           </tr> 
           <tr>

@@ -45,7 +45,7 @@
 			      		</td>
 			      		<td>
 			      			<td class="l">Local/Direct Line</td>
-			      			<td>{{ $loan->loc_dir_line }}</td>
+			      			<td>{{ $loan->local_dir_line }}</td>
 			      		</td>
 			      	</tr>	
 			      	<tr>

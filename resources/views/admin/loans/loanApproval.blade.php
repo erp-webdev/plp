@@ -66,7 +66,7 @@
 			      		</td>
 			      		<td>
 			      			<td class="l">Local/Direct Line</td>
-			      			<td>{{ $loan->loc_dir_line }}</td>
+			      			<td>{{ $loan->local_dir_line }}</td>
 			      		</td>
 			      	</tr>	
 			      	<tr>
@@ -181,7 +181,8 @@
 			      			<td class="l">Loan Amount</td>
 			      			<td style="text-align: right">
 			      			@if($loan->status == $utils->getStatusIndex('officer'))
-			      				<input type="number" name="loan_amount" value="{{ $loan->loan_amount }}" class="form-control input-sm" min="{{ $terms->min_amount }}" max="{{ $terms->max_amount }}">
+			      				<input type="number" name="loan_amount" value="{{ $loan->loan_amount }}" class="form-control input-sm" max="{{ $loan->loan_amount
+			      				 }}">
 			      			@else
 			      				Php {{ number_format($loan->loan_amount, 2, '.', ',') }}
 			      			@endif

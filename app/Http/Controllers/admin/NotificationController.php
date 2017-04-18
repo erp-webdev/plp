@@ -133,6 +133,7 @@ class NotificationController extends Controller
    	// Employee / Guarantor on check ready
    	public function notifyOnCheckReady($loan)
    	{
+      // To employee
    		$to = $loan->EmpID;
    		$title = 'Your check is now ready!';
    		$msg = 'Your check is now ready for claiming.';
@@ -140,30 +141,39 @@ class NotificationController extends Controller
 
    		$this->post($to, $title, $msg, $type);
 
-   		$to = $loan->guarantor_EmpID; 
-   		$title = 'A check is now ready.';
-   		$msg = 'A loan applicant whom you are a co-borrower has now a check ready for claiming.';
-   		$type = $this->getType(1);
+      // To Guarantor
+      if($loan->guarantor_EmpID != null){
+        $to = $loan->guarantor_EmpID; 
+        $title = 'A check is now ready.';
+        $msg = 'A loan applicant whom you are a co-borrower has now a check ready for claiming.';
+        $type = $this->getType(1);
 
-   		$this->post($to, $title, $msg, $type);
-
-      $to = $loan->guarantor_EmpID; 
-      $title = 'New payroll deduction schedule.';
-      $msg = 'A new payroll deduction schedule for loan application has been posted.';
-      $type = $this->getType(1);
-
-      $this->post($to, $title, $msg, $type);
-
+        $this->post($to, $title, $msg, $type);
+      }
+   		
+      // To Payroll
       $employees = DB::table('viewUserPermissions')->where('permission', 'payroll')->get();
 
-        foreach ($employees as $employee) {
-          $to = $employee->employee_id; 
-          $title = 'A check has been released.';
-          $msg = 'A check has been released. A loan application with control # ' . $loan->ctrl_no . ' is ready for deductions.';
-          $type = $this->getType(1);
+      foreach ($employees as $employee) {
+        $to = $employee->employee_id; 
+        $title = 'New payroll deduction schedule.';
+        $msg = 'A new payroll deduction schedule for loan application has been posted.';
+        $type = $this->getType(1);
 
-          $this->post($to, $title, $msg, $type);
-        }
+        $this->post($to, $title, $msg, $type);
+      }
+
+      // to Custodian
+      $employees = DB::table('viewUserPermissions')->where('permission', 'custodian')->get();
+
+      foreach ($employees as $employee) {
+        $to = $employee->employee_id; 
+        $title = 'A check has been released.';
+        $msg = 'A check has been released. A loan application with control # ' . $loan->ctrl_no . ' is ready for deductions.';
+        $type = $this->getType(1);
+
+        $this->post($to, $title, $msg, $type);
+      }
    	}
 
     public function notifyAppDenied($loan)

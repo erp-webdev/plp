@@ -1,5 +1,6 @@
 @extends('admin.layouts.app')
 @section('content')
+<!-- {{ var_dump($endorsements) }} -->
 <div class="modal fade" tabindex="-1" role="dialog" id="loan">
     <div class="modal-dialog" role="document">
       	<div class="modal-content">
@@ -75,7 +76,7 @@
 									<tr>
 										<td>{{ $item->refno }}</td>
 										<td>{{ $item->ctrl_no }}</td>
-										<td>{{ utf8_encode($item->FullName) }} <br>
+										<td>{{ $item->FullName	 }} <br>
 										</td>
 										<td style="text-align: right">{{ number_format($item->loan_amount, 2, '.', ',') }}</td>
 										<td style="text-align: right">{{ number_format($item->total, 2, '.', ',') }}</td>

@@ -205,7 +205,10 @@ class ApplicationController extends Controller
                     $loan->save();
                 }else{
                     // Delete guarantor record if exists
+                    $g = DB::table('guarantors')->where('eFundData_id', $loan->id)->get();
                     DB::table('guarantors')->where('eFundData_id', $loan->id)->delete();
+                    $log = new Log();
+                    $log->writeOnly('Delete', 'guarantors', $g);
                 }
 
                 if(isset($_POST['verify'])){
@@ -455,7 +458,8 @@ class ApplicationController extends Controller
                 abort(403);
 
         DB::table('eFundData')->where('id', $id)->delete();
-
+        $log = new Log();
+        $log->writeOnly('Delete', 'eFundData', $loan);
         return redirect()->route('applications.index')->with('success', trans('loan.application.delete'));
     }
 

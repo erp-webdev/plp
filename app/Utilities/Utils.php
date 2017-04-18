@@ -125,8 +125,8 @@ class Utils
      * Set Loan Application Status
      * Process Flow of Applications
      * [0] => Saved
-     * [1] => For Co-Borrower's Approval
-     * [2] => For Head's Approval
+     * [1] => For Head's Approval
+     * [2] => For Co-Borrower's Approval
      * [3] => For Officer's Approval
      * [4] => Treasury
      * [5] => Paid (Complete)
@@ -145,8 +145,10 @@ class Utils
             return 1;
 
     	}else if($status == 1){
-
-    		return 2;
+            if($withSurety != null)
+    		    return 2;
+            else
+                return 3;
 
     	}else if($status == 2){
 

@@ -28,7 +28,7 @@ class SendSignedCheckNotif extends EmailController
     }
 
     /**
-     * Notify Employee, guarantor and payroll
+     * Notify Employee, guarantor, payroll and custodian
      *
      * @param  CheckSigned  $event
      * @return void
@@ -87,6 +87,26 @@ class SendSignedCheckNotif extends EmailController
             $args = ['loan' => $loan, 'employee' => $employee, 'utils' => $utils];
 
             $this->send($employee->employee_id, config('preferences.notif_subjects.payroll', 'Loan Application Notification'), 'emails.payroll', $args, $cc = '');
+            
+        }
+    }
+
+    public function notifyCustodian($loan)
+    {
+        $pref = Preference::name('cust_notif');
+        if($pref->value != 1)
+            return;
+        
+        $employees = DB::table('viewUserPermissions')->where('permission', 'custodian')->get();
+        $utils = new Utils();
+
+        foreach ($employees as $employee) {
+            if(empty($employee->EmailAdd))
+                continue;
+            
+            $args = ['loan' => $loan, 'employee' => $employee, 'utils' => $utils];
+
+            $this->send($employee->employee_id, config('preferences.notif_subjects.check_signed_cust', 'Loan Application Notification'), 'emails.checkSigned_custodian.blade', $args, $cc = '');
             
         }
     }

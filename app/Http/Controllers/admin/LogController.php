@@ -50,7 +50,8 @@ class LogController extends Controller
 		            	$query->content($request->content);
 		            }
 
-		         })->paginate($this->show);
+		         })->orderBy('created_at', 'desc')
+				->paginate($this->show);
 
     	return view('admin.logs')->withLogs($logs);
     }

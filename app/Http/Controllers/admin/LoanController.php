@@ -10,6 +10,7 @@ use Event;
 use Input;
 use Excel;
 use Session;
+use eFund\Log;
 use eFund\Loan;
 use eFund\Terms;
 use eFund\Ledger;
@@ -333,28 +334,30 @@ class LoanController extends Controller
             $eFundData->save();
 
             // Endorser
-            $endorser = DB::table('endorsers')->insertGetId(
-                [
+            $query = [
                     'refno' => $this->utils->generateReference(),
                     'eFundData_id' => $eFundData->id,
                     'EmpID' => $loan->endorserempid,
                     'signed_at' => $loan->approvedat,
                     'status' => 1
-                ]);
+                ];
+            $endorser = DB::table('endorsers')->insertGetId($query);
+            $log = new Log();
+            $log->writeOnly('Insert', 'endorsers', $query);
 
             $eFundData->endorser_id = $endorser;
 
             // Guarantor
-            
-            $guarantor = DB::table('guarantors')->insertGetId(
-                [
+            $query = [
                     'refno' => $this->utils->generateReference(),
                     'eFundData_id' => $eFundData->id,
                     'EmpID' => $loan->guarantorempid,
                     'signed_at' => $eFundData->approvedat,
                     'status' => 1,
                     'guaranteed_amount' => $loan->guaranteedamount
-                ]);
+                ];
+            $guarantor = DB::table('guarantors')->insertGetId($query);
+            $log->writeOnly('Insert', 'guarantors', $query);
 
             $eFundData->guarantor_id = $guarantor;
             $eFundData->save();
