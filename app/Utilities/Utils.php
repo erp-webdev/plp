@@ -16,7 +16,7 @@ class Utils
     					"For Officer's Approval"          , // [4]
                         "Treasury"                        , // [5]
                         "For Cheque Release"              , // [6]
-    					"Incomplete"                      , // [7]
+    					"With Outstanding Balance"                      , // [7]
                         "Paid"                            , // [8]
                         "Denied"                            // [9]
     				 ];
