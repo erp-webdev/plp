@@ -128,7 +128,7 @@
 	        		</td>
 	        		<td>
 		      			<td class="l">Prepared By</td>
-		      			<td>&nbsp;</td>
+		      			<td>{{ utf8_encode(($utils->getUserInfo($loan->prepared_by)->name)) }}</td>
 		      		</td>
 	        	</tr>
 	        	<tr>
@@ -137,15 +137,19 @@
 	        			<td>{{ $loan->check_no }}</td>
 	        		</td>
 	        		<td>
-	        			<td class="l">Check Release</td>
+	        			<td class="l">Check’s Issue Date</td>
 	        			<td>
 	        				@if(!empty($loan->check_released))
 	        				{{ date('j F Y', strtotime($loan->check_released)) }}
 	        				@endif
 	        			</td>
 		      			<td>
-		      				<td>{{ utf8_encode(($utils->getUserInfo($loan->prepared_by)->name)) }}</td>
-		      				<td>&nbsp;</td>
+		      				<td class="l">Released At</td>
+		      				<td>
+		      				@if(!empty($loan->released))
+	        					{{ date('j F Y h:i A', strtotime($loan->released)) }}
+	        				@endif
+	        				</td>
 		      			</td>
 	        		</td>
 	        	</tr>

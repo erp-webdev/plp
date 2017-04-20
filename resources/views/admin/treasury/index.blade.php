@@ -43,7 +43,8 @@
 						<th>CV #</th>
 						<th>CV Date</th>
 						<th>Check #</th>
-						<th>Check Date</th>
+						<th>Check’s Issue Date</th>
+						<th>Check Released Date</th>
 						<th>Status</th>
 						<th>Action</th>
 					</thead>
@@ -63,6 +64,11 @@
 							<td>
 								@if(!empty($loan->check_released))
 									{{ date('j F y', strtotime($loan->check_released)) }}
+								@endif
+							</td>
+							<td>
+								@if(!empty($loan->released))
+									{{ date('j F y h:i A', strtotime($loan->released)) }}
 								@endif
 							</td>
 							<td>{!! $utils->formatTreasuryStatus($loan->status) !!}</td>

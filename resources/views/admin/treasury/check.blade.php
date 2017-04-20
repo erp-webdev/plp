@@ -106,7 +106,9 @@
               @if($loan->check_created_at == null && $loan->status == $utils->getStatusIndex('treasury'))
               <input type="date" name="cv_date" class="form-control input-sm" required>
              @else
-              <span>{{ $loan->cv_date }}</span>
+              <span>
+                  {{ date('j F y', strtotime($loan->cv_date)) }}
+              </span>
               @endif
             </div>
           </div>
@@ -120,11 +122,23 @@
               @endif
             </div>
              <div class="form-group">
-              <label>Check Release</label>
+              <label>Check’s Issue Date</label>
               @if($loan->check_created_at == null && $loan->status == $utils->getStatusIndex('treasury'))
               <input type="date" name="check_released" class="form-control input-sm">
                @else
-              <span>{{ $loan->check_released }}</span>
+              <span>
+                  {{ date('j F y', strtotime($loan->check_released)) }}
+              </span>
+              @endif
+            </div>
+            <div class="form-group">
+              <label>Released At</label>
+              @if($loan->check_created_at != null && $loan->status != $utils->getStatusIndex('treasury'))
+              <span>
+                @if(!empty($loan->released))
+                  {{ date('j F y h:i A', strtotime($loan->released)) }}
+                @endif
+              </span>
               @endif
             </div>
           </div>
