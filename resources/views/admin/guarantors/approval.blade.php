@@ -93,7 +93,12 @@
   <div class="modal-footer">
     <p style="text-align: justify;">I hereby consent to act as surety of the applicant and agree to pay the abovenamed applicant's loan up to the amount of 
     @if($loan->guarantor_status == null && $loan->status == $utils->getStatusIndex('guarantor'))
-      Php <input type="number" name="guaranteed_amount" style="width: 100px" min="{{ $loan->loan_amount - $terms->min_amount }}" value="{{ $loan->loan_amount - $terms->min_amount }}" required>
+      <?php 
+        $gAmount = {{ $loan_amount - $terms->min_amount }};
+        if($gAmount > $limits)
+          $gAmount = $limits;
+      ?>
+      Php <input type="number" name="guaranteed_amount" style="width: 100px" min="{{ $gAmount }}" value="{{ $gAmount }}" max="{{ $limits }}" required>
     @else
       <span>Php {{ number_format($loan->guaranteed_amount, 2, '.', ',') }}</span>
     @endif
