@@ -5,6 +5,7 @@ app.controller('ApprovalCtrl', function($scope, $http, $filter) {
 		$http({
 	        method : "GET",
 	        url : $showUrl + $id,
+	        cache: false,
 	    }).then(function mySucces(response) {
 	        $('.modal-content').html(response.data);
 	    }, function myError(response) {

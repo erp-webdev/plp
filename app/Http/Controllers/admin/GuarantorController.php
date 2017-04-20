@@ -51,10 +51,18 @@ class GuarantorController extends Controller
             $loan = Loan::findOrFail($guarantor->eFundData_id);
             $employee = Employee::where('EmpID', $loan->EmpID)->first();
             $terms = Terms::getRankLimits($employee->RankDesc);
-            $limits = GLimits::scopeGetRankLimits($guarantor->RankDesc);
+            $limits = 0;
+
+            if(str_contains(strtolower($guarantor->RankDesc), 'supervisor'))
+                $limits = GLimits::where('RankDesc','like', '%supervisor%')->first();
+            else if(str_contains(strtolower($guarantor->RankDesc), 'manager'))
+                $limits = GLimits::where('RankDesc','like', '%manager%')->first();
+            else if(str_contains(strtolower($guarantor->RankDesc), 'president'))
+                $limits = GLimits::where('RankDesc','like', '%president%')->first();
+            
             if(empty($limits))
                 $limits = 0;
-            else
+            else 
                 $limits = $limits->Amount;
 
             if($guarantor->EmpID != Auth::user()->employee_id)
