@@ -69,7 +69,10 @@ class TreasuryController extends Controller
     {
     	if(isset($request->approve)){
             DB::beginTransaction();
-    		$treasury = new Treasury();
+    		$treasury = Treasury::where('eFundData_id', $request->id)->first();
+            if(empty($treasury))
+                $treasury = new Treasury();
+
     		$treasury->eFundData_id = $request->id;
             $treasury->cv_no = $request->cv_no;
     		$treasury->cv_date = $request->cv_date;
@@ -83,9 +86,6 @@ class TreasuryController extends Controller
     		$loan->status = $this->utils->setStatus($loan->status);
             $loan->start_of_deductions = $this->utils->getStartOfDeduction($treasury->check_released);
     		$loan->save();
-
-            // Create Deduction schedule
-            DB::select('EXEC spCreateDeductionSchedule ?, ?, ?, ?', [$loan->start_of_deductions, $loan->terms_month, $loan->id, 0]);
 
             Event::fire(new CheckSigned($loan));
 
@@ -102,6 +102,12 @@ class TreasuryController extends Controller
     		$loan = Loan::find($request->id);
     		$loan->status = $this->utils->setStatus($loan->status);
     		$loan->save();
+
+            // Create Deduction schedule
+            DB::select('EXEC spCreateDeductionSchedule ?, ?, ?, ?', [$loan->start_of_deductions, $loan->terms_month, $loan->id, 0]);
+            // Update Balance
+            DB::select('EXEC updateBalance ?, ?', [$loan->id, $loan->total]);
+
             DB::commit();
     		return redirect()->back()->withSuccess(trans('loan.application.released'));
 
