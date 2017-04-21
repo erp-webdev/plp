@@ -116,7 +116,7 @@
             <div class="form-group">
               <label>Check No</label>
               @if($loan->check_created_at == null && $loan->status == $utils->getStatusIndex('treasury'))
-              <input type="text" name="check_no" class="form-control input-sm">
+              <input type="text" name="check_no" class="form-control input-sm" required>
                @else
               <span>{{ $loan->check_no }}</span>
               @endif
@@ -124,7 +124,7 @@
              <div class="form-group">
               <label>Check’s Issue Date</label>
               @if($loan->check_created_at == null && $loan->status == $utils->getStatusIndex('treasury'))
-              <input type="date" name="check_released" class="form-control input-sm">
+              <input type="date" name="check_released" class="form-control input-sm" required>
                @else
               <span>
                   {{ date('j F y', strtotime($loan->check_released)) }}
