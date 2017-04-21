@@ -34,14 +34,14 @@
 	                        <div class="form-group col-xs-12 col-sm-4 col-md-4">
 	                                <span class="col-xs-12 col-sm-3 col-md-3">Amount</span>
 	                                <div class="col-xs-12 col-sm-9 col-md-9">
-	                                    <input type="number" id="arAmount" class="form-control">
+	                                    <input type="number" id="arAmount" class="form-control" onchange="updateARAmount()">
 	                                </div>
 	                        </div>
 							<div id="deductionBatch" class="col-xs-12"></div>
 							<div class="clearfix"></div>
                         </div>
                         <div class="modal-footer">
-                            <button type="submit" name="save" class="btn btn-sm btn-success"><i class="fa fa-save"></i> Apply Deductions</button>
+                            <button id="applyDeduction" type="submit" name="save" class="btn btn-sm btn-success" disabled><i class="fa fa-save"></i> Apply Deductions</button>
                         </div>
                		</form>
       			</div><!-- /.modal-content -->
@@ -150,6 +150,33 @@
 		var $search = $('#search').val();
 		var $searchUrl = "{{ route('admin.loan') }}" + "?show=" + $show + "&search=" + $search;
 		window.location.href = $searchUrl;
+		updateARAmount();
+	}
+
+	function updateTotalAR() {
+		var $bal = $('#arAmount').val();
+
+		$('.amount').each(function( index ) {
+
+			var id = $(this).closest('tr').find('#id');
+			if(id[0].checked == 1){
+				$bal -= $(this).val();
+			}
+			$bal = Math.round($bal*100)/100;
+			$('#arBalance').text($bal);
+
+			if($bal == 0){
+				$('#applyDeduction').removeAttr('disabled');	
+			}else{
+				$('#applyDeduction').attr('disabled', 'disabled');	
+			}
+		});
+
+	}
+
+	function updateARAmount() {
+		$('#arBalance').text($('#arAmount').val());
+		updateTotalAR();
 	}
 	
 	var $myEFundPage = true;

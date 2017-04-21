@@ -14,7 +14,7 @@
                             <tr class="<?php if($emp->amount <> 0) echo 'success'; ?> " title="<?php if($emp->amount <> 0) echo 'POSTED'; ?> ">
                                 <td>
                                   <input type="hidden" name="id[]" value="{{ $emp->id }}">
-                                  <input type="checkbox" name="id{{ $emp->id }}" value="{{ $emp->id }}" <?php if($emp->amount <> 0) echo 'style="display:none"'; ?>>
+                                  <input id="id" type="checkbox" name="id{{ $emp->id }}" value="{{ $emp->id }}" <?php if($emp->amount <> 0) echo 'style="display:none"'; ?> onclick="updateTotalAR()">
                                 </td>
                                 <td>{{ $emp->ctrl_no }}</td>
                                 <td>{{ $emp->EmpID }}</td>
@@ -23,13 +23,13 @@
                                   <input type="number" name="deduction{{ $emp->id }}" class="form-control input-sm" value="{{ $emp->deductions }}" disabled>
                                 </td>
                                 <td>
-                                  <input type="number" name="amount{{ $emp->id }}" class="form-control input-sm" value="{{ $emp->amount }}" <?php if($emp->amount <> 0) echo 'disabled'; ?>>
+                                  <input type="number" name="amount{{ $emp->id }}" class="form-control input-sm amount" value="<?php if($emp->amount <> 0) echo $emp->amount; else echo $emp->deductions; ?>" <?php if($emp->amount <> 0) echo 'disabled'; ?> onchange="updateARAmount()">
                                 </td>
                             </tr>
                            @endforeach
                            <tr>
                              <td colspan="5" style="text-align: right"><strong>Remaining Balance</strong></td>
-                             <td style="text-align: right">Php <strong id="arBalance"></strong></td>
+                             <td style="text-align: right">Php <span style="font-weight: bold;" id="arBalance"></span></td>
                            </tr>
                    </tbody>
            </table>

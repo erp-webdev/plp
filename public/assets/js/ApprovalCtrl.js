@@ -21,6 +21,7 @@ app.controller('ApprovalCtrl', function($scope, $http, $filter) {
 	        url : $url + '?deductionDate=' + $filter('date')($scope.deductionDate, 'yyyy-MM-dd'),
 	    }).then(function mySucces(response) {
 	        $('#deductionBatch').html(response.data);
+	        updateARAmount();
 	    }, function myError(response) {
 	        $('#deductionBatch').html('Something went wrong! Please try again.');
 	        
