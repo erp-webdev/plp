@@ -465,7 +465,7 @@ class Utils
     public $index = 0;
     public $prevCtr = 0;
     public $prevId = '';
-    public function formatLedger($value, $ctr, $id)
+    public function formatLedger($value, $ctr, $id, $isCurrency = false)
     {
 
         if($this->prevCtr != $ctr){
@@ -479,6 +479,10 @@ class Utils
             $value = '';
 
         $this->index += 1;
+
+        if($isCurrency)
+            if(!empty($value))
+                $value = $this->formatNumber((float)($value));
 
         return $value;
     }

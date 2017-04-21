@@ -70,10 +70,10 @@ class LedgerController extends Controller
 
     public function printLedger($EmpID, $showBalance = true)
     {
+        $showBalance = true;
+
         if(isset($_GET['bal']))
-            if($_GET['bal'] == 'true')
-                $showBalance = true;
-            else
+            if($_GET['bal'] != 'true')
                 $showBalance = false;
 
         $ledger = Ledger::where('EmpID', $EmpID)
@@ -97,5 +97,6 @@ class LedgerController extends Controller
                 ->withReport($report);
 
         return;
+
     }
 }

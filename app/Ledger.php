@@ -56,15 +56,15 @@ class Ledger extends Model
     	return date('d-M-y', strtotime($value));
     }
 
-    public function getAmountAttribute($value)
-    {
-    	return $this->utils->formatNumber($value);
-    }
+    // public function getAmountAttribute($value)
+    // {
+    // 	return $this->utils->formatNumber($value);
+    // }
 
-    public function getBalanceAttribute($value)
-    {
-    	return $this->utils->formatNumber($value);
-    }
+    // public function getBalanceAttribute($value)
+    // {
+    // 	return $this->utils->formatNumber($value);
+    // }
 
    public function scopeDeductionList($query, $date)
    {

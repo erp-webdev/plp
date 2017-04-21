@@ -77,18 +77,18 @@
 						<td>{{ $utils->formatLedger($ledger->check_released, $ctr, $ledger->eFundData_id) }}</td>
 						<td style="text-align: right">{{ $utils->formatLedger($ledger->loan_amount, $ctr, $ledger->eFundData_id) }}</td>
 						<td style="text-align: right">{{ $utils->formatLedger($ledger->loan_amount_interest, $ctr, $ledger->eFundData_id) }}</td>
-						<td>{{ $utils->formatLedger($ledger->total, $ctr, $ledger->eFundData_id) }}</td>
+						<td>{{ $utils->formatLedger($ledger->total, $ctr, $ledger->eFundData_id, true) }}</td>
 						<td>{{ $utils->formatLedger($ledger->terms_month, $ctr, $ledger->eFundData_id) }}</td>
-						<td style="text-align: right">{{ $utils->formatLedger($ledger->deductions, $ctr, $ledger->eFundData_id) }}</td>
+						<td style="text-align: right">{{ $utils->formatLedger($ledger->deductions, $ctr, $ledger->eFundData_id, true) }}</td>
 						<td>{{ $ledger->date }}</td>
 						<td>{{ $ledger->ar_no }}</td>
-						<td style="text-align: right">{{ $utils->formatNumber($ledger->amount) }}</td>
+						<td style="text-align: right">{{ $utils->formatNumber((float)$ledger->amount) }}</td>
 						<td style="text-align: right">
 						@if($showBalance)
-							{{ $ledger->balance }}
+							{{ $utils->formatNumber((float)$ledger->balance) }}
 						@else
 							@if($ctr == 0)
-								{{ $utils->formatNumber($balance) }}
+								{{ $utils->formatNumber((float)$balance) }}
 							@endif
 						@endif
 						</td>
