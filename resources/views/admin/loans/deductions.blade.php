@@ -2,20 +2,35 @@
     <div id="deductionList">
            <table class="table table-condensed table-striped table-hover">
                    <thead>
+                           <th></th>
                            <th>Control #</th>
-                           <th>Employee ID</th>
-                           <th>Employee Name</th>
-                           <th>Deduction</th>
+                           <th>EmpID</th>
+                           <th >Employee Name</th>
+                           <th style="text-align: center;">Deduction</th>
+                           <th style="text-align: center;">Amount Paid</th>
                    </thead>
                    <tbody>
                            @foreach($empList as $emp)
-                            <tr>
-                                    <td>{{ $emp->ctrl_no }}</td>
-                                    <td>{{ $emp->EmpID }}</td>
-                                    <td>{{ $emp->FullName }}</td>
-                                    <td>{{ $emp->deductions }} </td>
+                            <tr class="<?php if($emp->amount <> 0) echo 'success'; ?> " title="<?php if($emp->amount <> 0) echo 'POSTED'; ?> ">
+                                <td>
+                                  <input type="hidden" name="id[]" value="{{ $emp->id }}">
+                                  <input type="checkbox" name="id{{ $emp->id }}" value="{{ $emp->id }}" <?php if($emp->amount <> 0) echo 'style="display:none"'; ?>>
+                                </td>
+                                <td>{{ $emp->ctrl_no }}</td>
+                                <td>{{ $emp->EmpID }}</td>
+                                <td>{{ utf8_encode($emp->FullName) }}</td>
+                                <td>
+                                  <input type="number" name="deduction{{ $emp->id }}" class="form-control input-sm" value="{{ $emp->deductions }}" disabled>
+                                </td>
+                                <td>
+                                  <input type="number" name="amount{{ $emp->id }}" class="form-control input-sm" value="{{ $emp->amount }}" <?php if($emp->amount <> 0) echo 'disabled'; ?>>
+                                </td>
                             </tr>
                            @endforeach
+                           <tr>
+                             <td colspan="5" style="text-align: right"><strong>Remaining Balance</strong></td>
+                             <td style="text-align: right">Php <strong id="arBalance"></strong></td>
+                           </tr>
                    </tbody>
            </table>
     </div>

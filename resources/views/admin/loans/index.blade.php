@@ -10,28 +10,34 @@
 
 	<div class="row" ng-app="ApprovalApp" ng-controller="ApprovalCtrl">
 		  <div class="modal fade" tabindex="-1" role="dialog" id="deductions">
-		    <div class="modal-dialog" role="document">
+		    <div class="modal-dialog modal-lg" role="document">
 		      	<div class="modal-contents" style="background-color: #fff">
 	                <div class="modal-header">
 	                    <div class="modal-title"><h4>Batch Deductions</h4></div>
-	                    <p>Batch deduction enables posting of deductions per AR # and date specified. All loan applications with the specified deduction date will be updated.</p>
+	                    <p>Batch deduction enables posting of deductions per AR # and date specified.</p>
 	                </div>
 	                <form action="{{ route('loan.deduction.batch') }}" method="POST" class="form-horizontal">
 	                    <div class="modal-body">
 	                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
-	                        <div class="form-group col-xs-12 col-sm-6 col-md-6">
+	                        <div class="form-group col-xs-12 col-sm-4 col-md-4">
 	                                <span class="col-xs-12 col-sm-3 col-md-3">Date</span>
 	                                <div class="col-xs-12 col-sm-9 col-md-9">
-	                                      <input type="date" name="deductionDate" class="form-control" ng-change="loadBatchDeduction('{{ route('loan.deduction.list') }}')" ng-model="deductionDate" max="<?php echo date('Y-m-d'); ?>" required>
+	                                      <input type="date" name="deductionDate" class="form-control" ng-change="loadBatchDeduction('{{ route('loan.deduction.list') }}')" ng-model="deductionDate" max="<?php //echo date('Y-m-d'); ?>" required>
 	                                </div>
 	                        </div>
-	                        <div class="form-group col-xs-12 col-sm-6 col-md-6">
+	                        <div class="form-group col-xs-12 col-sm-4 col-md-4">
 	                                <span class="col-xs-12 col-sm-3 col-md-3">AR #</span>
 	                                <div class="col-xs-12 col-sm-9 col-md-9">
 	                                        <input type="text" name="d_arno" class="form-control" required>
 	                                </div>
 	                        </div>
-							<div id="deductionBatch"></div>
+	                        <div class="form-group col-xs-12 col-sm-4 col-md-4">
+	                                <span class="col-xs-12 col-sm-3 col-md-3">Amount</span>
+	                                <div class="col-xs-12 col-sm-9 col-md-9">
+	                                    <input type="number" id="arAmount" class="form-control">
+	                                </div>
+	                        </div>
+							<div id="deductionBatch" class="col-xs-12"></div>
 							<div class="clearfix"></div>
                         </div>
                         <div class="modal-footer">
@@ -145,6 +151,7 @@
 		var $searchUrl = "{{ route('admin.loan') }}" + "?show=" + $show + "&search=" + $search;
 		window.location.href = $searchUrl;
 	}
+	
 	var $myEFundPage = true;
 
 	if(tour.ended()){

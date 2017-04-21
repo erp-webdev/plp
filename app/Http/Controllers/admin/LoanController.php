@@ -140,20 +140,20 @@ class LoanController extends Controller
 
         $loan = []; 
         if(count($request->eFundData_id) > 0)
-            $loan = Loan::select('total')->where('id', $request->eFundData_id[0])->first();
-
-        $balance = $loan->total;
+            $loan = Loan::where('id', $request->eFundData_id[0])->first();
 
         for($i = 0; $i < count($request->id); $i++){
-
-            $deduction = Deduction::find($request->id[$i]);
-            $deduction->ar_no = $request->ar_no[$i];
-            $deduction->amount = $request->amount[$i];
-            $balance = $balance - $request->amount[$i];
-            $deduction->balance = round($balance, 2);
-            $deduction->updated_by = Auth::user()->id;
-            $deduction->save();
+            if(!empty(trim($request->ar_no[$i]))){
+                $deduction = Deduction::find($request->id[$i]);
+                $deduction->ar_no = $request->ar_no[$i];
+                $deduction->amount = $request->amount[$i];
+                $deduction->updated_by = Auth::user()->id;
+                $deduction->save();
+            }
         }
+        // Update Balance
+        DB::select('EXEC updateBalance ?, ?', [$loan->id, $loan->total]);
+
         DB::commit();
 
         return redirect()->route('admin.loan');//->withSuccess(trans('loan.application.deduction'));
@@ -425,7 +425,7 @@ class LoanController extends Controller
 
         if(isset($_GET['deductionDate'])){
             $date = $_GET['deductionDate'];
-            $empList = Ledger::select('EmpID', 'FullName', 'ctrl_no', 'deductions')->deductionList($date)->get();
+            $empList = Ledger::select('id', 'EmpID', 'FullName', 'ctrl_no', 'deductions', 'amount')->deductionList($date)->get();
         }
 
         return view('admin.loans.deductions')->with('empList', $empList);
@@ -434,26 +434,38 @@ class LoanController extends Controller
     public function applyBatchDeductions(Request $request)
     {
         DB::beginTransaction();
-        $empList = Ledger::deductionList($request->deductionDate)->get();
 
-        foreach ($empList as $emp) {
-           
-            Deduction::where('id', $emp->id)->update([
-                'ar_no'         => $request->d_arno,
-                'amount'        => floatval(preg_replace('/[^\d.]/', '', $emp->deductions)),
-                'updated_by'    => Auth::user()->id
-            ]);
+        for($i = 0; $i < count($request->id); $i++){
+            $id = 'id' . $request->id[$i];
+            $amount = 'amount' . $request->id[$i];
+            $deduction = 'deduction' . $request->id[$i];
 
-            $total_amount = Ledger::where('eFundData_id', $emp->eFundData_id)->sum('amount');
-            // $total_amount += floatval(preg_replace('/[^\d.]/', '', $emp->deductions));
-            Deduction::where('id', $emp->id)->update([
-                'balance'       => round(floatval(preg_replace('/[^\d.]/', '', $emp->total)) - $total_amount, 2)
-            ]);
+            if(isset($request->$id)){
+
+                $emp = Ledger::find($request->$id)->first();
+
+                if(empty($emp))
+                    continue;
+
+                if(isset($request->$amount)){
+
+                    Deduction::where('id', $request->id[$i])
+                        ->update([
+                            'ar_no'         => $request->d_arno,
+                            'amount'        => $request->$amount,
+                            'updated_by'    => Auth::user()->id
+                        ]
+                    );
+
+                    // Update Balance
+                    DB::select('EXEC updateBalance ?, ?', [$emp->eFundData_id, $emp->total]);
+                }
+            }
         }
-       
+
         DB::commit();
 
-        return redirect()->back()->withSuccess('Deductions Applied successfully!');
+        return redirect()->route('admin.loan')->withSuccess('Deductions Applied successfully!');
     }
 
 }
