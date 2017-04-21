@@ -41,15 +41,15 @@ class Ledger extends Model
         return $this->utils->formatNumber($value);
     }
 
-    public function getTotalAttribute($value)
-    {
-        return $this->utils->formatNumber($value);
-    }
+    // public function getTotalAttribute($value)
+    // {
+    //     return $this->utils->formatNumber($value);
+    // }
 
-    public function getDeductionsAttribute($value)
-    {
-    	return $this->utils->formatNumber($value);
-    }
+    // public function getDeductionsAttribute($value)
+    // {
+    // 	return $this->utils->formatNumber($value);
+    // }
 
     public function getCreatedAtAttribute($value)
     {
