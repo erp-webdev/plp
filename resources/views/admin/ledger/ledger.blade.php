@@ -82,7 +82,7 @@
 						<td style="text-align: right">{{ $utils->formatLedger($ledger->deductions, $ctr, $ledger->eFundData_id) }}</td>
 						<td>{{ $ledger->date }}</td>
 						<td>{{ $ledger->ar_no }}</td>
-						<td style="text-align: right">{{ $ledger->amount }}</td>
+						<td style="text-align: right">{{ $utils->formatNumber($ledger->amount) }}</td>
 						<td style="text-align: right">
 						@if($showBalance)
 							{{ $ledger->balance }}
