@@ -197,7 +197,7 @@ class Utils
             $label = 'primary';
         else if(in_array($status, [5]))
             $label = 'warning';
-        else if(in_array($status, [6,8]))
+        else if(in_array($status, [6,7]))
             $label = 'success';
         else if(in_array($status, [9]))
             $label = 'danger';
