@@ -15,6 +15,7 @@ app.controller('ApprovalCtrl', function($scope, $http, $filter) {
 		$scope.deductionDate = '';
 
 	$scope.loadBatchDeduction = function($url){
+
 		$('#deductionBatch').html("<span class='col-sm-12' style='padding: 10px'><i class='fa fa-spin fa-spinner'></i> Please wait while we retrieve the employee's record...</span>");
 		$http({
 	        method : "GET",
@@ -24,8 +25,21 @@ app.controller('ApprovalCtrl', function($scope, $http, $filter) {
 	        updateARAmount();
 	    }, function myError(response) {
 	        $('#deductionBatch').html('Something went wrong! Please try again.');
-	        
 	    });
 	};
+
+	$scope.loadPayrollList = function($url){
+
+		$('.modal-body').html("<span class='col-sm-12' style='padding: 10px'><i class='fa fa-spin fa-spinner'></i> Please wait while we are retrieving records...</span>");
+		
+		$http({
+	        method : "GET",
+	        url : $url,
+	    }).then(function mySucces(response) {
+			$('.modal-body').html(response.data);	
+	    }, function myError(response) {
+	        $('.modal-body').html('Something went wrong! Please try again.');
+	    });
+	}
 
 });

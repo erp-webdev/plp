@@ -25,6 +25,7 @@ use eFund\Events\LoanPaid;
 use eFund\Events\LoanDenied;
 use eFund\Events\LoanApproved;
 use eFund\Http\Controllers\Controller;
+use eFund\Http\Controllers\admin\EmailController;
 
 class LoanController extends Controller
 {
@@ -465,6 +466,96 @@ class LoanController extends Controller
         DB::commit();
 
         return redirect()->route('admin.loan')->withSuccess('Deductions Applied successfully!');
+    }
+
+    /*
+     *
+     * Send list of all loan applications to payroll 
+     * for loan verifications.
+     * 
+     */
+    public function sendPayrollNotif(Request $request)
+    {
+        $employees = DB::table('viewUserPermissions')->where('permission', 'payroll')->get();
+
+        if(empty($employees)){
+            return redirect()->route('admin.loan')->withError('Email was not sent! No user tagged with payroll roles was found!');
+        }   
+
+        $loans = $this->getPayrollList();
+        if(count($loans) == 0)
+            return redirect()->route('admin.loan')->withError('Email was not sent! There are no loan applications for payroll verifications');
+
+        $loans = $this->getFormattedPayrollList();
+        $email = new EmailController;
+
+        foreach ($employees as $employee) {
+            if(empty($employee->EmailAdd))
+                continue;
+            
+            $args = ['employee' => $employee, 'loansHtml' => $loans];
+
+            $email->send($employee->employee_id, config('preferences.notif_subjects.created', 'Loan Application Notification'), 'emails.payroll_verify_list', $args, $cc = '');
+        }
+
+        return redirect()->route('admin.loan')->withSuccess('Email sent!');
+    }
+
+    /*
+     *
+     * List all loan applications for payroll verifications
+     * 
+     */
+    public function getPayrollList()
+    {
+        // $yesterday = date('Y-m-d 17:01:00',(strtotime ( '-1 day' , strtotime ('Y-m-d'))));
+        // $today = date('Y-m-d 17:00:00');
+
+        // $loans = Loan::where('status', $this->utils->getStatusIndex('payroll'))
+        //             ->whereBetween('created_at', [$yesterday, $today])
+        //             ->orderBy('ctrl_no')
+        //             ->get();
+
+        // All unverified loans
+        $loans = Loan::where('status', $this->utils->getStatusIndex('payroll'))->orderBy('ctrl_no')->get();
+
+        return $loans;
+    }
+
+    /*
+     * Get formatted list of loans for payroll verifications
+     */
+    public function getFormattedPayrollList()
+    {
+        $loans = $this->getPayrollList();
+
+        if(count($loans) == 0)
+            return 'No loan applications for payroll verifications was found!';
+
+        $html = 
+        '<table class="table table-hover table-condensed">
+            <thead >
+                <th style="padding: 10px">Ctrl #</th>
+                <th style="padding: 10px">Employee ID</th>
+                <th style="padding: 10px">Employee Name</th>
+                <th style="padding: 10px">Applied Date</th>
+            </thead>
+            <tbody>
+        ';
+
+        foreach($loans as $loan){
+            $html .= 
+                '<tr>
+                    <td style="padding: 10px">' . $loan->ctrl_no . '</td>
+                    <td style="padding: 10px">' . $loan->EmpID . '</td>
+                    <td style="padding: 10px">' . $loan->FullName . '</td>
+                    <td style="padding: 10px">' . date('Y-m-d', strtotime($loan->created_at)) . '</td>
+                </tr>';
+        }
+
+        $html .= '</tbody></table>';
+
+        return $html;
     }
 
 }

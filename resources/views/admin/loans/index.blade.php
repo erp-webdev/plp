@@ -47,12 +47,34 @@
       			</div><!-- /.modal-content -->
 		    </div><!-- /.modal-dialog -->
 		  </div><!-- /.modal -->
+		  <div class="modal fade" tabindex="-1" role="dialog" id="email">
+		    <div class="modal-dialog" role="document">
+		      	<div class="modal-contents" style="background-color: #fff">
+	                <div class="modal-header">
+	                    <div class="modal-title"><h4> Loan Email Notification</h4></div>
+	                    <p>Send list of loan applications for verification of payroll.</p>
+	                </div>
+	                <form action="{{ route('loan.email.notif') }}" method="post">
+	                	<input type="hidden" name="_token" value="{{ csrf_token() }}">
+	                	<div class="modal-body">
+		                	
+		                </div>
+		                <div class="clearfix"></div>
+	                    <div class="modal-footer">
+	                        <button type="submit" name="send" class="btn btn-sm btn-success" onclick="startLoading()"><i class="fa fa-send"></i> Send Email</button>
+	                    </div>
+	                </form>
+	               
+      			</div><!-- /.modal-content -->
+		    </div><!-- /.modal-dialog -->
+		  </div><!-- /.modal -->
 		<div class="col-xs-12 col-sm-12 col-md-12">
 			<h1>Transactions</h1>
 			<a id="refreshBtn" class="btn btn-sm btn-default" href="{{ route('admin.loan') }}"><i class="fa fa-refresh"></i> 
 			Refresh</a>
 			@permission('custodian')
 			<a class="btn btn-sm btn-info" data-toggle="modal" data-target="#deductions" ng-click="loadBatchDeduction('{{ route('loan.deduction.list') }}')"> Batch Deductions</a>
+			<a class="btn btn-sm btn-info" data-toggle="modal" data-target="#email" ng-click="loadPayrollList('{{ route('loan.email.list') }}')"><i class="fa fa-envelope"></i> Email</a>
 			<a class="btn btn-sm btn-primary pull-right" style="margin-right: 10px" href="{{ route('upload.show') }}"><i class="fa fa-upload"></i> Import</a>
 			@endpermission
 			<hr>
