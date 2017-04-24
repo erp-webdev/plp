@@ -5,6 +5,7 @@ use eFund\Http\Controllers\admin\EmailController;
 use eFund\Http\Controllers\admin\NotificationController;
 
 use DB;
+use eFund\Preference;
 use eFund\Events\GuarantorApproved;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -29,6 +30,8 @@ class NotifyPayroll  extends EmailController
      */
     public function handle(GuarantorApproved $event)
     {
+        $EnableEmail = Preference::name('payroll_notif');
+
         $employees = DB::table('viewUserPermissions')->where('permission', 'payroll')->get();
 
         foreach ($employees as $employee) {
@@ -37,8 +40,11 @@ class NotifyPayroll  extends EmailController
             
             $args = ['loan' => $event->loan, 'employee' => $employee];
 
-            $this->send($employee->employee_id, config('preferences.notif_subjects.created', 'Loan Application Notification'), 'emails.payroll_verify', $args, $cc = '');
 
+            if($EnableEmail->value == 1){
+                $this->send($employee->employee_id, config('preferences.notif_subjects.created', 'Loan Application Notification'), 'emails.payroll_verify', $args, $cc = '');
+            }
+            
             $notif = new NotificationController();
             $notif->notifyPayroll($event->loan, $employee->employee_id);
         }

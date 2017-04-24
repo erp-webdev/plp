@@ -31,12 +31,6 @@ class NotifyGuarantor extends EmailController
     {
         $EmpID = $event->loan->guarantor_EmpID;
         $body = 'emails.guarantor';
-
-        // if($event->loan->guarantor_id == NULL){
-        //     // Notification
-        //     $EmpID = $event->loan->endorser_EmpID;
-        //     $body = 'emails.endorser';
-        // }
         
         $notif = new NotificationController();
         $notif->notifyGuarantor($event->loan);

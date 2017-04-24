@@ -26,10 +26,12 @@
                 </div>
                 @else
                 <div class="form-group">
-                    <span class="col-md-7">{{ $setting->description }}</span>
+                    <span class="col-md-7">
+                        {{ $setting->description }}
+                        <span class="help-block">{{ $setting->helper }}</span>
+                    </span>
                     <div class="col-md-5">
                         <input class="form-control input-sm" type="{{ $setting->data_type }}" name="{{ $setting->name }}" value="{{ $setting->value }}" step="any" required>
-                        <span class="help-block">{{ $setting->helper }}</span>
                     </div>
                 </div>
                 @endif

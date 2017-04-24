@@ -65,24 +65,24 @@ class EndorsementController extends Controller
     {
         DB::beginTransaction();
         if(isset($_POST['approve'])){
-                $endorsement = Endorser::findOrFail($request->id);
-                if($endorsement->EmpID != Auth::user()->employee_id)
-                    abort(403);
+            $endorsement = Endorser::findOrFail($request->id);
+            if($endorsement->EmpID != Auth::user()->employee_id)
+                abort(403);
 
-                if($endorsement->signed_at != '--')
-                    return redirect()->back()->withSuccess(trans('loan.application.approved2'));
+            if($endorsement->signed_at != '--')
+                return redirect()->back()->withSuccess(trans('loan.application.approved2'));
 
-                $endorsement->refno = $this->utils->generateReference();
-                $endorsement->signed_at = date('Y-m-d H:i:s');
-                $endorsement->endorser_status = 1;
-                $endorsement->save();
+            $endorsement->refno = $this->utils->generateReference();
+            $endorsement->signed_at = date('Y-m-d H:i:s');
+            $endorsement->endorser_status = 1;
+            $endorsement->save();
 
-                $loan = Loan::findOrFail($endorsement->eFundData_id);
-                $loan->status = $this->utils->setStatus($this->utils->getStatusIndex('endorser'), $loan->guarantor_id);
-                $loan->save();
+            $loan = Loan::findOrFail($endorsement->eFundData_id);
+            $loan->status = $this->utils->setStatus($this->utils->getStatusIndex('endorser'), $loan->guarantor_id);
+            $loan->save();
 
-                Event::fire(new EndorsementApproved($loan));
-                DB::commit();
+            Event::fire(new EndorsementApproved($loan));
+            DB::commit();
             return redirect()->route('endorsements.index')
                     ->withSuccess(trans('loan.application.approved'));
         }else if(isset($_POST['deny'])){
