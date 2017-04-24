@@ -3,30 +3,21 @@
 <div class="modal fade" tabindex="-1" role="dialog" id="reporViewModal" >
     <div class="modal-dialog" role="document" style="width: 100%">
       <div class="modal-content">
-      	<!-- <div class="modal-header">
+      	<div class="modal-header">
       		<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-      		<div class="btn-group">
-			  	<button type="button" class="btn btn-default"><i class="fa fa-print"></i> Print</button>
-			  	<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-			    	<span class="caret"></span>
-			    	<span class="sr-only">PDF (.pdf)</span>
-			    	<span class="sr-only">Excel (.xlsx)</span>
-			    	<span class="sr-only">CSV (.csv)</span>
-			  	</button>
-			</div>
-      	</div> -->
+      	</div>
         <div class="modal-body">
 			<div class="reportViewFS">sa</div>
 		</div>
 		<div class="modal-footer">
 			<div class="btn-group">
-			  	<button type="button" class="btn btn-default" onclick="format = 'pdf'; print()"><i class="fa fa-print"></i> Print</button>
-			  	<!-- <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+			  	<a type="button" class="btn btn-default" onclick="format = 'pdf'; print()"><i class="fa fa-print"></i> Print</a>
+			  	<a type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 			    	<span class="caret"></span>
 			    	<span class="sr-only">PDF (.pdf)</span>
 			    	<span class="sr-only">Excel (.xlsx)</span>
 			    	<span class="sr-only">CSV (.csv)</span>
-			  	</button> -->
+			  	</a>
 			</div>
 			<button type="button" class="btn btn-sm btn-default" data-dismiss="modal" aria-label="Close">Close</button>
 		</div>
@@ -74,13 +65,16 @@
 		<div class="col-xs-12 col-sm-10 col-md-10">
 			<div class="col-xs-12 col-sm-12 col-md-12" style="margin-bottom: 5px">
 				<div class="btn-group">
-				  	<button type="button" class="btn btn-default" onclick="format = 'pdf'; print()"><i class="fa fa-print"></i> Print</button>
-				  	<!-- <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-				    	<span class="caret"></span>
-				    	<span class="sr-only">PDF (.pdf)</span>
-				    	<span class="sr-only">Excel (.xlsx)</span>
-				    	<span class="sr-only">CSV (.csv)</span>
-				  	</button> -->
+				  	<button type="button" class="btn btn-default" onclick="format = 'html'; print()"><i class="fa fa-print"></i> Print</button>
+					<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					    <span class="caret"></span>
+					    <span class="sr-only">Toggle Dropdown</span>
+					</button>
+				  	<ul class="dropdown-menu">
+				  		<li><a onclick="format = 'pdf'; print()">PDF (.pdf)</a></li>
+					    <li><a onclick="format = 'xlsx'; print()">Excel (.xlsx)</a></li>
+					    <li><a onclick="format = 'csv'; print()">CSV (.csv)</a></li>
+				  	</ul>
 				</div>
 				<a class="btn btn-default btn-sm" href="#reportViewModal" data-toggle="modal" data-target="#reporViewModal" onclick="showFullScreen()"><i class="fa fa-eye"></i> View FullScreen</a>
 			</div>

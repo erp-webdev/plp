@@ -86,7 +86,7 @@ class ReportController extends Controller
         $toDate = '';
         $EmpID = '';
         $status = '';
-        $format = 'pdf';
+        $format = 'html';
 
         if(isset($_GET['dateFrom']))
             $fromDate = $_GET['dateFrom'];
@@ -114,43 +114,50 @@ class ReportController extends Controller
         elseif($type == 'ledger')
             $ledger = $this->ledgerReport($fromDate, $toDate, $EmpID, $status);
 
-        if($format == 'pdf'){
+        if($type == 'payroll'){
+            $html = view('admin.reports.payrollNotif')
+                    ->withLoans($loans)
+                    ->withUtils($this->utils);
 
-            if($type == 'payroll'){
-                $html = view('admin.reports.payrollNotif')
-                        ->withLoans($loans)
-                        ->withUtils($this->utils);
-            }elseif($type == 'summary'){
-                $html = view('admin.reports.summary')
-                        ->withLoans($loans)
-                        ->withUtils($this->utils);
-            }elseif(in_array($type, ['ledger'])){
-                $html = view('admin.ledger.ledger')
-                        ->withLedgers($ledger)
-                        ->withUtils($this->utils);
-            }
+        }elseif($type == 'summary'){
+            $html = view('admin.reports.summary')
+                    ->withLoans($loans)
+                    ->withUtils($this->utils);
+        }elseif(in_array($type, ['ledger'])){
+            $html = view('admin.ledger.ledger')
+                    ->withLedgers($ledger)
+                    ->withUtils($this->utils);
+        }
+
+        if($format == 'html' || $format == 'pdf')
+            return $this->stream($html, $format);
+        
+    }
+
+    public function stream($html, $format = 'html', $size = 'letter', $orientation = 'landscape' )
+    {
+      
+        if($format == 'html'){
+
+            $report = (object)['title' => 'Megaworld EFund Payroll Notification', 'html' => $html];
+            $html = view('admin.reports.layout')
+                ->withReport($report);
+
+            return $html;
+
+        }elseif($format == 'pdf'){
+            
+            $report = (object)['title' => 'Megaworld EFund Payroll Notification', 'html' => $html];
+
+            $pdf = PDF::loadView('admin.reports.layout', ['report' => $report])->setPaper($size, $orientation)->setWarnings(false);
+            return $pdf->stream('saa.pdf'); 
+
+        }elseif($format == 'xlsx'){
 
         }elseif($format == 'csv'){
 
         }
-        $this->stream($html);
         
-    }
-
-    public function stream($html, $size = 'letter', $orientation = 'landscape')
-    {
-        $report = (object)['title' => 'Megaworld EFund Payroll Notification', 'html' => $html];
-        $html = view('admin.reports.layout')
-                ->withReport($report);
-      
-        echo $html;
-        return;
-
-        $dompdf = new Dompdf();
-        $dompdf->loadHTML($html);
-        $dompdf->setPaper($size, $orientation);
-        $dompdf->render();
-        $dompdf->stream();
     }
 
     public function payrollReport($fromDate, $toDate, $EmpID, $status)

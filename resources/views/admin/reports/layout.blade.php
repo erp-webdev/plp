@@ -2,7 +2,8 @@
 <html>
 <head>
 	<title>Megaworld eFund Report</title>
-	<meta author="MW eFund System">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<meta author="Megaworld eFund System">
 	<meta created="{{ date('m/d/y H:i:s') }}">
 	<style type="text/css">
 		@media screen {
@@ -23,10 +24,10 @@
 <body>
 
 <h4>{{ $report->title }}</h4>
-<div id="content" style="page-break-after: always">
+<div id="content">
 	{!! $report->html !!}
 </div>
-<div class="footer" style="page-break-after: always">
+<div class="footer">
 	<table style="width: 100%">
 		<tr style="font-size: 9px">
 			<td>Printed at: {{ date('m/d/Y H:i:s') }}</td>

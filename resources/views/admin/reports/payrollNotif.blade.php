@@ -1,5 +1,5 @@
 <style type="text/css">
-	thead{
+	.thead{
 		border-top: 2px solid #000; 
 		border-bottom: 2px solid #000;
 	}
@@ -12,17 +12,17 @@
 </style>
 <div class="table-responsive">
 	<table style="width: 100%;" class="table-hover">
-		<thead style="font-size: 12px">
-			<th>EF <br>Control No.</th>
-			<th>EMPLOYEE <br>ID NO.</th>
-			<th>EMPLOYEE <br>NAME</th>
-			<th>Date of <br>Check Release</th>
-			<th>TOTAL <br>AMOUNT</th>
-			<th>TOTAL NO. <br>OF DEDUCTIONS</th>
-			<th>Deduction <br>per payday</th>
-			<th>START <br>OF DEDUCTION</th>
-		</thead>
-		<tbody style="font-size: 12px;">
+		<tbody style="font-size: 12px; " >
+			<tr class="thead" style="font-size: 12px; font-weight: bold">
+				<th>EF <br>Control No.</th>
+				<th>EMPLOYEE <br>ID NO.</th>
+				<th>EMPLOYEE <br>NAME</th>
+				<th>Date of <br>Check Release</th>
+				<th>TOTAL <br>AMOUNT</th>
+				<th>TOTAL NO. <br>OF DEDUCTIONS</th>
+				<th>Deduction <br>per payday</th>
+				<th>START <br>OF DEDUCTION</th>
+			</tr>
 			@foreach($loans as $loan)
 			<tr>
 				<td style="text-align: left; ">{{ $loan->ctrl_no }}</td>

@@ -2,7 +2,7 @@
 	table tbody tr td{
 		padding: 5px;
 	}
-	table thead th{
+	table tr th{
 		padding: 1px;
 		text-align: center;
 		vertical-align: text-top;
@@ -10,7 +10,7 @@
 </style>
 <div class="table-responsive">
 	<table style="width: 100%; font-size: 10px" class="table-hover">
-		<thead style="border-top: 2px solid #000; border-bottom: 2px solid #000; ">
+		<tr style="border-top: 2px solid #000; border-bottom: 2px solid #000; ">
 			<th>Control #</th>
 			<th>Employee No.</th>
 			<th>Employee Name</th>
@@ -29,7 +29,7 @@
 			<th>Total amount <br>paid</th>
 			<th>Balance</th>
 			<th>Remarks</th>
-		</thead>
+		</tr>
 		<tbody style="font-size: 10px;">
 			@foreach($loans as $loan)
 			<tr>

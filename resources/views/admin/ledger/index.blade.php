@@ -27,15 +27,15 @@
 			 	</div>
 		    </div>
 			<table class="table table-condensed table-hover table-striped">
-				<thead style="text-align: center">
+				<tr style="text-align: center">
 					<th>Employee ID</th>
 					<th>Employee Name</th>
 					<th>Date Hired</th>
 					<th>Position</th>
 					<th>Rank</th>
 					<th>Action</th>
-				</thead>
-				<tbody>
+				</tr>
+			<tbody>
 					@foreach($employees as $employee)
 					<tr>
 						<td>{{ $employee->EmpID }}</td>
