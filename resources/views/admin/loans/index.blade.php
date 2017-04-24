@@ -34,7 +34,7 @@
 	                        <div class="form-group col-xs-12 col-sm-4 col-md-4">
 	                                <span class="col-xs-12 col-sm-3 col-md-3">Amount</span>
 	                                <div class="col-xs-12 col-sm-9 col-md-9">
-	                                    <input type="number" id="arAmount" class="form-control" onchange="updateARAmount()">
+	                                    <input type="number" id="arAmount" step="any" class="form-control" onchange="updateARAmount()">
 	                                </div>
 	                        </div>
 							<div id="deductionBatch" class="col-xs-12"></div>

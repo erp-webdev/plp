@@ -456,9 +456,8 @@ class LoanController extends Controller
                             'updated_by'    => Auth::user()->id
                         ]
                     );
-
                     // Update Balance
-                    DB::select('EXEC updateBalance ?, ?', [$emp->eFundData_id, $emp->total]);
+                    DB::select('EXEC updateBalance ?, ?', [(float)$emp->eFundData_id, (float)$emp->total]);
                 }
             }
         }
