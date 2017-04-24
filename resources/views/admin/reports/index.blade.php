@@ -11,13 +11,18 @@
 		</div>
 		<div class="modal-footer">
 			<div class="btn-group">
-			  	<a type="button" class="btn btn-default" onclick="format = 'pdf'; print()"><i class="fa fa-print"></i> Print</a>
-			  	<a type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-			    	<span class="caret"></span>
-			    	<span class="sr-only">PDF (.pdf)</span>
-			    	<span class="sr-only">Excel (.xlsx)</span>
-			    	<span class="sr-only">CSV (.csv)</span>
-			  	</a>
+			  	<button type="button" class="btn btn-sm btn-default" onclick="format = 'html'; print()"><i class="fa fa-print"></i> Print</button>
+				<button type="button" class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				&nbsp;
+				<i class="fa fa-caret-down"></i>
+				<span class="sr-only">Toggle Dropdown</span>
+				&nbsp;
+				</button>
+			  	<ul class="dropdown-menu">
+			  		<li><a onclick="format = 'pdf'; print()">PDF (.pdf)</a></li>
+				    <li><a onclick="format = 'xlsx'; print()">Excel (.xlsx)</a></li>
+				    <li><a onclick="format = 'csv'; print()">CSV (.csv)</a></li>
+			  	</ul>
 			</div>
 			<button type="button" class="btn btn-sm btn-default" data-dismiss="modal" aria-label="Close">Close</button>
 		</div>
@@ -52,7 +57,7 @@
 						<select id="status" class="form-control  input-sm">
 							<option value="0">All</option>
 							<option value="1">Paid</option>
-							<option value="2">Incomplete</option>
+							<option value="2">Active Account</option>
 							<option value="3">For Approval</option>
 							<option value="4">Denied</option>
 						</select>
@@ -65,10 +70,12 @@
 		<div class="col-xs-12 col-sm-10 col-md-10">
 			<div class="col-xs-12 col-sm-12 col-md-12" style="margin-bottom: 5px">
 				<div class="btn-group">
-				  	<button type="button" class="btn btn-default" onclick="format = 'html'; print()"><i class="fa fa-print"></i> Print</button>
-					<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-					    <span class="caret"></span>
-					    <span class="sr-only">Toggle Dropdown</span>
+				  	<button type="button" class="btn btn-sm btn-default" onclick="format = 'html'; print()"><i class="fa fa-print"></i> Print</button>
+					<button type="button" class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					&nbsp;
+					<i class="fa fa-caret-down"></i>
+					<span class="sr-only">Toggle Dropdown</span>
+					&nbsp;
 					</button>
 				  	<ul class="dropdown-menu">
 				  		<li><a onclick="format = 'pdf'; print()">PDF (.pdf)</a></li>
@@ -80,7 +87,6 @@
 			</div>
 			<div class="col-xs-12 col-sm-12 col-md-12" id="reportView" style="border-left: 1px solid #ccc; height: 70vh; overflow: scroll;"></div>
 		</div>
-		
 	</div>
 </div>
 

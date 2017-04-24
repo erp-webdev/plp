@@ -9,6 +9,7 @@ use App;
 use DB;
 use Log;
 use Auth;
+use Excel;
 use Session;
 use eFund\Loan;
 use Dompdf\Dompdf;
@@ -87,6 +88,7 @@ class ReportController extends Controller
         $EmpID = '';
         $status = '';
         $format = 'html';
+        $title = 'Megaworld Efund System';
 
         if(isset($_GET['dateFrom']))
             $fromDate = $_GET['dateFrom'];
@@ -107,13 +109,21 @@ class ReportController extends Controller
         $loans = [];
         $ledger = [];
 
-        if($type == 'payroll')
+        // Get loan  data
+        if($type == 'payroll'){
             $loans = $this->payrollReport($fromDate, $toDate, $EmpID, $status);
-        elseif($type == 'summary')
+            $title = 'Efund Payroll Deduction List';
+        }
+        elseif($type == 'summary'){
             $loans = $this->summaryReport($fromDate, $toDate, $EmpID, $status);
-        elseif($type == 'ledger')
+            $title = 'Efund Summary Report - ' . date('Ymd');
+        }
+        elseif($type == 'ledger'){
             $ledger = $this->ledgerReport($fromDate, $toDate, $EmpID, $status);
+            $title = 'Efund Ledger - ' . $EmpID;
+        }
 
+        // format loan data to table
         if($type == 'payroll'){
             $html = view('admin.reports.payrollNotif')
                     ->withLoans($loans)
@@ -129,8 +139,17 @@ class ReportController extends Controller
                     ->withUtils($this->utils);
         }
 
-        if($format == 'html' || $format == 'pdf')
-            return $this->stream($html, $format);
+        // Generate output in specified format
+        if($format == 'html' || $format == 'pdf'){
+
+            if($type == 'summary')
+                return $this->stream($html, $format, 'legal', 'landscape');
+            else
+                return $this->stream($html, $format);
+
+        }else if($format == 'xlsx' || $format == 'csv'){
+            return $this->formatExcel($loans, $type, $format, $title);
+        }
         
     }
 
@@ -217,27 +236,66 @@ class ReportController extends Controller
                 ->orderBy('ctrl_no', 'asc')->get();
     }
 
-    public function renderPDF($view, $title = 'OCS_Report', $size = 'letter', $orientation = 'landscape', $warning = false, $paging = true)
+    public function formatExcel($loans, $type, $format = 'xlsx', $title = 'Megaworld EFund System')
     {
-        $pdf = App::make('dompdf.wrapper');
-        $pdf->setPaper($size, $orientation)->setWarnings($warning);
-        $pdf->loadHTML($view);
-        $pdf->output();
-        return $pdf->stream('asdf.pdf');
-        if($paging){
-          $dom_pdf = $pdf->getDomPDF();
+        if($type == 'payroll'){
 
-          $user = DB::table('viewUsers')->select('FName', 'LName')->where('id', Auth::user()->id)->first();
-          $printedby = 'Printed by:' . $user->LName . ', ' . substr($user->FName, 0, 1);
-          $printed = 'Printed at: ' . date('m/d/Y g:i A');
-          $canvas = $dom_pdf->get_canvas();
-          // $canvas->page_text($this->getX($size, $orientation), $this->getY($size, $orientation) - 10, "Page {PAGE_NUM} of {PAGE_COUNT}", null, 10, array(0, 0, 0));
-          // $canvas->page_text(($this->getX($size, $orientation) / 2.5), $this->getY($size, $orientation) - 10, "*** This is a system generated report. No signature required. ***", null, 10, array(0, 0, 0));
-          // $canvas->page_text(33, $this->getY($size, $orientation) - 20 , "Megaworld iClearance System", null, 10, array(0, 0, 0));
-          // $canvas->page_text(33, $this->getY($size, $orientation) - 10, $printed, null, 10, array(0, 0, 0));
-          // $canvas->page_text(33, $this->getY($size, $orientation), $printedby, null, 10, array(0, 0, 0));
+            $data = [];
+
+            foreach($loans as $row){
+                $newRow = [
+                    'EF Ctrl No.' => $row->ctrl_no,
+                    'Employee ID NO.' => $row->EmpID,
+                    'Employee Name' => $row->FullName,
+                    'Date of Check Release' => date('Y-m-d', strtotime($row->released)),
+                    'TOTAL AMOUNT' => number_format($row->total, 2),
+                    'TOTAL NO. OF DEDUCTIONS' => $row->terms_month * 2,
+                    'Deduction per payday' => number_format($row->deductions, 2),
+                    'START OF DEDUCTIONS' => $row->start_of_deductions
+                ];
+                array_push($data, $newRow);
+            }
+
+        }else if($type == 'summary'){
+            $data = [];
+            
+            foreach($loans as $row){
+                $newRow = [
+                    'Control #' => $row->ctrl_no,
+                    'Employee ID' => $row->EmpID,
+                    'Employee Name' => $row->FullName,
+                    'Guarantor' => $row->guarantor_FullName,
+                    'Date of Application' => date('Y-m-d', strtotime($row->created_at)),
+                    'CV NO' => $row->cv_no,
+                    'CV Date' => date('Y-m-d', strtotime($row->cv_date)),
+                    'CHECK NO' => $row->check_no,
+                    'Date of check release' => date('Y-m-d', strtotime($row->released)),
+                    'Principal' => number_format($row->loan_amount, 2),
+                    'LOAN AMOUNT Interest' => number_format($row->loan_amount * $row->int_amount, 2),
+                    'Total' => number_format($row->total, 2),
+                    'Payment Terms (no. of mos)' => $row->terms_month,
+                    'Deduction per payroll period' => number_format($row->deductions, 2),
+                    'START OF DEDUCTIONS' => $row->start_of_deductions,
+                    'Total amount paid' => number_format($row->paid_amoun, 2),
+                    'Balance' => number_format(round($row->balance, 2), 2),
+                    'Remarks' => $row->Remarks
+                ];
+
+                array_push($data, $newRow);
+            }
         }
-        return $pdf->download('sample.pdf');
+
+        $this->downloadExcel($data, $title, $format);
     }
 
+    public function downloadExcel($data, $title = 'Megaworld EFund System', $type = 'xlsx')
+    {
+        return Excel::create($title, function($excel) use ($data) {
+            $excel->sheet('Sheet1', function($sheet) use ($data)
+            {
+                $sheet->fromArray($data);
+            });
+        })->download($type);
+    }
+   
 }

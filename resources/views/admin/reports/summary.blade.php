@@ -41,7 +41,7 @@
 				<td>{{ $loan->cv_no }}</td>
 				<td>{{ $loan->cv_date }}</td>
 				<td>{{ $loan->check_no }}</td>
-				<td>{{ $loan->check_released }}</td>
+				<td>{{ $loan->released }}</td>
 				<td style="text-align: right">{{ $utils->formatNumber($loan->loan_amount) }}</td>
 				<td style="text-align: right">{{ $utils->formatNumber($loan->int_amount) }}</td>
 				<td style="text-align: right">{{ $utils->formatNumber($loan->total) }}</td>
@@ -49,7 +49,7 @@
 				<td style="text-align: right">{{ $utils->formatNumber($loan->deductions) }}</td>
 				<td>{{ $loan->start_of_deductions }}</td>
 				<td style="text-align: right">{{ $utils->formatNumber($loan->paid_amount) }}</td>
-				<td style="text-align: right">{{ $utils->formatNumber($loan->balance) }}</td>
+				<td style="text-align: right">{{ $utils->formatNumber(round($loan->balance, 2)) }}</td>
 				<td>&nbsp;</td>
 			</tr>
 			@endforeach

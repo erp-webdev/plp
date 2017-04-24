@@ -28,7 +28,7 @@
 				<td style="text-align: left; ">{{ $loan->ctrl_no }}</td>
 				<td style="text-align: left">{{ $loan->EmpID }}</td>
 				<td style="text-align: left">{{ ucwords(strtolower($loan->FullName)) }}</td>
-				<td style="text-align: center">{{ $loan->check_released }}</td>
+				<td style="text-align: center">{{ $loan->released }}</td>
 				<td style="text-align: right">{{ $utils->formatNumber($loan->total) }}</td>
 				<td style="text-align: center">{{ $loan->terms_month * 2 }}</td>
 				<td style="text-align: right">{{ $utils->formatNumber($loan->deductions) }}</td>
