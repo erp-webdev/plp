@@ -112,6 +112,7 @@ Route::group(['middleware' => ['auth']], function() {
 	Route::get('preferences',['as'=>'preferences.index','uses'=>'admin\PreferenceController@index', 'middleware' => ['permission:Preferences']]);
 	Route::post('preferences',['as'=>'preferences.update','uses'=>'admin\PreferenceController@update', 'middleware' => ['permission:Preferences']]);
 	Route::post('preferences/terms',['as'=>'preferences.terms','uses'=>'admin\PreferenceController@updateTerms', 'middleware' => ['permission:Preferences']]);
+	Route::post('preferences/limits',['as'=>'preferences.limits','uses'=>'admin\PreferenceController@updateGLimits', 'middleware' => ['permission:Preferences']]);
 
 	// FAQ
 	Route::get('admin/documentation', function () {

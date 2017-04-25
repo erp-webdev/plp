@@ -17,11 +17,13 @@
             @foreach($settings as $setting)
                 @if($setting->data_type == 'boolean')
                 <div class="form-group">
-                    <span class="col-md-7">{{ $setting->description }}</span>
+                    <span class="col-md-7">
+                    {{ $setting->description }}
+                    <span class="help-block">{{ $setting->helper }}</span>
+                    </span>
                     <div class="col-md-5">
                         <input type="hidden" id="{{ $setting->name }}" name="{{ $setting->name }}" value="{{ $setting->value }}">
                         <input type="checkbox" <?php if($setting->value == '1') echo 'checked'; ?> onclick="changeValue('#{{ $setting->name }}')">
-                        <span class="help-block">{{ $setting->helper }}</span>
                     </div>
                 </div>
                 @else
@@ -66,8 +68,30 @@
             <button type="submit" class="btn btn-block btn-sm btn-success"><i class="fa fa-save"></i> Save</button>
         </form>
     </div>
-    <div class="col-md-7" style="border: 1px solid #ccc; padding: 10px; margin: 5px;">
-        
+   <div class="col-md-7" style="border: 1px solid #ccc; padding: 10px; margin: 5px;">
+        <h4>Guaranteed Amount</h4>
+        <hr>
+        <form class="form form-horizontal" action="{{ route('preferences.limits') }}" method="post">
+            <input type="hidden" name="_token" value="{{ csrf_token() }}">
+            <table class="table table-hover table-condensed table-striped">
+                <thead>
+                    <th>Rank/Position</th>
+                    <th>Maximum</th>
+                </thead>
+                <tbody>
+                    @foreach($limits as $limit)
+                    <tr>
+                        <td>
+                            <input type="hidden" name="id[]" value="{{ $limit->id }}">
+                            {{ utf8_encode($limit->RankDesc) }}
+                        </td>
+                        <td><input class="form-control input-sm" min="0" type="number" step="500" name="amount[]" value="{{ $limit->Amount }}" required></td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
+            <button type="submit" class="btn btn-block btn-sm btn-success"><i class="fa fa-save"></i> Save</button>
+        </form>
     </div>
     <script type="text/javascript">
         function changeValue(name) {

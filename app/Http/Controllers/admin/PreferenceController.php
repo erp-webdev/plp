@@ -4,9 +4,10 @@ namespace eFund\Http\Controllers\admin;
 
 use Illuminate\Http\Request;
 
-use eFund\Http\Requests;
 use eFund\Http\Controllers\Controller;
+use eFund\Http\Requests;
 use eFund\Preference;
+use eFund\GLimits;
 use eFund\Terms;
 use Session;
 
@@ -21,9 +22,10 @@ class PreferenceController extends Controller
     {
     	$settings = Preference::orderBy('data_type', 'desc')->get();
     	$terms = Terms::All();
-
+        $limits = GLimits::All();
     	return view('admin.preferences')
     	->withSettings($settings)
+        ->withLimits($limits)
     	->withTerms($terms);
     }
 
@@ -53,5 +55,18 @@ class PreferenceController extends Controller
     	}
 
     	return redirect()->route('preferences.index');
+    }
+
+    public function updateGLimits(Request $request)
+    {
+        for($i = 0; $i < count($request->id); $i++){
+            $limit = GLimits::find($request->id[$i]);
+            if(!empty($limit)){
+                $limit->Amount = $request->amount[$i];
+                $limit->save();
+            }
+        }
+
+        return redirect()->route('preferences.index');
     }
 }
