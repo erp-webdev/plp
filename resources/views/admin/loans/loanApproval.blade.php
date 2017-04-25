@@ -110,8 +110,8 @@
 			      	@endif
 			      	
 			      </table>
-			       <hr>
 	        	@if(!empty($loan->cv_date))
+			       <hr>
 	        	<table class="table-condensed">
 	        	<tr>
 	        		<td>
@@ -219,13 +219,20 @@
 			      			<td style="font-weight: bold; border-top-style: double;text-align: right; font-size: 15px">Php {{ number_format($loan->total, 2, '.', ',') }}</td>
 			      		</td>
 			      	</tr>	
+			      	<tr>
+			      		<td colspan="8">
+			      			<textarea name="remarks" class="form-control" placeholder="Remarks" >
+			      				{{ trim($loan->remarks) }}
+			      			</textarea>
+			      		</td>
+			      	</tr>
 		      	</table>
 		     	@permission(['officer'])
 				@if($loan->status == $utils->getStatusIndex('officer'))
 				<div class="clearfix"></div>
 				<button type="submit" name="deny" class="btn btn-danger btn-sm pull-right"><i class="fa fa-thumbs-down"></i> Deny</button>
 				<button type="submit" name="approve" class="btn btn-success btn-sm pull-right"><i class="fa fa-thumbs-up"></i> Approve</button>
-				<button type="submit" name="calculate" class="btn btn-default btn-sm pull-right"><i class="fa fa-calculator"></i> Calculate</button>
+				<button type="statusubmit" name="calculate" class="btn btn-default btn-sm pull-right"><i class="fa fa-calculator"></i> Calculate</button>
 				@endif
 				@endif
 			</form>

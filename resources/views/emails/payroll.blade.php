@@ -1,8 +1,7 @@
-	@extends('emails.layout')
+@extends('emails.layout')
 @section('content')
 	<?php 
 		$loans = [$args['loan']];
-		$loans[0]->start_of_deductions = date_format($loans[0]->start_of_deductions, 'm/d/y');
 		$utils = $args['utils'];
 		$employee = $args['employee'];
 	  ?>

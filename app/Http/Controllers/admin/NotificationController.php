@@ -150,8 +150,32 @@ class NotificationController extends Controller
 
         $this->post($to, $title, $msg, $type);
       }
-   		
-      // To Payroll
+
+      // to Custodian
+      $employees = DB::table('viewUserPermissions')->where('permission', 'custodian')->get();
+
+      foreach ($employees as $employee) {
+        $to = $employee->employee_id; 
+        $title = 'A check is now ready.';
+        $msg = 'A check is now ready. A loan application with control # ' . $loan->ctrl_no . ' is awaiting for check release.';
+        $type = $this->getType(1);
+
+        $this->post($to, $title, $msg, $type);
+      }
+   	}
+
+     // Employee on check release
+    public function notifyOnCheckReleased($loan)
+    {
+      // To employee
+      $to = $loan->EmpID;
+      $title = 'EFund Check Released!';
+      $msg = 'Your check has been released!';
+      $type = $this->getType(2);
+
+      $this->post($to, $title, $msg, $type);
+
+       // To Payroll
       $employees = DB::table('viewUserPermissions')->where('permission', 'payroll')->get();
 
       foreach ($employees as $employee) {
@@ -174,7 +198,8 @@ class NotificationController extends Controller
 
         $this->post($to, $title, $msg, $type);
       }
-   	}
+    }
+      
 
     public function notifyAppDenied($loan)
     {

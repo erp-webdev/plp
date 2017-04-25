@@ -14,6 +14,7 @@ use eFund\Treasury;
 use eFund\Http\Requests;
 use eFund\Utilities\Utils;
 use eFund\Events\CheckSigned;
+use eFund\Events\CheckReleased;
 use eFund\Http\Controllers\Controller;
 
 
@@ -107,6 +108,8 @@ class TreasuryController extends Controller
             DB::select('EXEC spCreateDeductionSchedule ?, ?, ?, ?', [$loan->start_of_deductions, $loan->terms_month, $loan->id, 0]);
             // Update Balance
             DB::select('EXEC updateBalance ?, ?', [$loan->id, $loan->total]);
+
+            Event::fire(new CheckReleased($loan));
 
             DB::commit();
     		return redirect()->back()->withSuccess(trans('loan.application.released'));

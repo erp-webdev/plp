@@ -11,8 +11,10 @@ return [
 
 	// Employee Notification
 	'notif_subjects' => [
-		'check_signed' => 'Loan Check is now ready!',
+		'check_signed' => 'EFund Check is now ready!',
+		'check_released' => 'EFund Check has been released!',
 		'check_signed_cust' => "Applicant's Check is now ready!",
+		'check_released_cust' => "Applicant's Check has been released!",
 		'payroll' => 'New Loan Deduction Schedule!', 
 		'approved' => 'A Loan Application has been approved!',
 		'created'	=> 'A Loan Application has been created!',

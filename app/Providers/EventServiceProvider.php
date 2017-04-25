@@ -32,6 +32,9 @@ class EventServiceProvider extends ServiceProvider
         'eFund\Events\CheckSigned' => [
             'eFund\Listeners\SendSignedCheckNotif',
         ],
+        'eFund\Events\CheckReleased' => [
+            'eFund\Listeners\NotifyOnCheckReleased',
+        ],
         'eFund\Events\LoanPaid' => [
             'eFund\Listeners\NotifyPaidEmployee',
         ],

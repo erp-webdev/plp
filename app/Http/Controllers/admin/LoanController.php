@@ -111,6 +111,7 @@ class LoanController extends Controller
             $loan->approved_by = Auth::user()->employee_id;
             $loan->approved_at = date('Y-m-d H:i:s');
             $loan->status = $this->utils->setStatus($loan->status);
+            $loan->remarks = trim($request->remarks);
             $loan->save();
 
             Event::fire(new LoanApproved($loan));
@@ -119,6 +120,7 @@ class LoanController extends Controller
         }elseif(isset($request->deny)){
             
             $loan->status = $this->utils->getStatusIndex('denied');
+            $loan->remarks = $request->remarks;
             $loan->save();
             
             Event::fire(new LoanDenied($loan));
