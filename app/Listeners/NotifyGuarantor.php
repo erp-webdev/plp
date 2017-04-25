@@ -5,6 +5,8 @@ namespace eFund\Listeners;
 use eFund\Http\Controllers\admin\EmailController;
 use eFund\Http\Controllers\admin\NotificationController;
 
+use Event;
+use eFund\Events\GuarantorApproved;
 use eFund\Events\EndorsementApproved;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -30,6 +32,11 @@ class NotifyGuarantor extends EmailController
     public function handle(EndorsementApproved $event)
     {
         $EmpID = $event->loan->guarantor_EmpID;
+
+        if(empty($EmpID)){
+            Event::fire(new GuarantorApproved($event->loan));
+        }
+
         $body = 'emails.guarantor';
         
         $notif = new NotificationController();
