@@ -56,7 +56,7 @@ class AuthController extends Controller
             'name' => 'required|max:255',
             'employee_id' => 'required|unique:users',
             // 'employee_id' => 'required|email|max:255|unique:users',
-            // 'password' => 'required|min:6|confirmed',
+            'password' => 'required|min:6|confirmed',
         ]);
     }
 
@@ -100,6 +100,7 @@ class AuthController extends Controller
         if(count($user) == 0){
             // Create user for first time use
             $user = new User();
+            $user->setTable('users');   
             $user->name  = $employee->FName;
             $user->email = $employee->EmailAdd;
             $user->employee_id = $employee->EmpID;
