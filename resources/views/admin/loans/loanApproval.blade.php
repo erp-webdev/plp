@@ -219,13 +219,13 @@
 			      			<td style="font-weight: bold; border-top-style: double;text-align: right; font-size: 15px">Php {{ number_format($loan->total, 2, '.', ',') }}</td>
 			      		</td>
 			      	</tr>	
+			      	@if($loan->status >= $utils->getStatusIndex('officer'))
 			      	<tr>
 			      		<td colspan="8">
-			      			<textarea name="remarks" class="form-control" placeholder="Remarks" >
-			      				{{ trim($loan->remarks) }}
-			      			</textarea>
+			      			<textarea name="remarks" class="form-control" placeholder="Remarks" >{{ trim($loan->remarks) }}</textarea>
 			      		</td>
 			      	</tr>
+			      	@endif
 		      	</table>
 		     	@permission(['officer'])
 				@if($loan->status == $utils->getStatusIndex('officer'))
