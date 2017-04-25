@@ -74,7 +74,7 @@
 			Refresh</a>
 			@permission('custodian')
 			<a class="btn btn-sm btn-info" data-toggle="modal" data-target="#deductions" ng-click="loadBatchDeduction('{{ route('loan.deduction.list') }}')"> Batch Deductions</a>
-			<a class="btn btn-sm btn-info" data-toggle="modal" data-target="#email" ng-click="loadPayrollList('{{ route('loan.email.list') }}')"><i class="fa fa-envelope"></i> Email</a>
+			<a class="btn btn-sm btn-info" data-toggle="modal" data-target="#email" ng-click="loadPayrollList('{{ route('loan.email.list') }}')"><i class="fa fa-envelope"></i> Payroll Verifications</a>
 			<a class="btn btn-sm btn-primary pull-right" style="margin-right: 10px" href="{{ route('upload.show') }}"><i class="fa fa-upload"></i> Import</a>
 			@endpermission
 			<hr>
@@ -147,7 +147,7 @@
 								<td>{{ $loan->terms_month }}</td>
 								<!-- <td style="text-align: right">{ { number_format($loan->deductions, 2, '.', ',') }}</td> -->
 								<td style="text-align: right">{{ number_format($loan->paid_amount, 2, '.', ',') }}</td>
-								<td style="text-align: right">{{ number_format($loan->balance, 2, '.', ',') }}</td>
+								<td style="text-align: right">{{ number_format(round($loan->balance,2), 2, '.', ',') }}</td>
 								<td>{!! $utils->formatStatus($loan->status) !!}</td>
 								<td>
 									<a data-toggle="modal" data-target="#loan" ng-click="loadLoan({{ $loan->id }})" class="btn btn-sm btn-info" title="View Loan Application" data-toggle="tooltip"><i class="fa fa-eye"></i></a>
