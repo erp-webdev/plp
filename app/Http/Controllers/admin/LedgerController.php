@@ -5,6 +5,8 @@ namespace eFund\Http\Controllers\admin;
 use Illuminate\Http\Request;
 
 use Log;
+use PDF;
+use Excel;
 use Session;
 use eFund\Loan;
 use eFund\Ledger;
@@ -52,10 +54,8 @@ class LedgerController extends Controller
                 $showBalance = false;
 
     	$ledger = Ledger::where('EmpID', $EmpID)
-    		// ->groupBy('ctrl_no', 'id')
-    		->orderBy('ctrl_no', 'asc')
+    		        ->orderBy('ctrl_no', 'asc')
                     ->get();
-    		// ->paginate(50);
 
     	$employee = Employee::where('EmpID', $EmpID)->first();
         $balance = Loan::where('EmpID', $EmpID)->sum('balance');
@@ -71,32 +71,89 @@ class LedgerController extends Controller
     public function printLedger($EmpID, $showBalance = true)
     {
         $showBalance = true;
+        $format = 'html';
+
+        if(isset($_GET['format']))
+            $format = $_GET['format'];
 
         if(isset($_GET['bal']))
-            if($_GET['bal'] != 'true')
+            if($_GET['bal'] == 'true')
+                $showBalance = true;
+            else
                 $showBalance = false;
 
         $ledger = Ledger::where('EmpID', $EmpID)
-            // ->groupBy('ctrl_no', 'id')
-            ->orderBy('ctrl_no', 'asc')
+                    ->orderBy('ctrl_no', 'asc')
                     ->get();
-            // ->paginate(50);
 
         $employee = Employee::where('EmpID', $EmpID)->first();
+        $balance = Loan::where('EmpID', $EmpID)->sum('balance');
 
         $html = view('admin.ledger.ledger')
                 ->withLedgers($ledger)
                 ->withEmployee($employee)
                 ->withUtils($this->utils)
+                ->withBalance($balance)
                 ->with('showBalance', $showBalance);
-       
-        $report = (object)['title' => '', 'html' => $html];
 
-        echo view('admin.reports.layout')
-                ->withHtml($html)
-                ->withReport($report);
+        if($format == 'pdf'){   
+            // PDF
+            $pdf = PDF::loadHtml($html)->setPaper('legal', 'landscape')->setWarnings(false);
 
-        return;
+            return $pdf->stream('EFund Ledger - ' . $EmpID . '.pdf');
 
+        }else if($format == 'xls'){
+
+            return $this->formatExcel($html, $EmpID);
+        }
+
+        // HTML
+        return $html;
+        
     }
+
+    public function formatExcel($html, $EmpID)
+    {
+        header('Content-type: application/excel');
+        $filename = 'EFund Ledger - ' . $EmpID . '.xls';
+        header('Content-Disposition: attachment; filename='.$filename);
+
+        $data = '<html xmlns:x="urn:schemas-microsoft-com:office:excel">
+        <head>
+            <!--[if gte mso 9]>
+            <xml>
+                <x:ExcelWorkbook>
+                    <x:ExcelWorksheets>
+                        <x:ExcelWorksheet>
+                            <x:Name>Sheet 1</x:Name>
+                            <x:WorksheetOptions>
+                                <x:Print>
+                                    <x:ValidPrinterInfo/>
+                                </x:Print>
+                            </x:WorksheetOptions>
+                        </x:ExcelWorksheet>
+                    </x:ExcelWorksheets>
+                </x:ExcelWorkbook>
+            </xml>
+            <![endif]-->
+        </head>
+
+        <body>
+           '. $html .'
+        </body></html>';
+
+        return $data;
+    }
+
+    public function downloadExcel($data, $title = 'Megaworld EFund System', $type = 'xlsx')
+    {
+        return Excel::create($title, function($excel) use ($data) {
+            $excel->sheet('Sheet1', function($sheet) use ($data)
+            {
+                $sheet->fromArray($data);
+            });
+        })->download($type);
+    }
+
+
 }

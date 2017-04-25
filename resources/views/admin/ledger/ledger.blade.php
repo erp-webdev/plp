@@ -12,7 +12,7 @@
 	tbody{
 		font-size: 12px;
 	}
-	.table-hover thead{
+	.table-hover tr th{
 		border-top: 2px solid black;
 		border-bottom: 2px solid black;
 	}
@@ -28,6 +28,18 @@
 	td{
 		padding: 5px;
 	}
+	@media screen {
+		  div.footer {
+		    /*display: none;*/
+		  }
+		}
+		@media print {
+		  div.footer {
+		    position: fixed;
+		    bottom: 0;
+		  }
+		  
+		}
 </style>
 <b>EMPLOYEE'S LEDGER:</b>
 <table class="table-condensed">
@@ -50,23 +62,23 @@
 </table>
 <div class="table-responsive">
 			<table class="table-hover">
-				<thead>
-					<th >Date of <br>Availment</th>
-					<th>EF <br>Control No.</th>
-					<th>CV No.</th>
-					<th>CV Date</th>
-					<th>Date of <br>Check Release</th>
-					<th><br>principal</th>
-					<th>LOAN AMOUNT <br>interest</th>
-					<th><br>total</th>
-					<th>PAYMENT <br>TERM</th>
-					<th>Deduction <br>per payday</th>
-					<th><br>date</th>
-					<th>Payments <br>AR#</th>
-					<th><br>amount</th>
-					<th>BALANCE</th>
-				</thead>
 				<tbody>
+					<tr>
+						<th >Date of <br>Availment</th>
+						<th>EF <br>Control No.</th>
+						<th>CV No.</th>
+						<th>CV Date</th>
+						<th>Date of <br>Check Release</th>
+						<th><br>principal</th>
+						<th>LOAN AMOUNT <br>interest</th>
+						<th><br>total</th>
+						<th>PAYMENT <br>TERM</th>
+						<th>Deduction <br>per payday</th>
+						<th><br>date</th>
+						<th>Payments <br>AR#</th>
+						<th><br>amount</th>
+						<th>BALANCE</th>
+					</tr>
 					<?php $ctr = 0;?>
 					@foreach($ledgers as $ledger)
 					<tr class="<?php if($utils->formatLedger($ledger->eFundData_id, $ctr, $ledger->eFundData_id) != '') echo'new' ?>" >
@@ -85,10 +97,10 @@
 						<td style="text-align: right">{{ $utils->formatNumber((float)$ledger->amount) }}</td>
 						<td style="text-align: right">
 						@if($showBalance)
-							{{ $utils->formatNumber((float)$ledger->balance) }}
+							{{ $utils->formatNumber((float)(round($ledger->balance,2))) }}
 						@else
 							@if($ctr == 0)
-								{{ $utils->formatNumber((float)$balance) }}
+								{{ $utils->formatNumber((float)(round($balance,2))) }}
 							@endif
 						@endif
 						</td>
@@ -97,3 +109,12 @@
 					@endforeach
 				</tbody>
 			</table>
+<div class="footer">
+	<table style="width: 100%">
+		<tr style="font-size: 9px">
+			<td>Printed at: {{ date('m/d/Y H:i:s') }}</td>
+			<td style="text-align: right">Printed by: ({{ Auth::user()->id }}) {{ Auth::user()->name }} </td>
+			<td><span id="pageFooter"></span></td>
+		</tr>
+	</table>
+</div>
