@@ -156,7 +156,8 @@ class DashboardController extends Controller
                     array_push($counts, $rank->RankCount);
 
                     array_push($bgColors, $this->colorPicker($bgColors));
-                    array_push($hoverColors, $this->colorPicker($hoverColors));
+                    // array_push($hoverColors, $this->colorPicker($hoverColors));
+                    $hoverColors = $bgColors;
                 }
             }
 

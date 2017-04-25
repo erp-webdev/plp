@@ -43,7 +43,7 @@
 					<li class="list-group-item active">Application Status <?php echo date('Y'); ?></li>
 					<li class="list-group-item">
 						<span class="badge"><?php if(!empty($data->stats->inc)) echo $data->stats->inc; else echo 0;?></span>
-						Incomplete
+						Active Account
 					</li>
 					<li class="list-group-item">
 						<span class="badge"><?php if(!empty($data->stats->paid)) echo $data->stats->paid; else echo 0;?></span>
