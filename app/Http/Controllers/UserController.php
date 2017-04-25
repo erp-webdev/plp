@@ -53,7 +53,7 @@ class UserController extends Controller
         $this->validate($request, [
             'name' => 'required',
             'employee_id' => 'required|unique:users',
-            'password' => 'required|same:confirm-password',
+            // 'password' => 'required|same:confirm-password',
             'roles' => 'required'
         ]);
 
@@ -62,13 +62,13 @@ class UserController extends Controller
         if(!empty($employee))
         {
             $input = $request->all();
-            $input['password'] = Hash::make($input['password']);
 
             $user = new User;
+            $user->setTable('users');
             $user->name  = $request->name;
             $user->email = $employee->EmailAdd;
             $user->employee_id = $request->employee_id;
-            $user->password = $input['password'];
+            $user->password = Hash::make($request->employee_id);;
             $user->save();
 
             if(!empty($request->input('roles'))) {
@@ -153,6 +153,7 @@ class UserController extends Controller
             $input['active'] = '0';
 
         $user = User::withoutGlobalScope('active')->find($id);
+        $user->setTable('users');
         $user->update($input);
         
         $model = DB::table('role_user')->where('user_id',$id)->get();
@@ -182,7 +183,9 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        User::withoutGlobalScope('active')->findOrFail($id)->delete();
+        $user = User::withoutGlobalScope('active')->findOrFail($id);
+        $user->setTable('users');
+        $user->delete();
 
         return redirect()->route('users.index')
                         ->with('success','User deleted successfully');

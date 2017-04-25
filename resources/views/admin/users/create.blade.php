@@ -10,6 +10,25 @@
         </div>
         <hr/>
     </div>
+    @if ($message = Session::get('success'))
+        <div class="col-xs-12 col-sm-12 col-md-12">
+            <div class="alert alert-success">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+                <p>{{ $message }}</p>
+            </div>
+        </div>
+    @elseif ($message = Session::get('error'))
+        <div class="col-xs-12 col-sm-12 col-md-12">
+            <div class="alert alert-danger">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+                <p>{{ $message }}</p>
+            </div>
+        </div>
+    @endif
     <form method="POST" action="{{ route('users.store') }}">
         <input type="hidden" name="_token" value="{{ csrf_token() }}">
     	<div class="col-xs-12 col-sm-5 col-md-5">
@@ -25,7 +44,7 @@
                     <input type="text" name="employee_id" class="form-control" placeholder="Employee ID" value="{{ Input::old('employee_id') }}">
                 </div>
             </div>
-            <div class="col-xs-12 col-sm-12 col-md-12">
+            <!-- <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group">
                     <strong>Password:</strong>
                     <input type="password" name="password" class="form-control" placeholder="Password" value="">
@@ -36,7 +55,7 @@
                     <strong>Confirm Password:</strong>
                     <input type="password" name="confirm-password" class="form-control" placeholder="Confirm Password" value="">
                 </div>
-            </div>
+            </div> -->
             <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group">
                     <strong>Role:</strong>

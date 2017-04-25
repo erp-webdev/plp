@@ -48,4 +48,9 @@ class User extends Authenticatable
         else
            return $value;
     }
+
+    public function setTable($table)
+    {
+        $this->table = $table;
+    }
 }
