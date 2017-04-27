@@ -209,7 +209,7 @@
 	<tr>
 		<td style="width: 100px; text-align: right"><strong>DISAPPROVED</strong></td>
 		<td style="width: 10px; text-align: center; border: 1px solid black">
-			@if($loan->approved == 0)
+			@if($loan->approved == 0 && !empty($loan->approved_FullName))
 			✓
 			@endif
 		</td>
