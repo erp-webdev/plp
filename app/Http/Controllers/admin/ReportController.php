@@ -209,7 +209,7 @@ class ReportController extends Controller
         return Loan::where(function($query) use ($fromDate, $toDate, $EmpID, $status){
 
                 if(!empty($fromDate) && !empty($toDate)){
-                    $query->where('created_at', '>=', $fromDate)->where('created_at', '<=', $toDate .' 23:59:59')->orderBy('created_at', 'desc');
+                    $query->where('created_at', '>=', $fromDate)->where('created_at', '<=', $toDate .' 23:59:59');
                 }
 
                 if(!empty($EmpID)){
@@ -227,7 +227,7 @@ class ReportController extends Controller
                         $query->where('status', $this->utils->getStatusIndex('denied'));
                 }
                 
-            })->get();
+            })->orderBy('FullName', 'asc')->get();
     }
 
     public function ledgerReport($fromDate, $toDate, $EmpID, $status)
