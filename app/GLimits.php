@@ -2,6 +2,7 @@
 
 namespace eFund;
 
+use EFund\Employee;
 use Illuminate\Database\Eloquent\Model;
 
 class GLimits extends Model
@@ -9,5 +10,19 @@ class GLimits extends Model
     protected $table = 'guaranteedAmountLimit';
     public $timestamps = false;	
 
+    public function scopeLimit($scope, $EmpID)
+    {
+    	$guarantor = Employee::where('EmpID', $EmpID)->first();
+
+    	if(str_contains(strtolower($guarantor->RankDesc), 'supervisor'))
+            return $this->where('RankDesc','like', '%supervisor%')->first();
+        else if(str_contains(strtolower($guarantor->RankDesc), 'manager'))
+            return $this->where('RankDesc','like', '%manager%')->first();
+        else if(str_contains(strtolower($guarantor->RankDesc), 'Assistant Vice President') ||
+        		str_contains(strtolower($guarantor->RankDesc), 'Senior Assistant Vice President'))
+            return $this->where('RankDesc','like', '%Assistant Vice President – Senior Assistant Vice President%')->first();
+        else
+            return $this->where('RankDesc','like', '%Vice President and Up%')->first();
+    }
    
 }

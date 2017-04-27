@@ -38,6 +38,7 @@ return [
 		'maximum'	=> 'Loan amount above maximum loanable!',
 		'active'  	=> 'Employee is not found or has been deactivated!',
 		'guarantor' => 'Invalid Guarantor. Guarantor may not be active or a regular employee or may have a standing balance.',
+		'guaranteed_amount' => 'Specified guarantor has insufficient amount that can be guaranteed on your application.',
 		'endorser' 	=> 'Invalid Endorser. Endorser may not be active or a regular employee.',
 		'arExists' 	=> 'Failed to update deductions. AR # already exists from our records.',
 	],

@@ -73,6 +73,7 @@ class GuarantorController extends Controller
                 ->withTerms($terms)
                 ->withLimits($limits)
                 ->withUtils($this->utils);
+                
         } catch (Exception $e) {
             abort(500);
         }

@@ -63,4 +63,11 @@ class Guarantor extends Model
                     ->orWhere('FullName',  'LIKE', '%' . $keyword . '%')
                     ->orWhere('EmpID', 'LIKE', '%' . $keyword . '%');
     }
+
+    // Get Total Guaranted Amount of Guarantors on Active Loan Applications
+    public function scopeGuaranteedAmountLimit($scope, $EmpID)
+    {
+        return $scope->where('guarantor_status', 1)->where('EmpID', $EmpID)
+            ->where('status', '>', 2)->where('status', '<', 8);
+    }
 }

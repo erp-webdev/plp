@@ -11,6 +11,7 @@ use Session;
 use eFund\Log;
 use eFund\Loan;
 use eFund\Terms;
+use eFund\GLimits;
 use eFund\Ledger;
 use eFund\Endorser;
 use eFund\Guarantor;
@@ -301,6 +302,9 @@ class ApplicationController extends Controller
         if($this->validateAboveMinAmount($request->loan_amount))
             if(!$this->validateGuarantor($request->surety))
                 array_push($errors, trans('loan.validation.guarantor'));
+            else
+                if(!$this->validateGuaranteedAmount($request->surety, $request->loan_amount))
+                    array_push($errors, trans('loan.validation.guaranteed_amount'));
 
         return $errors;
     }
@@ -437,17 +441,46 @@ class ApplicationController extends Controller
         $valid = true;
 
         if($this->validateEmployeeStatus($EmpID)){
-            // TODO:: check balance
+            // Check Balance
             $balance = Loan::where('EmpID', $EmpID)
                     ->whereNotIn('status', [0,9])
                     ->sum('balance');
 
             if($balance > 0)
                 $valid = false;
+
         }
 
         if($EmpID == Auth::user()->employee_id)
             $valid = false;
+
+        return $valid;
+    }
+
+    public function validateGuaranteedAmount($EmpID, $amount)
+    {
+        $valid = true;
+        // Check Guarateed amount total
+        $totalGuaranteedAmount = Guarantor::guaranteedAmountLimit($EmpID)->sum('guaranteed_amount');
+        // Get Employee Rank Limit 
+        $employee = Employee::current()->first();
+        $terms = Terms::getRankLimits($employee->RankDesc);
+        $gAmountLimit = GLimits::limit($EmpID);
+
+        if($totalGuaranteedAmount < $gAmountLimit->Amount){
+            // Total guaranteed amount of active accounts
+            // is less than the maximum limit of a guarantor's rank
+            if($totalGuaranteedAmount < $amount - $terms->min_amount){
+                // Total guaranteed amount is not sufficient to 
+                // guarantee min amount of the loan application.
+                $valid = false;
+            }
+
+        }else{
+
+            $valid = false;
+
+        }
 
         return $valid;
     }
