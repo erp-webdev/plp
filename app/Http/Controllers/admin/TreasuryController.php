@@ -40,7 +40,9 @@ class TreasuryController extends Controller
             $search = $_GET['search'];
 
 
-    	$loans = Loan::notDenied()->where('status', '>', 4)
+    	$loans = Loan::notDenied()
+                    ->where('status', '=', 4)
+                    ->where('status', '=', 5)
                     ->search($search)
                     ->orderBy('created_at', 'desc')
                     ->paginate($show); 
