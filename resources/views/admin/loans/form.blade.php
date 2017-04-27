@@ -138,12 +138,16 @@
 		<td style="height: 15px; background-color: #ccc" colspan="4"></td>
 	</tr>
 	<tr class="box">
-		<td colspan="4">
+		<td colspan="2">
 			<strong><u>FOR EMPLOYEES FUND CUSTODIAN USE</u></strong><br><br>
 		Previous Balance: <strong><u>{{ $utils->formatNumber($balance) }}</u></strong><br><br>
 		Approved Loan: <strong><u>Php {{ $utils->formatNumber($loan->loan_amount) }}</u></strong><br><br>
 		Interest: <strong><u>{{ $loan->interest }}% </u></strong> x <strong><u>{{ $loan->terms_month }}</u> </strong> months <br><br>
 		<u><strong>TOTAL </strong>  <strong>Php <u>{{ $utils->formatNumber($loan->total) }}</u></strong></u>
+		</td>
+		<td colspan="2" style="text-align: left; vertical-align: text-top; border-left: 1px solid #ccc; padding-left: 10px">
+			<strong>Remarks:</strong> <br>
+			<p>{{ $loan->remarks }}</p>
 		</td>
 	</tr>
 	<tr >
