@@ -93,6 +93,9 @@
         <hr>
         <div>
           <div class="col-xs-12 col-sm-6 col-md-6">
+              @if($loan->check_created_at == null && $loan->status == $utils->getStatusIndex('treasury'))
+              <span class="help-block">To be filled up only when check is ready for release.</span>
+              @endif
             <div class="form-group">
               <label>CV No</label>
               @if($loan->check_created_at == null && $loan->status == $utils->getStatusIndex('treasury'))
