@@ -2,7 +2,7 @@
 
 namespace eFund;
 
-use EFund\Employee;
+use eFund\Employee;
 use Illuminate\Database\Eloquent\Model;
 
 class GLimits extends Model

@@ -34,13 +34,21 @@ class GuarantorController extends Controller
      public function index()
     {
     	$guarantors = Guarantor::guarantors()->orderBy('id', 'desc')->paginate(10);
-        
+
         for ($i=0; $i < count($guarantors); $i++) { 
             $guarantors[$i]->FullName = $guarantors[$i]->FullName;
         }
 
+        $GLimit = GLimits::limit(Auth::user()->employee_id);
+        $GAmount = Guarantor::guaranteedAmountLimit(Auth::user()->employee_id)->sum('guaranteed_amount');
+
+        $GAmount = $GLimit->Amount - $GAmount;
+        if($GAmount < 0)
+            $GAmount = 0;
+
     	return view('admin.guarantors.index')
     			->withGuarantors($guarantors)
+                ->with('GAmount', $GAmount) 
     			->withUtils($this->utils);
     }
 
@@ -51,14 +59,8 @@ class GuarantorController extends Controller
             $loan = Loan::findOrFail($guarantor->eFundData_id);
             $employee = Employee::where('EmpID', $loan->EmpID)->first();
             $terms = Terms::getRankLimits($employee->RankDesc);
-            $limits = 0;
 
-            if(str_contains(strtolower($guarantor->RankDesc), 'supervisor'))
-                $limits = GLimits::where('RankDesc','like', '%supervisor%')->first();
-            else if(str_contains(strtolower($guarantor->RankDesc), 'manager'))
-                $limits = GLimits::where('RankDesc','like', '%manager%')->first();
-            else if(str_contains(strtolower($guarantor->RankDesc), 'president'))
-                $limits = GLimits::where('RankDesc','like', '%president%')->first();
+            $limits = GLimits::limit($EmpID);
             
             if(empty($limits))
                 $limits = 0;
@@ -73,7 +75,7 @@ class GuarantorController extends Controller
                 ->withTerms($terms)
                 ->withLimits($limits)
                 ->withUtils($this->utils);
-                
+
         } catch (Exception $e) {
             abort(500);
         }
