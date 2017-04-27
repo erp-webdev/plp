@@ -45,10 +45,6 @@ class NotifyOnCheckReleased extends EmailController
 
     public function notifyPayroll($loan)
     {
-        $pref = Preference::name('payroll_notif');
-        if($pref->value != 1)
-            return;
-        
         $employees = DB::table('viewUserPermissions')->where('permission', 'payroll')->get();
         $utils = new Utils();
 
@@ -82,6 +78,18 @@ class NotifyOnCheckReleased extends EmailController
         }
     }
 
+    public function notifyGuarantor($loan)
+    {
+        $pref = Preference::name('guarantor_notif');
+        if($pref->value != 1)
+            return;
+
+        $utils = new Utils();
+        $args = ['loan' => $loan, 'utils' => $utils];
+
+        $this->send($loan->guarantor_EmpID, config('preferences.notif_subjects.check_signed', 'Loan Application Notification'), 'emails.checkSigned_guarantor', $args, $cc = '');
+    }
+
     /**
      * Handle the event.
      *
@@ -93,5 +101,6 @@ class NotifyOnCheckReleased extends EmailController
         $this->notifyEmployee($event->loan);
         $this->notifyPayroll($event->loan);
         $this->notifyCustodian($event->loan);
+        $this->notifyGuarantor($event->loan);
     }
 }

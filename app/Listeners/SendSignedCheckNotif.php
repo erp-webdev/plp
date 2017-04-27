@@ -36,8 +36,8 @@ class SendSignedCheckNotif extends EmailController
     public function handle(CheckSigned $event)
     {
         $this->notifyEmployee($event->loan);
-        $this->notifyGuarantor($event->loan);
-        $this->notifyCustodian($event->loan);
+        // $this->notifyGuarantor($event->loan);
+        // $this->notifyCustodian($event->loan);
     }
 
     public function notifyEmployee($loan)
