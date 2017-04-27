@@ -183,7 +183,7 @@ class ReportController extends Controller
     {
           return Loan:: where(function($query) use ($fromDate, $toDate, $EmpID, $status){
                     if(!empty($fromDate) && !empty($toDate)){
-                        $query->where('start_of_deductions', '>=', $fromDate)->where('start_of_deductions', '<=', $toDate)->orderBy('start_of_deductions', 'desc');
+                        $query->where('start_of_deductions', '>=', $fromDate)->where('start_of_deductions', '<=', $toDate);
                     }
 
                     if(!empty($EmpID)){
@@ -201,7 +201,7 @@ class ReportController extends Controller
                             $query->where('status', $this->utils->getStatusIndex('denied'));
                     }
                     
-                })->get();
+                })->orderBy('FullName', 'asc')->get();
     }
 
     public function summaryReport($fromDate, $toDate, $EmpID, $status)
