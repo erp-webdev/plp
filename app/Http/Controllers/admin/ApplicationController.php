@@ -84,7 +84,7 @@ class ApplicationController extends Controller
         if($records_this_year == 0)
             $months = 12;
 
-
+        $allow_max = Preference::name('allow_over_max');
     	return view('admin.applications.create')->withLoan($loan)
                 ->withEmployee($employee)
                 ->withRecords($records)
@@ -93,6 +93,7 @@ class ApplicationController extends Controller
                 ->withBalance($balance)
                 ->withMonths($months)
                 ->with('records_this_year', $records_this_year)
+                ->with('overMax', $allow_max->value)
                 ->withUtils(new Utils());
     }
 
@@ -119,6 +120,7 @@ class ApplicationController extends Controller
         $months = 12;
         if($records_this_year > 0)
             $months = $this->utils->getTermMonths();
+        $allow_max = Preference::name('allow_over_max');
 
     	return view('admin.applications.create')
     	->withEmployee($employee)
@@ -128,6 +130,7 @@ class ApplicationController extends Controller
         ->withBalance($balance)
         ->withMonths($months)
         ->with('records_this_year', $records_this_year)
+        ->with('overMax', $allow_max->value)
         ->withUtils(new Utils());
     }
 

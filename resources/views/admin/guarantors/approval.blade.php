@@ -105,7 +105,7 @@
         else
           $max = $loan->total;
       ?>
-      Php <input type="number" name="guaranteed_amount" style="width: 100px" min="{{ $gAmount }}" value="{{ $gAmount }}" max="{{ $max }}" required>
+      Php <input type="number" name="guaranteed_amount" style="width: 100px" min="{{ $gAmount }}" value="{{ $gAmount }}" max="" required>
     @else
       <span>Php {{ number_format($loan->guaranteed_amount, 2, '.', ',') }}</span>
     @endif

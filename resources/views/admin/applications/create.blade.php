@@ -1,7 +1,7 @@
 @extends('admin.layouts.app')
 @section('content')
 <div ng-app="loanApp" ng-controller="LoanCtrl">
-	<div class="row">
+	<div class="row" >
 		<div class="col-xs-12 col-sm-12 col-md-12">
 			<h1>	Loan Application 
 					<span style="font-size: 14px; font-weight: normal">
@@ -42,7 +42,7 @@
 		</div>
 	</div>
 	<input type="hidden" id="getEmployeeURL" value="{{ url('/getEmployee') }}">
-	<form class="form form-horizontal" action="{{ route('applications.store') }}" method="post">
+	<form class="form form-horizontal" action="{{ route('applications.store') }}" method="post" ">
 	<input type="hidden" name="_token" value="{{ csrf_token() }}">
 	<input type="number" id="id" name="id" ng-model="id" style="display: none">
 		<div class="row">
@@ -94,7 +94,7 @@
 					<div class="col-md-8">
 						<div class="input-group">
 							<span class="input-group-addon">Php</span>
-							<input name="loan_amount" type="number" class="form-control input-sm" name="loan_amount" ng-model="loan" required ng-change="computeTotal()" ng-keyup="computeTotal()" step="500" >
+							<input name="loan_amount" type="number" class="form-control input-sm" name="loan_amount" ng-model="loan" required ng-change="computeTotal()" ng-keyup="computeTotal()" step="500" max="<?php if($overMax == 0) echo $terms->max_amount; ?>">
 							<span class="input-group-addon">.00</span>
 						</div>
 						<span class="help-block">Min: {{ $terms->min_amount }} - Max: {{ $terms->max_amount }}</span>
@@ -152,7 +152,7 @@
 						<div class="form-group">
 							<span class="col-md-4">Name</span>
 							<div class="col-md-8">
-								<input type="text" class="form-control input-sm" value="{{ $employee->FullName }}" disabled>
+								<input type="text"  class="form-control input-sm" value="{{ $employee->FullName }}" disabled>
 							</div>
 						</div>
 						<div class="form-group">
