@@ -1,7 +1,7 @@
 @extends('admin.layouts.app')
 @section('content')
   <div class="modal fade" tabindex="-1" role="dialog" id="loan">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog " role="document">
       <div class="modal-content">
         
       </div><!-- /.modal-content -->
@@ -11,7 +11,7 @@
    
 	<div class="row" ng-app="ApprovalApp" ng-controller="ApprovalCtrl">
 		<div class="modal fade" tabindex="-1" role="dialog" id="deductions">
-		    <div class="modal-dialog" role="document">
+		    <div class="modal-dialog modal-lg" role="document">
 		      	<div class="modal-contents" style="background-color: #fff">
 	                <div class="modal-header">
 	                    <div class="modal-title"><h4>Deduction List</h4></div>

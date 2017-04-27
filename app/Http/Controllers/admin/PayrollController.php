@@ -35,7 +35,7 @@ class PayrollController extends Controller
             $search = $_GET['search'];
 
     	$loans = Loan::notDenied()
-                    ->where('status', '>=', $this->utils->getStatusIndex('payroll'))
+                    ->where('status', '=', $this->utils->getStatusIndex('payroll'))
                     ->search($search)
                     ->orderBy('id', 'desc')
                     ->paginate($show);
