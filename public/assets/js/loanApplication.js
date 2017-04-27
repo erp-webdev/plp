@@ -95,9 +95,8 @@ app.controller('LoanCtrl', function($scope, $http) {
 	    });
 	};
 	
+	$scope.$watchGroup(['loan', 'loc', 'mos', 'interest', 'head', 'surety'], function() {
+	    $('#submit').attr('disabled', 'disabled');
+	});
 
-
-	   
-
-	
 });
