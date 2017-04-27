@@ -9,6 +9,10 @@
 	table{
 		border-collapse: collapse;
 	}
+	td{
+		white-space: nowrap;
+		word-break: keep-all;
+	}
 </style>
 <div class="table-responsive">
 	<table style="width: 100%;" class="table-hover">
@@ -28,11 +32,11 @@
 				<td style="text-align: left; ">{{ $loan->ctrl_no }}</td>
 				<td style="text-align: left">{{ $loan->EmpID }}</td>
 				<td style="text-align: left">{{ ucwords(strtolower($loan->FullName)) }}</td>
-				<td style="text-align: center">{{ $loan->released }}</td>
+				<td style="text-align: center">{{ date('m/d/Y', strtotime($loan->released)) }}</td>
 				<td style="text-align: right">{{ $utils->formatNumber($loan->total) }}</td>
 				<td style="text-align: center">{{ $loan->terms_month * 2 }}</td>
 				<td style="text-align: right">{{ $utils->formatNumber($loan->deductions) }}</td>
-				<td style="text-align: center">{{ $loan->start_of_deductions }}</td>
+				<td style="text-align: center">{{ date('m/d/Y', strtotime($loan->start_of_deductions)) }}</td>
 			</tr>
 			@endforeach
 		</tbody>
