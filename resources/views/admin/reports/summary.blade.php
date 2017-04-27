@@ -7,6 +7,10 @@
 		text-align: center;
 		vertical-align: text-top;
 	}
+	td{
+		word-break: keep-all;
+		white-space: nowrap;
+	}
 </style>
 <div class="table-responsive">
 	<table style="width: 100%; font-size: 10px" class="table-hover">
@@ -37,20 +41,20 @@
 				<td>{{ $loan->EmpID }}</td>
 				<td>{{ ucwords(strtolower($loan->FullName)) }}</td>
 				<td>{{ ucwords(strtolower($loan->guarantor_FullName)) }}</td>
-				<td>{{ $loan->created_at }}</td>
+				<td>{{ date('m/d/Y', strtotime($loan->created_at)) }}</td>
 				<td>{{ $loan->cv_no }}</td>
-				<td>{{ $loan->cv_date }}</td>
+				<td>{{ date('m/d/Y', strtotime($loan->cv_date)) }}</td>
 				<td>{{ $loan->check_no }}</td>
-				<td>{{ $loan->released }}</td>
+				<td>{{ date('m/d/Y', strtotime($loan->released)) }}</td>
 				<td style="text-align: right">{{ $utils->formatNumber($loan->loan_amount) }}</td>
 				<td style="text-align: right">{{ $utils->formatNumber($loan->int_amount) }}</td>
 				<td style="text-align: right">{{ $utils->formatNumber($loan->total) }}</td>
 				<td>{{ $loan->terms_month }}</td>
 				<td style="text-align: right">{{ $utils->formatNumber($loan->deductions) }}</td>
-				<td>{{ $loan->start_of_deductions }}</td>
+				<td>{{ date('m/d/Y', strtotime($loan->start_of_deductions)) }}</td>
 				<td style="text-align: right">{{ $utils->formatNumber($loan->paid_amount) }}</td>
 				<td style="text-align: right">{{ $utils->formatNumber(round($loan->balance, 2)) }}</td>
-				<td>&nbsp;</td>
+				<td>{{ $loan->remarks }}</td>
 			</tr>
 			@endforeach
 		</tbody>
