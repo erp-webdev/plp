@@ -47,7 +47,8 @@ class LoanController extends Controller
         if(isset($_GET['search']))
             $search = $_GET['search'];
 
-     	$loans = Loan::orderBy('ctrl_no', 'desc')
+     	$loans = Loan::where('status', '>', $this->utils->getStatusIndex('guarantor'))
+                    ->orderBy('ctrl_no', 'desc')
                     ->search($search)
                     ->paginate($show);
 
@@ -514,9 +515,9 @@ class LoanController extends Controller
         // $today = date('Y-m-d 17:00:00');
 
         // $loans = Loan::where('status', $this->utils->getStatusIndex('payroll'))
-        //             ->whereBetween('created_at', [$yesterday, $today])
-        //             ->orderBy('ctrl_no')
-        //             ->get();
+                    // ->where('created_at', '<' ,date('Y-m-d 17:00:00'))
+                    // ->orderBy('ctrl_no')
+                    // ->get();
 
         // All unverified loans
         $loans = Loan::where('status', $this->utils->getStatusIndex('payroll'))->orderBy('ctrl_no')->get();
