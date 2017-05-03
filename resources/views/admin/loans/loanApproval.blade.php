@@ -259,7 +259,7 @@
 		    					<input  class="form-control input-sm" type="text" name="ar_no[]" value="{{ $deduction->ar_no }}" <?php if($deduction->amount <> 0) echo 'readonly'; ?>>
 		    				</td>
 		    				<td style="width: 25px"><input class="form-control input-sm" type="number" step="any" name="amount[]" value="{{ $deduction->amount }}" <?php if($deduction->amount <> 0) echo 'readonly'; ?>></td>
-		    				<td style="width: 25px"><input class="form-control input-sm" type="number" step="any" name="balance[]" value="{{ $deduction->balance }}" disabled></td>
+		    				<td style="width: 25px"><input class="form-control input-sm" type="number" step="any" name="balance[]" value="{{ number_format($deduction->balance, 2, '.', '') }}" disabled ></td>
 		    			</tr>
 		    			<?php $totalAmount += $deduction->amount;  
 		    					if(!empty(trim($deduction->ar_no)))

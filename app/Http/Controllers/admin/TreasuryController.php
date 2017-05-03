@@ -86,7 +86,6 @@ class TreasuryController extends Controller
             // Set Start of deductions
     		$loan = Loan::find($request->id);
     		$loan->status = $this->utils->setStatus($loan->status);
-            $loan->start_of_deductions = $this->utils->getStartOfDeduction($treasury->check_released);
     		$loan->save();
 
             Event::fire(new CheckSigned($loan));
@@ -96,17 +95,22 @@ class TreasuryController extends Controller
     		return redirect()->back()->withSuccess(trans('loan.application.cheque'));
 
     	}else{
+            // Released
             DB::beginTransaction();
     		$treasury = Treasury::where('eFundData_id', $request->id)->first();
     		$treasury->released = date('m-d-y H:i:s');
+            $loan->start_of_deductions = $this->utils->getStartOfDeduction($treasury->released);
     		$treasury->save();
 
     		$loan = Loan::find($request->id);
     		$loan->status = $this->utils->setStatus($loan->status);
     		$loan->save();
 
+            // Loan Application Counts within the current year based on the application date
+            $records_this_year = Loan::employee()->yearly()->notDenied()->count();
+
             // Create Deduction schedule
-            DB::select('EXEC spCreateDeductionSchedule ?, ?, ?, ?', [$loan->start_of_deductions, $loan->terms_month, $loan->id, 0]);
+            DB::select('EXEC spCreateDeductionSchedule ?, ?, ?, ?, ?', [$loan->start_of_deductions, $loan->terms_month, $loan->id, 0, $records_this_year]);
             // Update Balance
             DB::select('EXEC updateBalance ?, ?', [$loan->id, $loan->total]);
 

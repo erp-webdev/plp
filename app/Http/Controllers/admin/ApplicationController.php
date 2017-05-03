@@ -109,7 +109,7 @@ class ApplicationController extends Controller
     	$employee = Employee::current()->first();
         // Loan Application Counts
     	$records = Loan::employee()->notDenied()->count();
-        // Loan Application Counts within the current year
+        // Loan Application Counts within the current year based on the application date
         $records_this_year = Loan::employee()->yearly()->notDenied()->count();
         // Interest percentage
     	$interest = Preference::name('interest');
