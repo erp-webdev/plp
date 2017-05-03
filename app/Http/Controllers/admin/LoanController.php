@@ -438,7 +438,6 @@ class LoanController extends Controller
     public function applyBatchDeductions(Request $request)
     {
         DB::beginTransaction();
-
         for($i = 0; $i < count($request->id); $i++){
             $id = 'id' . $request->id[$i];
             $amount = 'amount' . $request->id[$i];
@@ -460,13 +459,31 @@ class LoanController extends Controller
                             'updated_by'    => Auth::user()->id
                         ]
                     );
+
                     // Update Balance
-                    DB::select('EXEC updateBalance ?, ?', [(float)$emp->eFundData_id, (float)$emp->total]);
+                    DB::select('EXEC updateBalance ?, ?', [$emp->eFundData_id, $emp->total]);
                 }
             }
         }
-
         DB::commit();
+
+        // Update Balance
+        for($i = 0; $i < count($request->id); $i++){
+            $id = 'id' . $request->id[$i];
+            $amount = 'amount' . $request->id[$i];
+            $deduction = 'deduction' . $request->id[$i];
+
+            if(isset($request->$id)){
+
+                $emp = Ledger::find($request->$id)->first();
+
+                if(empty($emp))
+                    continue;
+
+                // Update Balance
+                DB::select('EXEC updateBalance ?, ?', [$emp->eFundData_id, $emp->total]);
+            }
+        }
 
         return redirect()->route('admin.loan')->withSuccess('Deductions Applied successfully!');
     }
