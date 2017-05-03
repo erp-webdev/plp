@@ -39,10 +39,9 @@ class TreasuryController extends Controller
         if(isset($_GET['search']))
             $search = $_GET['search'];
 
-
     	$loans = Loan::notDenied()
-                    ->where('status', '=', 4)
-                    ->where('status', '=', 5)
+                    ->where('status', $this->utils->getStatusIndex('treasury'))
+                    ->OrWhere('status', $this->utils->getStatusIndex('release'))
                     ->search($search)
                     ->orderBy('created_at', 'desc')
                     ->paginate($show); 
