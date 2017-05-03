@@ -71,7 +71,12 @@
 		<h3>Contents</h3>
         <ul>
             <li><a href="#login">Login System</a></li>
-            <li><a href="#application">Loan Application</a></li>
+            <li><a href="#application">Loan Application</a>
+                <ul>
+                    <li><a href="#appMgt"> Application Management</a></li>
+                </ul>
+
+            </li>
             <li><a href="#loan">Loan Management</a></li>
             <li><a href="#endorsements">Endorsements</a></li>
             <li><a href="#guarantors">Guarantors</a></li>
@@ -99,11 +104,11 @@
             <h1 id="application">Loan Application</h1>
             <p>By default, Loan applications is enabled to all regular employees of Megaworld Corp. This is where employees will submit their loan applications. The eFund System provides easy and yet with several verifications of loan applications allowable to each employee. The employee can file their applications through <strong>My eFunds <img src="{{ url('efund_sm.png') }}" style="background-color: black"></strong> menu.</p>
 
-            <h4>Application Management</h4>
+            <h4 id="appMgt">Application Management</h4>
             <p><strong>My eFunds</strong> provides a listing of all owned previous, current and saved loans applications of the employee.</p>
             <p>To view application, click <i class="fa fa-eye"></i> icon that correspond to the application to be viewed.</p> 
             <p>Applications can only be edited or modified when it is saved only and not yet submitted.</p>
-            <p>Application can be monitored through the its status.</p>
+            <p>Application can be monitored through its status.</p>
             <div class="bs-callout bs-callout-info">
                 <h4>Application Statuses</h4>
                 <div class="table-responsive">
@@ -185,5 +190,16 @@
             <h1></h1>
         </div>
 
+        <div>
+            <h1 id="endorsements">Endorsements</h1>
+            <p>In general, Endorsements is an act of giving one's approval or support.</p>
+            <h4>Endorsement Management</h4>
+            <p>To view application, click <i class="fa fa-eye"></i> icon that correspond to the application to be viewed.</p>
+            <p>Applications can only be approved or denied.</p>
+            <ol></ol>
+            <h4></h4>
+        </div>
+
+        <div></div>
 	</div>
 @endsection

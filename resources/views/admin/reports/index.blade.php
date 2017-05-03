@@ -36,7 +36,6 @@
 		
 		<hr>
 		<div class="col-xs-12 col-sm-2 col-md-2">
-			<strong>Type</strong>
 			<ul class="list-group">
 				<li class="list-group-item" onclick="$type = 'payroll'; showReport()"><i class="fa fa-book"></i> Payroll Notification</li>
 				<li class="list-group-item" onclick="$type = 'summary'; showReport()"><i class="fa fa-book"></i> Loan Summary</li>
@@ -44,25 +43,44 @@
 			<div>
 				<strong>Filter</strong>
 				<div id="filter">
-					<div class="form-group">
-						Date From <input class="form-control input-sm" type="date" id="fromDate">
-						Date To     <input class="form-control  input-sm" type="date" id="toDate">
+					<div class="" style="overflow: scroll; height: 40vh">
+						<div class="form-group">
+							Application Date <input class="form-control input-sm" type="date" id="fromDate">
+							To    <input class="form-control  input-sm" type="date" id="toDate">
+						</div>
+						<div class="form-group">
+							Employee ID
+							<input type="search" id="EmpID" class="form-control  input-sm" placeholder="YYYY-MM-XXXX">
+						</div>
+						<div class="form-group">
+							Status
+							<select id="status" class="form-control  input-sm">
+								<option value="0">All</option>
+								<option value="1">Paid</option>
+								<option value="2">Active Account</option>
+								<option value="3">For Approval</option>
+								<option value="4">Denied</option>
+							</select>
+						</div>
+						<!-- <div class="form-group">
+							Others
+							<select id="others" class="form-control  input-sm">
+								<option value="0">Name</option>
+								<option value="1">Guarantor</option>
+								<option value="2">Check Released</option>
+							</select>
+						</div> -->
+						<div class="form-group">
+							Sort By
+							<select id="sort" class="form-control  input-sm">
+								<option value="FullName">Employee Name</option>
+								<option value="ctrl_no">Control #</option>
+								<option value="EmpID">Employee ID</option>
+								<option value="created_at">Date of Application</option>
+								<option value="loan_amount">Loan Amount</option>
+							</select>
+						</div>
 					</div>
-					<div class="form-group">
-						Employee ID
-						<input type="search" id="EmpID" class="form-control  input-sm" placeholder="YYYY-MM-XXXX">
-					</div>
-					<div class="form-group">
-						Status
-						<select id="status" class="form-control  input-sm">
-							<option value="0">All</option>
-							<option value="1">Paid</option>
-							<option value="2">Active Account</option>
-							<option value="3">For Approval</option>
-							<option value="4">Denied</option>
-						</select>
-					</div>
-
 					<a onclick="showReport()" class="btn btn-sm btn-block btn-success"><i class="fa fa-filter"></i> Filter</a>
 				</div>
 			</div>
@@ -103,6 +121,10 @@
 		if($type == ''){
 			$('#reportView').html('<div class="alert alert-danger">Please select report to be generated.</div>');
 			return;
+		}else if($type == 'payroll'){
+			$('#status').val(2);
+		}else{
+			$('#status').val(0);
 		}
 
 		startLoading();
@@ -113,6 +135,7 @@
 	        		"?dateFrom=" + $('#fromDate').val() +
 	        		"&dateTo=" + $('#toDate').val() +
 	        		"&EmpID=" + $('#EmpID').val() +
+	        		"&sort=" + $('#sort').val() +
 	        		"&status=" + $('#status').val(),
 	        data: {'_token=': "{{ csrf_token() }}" },
 	        success: function(data){

@@ -39,6 +39,7 @@ class ReportController extends Controller
     	$toDate = '';
     	$EmpID = '';
     	$status = '';
+        $sort = 'FullName';
 
     	if(isset($_GET['dateFrom']))
     		$fromDate = $_GET['dateFrom'];
@@ -52,24 +53,33 @@ class ReportController extends Controller
     	if(isset($_GET['status']))
     		$status = $_GET['status'];
 
+        if(isset($_GET['sort']))
+            $sort = $_GET['sort'];
+
+        $args = [   'dateFrom' => $fromDate, 
+                    'toDate' => $toDate, 
+                    'EmpID' => $EmpID, 
+                    'status' => $status, 
+                    'sort' => $sort
+                ];
 
     	switch ($type) {
     		case 'payroll':
-    			$loans = $this->payrollReport($fromDate, $toDate, $EmpID, $status);
+    			$loans = $this->payrollReport($args);
 
 				return view('admin.reports.payrollNotif')
 					->withLoans($loans)
 					->withUtils($this->utils);
     		
 			case 'summary':
-				$loans = $this->summaryReport($fromDate, $toDate, $EmpID, $status);
+				$loans = $this->summaryReport($args);
 
 				return view('admin.reports.summary')
 					->withLoans($loans)
 					->withUtils($this->utils);
 
 			case 'ledger':
-				$ledger = $this->ledgerReport($fromDate, $toDate, $EmpID, $status);
+				$ledger = $this->ledgerReport($args);
 
 	    		return view('admin.ledger.ledger')
 	    			->withLedgers($ledger)
@@ -88,6 +98,7 @@ class ReportController extends Controller
         $EmpID = '';
         $status = '';
         $format = 'html';
+        $sort = 'FullName';
         $title = 'Megaworld Efund System';
 
         if(isset($_GET['dateFrom']))
@@ -104,6 +115,16 @@ class ReportController extends Controller
 
          if(isset($_GET['format']))
             $format = $_GET['format'];
+
+        if(isset($_GET['sort']))
+            $sort = $_GET['sort'];
+
+        $args = [   'dateFrom' => $fromDate, 
+                    'toDate' => $toDate, 
+                    'EmpID' => $EmpID, 
+                    'status' => $status, 
+                    'sort' => $sort
+                ];
         
         $html = '';
         $loans = [];
@@ -111,15 +132,15 @@ class ReportController extends Controller
 
         // Get loan  data
         if($type == 'payroll'){
-            $loans = $this->payrollReport($fromDate, $toDate, $EmpID, $status);
+            $loans = $this->payrollReport($args);
             $title = 'Efund Payroll Deduction List';
         }
         elseif($type == 'summary'){
-            $loans = $this->summaryReport($fromDate, $toDate, $EmpID, $status);
+            $loans = $this->summaryReport($args);
             $title = 'Efund Summary Report - ' . date('Ymd');
         }
         elseif($type == 'ledger'){
-            $ledger = $this->ledgerReport($fromDate, $toDate, $EmpID, $status);
+            $ledger = $this->ledgerReport($args);
             $title = 'Efund Ledger - ' . $EmpID;
         }
 
@@ -179,15 +200,15 @@ class ReportController extends Controller
         
     }
 
-    public function payrollReport($fromDate, $toDate, $EmpID, $status)
+    public function payrollReport($args)
     {
-          return Loan:: where(function($query) use ($fromDate, $toDate, $EmpID, $status){
-                    if(!empty($fromDate) && !empty($toDate)){
-                        $query->where('start_of_deductions', '>=', $fromDate)->where('start_of_deductions', '<=', $toDate);
+          return Loan:: where(function($query) use ($args){
+                    if(!empty($arg['fromDate']) && !empty($arg['toDate'])){
+                        $query->where('start_of_deductions', '>=', $arg['fromDate'])->where('start_of_deductions', '<=', $arg['toDate']);
                     }
 
-                    if(!empty($EmpID)){
-                        $query->where('EmpID', $EmpID);
+                    if(!empty($args['EmpID'])){
+                        $query->where('EmpID', $args['EmpID']);
                     }
 
                     if(!empty($status)){
@@ -201,19 +222,19 @@ class ReportController extends Controller
                             $query->where('status', $this->utils->getStatusIndex('denied'));
                     }
                     
-                })->orderBy('FullName', 'asc')->get();
+                })->orderBy($args['sort'], 'asc')->get();
     }
 
-    public function summaryReport($fromDate, $toDate, $EmpID, $status)
+    public function summaryReport($args)
     {
-        return Loan::where(function($query) use ($fromDate, $toDate, $EmpID, $status){
+        return Loan::where(function($query) use ($args){
 
-                if(!empty($fromDate) && !empty($toDate)){
-                    $query->where('created_at', '>=', $fromDate)->where('created_at', '<=', $toDate .' 23:59:59');
+                if(!empty($args['fromDate']) && !empty($args['toDate'])){
+                    $query->where('created_at', '>=', $args['fromDate'])->where('created_at', '<=', $args['toDate'] .' 23:59:59');
                 }
 
                 if(!empty($EmpID)){
-                    $query->where('EmpID', 'LIKE', '%' . $EmpID . '%');
+                    $query->where('EmpID', 'LIKE', '%' . $args['EmpID'] . '%');
                 }
 
                 if(!empty($status)){
@@ -227,13 +248,13 @@ class ReportController extends Controller
                         $query->where('status', $this->utils->getStatusIndex('denied'));
                 }
                 
-            })->orderBy('FullName', 'asc')->get();
+            })->orderBy($args['sort'], 'asc')->get();
     }
 
-    public function ledgerReport($fromDate, $toDate, $EmpID, $status)
+    public function ledgerReport($args)
     {
-        return Ledger::where('EmpID', $EmpID)
-                ->orderBy('ctrl_no', 'asc')->get();
+        return Ledger::where('EmpID', $args['EmpID'])
+                ->orderBy($args['sort'], 'asc')->get();
     }
 
     public function formatExcel($loans, $type, $format = 'xlsx', $title = 'Megaworld EFund System')
