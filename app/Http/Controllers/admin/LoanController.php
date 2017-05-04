@@ -153,10 +153,11 @@ class LoanController extends Controller
                 $deduction->amount = $request->amount[$i];
                 $deduction->updated_by = Auth::user()->id;
                 $deduction->save();
+
+                // Update Balance
+                DB::select('EXEC updateBalance ?', [$request->id[$i]]);
             }
         }
-        // Update Balance
-        DB::select('EXEC updateBalance ?, ?', [$loan->id, $loan->total]);
 
         DB::commit();
 
@@ -445,10 +446,10 @@ class LoanController extends Controller
 
             if(isset($request->$id)){
 
-                $emp = Ledger::find($request->$id)->first();
+                // $emp = Ledger::find($request->$id)->first();
 
-                if(empty($emp))
-                    continue;
+                // if(empty($emp))
+                //     continue;
 
                 if(isset($request->$amount)){
 
@@ -461,29 +462,12 @@ class LoanController extends Controller
                     );
 
                     // Update Balance
-                    DB::select('EXEC updateBalance ?, ?', [$emp->eFundData_id, $emp->total]);
+                    DB::select('EXEC updateBalance1 ?', [$request->$id]);
                 }
             }
         }
         DB::commit();
 
-        // Update Balance
-        for($i = 0; $i < count($request->id); $i++){
-            $id = 'id' . $request->id[$i];
-            $amount = 'amount' . $request->id[$i];
-            $deduction = 'deduction' . $request->id[$i];
-
-            if(isset($request->$id)){
-
-                $emp = Ledger::find($request->$id)->first();
-
-                if(empty($emp))
-                    continue;
-
-                // Update Balance
-                DB::select('EXEC updateBalance ?, ?', [$emp->eFundData_id, $emp->total]);
-            }
-        }
 
         return redirect()->route('admin.loan')->withSuccess('Deductions Applied successfully!');
     }
