@@ -176,6 +176,8 @@ class LoanController extends Controller
         $loan->status = $this->utils->setStatus($loan->status);
         $loan->save();
 
+        Deduction::where('eFundData_id', $id)->whereNull('ar_no')->orWhere('ar_no', '')->update(['ar_no' => '-']);
+
         Event::fire(new LoanPaid($loan));
 
         DB::commit();
