@@ -50,7 +50,7 @@
 		<!-- Nav tabs -->
 			 <ul class="nav nav-tabs" role="tablist">
 			    <li role="presentation" class="active"><a href="#loans" aria-controls="loans" role="tab" data-toggle="tab">Loans</a></li>
-			    <li role="presentation"><a href="#ledger" aria-controls="ledger" role="tab" data-toggle="tab">Ledger</a></li>
+			    <!-- <li role="presentation"><a href="#ledger" aria-controls="ledger" role="tab" data-toggle="tab">Ledger</a></li> -->
 			  </ul>
 
 			  <!-- Tab panes -->

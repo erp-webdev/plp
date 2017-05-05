@@ -64,6 +64,8 @@ class LedgerController extends Controller
             $from = $_GET['from'];
 
     	$ledger = Ledger::where('EmpID', $EmpID)->where(function ($query) use ($to, $from){
+
+                    if(!empty($to) && !empty($from))
                         $query->where('created_at', '<=', $to)
                             ->where('created_at', '>=', $from);
                     })
@@ -85,6 +87,9 @@ class LedgerController extends Controller
     {
         $showBalance = true;
         $format = 'html';
+        $from = '';
+        $to = '';
+
 
         if(isset($_GET['format']))
             $format = $_GET['format'];
@@ -95,7 +100,18 @@ class LedgerController extends Controller
             else
                 $showBalance = false;
 
-        $ledger = Ledger::where('EmpID', $EmpID)
+        if(isset($_GET['to']))
+            $to = $_GET['to'];
+
+        if(isset($_GET['from']))
+            $from = $_GET['from'];
+
+        $ledger = Ledger::where('EmpID', $EmpID)->where(function ($query) use ($to, $from){
+
+                    if(!empty($to) && !empty($from))
+                        $query->where('created_at', '<=', $to)
+                            ->where('created_at', '>=', $from);
+                    })
                     ->orderBy('ctrl_no', 'asc')
                     ->get();
 

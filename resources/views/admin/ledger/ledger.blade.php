@@ -79,15 +79,25 @@
 						<th><br>amount</th>
 						<th>BALANCE</th>
 					</tr>
-					<?php $ctr = 0;?>
+					<?php $ctr = 0; $new = true;?>
 					@foreach($ledgers as $ledger)
+					<?php 
+						if($utils->formatLedger($ledger->eFundData_id, $ctr, $ledger->eFundData_id) != ''){
+							$new = true;
+						}else
+						{
+							$new = false;
+						}
+					 ?>
 					<tr class="<?php if($utils->formatLedger($ledger->eFundData_id, $ctr, $ledger->eFundData_id) != '') echo'new' ?>" >
 						<td>{{ $utils->formatLedger($ledger->created_at, $ctr, $ledger->eFundData_id) }}</td>
 						<td>{{ $utils->formatLedger($ledger->ctrl_no, $ctr, $ledger->eFundData_id) }}</td>
 						<td>{{ $utils->formatLedger($ledger->cv_no, $ctr, $ledger->eFundData_id) }}</td>
 						<td>{{ $utils->formatLedger($ledger->cv_date, $ctr, $ledger->eFundData_id) }}</td>
 						<td>{{ $utils->formatLedger($ledger->check_released, $ctr, $ledger->eFundData_id) }}</td>
-						<td style="text-align: right">{{ $utils->formatLedger($ledger->loan_amount, $ctr, $ledger->eFundData_id) }}</td>
+						<td style="text-align: right">
+								{{ $utils->formatLedger($ledger->loan_amount, $ctr, $ledger->eFundData_id) }}
+						</td>
 						<td style="text-align: right">{{ $utils->formatLedger($ledger->loan_amount_interest, $ctr, $ledger->eFundData_id) }}</td>
 						<td>{{ $utils->formatLedger($ledger->total, $ctr, $ledger->eFundData_id, true) }}</td>
 						<td>{{ $utils->formatLedger($ledger->terms_month, $ctr, $ledger->eFundData_id) }}</td>
