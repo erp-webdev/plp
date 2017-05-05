@@ -317,7 +317,7 @@ class ApplicationController extends Controller
                     ->where('id', '<>', $id)
                     ->sum('balance');
 
-        return $balance;
+        return round($balance, 2);
     }
 
     public function validateAvailment()

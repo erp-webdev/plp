@@ -2,6 +2,10 @@
 $(document).ready(function() {
    	$('#dataTable').DataTable({
    		"aaSorting": [],	
+      paging : false,
+      searching: false,
+      // ordering: false
+      aaSorting: [],
    	});	
 } );
 // <!-- Dropdown -->

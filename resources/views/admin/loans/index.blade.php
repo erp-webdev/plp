@@ -120,20 +120,20 @@
 				 	</div>
 		        </div>
 	        <div class="clearfix"></div>
-				<table  class="table table-striped table-hover table-condensed">
+				<table id="dataTable"  class="table table-striped table-hover table-condensed">
 					<thead>
-						<th>Control No</th>
-						<th>Employee</th>
-						<th>Date Applied</th>
-						<th style="text-align: right">Loan Amount (Php)</th>
-						<!-- <th style="text-align: right">Interest Amount (Php)</th> -->
-						<th style="text-align: right">Total (Php)</th>
-						<th>Terms (mos)</th>
-						<!-- <th style="text-align: right">Deductions (Php)</th> -->
-						<th style="text-align: right">Amount Paid (Php)</th>
-						<th style="text-align: right">Balance (Php)</th>
-						<th>Status</th>
-						<th>Action</th>
+						<th value="ctrl_no">Control No</th>
+						<th value="FullName">Employee</th>
+						<th value="created_at">Date Applied</th>
+						<th value="loan_amount" style="text-align: right">Loan Amount (Php)</th>
+						<!-- <th value="ctrl_no" style="text-align: right">Interest Amount (Php)</th> -->
+						<th value="total" style="text-align: right">Total (Php)</th>
+						<th value="terms_month">Terms (mos)</th>
+						<!-- <th value="ctrl_no" style="text-align: right">Deductions (Php)</th> -->
+						<th value="paid_amount" style="text-align: right">Amount Paid (Php)</th>
+						<th value="balance" style="text-align: right">Balance (Php)</th>
+						<th value="status">Status</th>
+						<th value="id">Action</th>
 					</thead>
 					<tbody>
 						@foreach($loans as $loan)
@@ -167,10 +167,14 @@
 <script type="text/javascript" src="{{ url('/assets/js/ApprovalCtrl.js') }}"></script>
 <script type="text/javascript">
 	var $showUrl = "{{ route('loan.show', 0) }}";
+	var $by = "<?php if(isset($_GET['by'])) echo $_GET['by']; else echo 'desc'; ?>";
+	var $sort = "<?php if(isset($_GET['sort'])) echo $_GET['sort']; else echo 'created_at'; ?>";
+
+
 	function find() {
 		var $show = $('#show').val();
 		var $search = $('#search').val();
-		var $searchUrl = "{{ route('admin.loan') }}" + "?show=" + $show + "&search=" + $search;
+		var $searchUrl = "{{ route('admin.loan') }}" + "?show=" + $show + "&search=" + $search + "&sort=" + $sort + "&by=" + $by;
 		window.location.href = $searchUrl;
 		updateARAmount();
 	}
@@ -282,6 +286,16 @@
 }
 
 
+$('#dataTable thead').on('click', 'th', function () {
+  $sort = $(this).attr('value');
+  if($by == 'desc')
+  	$by = 'asc';
+  else
+  	$by = 'desc';
+
+  find();
+
+});
 
 
 

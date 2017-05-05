@@ -41,14 +41,22 @@ class LoanController extends Controller
     {
         $show = 10;
         $search = '';
+        $sort = 'created_at';
+        $sortBy = 'desc';
         if(isset($_GET['show']))
             $show = $_GET['show'];
 
         if(isset($_GET['search']))
             $search = $_GET['search'];
 
+        if(isset($_GET['sort']))
+            $sort = $_GET['sort'];
+
+        if(isset($_GET['by']))
+            $sortBy = $_GET['by'];
+
      	$loans = Loan::where('status', '>', $this->utils->getStatusIndex('guarantor'))
-                    ->orderBy('ctrl_no', 'desc')
+                    ->orderBy($sort, $sortBy)
                     ->search($search)
                     ->paginate($show);
 
@@ -169,7 +177,7 @@ class LoanController extends Controller
         DB::beginTransaction();
         $loan = Loan::findOrFail($id);
 
-        if($loan->balance > 0)
+        if(round($loan->balance, 2) > 0)
             return redirect()->back()
                 ->withError(trans('loan.application.balance'));
 
