@@ -29,6 +29,7 @@ class LedgerController extends Controller
     {
         $show = 10;
         $search = '';
+        
         if(isset($_GET['show']))
             $show = $_GET['show'];
 
@@ -47,14 +48,26 @@ class LedgerController extends Controller
 
     public function show($EmpID, $showBalance = true)
     {
+        $from = '';
+        $to = '';
+
         if(isset($_GET['bal']))
             if($_GET['bal'] == 'true')
                 $showBalance = true;
             else
                 $showBalance = false;
 
-    	$ledger = Ledger::where('EmpID', $EmpID)
-    		        ->orderBy('ctrl_no', 'asc')
+        if(isset($_GET['to']))
+            $to = $_GET['to'];
+
+        if(isset($_GET['from']))
+            $from = $_GET['from'];
+
+    	$ledger = Ledger::where('EmpID', $EmpID)->where(function ($query) use ($to, $from){
+                        $query->where('created_at', '<=', $to)
+                            ->where('created_at', '>=', $from);
+                    })
+                    ->orderBy('ctrl_no', 'asc')
                     ->get();
 
     	$employee = Employee::where('EmpID', $EmpID)->first();

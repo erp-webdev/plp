@@ -17,7 +17,7 @@
 	                    <p>Batch deduction enables posting of deductions per AR # and date specified.</p>
 	                </div>
 	                <form action="{{ route('loan.deduction.batch') }}" method="POST" class="form-horizontal">
-	                    <div class="modal-body">
+	                    <div class="modal-body" id="deductionBody">
 	                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
 	                        <div class="form-group col-xs-12 col-sm-4 col-md-4">
 	                                <span class="col-xs-12 col-sm-3 col-md-3">Date</span>
@@ -56,7 +56,7 @@
 	                </div>
 	                <form action="{{ route('loan.email.notif') }}" method="post">
 	                	<input type="hidden" name="_token" value="{{ csrf_token() }}">
-	                	<div class="modal-body">
+	                	<div class="modal-body" id="emailModalBody">
 		                	
 		                </div>
 		                <div class="clearfix"></div>

@@ -36,9 +36,9 @@ app.controller('ApprovalCtrl', function($scope, $http, $filter) {
 	        method : "GET",
 	        url : $url,
 	    }).then(function mySucces(response) {
-			$('.modal-body').html(response.data);	
+			$('#emailModalBody').html(response.data);	
 	    }, function myError(response) {
-	        $('.modal-body').html('Something went wrong! Please try again.');
+	        $('#emailModalBody').html('Something went wrong! Please try again.');
 	    });
 	}
 
