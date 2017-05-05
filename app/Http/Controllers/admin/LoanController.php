@@ -432,7 +432,7 @@ class LoanController extends Controller
 
         if(isset($_GET['deductionDate'])){
             $date = $_GET['deductionDate'];
-            $empList = Ledger::select('id', 'EmpID', 'FullName', 'ctrl_no', 'deductions', 'amount')->deductionList($date)->get();
+            $empList = Ledger::select('id', 'EmpID', 'FullName', 'ctrl_no', 'deductions', 'amount', 'ar_no')->deductionList($date)->get();
         }
 
         return view('admin.loans.deductions')->with('empList', $empList);

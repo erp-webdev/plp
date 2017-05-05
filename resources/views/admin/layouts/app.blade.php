@@ -11,6 +11,7 @@
     <link rel="stylesheet" type="text/css" href="{{ url('/') }}/assets/css/custom.css">
     <link href="{{ url('/assets/css/bootstrap-tour.min.css') }}" rel="stylesheet">
     <script src="{{ url('/assets/js/angular.min.js') }}"></script>
+   
 </head>
 <body id="app-layout">
         @yield('modals')
@@ -42,6 +43,7 @@
            this.tour.next();
         }
     </script>
+    
     <style type="text/css">
         .popover[class*=tour-]{
           z-index: 15000;

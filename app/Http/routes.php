@@ -23,6 +23,7 @@ Route::group(['prefix' => '/', 'middleware' => ['auth']], function(){
 	Route::get('/', ['as' => 'admin.dashboard', 'uses' => 'admin\DashboardController@index']);
 	Route::get('/notification/seen/{id}', ['as' => 'notif.seen', 'uses' => 'admin\NotificationController@seen']);
 	Route::get('/notifications/{ctr}', ['as' => 'notifs', 'uses' => 'admin\DashboardController@loadNotification']);
+	Route::get('/notifications/{ctr}', ['as' => 'notifs', 'uses' => 'admin\DashboardController@loadNotification']);
 
 	// Loans
 	Route::get('loans', ['as' => 'admin.loan', 'uses' => 'admin\LoanController@index', 'middleware' => ['permission:loan_list']]);
@@ -44,6 +45,8 @@ Route::group(['prefix' => '/', 'middleware' => ['auth']], function(){
 	Route::get('reports', ['as' => 'report.index', 'uses' => 'admin\ReportController@index', 'middleware' => ['permission:custodian']]);
 	Route::get('reports/{type}', ['as' => 'report.show', 'uses' => 'admin\ReportController@show', 'middleware' => ['permission:custodian']]);
 	Route::get('reports/generate/{type}', ['as' => 'report.print', 'uses' => 'admin\ReportController@generate', 'middleware' => ['permission:custodian']]);
+	//Dashboard Charts
+	Route::get('charts', ['as' => 'charts', 'uses' => 'admin\ReportController@printChart', 'middleware' => ['permission:custodian']]);
 
 	// Ledger
 	Route::get('ledger', ['as' => 'ledger.index', 'uses' => 'admin\LedgerController@index', 'middleware' => ['permission:officer|custodian']]);

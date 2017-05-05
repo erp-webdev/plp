@@ -14,7 +14,6 @@ use eFund\Loan;
 use eFund\Endorser;
 use eFund\Notification;
 use eFund\Events\SendMail;
-
 use eFund\Http\Requests;
 use Illuminate\Http\Request;
 use eFund\Http\Controllers\Controller;

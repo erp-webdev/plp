@@ -10,12 +10,15 @@ use DB;
 use Log;
 use Auth;
 use Excel;
+use Entrust;
 use Session;
 use eFund\Loan;
 use Dompdf\Dompdf;
 use eFund\Http\Requests;
 use eFund\Utilities\Utils;
+
 use eFund\Http\Controllers\Controller;
+use eFund\Http\Controllers\admin\DashboarController;
 
 class ReportController extends Controller
 {
@@ -318,5 +321,29 @@ class ReportController extends Controller
             });
         })->download($type);
     }
-   
+
+    public function printChart()
+    {
+        $dashboard = new DashboardController();
+
+        $data = (object)[];
+
+        if(Entrust::can(['officer', 'custodian'])){
+            // Yearly Application Statistics
+            $data->appDatasets = $dashboard->appDatasets();
+            // Rank Statistics
+            $data->rankDatasets = $dashboard->rankDatasets();
+            $data->stats = DB::table('DashboardView')->first();
+            // Yearly Income (5 years)
+            $data->incomeDatasets = $dashboard->incomeDatasets();
+            
+            // Monthly Income of the current year
+            $data->IncomeMonthlyDatasets = $dashboard->incomeMonthlyDatasets(date('Y'));
+        }
+
+        $html = view('admin.charts')
+                ->with('data', $data);
+
+        return $this->stream($html, 'html');
+    }
 }

@@ -94,7 +94,7 @@
 			</div>
 			@endif
 		</div>
-		<div class="col-xs-12 col-sm-6 col-md-8">
+		<div id="chartsDiv" class="col-xs-12 col-sm-6 col-md-8">
 			<!-- CHARTS -->
 			@permission(['officer', 'custodian'])
 				@if(count($data->appDatasets) > 0)
@@ -117,6 +117,8 @@
 				</div>
 			@endpermission
 		</div>
+			<p class=""><a id="print" onclick="print()" target="_blank" download="ChartJpg.jpg"><i class="fa fa-print"></i> ad</a></p>
+			<p class=""><a href="{{ route('charts') }}" target="_blank"><i class="fa fa-print"></i> Print</a></p>
 	</div>
 	<div class="row">
 		
@@ -131,6 +133,7 @@
 	jQuery(document).ready(function() {
 	  jQuery("time.timeago").timeago();
 	});
+
 </script>
 
 <script type="text/javascript">

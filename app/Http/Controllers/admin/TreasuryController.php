@@ -11,6 +11,7 @@ use Event;
 use Session;
 use eFund\Loan;
 use eFund\Treasury;
+use eFund\Deduction;
 use eFund\Http\Requests;
 use eFund\Utilities\Utils;
 use eFund\Events\CheckSigned;
@@ -83,7 +84,6 @@ class TreasuryController extends Controller
     		$treasury->created_by = Auth::user()->id;
     		$treasury->save();
 
-            // Set Start of deductions
     		$loan = Loan::find($request->id);
     		$loan->status = $this->utils->setStatus($loan->status);
     		$loan->save();
@@ -97,13 +97,15 @@ class TreasuryController extends Controller
     	}else{
             // Released
             DB::beginTransaction();
+            $released = date('m-d-y H:i:s');
     		$treasury = Treasury::where('eFundData_id', $request->id)->first();
-    		$treasury->released = date('m-d-y H:i:s');
-            $loan->start_of_deductions = $this->utils->getStartOfDeduction($treasury->released);
+    		$treasury->released = $released;
     		$treasury->save();
-
+            
+            // Set Start of deductions
     		$loan = Loan::find($request->id);
     		$loan->status = $this->utils->setStatus($loan->status);
+            $loan->start_of_deductions = $this->utils->getStartOfDeduction(date('Y/m/d'));
     		$loan->save();
 
             // Loan Application Counts within the current year based on the application date
@@ -112,11 +114,13 @@ class TreasuryController extends Controller
             // Create Deduction schedule
             DB::select('EXEC spCreateDeductionSchedule ?, ?, ?, ?, ?', [$loan->start_of_deductions, $loan->terms_month, $loan->id, 0, $records_this_year]);
             // Update Balance
-            DB::select('EXEC updateBalance ?, ?', [$loan->id, $loan->total]);
+            $deductionId = Deduction::select('id')->where('eFundData_id', $loan->id)->first();
+            DB::select('EXEC updateBalance ?', [$deductionId->id]);
+            DB::commit();
 
+            
             Event::fire(new CheckReleased($loan));
 
-            DB::commit();
     		return redirect()->back()->withSuccess(trans('loan.application.released'));
 
     	}

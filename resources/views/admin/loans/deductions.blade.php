@@ -11,10 +11,10 @@
                    </thead>
                    <tbody>
                            @foreach($empList as $emp)
-                            <tr class="<?php if($emp->amount <> 0) echo 'success'; ?> " title="<?php if($emp->amount <> 0) echo 'POSTED'; ?> ">
+                            <tr class="<?php if(!empty(trim($emp->ar_no))) echo 'success'; ?> " title="<?php if(!empty(trim($emp->ar_no))) echo 'POSTED'; ?> ">
                                 <td>
                                   <input type="hidden" name="id[]" value="{{ $emp->id }}">
-                                  <input id="id" type="checkbox" name="id{{ $emp->id }}" value="{{ $emp->id }}" <?php if($emp->amount <> 0) echo 'style="display:none"'; ?> onclick="updateTotalAR()">
+                                  <input id="id" type="checkbox" name="id{{ $emp->id }}" value="{{ $emp->id }}" <?php if(!empty(trim($emp->ar_no))) echo 'style="display:none"'; ?> onclick="updateTotalAR()">
                                 </td>
                                 <td>{{ $emp->ctrl_no }}</td>
                                 <td>{{ $emp->EmpID }}</td>
@@ -23,7 +23,7 @@
                                   <input type="number" name="deduction{{ $emp->id }}" class="form-control input-sm" value="{{ $emp->deductions }}" disabled>
                                 </td>
                                 <td>
-                                  <input type="number" name="amount{{ $emp->id }}" class="form-control input-sm amount" value="<?php if($emp->amount <> 0) echo $emp->amount; else echo $emp->deductions; ?>" <?php if($emp->amount <> 0) echo 'disabled'; ?> onchange="updateARAmount()">
+                                  <input type="number" name="amount{{ $emp->id }}" class="form-control input-sm amount" value="<?php if(!empty(trim($emp->ar_no))) echo $emp->amount; else echo $emp->deductions; ?>" <?php if(!empty(trim($emp->ar_no))) echo 'disabled'; ?> onchange="updateARAmount()">
                                 </td>
                             </tr>
                            @endforeach

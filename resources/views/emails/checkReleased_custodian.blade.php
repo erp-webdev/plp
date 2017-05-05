@@ -11,7 +11,7 @@
 	Hi, Mr./Ms. {{ $utils->getFName($employee->FullName) }}!
 	<br>
 	<br>
-	A check is now ready for claiming of the EFund Applicant.
+	Ah check has been released to {{ $loan->FullName }} with control # {{ $loan->ctrl_no }}.
 	<br>
 	<br>
 
