@@ -238,22 +238,19 @@ class LoanController extends Controller
                 foreach ($data as $sheet) {
                     foreach($sheet as $cols){
                         $ctr++;
-                        //Ignores row with no control number
-                        if(isset($cols->ctrlno))
-                            if(empty($cols->ctrlno))
-                                continue;
 
                         foreach ($cols as $key => $value) {
                             // Sheet columns
                             if($key == 'ctrlno')
-                               if(Loan::where('ctrl_no', $value)->count() > 0)
-                                    array_push($loansWithError, $this->createError('Loan Ctrl No Exists from the database. '.$sheet->getTitle().'.row['. $ctr .'].column[' . $key .'].value[' . $value .']' , $cols));
+                                if(!empty($value))
+                                   if(Loan::where('ctrl_no', $value)->count() > 0)
+                                        array_push($loansWithError, $this->createError('Loan Ctrl No Exists from the database. '.$sheet->getTitle().'.row['. $ctr .'].column[' . $key .'].value[' . $value .']' , $cols));
 
                             //Process not empty column
                             if(!empty(trim($key)) && $value != null){
 
-                                if($key != 'loc' && empty($value)){
-                                    array_push($loansWithError, $this->createError('Empty Field. '.$sheet->getTitle().'.row['. $ctr .'].column[' . $key .'].value[' . $value .']' , $cols));
+                                if(in_array($key, ['empid', 'mos', 'amount', 'deductions', 'startofdeductions', 'endorserempid', 'type', 'status']) && empty($value)){
+                                    array_push($loansWithError, $this->createError('Required Field. '.$sheet->getTitle().'.row['. $ctr .'].column[' . $key .'].value[' . $value .']' , $cols));
                                 }
 
                                 if($key == 'status'){
@@ -267,8 +264,8 @@ class LoanController extends Controller
                             }
 
                             // Check column data type if it matches required corresponding column
-                            $dates = ['appdate', 'startofdeductions', 'approvedat', 'cvdate', 'cvrelease', 'date'];
-                            $numbers = ['mos', 'amount', 'deductions', 'guaranteedamount', 'balance'];
+                            $dates = ['appdate', 'startofdeductions'];
+                            $numbers = ['mos', 'amount', 'deductions',];
                             // Check date format
                             if(in_array($key, $dates))
                                 if(date('n/d/Y', strtotime($value)) != $value)
@@ -285,8 +282,6 @@ class LoanController extends Controller
                         // Sheets 
                         if($sheet->getTitle() == 'Loans'){
                             array_push($loans, $cols);
-                        }elseif($sheet->getTitle() == 'Ledger'){
-                            array_push($ledgers, $cols);
                         }
                     }
                 }
@@ -307,7 +302,13 @@ class LoanController extends Controller
         foreach ($loans as $loan) {
             // eFundData (Loan)
             $eFundData = new Loan();
-            $eFundData->ctrl_no = $loan->ctrlno;
+            if(empty($loan->ctrlno)){
+                // Create random id (5 chars)
+                $eFundData->ctrl_no = uniqid();
+            }else{
+                $eFundData->ctrl_no = $loan->ctrlno;
+            }
+
             $eFundData->EmpID = $loan->empid;
             $eFundData->local_dir_line = $loan->loc;
             $eFundData->terms_month = $loan->mos;
@@ -315,9 +316,11 @@ class LoanController extends Controller
             $eFundData->interest = $loan->interest;
             $eFundData->deductions = $loan->deductions;
             $eFundData->start_of_deductions = $loan->startofdeductions;
-            $eFundData->approved_by = $loan->approverempid;
-            $eFundData->approved_at = $loan->approvedat;
+            $eFundData->approved_by = Auth::user()->employee_id;
+            $eFundData->approved_at =  date('Y-m-d H:i:s', strtotime($loan->appdate));
             $eFundData->payroll_verified = 1;
+            $eFundData->total = round($loan->amount + ($loan->amount * 0.01 * $loan->mos), 2);
+
             // Type
             if(strtoupper(trim($loan->type)) == 'NEW')
                 $eFundData->type = 0;
@@ -348,78 +351,105 @@ class LoanController extends Controller
 
             $eFundData->save();
 
-            // Endorser
-            $query = [
-                    'refno' => $this->utils->generateReference(),
-                    'eFundData_id' => $eFundData->id,
-                    'EmpID' => $loan->endorserempid,
-                    'signed_at' => $loan->approvedat,
-                    'status' => 1
-                ];
-            $endorser = DB::table('endorsers')->insertGetId($query);
-            $log = new Log();
-            $log->writeOnly('Insert', 'endorsers', $query);
+            if(!empty($loan->endorserempid)){
+                // Endorser
+                $query = [
+                        'refno' => $this->utils->generateReference(),
+                        'eFundData_id' => $eFundData->id,
+                        'EmpID' => $loan->endorserempid,
+                        'signed_at' => $loan->approvedat,
+                        'status' => 1
+                    ];
+                $endorser = DB::table('endorsers')->insertGetId($query);
 
-            $eFundData->endorser_id = $endorser;
+                $log = new Log();
+                $log->writeOnly('Insert', 'endorsers', $query);
 
-            // Guarantor
-            $query = [
-                    'refno' => $this->utils->generateReference(),
-                    'eFundData_id' => $eFundData->id,
-                    'EmpID' => $loan->guarantorempid,
-                    'signed_at' => $eFundData->approvedat,
-                    'status' => 1,
-                    'guaranteed_amount' => $loan->guaranteedamount
-                ];
-            $guarantor = DB::table('guarantors')->insertGetId($query);
-            $log->writeOnly('Insert', 'guarantors', $query);
+                $eFundData->endorser_id = $endorser;
+                $eFundData->save();
+            }
 
-            $eFundData->guarantor_id = $guarantor;
-            $eFundData->save();
+            if(!empty($loan->guarantorempid)){
+                // Guarantor
+                $query = [
+                        'refno' => $this->utils->generateReference(),
+                        'eFundData_id' => $eFundData->id,
+                        'EmpID' => $loan->guarantorempid,
+                        'signed_at' => $eFundData->approvedat,
+                        'status' => 1,
+                        'guaranteed_amount' => $loan->guaranteedamount
+                    ];
+                $guarantor = DB::table('guarantors')->insertGetId($query);
+                $log->writeOnly('Insert', 'guarantors', $query);
+
+                $eFundData->guarantor_id = $guarantor;
+                $eFundData->save();
+            }
 
             // Treasury
             $treasury = new Treasury();
             $treasury->eFundData_id = $eFundData->id;
             $treasury->created_by = Auth::user()->id;
-            $treasury->cv_no = $loan->cvno;
-            $treasury->cv_date = $loan->cv_date;
-            $treasury->check_no = $loan->checkno;
-            $treasury->check_released = $loan->checkrelease;
-            $treasury->released = $loan->checkrelease;
+            if(!empty($loan->cvno))
+                $treasury->cv_no = $loan->cvno;
+            else
+                $treasury->cv_no = '-';
+
+            if(!empty($loan->cv_date))
+                $treasury->cv_date = $loan->cv_date;
+            else
+                $treasury->cv_date =  date('Y-m-d H:i:s', strtotime($loan->appdate));;
+            
+            if(!empty($loan->checkno))
+                $treasury->check_no = $loan->checkno;
+            else
+                $treasury->check_no = '-';
+
+            $treasury->check_released =  date('Y-m-d H:i:s', strtotime($loan->startofdeductions));
+            $treasury->released = date('Y-m-d H:i:s', strtotime($loan->startofdeductions));
             $treasury->save();
 
+            $treasury->cv_date = $loan->cv_date;
             $eFundData->created_at = date('Y-m-d H:i:s', strtotime($loan->appdate));
             $eFundData->remarks = '[Uploaded: '. date('ymdHis') .']';
             $eFundData->save();
             $successLoans++;
 
-             // Ledger from Excel to Database
-            foreach($ledgers as $ledger){
-                if(empty($ledger->ctrlno))
-                    continue;
-
-                if($ledger->ctrlno != $eFundData->ctrl_no)
-                    continue;
-
+            // Create deduction list or Ledger
+            $deductionDate = date('Y-m-d', strtotime($loan->startofdeductions));
+            $balance = $eFundData->total - $loan->deductions;
+            for($i = 0; $i < $loan->mos * 2; $i++){
                 $deduction = new Deduction();
                 $deduction->eFundData_id = $eFundData->id;
-                $deduction->date = $ledger->date;
-                $deduction->ar_no = $ledger->arno;
-                $deduction->amount = $ledger->amount;
-                $deduction->balance = $ledger->balance;
+                $deduction->date = $deductionDate;
+                // Set next deduction date
+                if(date('d', strtotime($deductionDate)) == 15){
+                    // End of Month (EOM)
+                    $deductionDate = date('Y-m-t', strtotime($deductionDate));
+                }else{
+                    $deductionDate = date('Y-m-d', strtotime("+15 days", strtotime($deductionDate)));
+                }
+
+                if(date('Y-m-d', strtotime($deductionDate)) <= date('Y-m-d')){
+                    $deduction->ar_no = '-';
+                    $deduction->amount = $loan->deductions;
+                    $deduction->balance = $balance;
+                    //Compute balance
+                    $balance = $balance - $loan->deductions;
+                }
+               
                 $deduction->updated_by = Auth::user()->id;
                 $deduction->updated_at = date('Y-m-d H:i:s');
                 $deduction->save();
-                $successLedger++;
-            } 
+            }
+
         }
 
         DB::commit();
 
         return view('admin.loans.upload')
                 ->withLoans($loansWithError)
-                ->withLedgers([])
-                ->withSuccess('Upload Successful! But, skipped '. count($loansWithError) . ' record(s) with error. '. $successLoans . ' Loans uploaded. '. $successLedger .' Ledgers uploaded.');
+                ->withSuccess('Upload Successful! But, skipped '. count($loansWithError) . ' record(s) with error. '. $successLoans . ' Loans uploaded. ');
     }
 
     public function createError($error = '', $data)
