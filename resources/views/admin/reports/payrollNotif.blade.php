@@ -36,7 +36,13 @@
 				<td style="text-align: right">{{ $utils->formatNumber($loan->total) }}</td>
 				<td style="text-align: center">{{ $loan->terms_month * 2 }}</td>
 				<td style="text-align: right">{{ $utils->formatNumber($loan->deductions) }}</td>
-				<td style="text-align: center">{{ date_format($loan->start_of_deductions, 'Y/m/d') }}</td>
+				<td style="text-align: center">
+				@if(is_object($loan->start_of_deductions))
+					{{ date_format($loan->start_of_deductions, 'Y/m/d') }}
+				@else
+					{{ date('Y/m/d', strtotime($loan->start_of_deductions)) }}
+				@endif
+				</td>
 			</tr>
 			@endforeach
 		</tbody>

@@ -278,7 +278,7 @@
 				@permission(['custodian'])
 		    	@if($loan->status != $utils->getStatusIndex('paid') && count($deductions) > 0)
 		    	<button type="submit" name="submit" class="btn btn-sm btn-success pull-right"><i class="fa fa-save"></i> Save</button>
-		    	<a class="btn btn-sm btn-warning pull-right"><i class="fa fa-save"></i> Recalculate Deductions</a>
+		    	<a class="btn btn-sm btn-warning pull-right" href="{{ route('deductions.recal', $loan->id) }}"><i class="fa fa-save"></i> Recalculate Deductions</a>
 		    	@endif
 		    	@endpermission
 	    	</form>

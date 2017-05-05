@@ -36,6 +36,7 @@ Route::group(['prefix' => '/', 'middleware' => ['auth']], function(){
 	Route::post('loans/deductions/batch', ['as' => 'loan.deduction.batch', 'uses' => 'admin\LoanController@applyBatchDeductions', 'middleware' => ['permission:custodian']]);
 	Route::post('loans/payroll/notifs', ['as' => 'loan.email.notif', 'uses' => 'admin\LoanController@sendPayrollNotif', 'middleware' => ['permission:custodian']]);
 	Route::get('loans/payroll/list', ['as' => 'loan.email.list', 'uses' => 'admin\LoanController@getFormattedPayrollList', 'middleware' => ['permission:custodian']]);
+	Route::get('loans/deductions/recal/{id}', ['as' => 'deductions.recal', 'uses' => 'admin\LoanController@recalDeductions', 'middleware' => ['permission:custodian']]);
 
 	// Upload
 	Route::get('loans/upload', ['as' => 'upload.show', 'uses' => 'admin\LoanController@showUpload', 'middleware' => ['permission:custodian']]);

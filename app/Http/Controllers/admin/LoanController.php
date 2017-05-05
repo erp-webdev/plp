@@ -564,4 +564,31 @@ class LoanController extends Controller
         return $html;
     }
 
+    /*
+     * 
+     * Recalcute Deduction on missed schedule
+     * Includes only previous schedules from the current date
+     * 
+     */
+    public function recalDeductions($id)
+    {
+        DB::unprepared('exec spUpdateDeduction ' . $id);
+
+        $loan = Loan::find($id);
+
+        $employees = DB::table('viewUserPermissions')->where('permission', 'payroll')->get();
+        $utils = new Utils();
+
+        foreach ($employees as $employee) {
+            if(empty($employee->EmailAdd))
+                continue;
+            
+            $args = ['loan' => $loan, 'employee' => $employee, 'utils' => $utils];
+            (new EmailController())->send($employee->employee_id, config('preferences.notif_subjects.payroll', 'Loan Application Notification'), 'emails.payroll', $args, $cc = '');
+            
+        }
+
+        // TODO: send to payroll new sched
+        return redirect()->back()->withSuccess('Loan deductions updated successfully!');
+    }
 }

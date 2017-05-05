@@ -85,7 +85,7 @@ class TreasuryController extends Controller
     		$treasury->save();
 
     		$loan = Loan::find($request->id);
-    		$loan->status = $this->utils->setStatus($loan->status);
+    		$loan->status = $this->utils->setStatus($this->utils->getStatusIndex('treasury'));
     		$loan->save();
 
             Event::fire(new CheckSigned($loan));
@@ -104,7 +104,7 @@ class TreasuryController extends Controller
             
             // Set Start of deductions
     		$loan = Loan::find($request->id);
-    		$loan->status = $this->utils->setStatus($loan->status);
+    		$loan->status = $this->utils->setStatus($this->utils->getStatusIndex('release'));
             $loan->start_of_deductions = $this->utils->getStartOfDeduction(date('Y/m/d'));
     		$loan->save();
 
@@ -117,7 +117,6 @@ class TreasuryController extends Controller
             $deductionId = Deduction::select('id')->where('eFundData_id', $loan->id)->first();
             DB::select('EXEC updateBalance ?', [$deductionId->id]);
             DB::commit();
-
             
             Event::fire(new CheckReleased($loan));
 
