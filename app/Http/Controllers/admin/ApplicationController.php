@@ -83,7 +83,7 @@ class ApplicationController extends Controller
         // Allowable # of months
         $months = $this->utils->getTermMonths();
         if($records_this_year == 0)
-            $months = 12;
+            $months = Preference::name('payment_term');
 
         $allow_max = Preference::name('allow_over_max');
     	return view('admin.applications.create')->withLoan($loan)
