@@ -56,6 +56,7 @@ class LoanController extends Controller
             $sortBy = $_GET['by'];
 
      	$loans = Loan::where('status', '>', $this->utils->getStatusIndex('guarantor'))
+                    ->where('status', '<', $this->utils->getStatusIndex('denied'))
                     ->orderBy($sort, $sortBy)
                     ->search($search)
                     ->paginate($show);
