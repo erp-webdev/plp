@@ -117,7 +117,6 @@
 				</div>
 			@endpermission
 		</div>
-			<p class=""><a id="print" onclick="print()" target="_blank" download="ChartJpg.jpg"><i class="fa fa-print"></i> ad</a></p>
 			<p class=""><a href="{{ route('charts') }}" target="_blank"><i class="fa fa-print"></i> Print</a></p>
 	</div>
 	<div class="row">

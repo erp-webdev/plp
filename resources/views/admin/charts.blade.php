@@ -9,7 +9,7 @@
 </head>
 <body id="app-layout">
             <div class="row" id="charts">
-		<div class="col-xs-12 col-sm-6 col-md-8">
+		<div class="col-xs-12 col-sm-12 col-md-12" style="width: 100%">
 			<!-- CHARTS -->
 			@permission(['officer', 'custodian'])
 				@if(count($data->appDatasets) > 0)
@@ -37,6 +37,8 @@
     <script src="{{ url('/') }}/assets/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="{{ url('/assets/js/Chart.js') }}"></script>
 <script type="text/javascript">
+	var	$animationCtr = 0;
+
 	@permission(['officer', 'custodian'])
 	@if(isset($data->appDatasets))
 		/*=====================================================
@@ -63,6 +65,14 @@
 		        datasets: <?php echo json_encode($data->appDatasets); ?>
 		    },
 		    options: {
+		    	animation:{
+		            animateScale:true,
+		            onComplete: function(animation) {
+		                $animationCtr++;
+		                if($animationCtr == 4)
+							window.print();
+		            }
+		        },
 		        scales: {
 		            yAxes: [{
 		                ticks: {
@@ -75,7 +85,8 @@
 		            text: 'EFund Applications'
 		        },
 		       
-		    }
+		    },
+		    
 		});
 		/*=====  End of Yearly Application Statistics  ======*/
 	@endif
@@ -95,7 +106,12 @@
 	    data: $rankYearly,
 	    options: {
 	        animation:{
-	            animateScale:true
+	            animateScale:true,
+	            onComplete: function(animation) {
+	                $animationCtr++;
+	                if($animationCtr == 4)
+						window.print();
+	            }
 	        },
 	        title: {
 	            display: true,
@@ -130,6 +146,16 @@
 		var incomeDatasets = new Chart(Income, {
 		    type: 'line',
 		    data: <?php echo json_encode($data->incomeDatasets); ?>,
+		    options: {
+		    	animation:{
+		            animateScale:true,
+		            onComplete: function(animation) {
+		                $animationCtr++;
+		                if($animationCtr == 4)
+							window.print();
+		            }
+		        },
+		    },
 		});
 	@endif
 	@if(isset($data->IncomeMonthlyDatasets))
@@ -138,12 +164,21 @@
 		var IncomeMonthlyDatasets = new Chart(monthly, {
 		    type: 'line',
 		    data: <?php echo json_encode($data->IncomeMonthlyDatasets); ?>,
+		    options: {
+		    	animation:{
+		            animateScale:true,
+		            onComplete: function(animation) {
+		                $animationCtr++;
+		                if($animationCtr == 4)
+							window.print();
+		            }
+		        },
+		    },
 		});
 	@endif
 	@endpermission
-	jQuery(document).ready(function($) {
-		window.print();
-	});
+
+	
 </script>
 </body>
 </html>
