@@ -117,7 +117,9 @@
 				</div>
 			@endpermission
 		</div>
+			@permission(['custodian'])
 			<p class=""><a href="{{ route('charts') }}" target="_blank"><i class="fa fa-print"></i> Print</a></p>
+			@endpermission
 	</div>
 	<div class="row">
 		
