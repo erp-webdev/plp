@@ -177,12 +177,12 @@ class ReportController extends Controller
         
     }
 
-    public function stream($html, $format = 'html', $size = 'letter', $orientation = 'landscape' )
+    public function stream($html, $format = 'html', $size = 'letter', $orientation = 'landscape', $title = 'Megaworld EFund Payroll Notification')
     {
       
         if($format == 'html'){
 
-            $report = (object)['title' => 'Megaworld EFund Payroll Notification', 'html' => $html];
+            $report = (object)['title' => $title, 'html' => $html];
             $html = view('admin.reports.layout')
                 ->withReport($report);
 
@@ -190,7 +190,7 @@ class ReportController extends Controller
 
         }elseif($format == 'pdf'){
             
-            $report = (object)['title' => 'Megaworld EFund Payroll Notification', 'html' => $html];
+            $report = (object)['title' => $title, 'html' => $html];
 
             $pdf = PDF::loadView('admin.reports.layout', ['report' => $report])->setPaper($size, $orientation)->setWarnings(false);
             return $pdf->stream('saa.pdf'); 
@@ -344,6 +344,6 @@ class ReportController extends Controller
         $html = view('admin.charts')
                 ->with('data', $data);
 
-        return $this->stream($html, 'html');
+        return $this->stream($html, 'html', 'letter', 'landscape', 'Megaworld EFund Statistics');
     }
 }
