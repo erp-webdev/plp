@@ -12,6 +12,7 @@ use Session;
 use eFund\Loan;
 use eFund\Treasury;
 use eFund\Deduction;
+use eFund\Preference;
 use eFund\Http\Requests;
 use eFund\Utilities\Utils;
 use eFund\Events\CheckSigned;
@@ -110,6 +111,22 @@ class TreasuryController extends Controller
 
             // Loan Application Counts within the current year based on the application date
             $records_this_year = Loan::employee()->yearly()->notDenied()->count();
+
+            // Check validity of terms based on Actual Start of Deduction on 2nd availment
+            $term_expected = $this->utils->getTermMonths();
+            if($records_this_year > 0){
+                if($loan->terms_month > $terms_expected){
+                    // If applied terms_month is more than the expected terms
+                    // Change loan terms and recompute deductions
+                    $loan->terms_month = $terms_expected;
+                    $interest = Preference::name('interest');
+                    $loan->total = $this->utils->getTotalLoan($loan->loan_amount, $interest->value, $terms_expected);
+                    $loan->deductions = $this->utils->computeDeductions($loan->term_mos, $loan->loan_amount);
+                    $loan->save();
+
+                    // TODO: Notify Custodian
+                }
+            }
 
             // Create Deduction schedule
             DB::select('EXEC spCreateDeductionSchedule ?, ?, ?, ?, ?', [$loan->start_of_deductions, $loan->terms_month, $loan->id, 0, $records_this_year]);
