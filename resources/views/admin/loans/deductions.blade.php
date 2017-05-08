@@ -15,6 +15,7 @@
                                 <td>
                                   <input type="hidden" name="id[]" value="{{ $emp->id }}">
                                   <input id="id" type="checkbox" name="id{{ $emp->id }}" value="{{ $emp->id }}" <?php if(!empty(trim($emp->ar_no))) echo 'style="display:none"'; ?> onclick="updateTotalAR()">
+                                  <?php if(!empty(trim($emp->ar_no))) echo '<i class="fa fa-check"></i>'; ?> 
                                 </td>
                                 <td>{{ $emp->ctrl_no }}</td>
                                 <td>{{ $emp->EmpID }}</td>
@@ -27,10 +28,12 @@
                                 </td>
                             </tr>
                            @endforeach
+                           @permission(['custodian'])
                            <tr>
                              <td colspan="5" style="text-align: right"><strong>Remaining Balance</strong></td>
                              <td style="text-align: right">Php <span style="font-weight: bold;" id="arBalance"></span></td>
                            </tr>
+                           @endpermission
                    </tbody>
            </table>
     </div>
