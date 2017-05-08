@@ -334,8 +334,23 @@ class Utils
      */
     public function getTermMonths()
     {
-    	$mos = Preference::name('payment_term');
-        return $mos->value - date('n');
+    	// $mos = Preference::name('payment_term');
+     //    return $mos->value - date('n');
+
+        $day = date('d');
+
+        if($day >= 6 && $day <= 20){
+
+            // End Of Month 
+            // Get number of months remaining till December 31st. 
+            // Usually ends with 15th of the month. 
+            return 12 - date('n') - 1;
+        }
+        else if($day >= 21 || $day <= 5){
+            // 15th of the month
+            // Get number of months remaining till December 31st.
+            return 12 - date('n');
+        }
     }
 
     /**
