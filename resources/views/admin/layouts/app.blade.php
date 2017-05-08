@@ -10,6 +10,7 @@
     <link href="{{ url('/') }}/assets/css/dataTables.bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="{{ url('/') }}/assets/css/custom.css">
     <link href="{{ url('/assets/css/bootstrap-tour.min.css') }}" rel="stylesheet">
+    <link href="{{ url('/assets/css/jquery-ui.css') }}" rel="stylesheet">
     <script src="{{ url('/assets/js/angular.min.js') }}"></script>
    
 </head>
@@ -27,6 +28,7 @@
         </div>
         <div id="loading-wheel" class="loading style-2" style="display: none"><div class="loading-wheel"></div></div>
     <script src="{{ url('/') }}/assets/js/jquery.min.js"></script>
+    <script src="{{ url('/') }}/assets/js/jquery-ui.js"></script>
     <script src="{{ url('/') }}/assets/js/bootstrap.min.js"></script>
     <script src="{{ url('/') }}/assets/js/jquery.dataTables.min.js"></script>
     <script src="{{ url('/') }}/assets/js/dataTables.bootstrap.min.js"></script>
@@ -42,6 +44,11 @@
         function nextTour() {
            this.tour.next();
         }
+
+        $(function() {
+        $( "input[type='date']" ).datepicker();
+          
+        });
     </script>
     
     <style type="text/css">
