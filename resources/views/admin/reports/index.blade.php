@@ -45,8 +45,8 @@
 				<div id="filter">
 					<div class="" style="overflow: scroll; height: 40vh">
 						<div class="form-group">
-							Application Date <input class="form-control input-sm" type="date" id="fromDate">
-							To    <input class="form-control  input-sm" type="date" id="toDate">
+							Application Date <input class="form-control input-sm datepicker" id="fromDate">
+							To    <input class="form-control  input-sm datepicker" id="toDate">
 						</div>
 						<div class="form-group">
 							Employee ID
