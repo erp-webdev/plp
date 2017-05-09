@@ -121,10 +121,6 @@
 		if($type == ''){
 			$('#reportView').html('<div class="alert alert-danger">Please select report to be generated.</div>');
 			return;
-		}else if($type == 'payroll'){
-			$('#status').val(2);
-		}else{
-			$('#status').val(0);
 		}
 
 		startLoading();

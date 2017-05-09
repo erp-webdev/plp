@@ -60,7 +60,7 @@ class ReportController extends Controller
             $sort = $_GET['sort'];
 
         $args = [   'dateFrom' => $fromDate, 
-                    'toDate' => $toDate, 
+                    'dateTo' => $toDate, 
                     'EmpID' => $EmpID, 
                     'status' => $status, 
                     'sort' => $sort
@@ -123,7 +123,7 @@ class ReportController extends Controller
             $sort = $_GET['sort'];
 
         $args = [   'dateFrom' => $fromDate, 
-                    'toDate' => $toDate, 
+                    'dateTo' => $toDate, 
                     'EmpID' => $EmpID, 
                     'status' => $status, 
                     'sort' => $sort
@@ -206,22 +206,22 @@ class ReportController extends Controller
     public function payrollReport($args)
     {
           return Loan:: where(function($query) use ($args){
-                    if(!empty($arg['fromDate']) && !empty($arg['toDate'])){
-                        $query->where('start_of_deductions', '>=', $arg['fromDate'])->where('start_of_deductions', '<=', $arg['toDate']);
+                    if(!empty($arg['dateFrom']) && !empty($arg['dateTo'])){
+                        $query->where('start_of_deductions', '>=', $arg['dateFrom'])->where('start_of_deductions', '<=', $arg['dateTo']);
                     }
 
                     if(!empty($args['EmpID'])){
                         $query->where('EmpID', $args['EmpID']);
                     }
 
-                    if(!empty($status)){
-                        if($status == 1) // Paid
+                    if(!empty($args['status'])){
+                        if($args['status'] == 1) // Paid
                             $query->where('status', $this->utils->getStatusIndex('paid'));
-                        elseif($status == 2)
+                        elseif($args['status'] == 2)
                             $query->where('status', $this->utils->getStatusIndex('inc'));
-                        elseif($status == 3)
+                        elseif($args['status'] == 3)
                             $query->where('status', '<', $this->utils->getStatusIndex('inc'));
-                        elseif($status == 4)
+                        elseif($args['status'] == 4)
                             $query->where('status', $this->utils->getStatusIndex('denied'));
                     }
                     
@@ -232,22 +232,22 @@ class ReportController extends Controller
     {
         return Loan::where(function($query) use ($args){
 
-                if(!empty($args['fromDate']) && !empty($args['toDate'])){
-                    $query->where('created_at', '>=', $args['fromDate'])->where('created_at', '<=', $args['toDate'] .' 23:59:59');
+                if(!empty($args['dateFrom']) && !empty($args['dateTo'])){
+                    $query->where('created_at', '>=', $args['dateFrom'])->where('created_at', '<=', $args['dateTo'] .' 23:59:59');
                 }
 
-                if(!empty($EmpID)){
+                if(!empty($args['EmpID'])){
                     $query->where('EmpID', 'LIKE', '%' . $args['EmpID'] . '%');
                 }
 
-                if(!empty($status)){
-                    if($status == 1) // Paid
+                if(!empty($args['status'])){
+                    if($args['status'] == 1) // Paid
                         $query->where('status', $this->utils->getStatusIndex('paid'));
-                    elseif($status == 2)
+                    elseif($args['status'] == 2)
                         $query->where('status', $this->utils->getStatusIndex('inc'));
-                    elseif($status == 3)
+                    elseif($args['status'] == 3)
                         $query->where('status', '<', $this->utils->getStatusIndex('inc'));
-                    elseif($status == 4)
+                    elseif($args['status'] == 4)
                         $query->where('status', $this->utils->getStatusIndex('denied'));
                 }
                 
