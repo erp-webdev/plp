@@ -55,6 +55,8 @@
 					@endforeach
 				</tbody>
 			</table>
+
+			{{ $<data></data>->links() }}
 		</div>
 	</div>
 
