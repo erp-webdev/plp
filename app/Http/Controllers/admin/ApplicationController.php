@@ -462,6 +462,9 @@ class ApplicationController extends Controller
         $valid = true;
         // Check Guarateed amount total
         $totalGuaranteedAmount = Guarantor::guaranteedAmountLimit($EmpID)->sum('guaranteed_amount');
+        if(empty($totalGuaranteedAmount))
+            $totalGuaranteedAmount = 0;
+
         // Get Employee Rank Limit 
         $employee = Employee::current()->first();
         $terms = Terms::getRankLimits($employee->RankDesc);
@@ -470,7 +473,7 @@ class ApplicationController extends Controller
         if($totalGuaranteedAmount < $gAmountLimit->Amount){
             // Total guaranteed amount of active accounts
             // is less than the maximum limit of a guarantor's rank
-            if($totalGuaranteedAmount < $amount - $terms->min_amount){
+            if($gAmountLimit->Amount - $totalGuaranteedAmount < $amount - $terms->min_amount){
                 // Total guaranteed amount is not sufficient to 
                 // guarantee min amount of the loan application.
                 $valid = false;
