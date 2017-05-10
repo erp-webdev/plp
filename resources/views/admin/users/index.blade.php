@@ -17,8 +17,7 @@
 		<div class="table-responsive">
 			<table id="dataTable" class="table table-striped table-condensed table-hover" cellspacing="0">
 				<thead>
-					<th>No</th>
-					<th>ID/Username</th>
+					<th>Username</th>
 					<th>Name</th>
 					<th>Email</th>
 					<th>Active</th>
@@ -28,7 +27,6 @@
 				<tbody>
 					@foreach ($data as $key => $user)
 					<tr>
-						<td>{{ ++$i }}</td>
 						<td>{{ $user->employee_id }}</td>
 						<td>{{ $user->name }}</td>
 						<td>{{ $user->email }}</td>
@@ -56,7 +54,7 @@
 				</tbody>
 			</table>
 
-			{{ $<data></data>->links() }}
+			{{ $data->links() }}
 		</div>
 	</div>
 

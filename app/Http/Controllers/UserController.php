@@ -27,8 +27,8 @@ class UserController extends Controller
     public function index(Request $request)
     {
         $data = User::withoutGlobalScope('active')->orderBy('id','asc')->paginate(10);
-        return view('admin.users.index',compact('data'))
-            ->with('i', ($request->input('page', 1) - 1) * 5);
+        return view('admin.users.index',compact('data'));
+            // ->with('i', ($request->input('page', 1) - 1) * 5);
     }
 
     /**
