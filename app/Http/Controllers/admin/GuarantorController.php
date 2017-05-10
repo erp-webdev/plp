@@ -60,7 +60,7 @@ class GuarantorController extends Controller
             $employee = Employee::where('EmpID', $loan->EmpID)->first();
             $terms = Terms::getRankLimits($employee->RankDesc);
 
-            $limits = GLimits::limit($EmpID);
+            $limits = GLimits::limit($guarantor->EmpID);
             
             if(empty($limits))
                 $limits = 0;
