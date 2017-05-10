@@ -14,6 +14,7 @@
 	<div class="row">
 		<div class="col-xs-12 col-sm-12 col-md-12">
 			<h1>Guarantor </h1>
+			<small>Remaining Amount that can be guaranteed: <strong>Php {{ number_format($GAmount, 2) }}</strong></small>
 
 			<hr>
 			@if ($message = Session::get('success'))

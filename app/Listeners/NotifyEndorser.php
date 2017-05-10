@@ -34,7 +34,7 @@ class NotifyEndorser extends EmailController
         $notif = new NotificationController();
         $notif->notifyEndorser($event->loan);
 
-        $this->send($event->loan->endorser_EmpID, config('preferences.notif_subjects.created', 'Loan Application Notification'), 'emails.endorser', $args, $cc = '');
+        $this->send($event->loan->endorser_EmpID, config('preferences.notif_subjects.created', 'Loan Application Notification'), 'emails.endorsement', $args, $cc = '');
 
     }
 }
