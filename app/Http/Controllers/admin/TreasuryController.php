@@ -115,12 +115,12 @@ class TreasuryController extends Controller
             // Check validity of terms based on Actual Start of Deduction on 2nd availment
             $term_expected = $this->utils->getTermMonths();
             if($records_this_year > 0){
-                if($loan->terms_month > $terms_expected){
+                if($loan->terms_month > $term_expected){
                     // If applied terms_month is more than the expected terms
                     // Change loan terms and recompute deductions
-                    $loan->terms_month = $terms_expected;
+                    $loan->terms_month = $term_expected;
                     $interest = Preference::name('interest');
-                    $loan->total = $this->utils->getTotalLoan($loan->loan_amount, $interest->value, $terms_expected);
+                    $loan->total = $this->utils->getTotalLoan($loan->loan_amount, $interest->value, $term_expected);
                     $loan->deductions = $this->utils->computeDeductions($loan->term_mos, $loan->loan_amount);
                     $loan->save();
 
