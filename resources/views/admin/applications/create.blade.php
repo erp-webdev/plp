@@ -210,7 +210,7 @@
 					<div class="form-group" id="surety_">
 						<span class="col-md-4">Employee ID</span>
 						<div class="col-md-8">
-							<input name="surety"  type="text" class="form-control input-sm" placeholder="YYYY-MM-XXXX" pattern="[0-9]{4}-[0-9]{2}-[a-zA-Z0-9]{4}" ng-model="surety" ng-change="getSurety()" id="surety_input">
+							<input name="surety"  type="text" class="form-control input-sm" placeholder="YYYY-MM-XXXX" pattern="[0-9]{4}-[0-9]{2}-[a-zA-Z0-9]{4}" ng-model="surety"  ng-change="getSurety()" id="surety_input">
 						</div>
 					</div>
 					<div class="form-group">
@@ -227,7 +227,7 @@
 			@if($loan->status == $utils->getStatusIndex('saved'))
 			<div class="row" style="border-top: 1px solid #ccc; padding-top: 10px">
 				<div class="col-md-4">
-					<button id="verify" name="verify" class="btn btn-primary btn-block" ><i class="fa fa-save"></i> Verify</button>
+					<button id="verify" name="verify" class="btn btn-primary btn-block" onclick="startLoading()"><i class="fa fa-save"></i> Verify</button>
 				</div>
 				<div class="col-md-4">
 					<button id="submit" name="submit" class="btn btn-success btn-block" <?php if(!isset($loan)) echo 'disabled'; ?> onclick="startLoading()"><i class="fa fa-send"></i> Submit Now</button>
@@ -250,6 +250,11 @@
 @section('scripts')
 <script type="text/javascript" src="{{ url('/assets/js/loanApplication.js') }}"></script>
 <script type="text/javascript">
+	jQuery(document).ready(function($) {
+		getHead();
+		getSurety();
+	});
+
 	@if(isset($loan))
 		// Saved
 		var $id = {{ $loan->id }};
@@ -295,9 +300,9 @@
 		var $interest = {{ $interest }};
 		var $total = 0;
 		var $deductions = 0;
-		var $head = "";
+		var $head = "{{ $endorser }}";
 		var $head_refno = "";
-		var $surety = "";
+		var $surety ="{{ $guarantor }}";
 		var $surety_refno = "";
 		var $loan_max = {{ $terms->max_amount }};
 		var $loan_min = {{ $terms->min_amount }};

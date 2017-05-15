@@ -85,6 +85,9 @@ class ApplicationController extends Controller
         if($records_this_year == 0)
             $months = Preference::name('payment_term');
 
+        $endorser = $this->getEndorser();
+        $guarantor = $this->getGuarantor();
+
         $allow_max = Preference::name('allow_over_max');
     	return view('admin.applications.create')->withLoan($loan)
                 ->withEmployee($employee)
@@ -95,6 +98,8 @@ class ApplicationController extends Controller
                 ->withMonths($months)
                 ->with('records_this_year', $records_this_year)
                 ->with('overMax', $allow_max->value)
+                ->withEndorser($endorser)
+                ->withGuarantor($guarantor)
                 ->withUtils(new Utils());
     }
 
@@ -123,6 +128,9 @@ class ApplicationController extends Controller
             $months = $this->utils->getTermMonths();
         $allow_max = Preference::name('allow_over_max');
 
+        $endorser = $this->getEndorser();
+        $guarantor = $this->getGuarantor();
+
     	return view('admin.applications.create')
     	->withEmployee($employee)
     	->withRecords($records)
@@ -132,8 +140,11 @@ class ApplicationController extends Controller
         ->withMonths($months)
         ->with('records_this_year', $records_this_year)
         ->with('overMax', $allow_max->value)
+        ->withEndorser($endorser)
+        ->withGuarantor($guarantor)
         ->withUtils(new Utils());
     }
+
 
     public function getEmployee($EmpID = '')
     {
@@ -297,16 +308,79 @@ class ApplicationController extends Controller
         // Endorser
         if(!$this->validateEndorser($request->head))
             array_push($errors, trans('loan.validation.endorser'));
-
+        else if($this->getEndorser() != $request->head){
+            // Check expected against inputted guarantor
+            array_push($errors, trans('loan.validation.endorser'));
+        }
+        
         // Guarantor
-        if($this->validateAboveMinAmount($request->loan_amount))
+        if($this->validateAboveMinAmount($request->loan_amount)){
             if(!$this->validateGuarantor($request->surety))
                 array_push($errors, trans('loan.validation.guarantor'));
             else
                 if(!$this->validateGuaranteedAmount($request->surety, $request->loan_amount))
                     array_push($errors, trans('loan.validation.guaranteed_amount'));
+            else if($this->getGuarantor() != $request->surety){
+                // Check expected against inputted guarantor
+                array_push($errors, trans('loan.validation.guarantor'));
+            }
+        }
 
         return $errors;
+    }
+
+    public function getEndorser()
+    {
+        $endorser = DB::table('viewSignatories')->where('EmpID', Auth::user()->employee_id)->first();
+
+        if(!empty($endorser)){
+            if(!empty($endorser->SIGNATORYID1) && $this->validateEndorser($endorser->SIGNATORYID1)){
+                $endorser = $endorser->SIGNATORYID1;
+            }else if(!empty($endorser->SIGNATORYID2) && $this->validateEndorser($endorser->SIGNATORYID2)){
+                $endorser = $endorser->SIGNATORYID2;
+            }else if(!empty($endorser->SIGNATORYID3) && $this->validateEndorser($endorser->SIGNATORYID2)){
+                $endorser = $endorser->SIGNATORYID3;
+            }else if(!empty($endorser->SIGNATORYID4) && $this->validateEndorser($endorser->SIGNATORYID4)){
+                $endorser = $endorser->SIGNATORYID4;
+            }else if(!empty($endorser->SIGNATORYID5) && $this->validateEndorser($endorser->SIGNATORYID5)){
+                $endorser = $endorser->SIGNATORYID5;
+            }else if(!empty($endorser->SIGNATORYID6) && $this->validateEndorser($endorser->SIGNATORYID6)){
+                $endorser = $endorser->SIGNATORYID6;
+            }else{
+                $endorser = '';
+            }
+        }else{
+            $endorser = '';
+        }
+
+        return $endorser;
+    }
+
+    public function getGuarantor()
+    {
+         $guarantor = DB::table('viewSignatories')->where('EmpID', Auth::user()->employee_id)->first();
+
+        if(!empty($guarantor)){
+            if(!empty($guarantor->SIGNATORYID1) && $this->validateGuarantor($guarantor->SIGNATORYID1)){
+                $guarantor = $guarantor->SIGNATORYID1;
+            }else if(!empty($guarantor->SIGNATORYID2) && $this->validateGuarantor($guarantor->SIGNATORYID2)){
+                $guarantor = $guarantor->SIGNATORYID2;
+            }else if(!empty($guarantor->SIGNATORYID3) && $this->validateGuarantor($guarantor->SIGNATORYID2)){
+                $guarantor = $guarantor->SIGNATORYID3;
+            }else if(!empty($guarantor->SIGNATORYID4) && $this->validateGuarantor($guarantor->SIGNATORYID4)){
+                $guarantor = $guarantor->SIGNATORYID4;
+            }else if(!empty($guarantor->SIGNATORYID5) && $this->validateGuarantor($guarantor->SIGNATORYID5)){
+                $guarantor = $guarantor->SIGNATORYID5;
+            }else if(!empty($guarantor->SIGNATORYID6) && $this->validateGuarantor($guarantor->SIGNATORYID6)){
+                $guarantor = $guarantor->SIGNATORYID6;
+            }else{
+                $guarantor = '';
+            }
+        }else{
+            $guarantor = '';
+        }
+
+        return $guarantor;
     }
 
 
@@ -443,18 +517,25 @@ class ApplicationController extends Controller
         if($this->validateEmployeeStatus($EmpID)){
             // Check Balance
             $balance = Loan::where('EmpID', $EmpID)
-                    ->whereNotIn('status', [0,9])
-                    ->sum('balance');
+                        ->whereNotIn('status', [0,9])
+                        ->sum('balance');
 
             if($balance > 0)
                 $valid = false;
-
         }
 
+        // Guarantor must not be the employee him/herself
         if($EmpID == Auth::user()->employee_id)
             $valid = false;
 
         return $valid;
+    }
+
+    public function validateSignatoryRank($EmpID)
+    {
+        $signatory = Employee::where('EmpID', $EmpID)->first();
+        $employee = Employee::current()->first();
+
     }
 
     public function validateGuaranteedAmount($EmpID, $amount)
