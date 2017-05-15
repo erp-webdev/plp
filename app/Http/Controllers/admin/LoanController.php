@@ -503,7 +503,7 @@ class LoanController extends Controller
                     );
 
                     // Update Balance
-                    DB::select('EXEC updateBalance1 ?', [$request->$id]);
+                    DB::select('EXEC updateBalance ?', [$request->$id]);
                 }
             }
         }
