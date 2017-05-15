@@ -13,6 +13,7 @@ use Excel;
 use Entrust;
 use Session;
 use eFund\Loan;
+use eFund\Ledger;
 use Dompdf\Dompdf;
 use eFund\Http\Requests;
 use eFund\Utilities\Utils;
@@ -87,6 +88,21 @@ class ReportController extends Controller
 	    		return view('admin.ledger.ledger')
 	    			->withLedgers($ledger)
 	    			->withUtils($this->utils);
+
+            case 'monthly':
+
+               $data = $this->monthlyReport($args);
+                return view('admin.reports.monthly')->withData($data);
+
+            case 'deduction':
+
+               $data = $this->deductionReport($args);
+                return view('admin.reports.deduction')->withData($data);
+
+            case 'resigned':
+
+               $data = $this->resignedReport($args);
+                return view('admin.reports.resigned')->withData($data);
 	    			
     		default:
     			return $type;
@@ -132,6 +148,8 @@ class ReportController extends Controller
         $html = '';
         $loans = [];
         $ledger = [];
+        // Monthly Report
+        $data = [];
 
         // Get loan  data
         if($type == 'payroll'){
@@ -146,16 +164,39 @@ class ReportController extends Controller
             $ledger = $this->ledgerReport($args);
             $title = 'Efund Ledger - ' . $EmpID;
         }
+        elseif($type == 'monthly'){
+            $data = $this->monthlyReport($args);
+            $title = "EMPLOYEES' EFUND REPORT" . $EmpID;
+        }
+        elseif($type == 'deduction'){
+            $data = $this->deductionReport($args);
+            $title = "EMPLOYEES' EFUND REPORT" . $EmpID;
+        }
+        elseif($type == 'resigned'){
+            $data = $this->resignedReport($args);
+            $title = "EMPLOYEES' EFUND REPORT" . $EmpID;
+        }
 
         // format loan data to table
         if($type == 'payroll'){
             $html = view('admin.reports.payrollNotif')
                     ->withLoans($loans)
                     ->withUtils($this->utils);
-
         }elseif($type == 'summary'){
             $html = view('admin.reports.summary')
                     ->withLoans($loans)
+                    ->withUtils($this->utils);
+        }elseif($type == 'monthly'){
+            $html = view('admin.reports.monthly')
+                    ->withData($data)
+                    ->withUtils($this->utils);
+        }elseif($type == 'deduction'){
+            $html = view('admin.reports.deduction')
+                    ->withData($data)
+                    ->withUtils($this->utils);
+        }elseif($type == 'resigned'){
+            $html = view('admin.reports.resigned')
+                    ->withData($data)
                     ->withUtils($this->utils);
         }elseif(in_array($type, ['ledger'])){
             $html = view('admin.ledger.ledger')
@@ -167,17 +208,20 @@ class ReportController extends Controller
         if($format == 'html' || $format == 'pdf'){
 
             if($type == 'summary')
-                return $this->stream($html, $format, 'legal', 'landscape');
+                return $this->stream($html, $format, 'legal', 'landscape', "EMPLOYEES' FUND SUMMARY");
+            elseif($type == 'payroll')
+                return $this->stream($html, $format, 'legal', 'landscape', "EMPLOYEES' FUND PAYROLL NOTIFICATION");
             else
-                return $this->stream($html, $format);
+                return $this->stream($html, $format, 'letter', 'landscape', "");
 
         }else if($format == 'xlsx' || $format == 'csv'){
-            return $this->formatExcel($loans, $type, $format, $title);
+
+            return $this->formatExcel($loans, $type, $format, $title, $html);
         }
         
     }
 
-    public function stream($html, $format = 'html', $size = 'letter', $orientation = 'landscape', $title = 'Megaworld EFund Payroll Notification')
+    public function stream($html, $format = 'html', $size = 'letter', $orientation = 'landscape', $title = "EMPLOYEES' FUND REPORT")
     {
       
         if($format == 'html'){
@@ -260,7 +304,48 @@ class ReportController extends Controller
                 ->orderBy($args['sort'], 'asc')->get();
     }
 
-    public function formatExcel($loans, $type, $format = 'xlsx', $title = 'Megaworld EFund System')
+    public function monthlyReport($args)
+    {
+        $year_prev = DB::select('EXEC spGetPreviousYearOutstandingBalance');
+
+        $year_cur = DB::table('viewMonthlyReport')
+                        ->where('app_year', date('Y'))
+                        ->orderBy('app_month', 'asc')->get();
+
+        $total = DB::select('EXEC spGetTotalOutstandingBalance');
+
+        return (object)[
+            'year_prev' => $year_prev,
+            'year_cur'  => $year_cur,
+            'total'     => $total
+        ];
+
+    }
+
+    public function deductionReport($args)
+    {
+        $employees = DB::table('viewEmployeeWithNoDeductions')->get();
+        $total = DB::select('EXEC spGetTotalEmployeesWithNoDeductions');
+
+        return (object)[
+            'employees' => $employees,
+            'total' => $total
+        ];
+    }
+
+    public function resignedReport($args)
+    {
+        $employees = DB::table('viewResignedEmployeesWithBalance')->get();
+        $total = DB::select('EXEC spGetTotalResignedEmployeesWithBalance');
+
+        return (object)[
+            'employees' => $employees,
+            'total' => $total
+        ];
+    }
+   
+
+    public function formatExcel($loans, $type, $format = 'xlsx', $title = 'Megaworld EFund System', $html = [])
     {
         if($type == 'payroll'){
 
@@ -307,6 +392,36 @@ class ReportController extends Controller
 
                 array_push($data, $newRow);
             }
+        }else{
+            header('Content-type: application/excel');
+            $filename = 'EFUND REPORT.xls';
+            header('Content-Disposition: attachment; filename='.$filename);
+
+            $data = '<html xmlns:x="urn:schemas-microsoft-com:office:excel">
+            <head>
+                <!--[if gte mso 9]>
+                <xml>
+                    <x:ExcelWorkbook>
+                        <x:ExcelWorksheets>
+                            <x:ExcelWorksheet>
+                                <x:Name>Sheet 1</x:Name>
+                                <x:WorksheetOptions>
+                                    <x:Print>
+                                        <x:ValidPrinterInfo/>
+                                    </x:Print>
+                                </x:WorksheetOptions>
+                            </x:ExcelWorksheet>
+                        </x:ExcelWorksheets>
+                    </x:ExcelWorkbook>
+                </xml>
+                <![endif]-->
+            </head>
+
+            <body>
+               '. $html .'
+            </body></html>';
+
+            return $data;
         }
 
         $this->downloadExcel($data, $title, $format);

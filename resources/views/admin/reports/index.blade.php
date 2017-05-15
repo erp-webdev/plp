@@ -21,7 +21,7 @@
 			  	<ul class="dropdown-menu">
 			  		<li><a onclick="format = 'pdf'; print()">PDF (.pdf)</a></li>
 				    <li><a onclick="format = 'xlsx'; print()">Excel (.xlsx)</a></li>
-				    <li><a onclick="format = 'csv'; print()">CSV (.csv)</a></li>
+				    <!-- <li><a onclick="format = 'csv'; print()">CSV (.csv)</a></li> -->
 			  	</ul>
 			</div>
 			<button type="button" class="btn btn-sm btn-default" data-dismiss="modal" aria-label="Close">Close</button>
@@ -39,6 +39,9 @@
 			<ul class="list-group">
 				<li class="list-group-item" onclick="$type = 'payroll'; showReport()"><i class="fa fa-book"></i> Payroll Notification</li>
 				<li class="list-group-item" onclick="$type = 'summary'; showReport()"><i class="fa fa-book"></i> Loan Summary</li>
+				<li class="list-group-item" onclick="$type = 'monthly'; showReport()"><i class="fa fa-book"></i> Monthly Summary</li>
+				<li class="list-group-item" onclick="$type = 'deduction'; showReport()"><i class="fa fa-book"></i> With Outstanding and No Deduction</li>
+				<li class="list-group-item" onclick="$type = 'resigned'; showReport()"><i class="fa fa-book"></i> Resigned Employees and With Outstanding Balance</li>
 				</ul>
 			<div>
 				<strong>Filter</strong>
@@ -98,7 +101,7 @@
 				  	<ul class="dropdown-menu">
 				  		<li><a onclick="format = 'pdf'; print()">PDF (.pdf)</a></li>
 					    <li><a onclick="format = 'xlsx'; print()">Excel (.xlsx)</a></li>
-					    <li><a onclick="format = 'csv'; print()">CSV (.csv)</a></li>
+					    <!-- <li><a onclick="format = 'csv'; print()">CSV (.csv)</a></li> -->
 				  	</ul>
 				</div>
 				<a class="btn btn-default btn-sm" href="#reportViewModal" data-toggle="modal" data-target="#reporViewModal" onclick="showFullScreen()"><i class="fa fa-eye"></i> View FullScreen</a>

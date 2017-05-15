@@ -102,12 +102,12 @@
 
         <div>
             <h1 id="application">Loan Application</h1>
-            <p>By default, Loan applications is enabled to all regular employees of Megaworld Corp. This is where employees will submit their loan applications. The eFund System provides easy and yet with several verifications of loan applications allowable to each employee. The employee can file their applications through <strong>My eFunds <img src="{{ url('efund_sm.png') }}" style="background-color: black"></strong> menu.</p>
+            <p>By default, Loan applications are enabled to all active regular employees of Megaworld Corp. This is where employees will submit their loan applications. The eFund System provides easy and several verifications of loan applications allowable to each employee. The employee can file their applications through <strong>My eFunds <img src="{{ url('efund_sm.png') }}" style="background-color: black"></strong> menu.</p>
 
             <h4 id="appMgt">Application Management</h4>
             <p><strong>My eFunds</strong> provides a listing of all owned previous, current and saved loans applications of the employee.</p>
-            <p>To view application, click <i class="fa fa-eye"></i> icon that correspond to the application to be viewed.</p> 
-            <p>Applications can only be edited or modified when it is saved only and not yet submitted.</p>
+            <p>To view an application, click <i class="fa fa-eye"></i> icon that correspond to the application to be viewed.</p> 
+            <p>Applications can only be edited or modified when it is saved and not yet submitted.</p>
             <p>Application can be monitored through its status.</p>
             <div class="bs-callout bs-callout-info">
                 <h4>Application Statuses</h4>
@@ -162,7 +162,7 @@
                     </table>
                 </div>
             </div>
-            <h4>Appying eFund</h4>
+            <h4>Applying eFund</h4>
             <p>To apply for a loan, </p>
             <ol>
                 <li>Click <label class="label label-success">Apply Loan</label> button.</li>
@@ -179,12 +179,6 @@
                     <li>Click Verify to verify and validate your loan application.</li>
                     <li>Once verified, you can now submit the application.</li>
                 </ul>
-                <div class="bs-callout bs-callout-info">
-                    <p>As you specify loan amount, Total and payroll deductions are computed. </p>
-                    <p><strong>Total</strong> is the sum of specified loan amount and the interest amount.</p>
-                    <p><strong>Interest amount</strong> is the product of loan amount multiplied by percentage of interest.</p>
-                    <p><strong>Payroll Deductions</strong> is the quotient of total amount divided by terms.</p>
-                </div>
             </ol>
 
             <h1></h1>
@@ -192,12 +186,7 @@
 
         <div>
             <h1 id="endorsements">Endorsements</h1>
-            <p>In general, Endorsements is an act of giving one's approval or support.</p>
-            <h4>Endorsement Management</h4>
-            <p>To view application, click <i class="fa fa-eye"></i> icon that correspond to the application to be viewed.</p>
-            <p>Applications can only be approved or denied.</p>
-            <ol></ol>
-            <h4></h4>
+            <p></p>
         </div>
 
         <div></div>
