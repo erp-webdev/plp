@@ -35,7 +35,7 @@
 		<td>{{ $employee->EmpID }}</td>
 		<td>{{ $employee->FullName }}</td>
 		<td style="text-align: right">{{ number_format($employee->total, 2) }}</td>
-		<td>{{ $employee->payments_made }}</td>
+		<td style="text-align: center;">{{ $employee->payments_made }}</td>
 		<td style="text-align: right">{{ number_format($employee->balance, 2) }}</td>
 		<td style="text-align: left">{{ $employee->guarantor_FullName }}</td>
 	</tr>
