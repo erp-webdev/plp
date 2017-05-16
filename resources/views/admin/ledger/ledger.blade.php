@@ -79,44 +79,47 @@
 						<th><br>amount</th>
 						<th>BALANCE</th>
 					</tr>
-					<?php $ctr = 0; $new = true;?>
+					<?php $prevId = ''; $ctr = 0;?>
 					@foreach($ledgers as $ledger)
-					<?php 
-						if($utils->formatLedger($ledger->eFundData_id, $ctr, $ledger->eFundData_id) != ''){
-							$new = true;
-						}else
-						{
-							$new = false;
-						}
-					 ?>
-					<tr class="<?php if($utils->formatLedger($ledger->eFundData_id, $ctr, $ledger->eFundData_id) != '') echo'new' ?>" >
-						<td>{{ $utils->formatLedger($ledger->created_at, $ctr, $ledger->eFundData_id) }}</td>
-						<td>{{ $utils->formatLedger($ledger->ctrl_no, $ctr, $ledger->eFundData_id) }}</td>
-						<td>{{ $utils->formatLedger($ledger->cv_no, $ctr, $ledger->eFundData_id) }}</td>
-						<td>{{ $utils->formatLedger($ledger->cv_date, $ctr, $ledger->eFundData_id) }}</td>
-						<td>{{ $utils->formatLedger($ledger->check_released, $ctr, $ledger->eFundData_id) }}</td>
-						<td style="text-align: right">
-								{{ $utils->formatLedger($ledger->loan_amount, $ctr, $ledger->eFundData_id) }}
-						</td>
-						<td style="text-align: right">{{ $utils->formatLedger($ledger->loan_amount_interest, $ctr, $ledger->eFundData_id) }}</td>
-						<td>{{ $utils->formatLedger($ledger->total, $ctr, $ledger->eFundData_id, true) }}</td>
-						<td>{{ $utils->formatLedger($ledger->terms_month, $ctr, $ledger->eFundData_id) }}</td>
-						<td style="text-align: right">{{ $utils->formatLedger($ledger->deductions, $ctr, $ledger->eFundData_id, true) }}</td>
-						<td>{{ $ledger->date }}</td>
-						<td>{{ $ledger->ar_no }}</td>
-						<td style="text-align: right">{{ $utils->formatNumber((float)$ledger->amount) }}</td>
-						<td style="text-align: right">
-						@if($showBalance)
-							{{ $utils->formatNumber((float)(round($ledger->balance,2))) }}
-						@else
-							@if($ctr == 0)
-								{{ $utils->formatNumber((float)(round($balance,2))) }}
-							@endif
-						@endif
-						</td>
-					</tr>
-					<?php $ctr++; ?>
+						<tr <?php if($ledger->eFundData_id != $prevId) echo 'style="border-top: 2px solid black"'; ?>>
+							<td style="text-align: left"><?php if($ledger->eFundData_id != $prevId) echo $ledger->created_at  ?></td>
+							<td style="text-align: left"><?php if($ledger->eFundData_id != $prevId) echo $ledger->ctrl_no; ?></td>
+							<td style="text-align: left"><?php if($ledger->eFundData_id != $prevId) echo  $ledger->cv_no; ?></td>
+							<td style="text-align: left"><?php if($ledger->eFundData_id != $prevId) echo  $ledger->cv_date; ?></td>
+							<td style="text-align: left"><?php if($ledger->eFundData_id != $prevId) echo  $ledger->check_released; ?></td>
+							<td style="text-align: left"><?php if($ledger->eFundData_id != $prevId) echo  $ledger->loan_amount; ?></td>
+							<td style="text-align: right"><?php if($ledger->eFundData_id != $prevId) echo  number_format($ledger->loan_amount_interest,2); ?></td>
+							<td><?php  if($ledger->eFundData_id != $prevId) echo  number_format($ledger->total,2); ?></td>
+							<td><?php if($ledger->eFundData_id != $prevId) echo  $ledger->terms_month; ?></td>
+							<td style="text-align: right"><?php if($ledger->eFundData_id != $prevId) echo  number_format($ledger->deductions,2); ?></td>
+							<td>{{ $ledger->date }}</td>
+							<td>{{ $ledger->ar_no }}</td>
+							<td style="text-align: right">{{ number_format($ledger->amount,2) }}</td>
+							<td style="text-align: right">
+							<?php 
+								if($showBalance){
+									echo number_format($ledger->balance,2);
+								}else{
+									if($ledger->eFundData_id != $prevId){
+										$amount_paid = 0;
+
+										foreach ($ledgers as $x) {
+											if($x->eFundData_id == $ledger->eFundData_id)
+												$amount_paid += $x->amount;
+										}
+										
+										echo round($ledger->total - $amount_paid,2);
+									}
+								}
+
+							 ?>
+							</td>
+						</tr>
+						<?php $prevId = $ledger->eFundData_id; ?>
 					@endforeach
+
+
+					
 				</tbody>
 			</table>
 <div class="footer">
