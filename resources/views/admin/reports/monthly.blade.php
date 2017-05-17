@@ -34,10 +34,10 @@
 	<tr>
 		<td>As of December 31, {{ date('Y') - 1 }}</td>
 		<td style="text-align: center;">{{ $data->year_prev[0]->total_count }}</td>
-		<td style="text-align: right">{{ $data->year_prev[0]->principal }}</td>
-		<td style="text-align: right">{{ $data->year_prev[0]->interest }}</td>
-		<td style="text-align: right">{{ $data->year_prev[0]->total }}</td>
-		<td style="text-align: right">{{ $data->year_prev[0]->balance }}</td>
+		<td style="text-align: right">{{ number_format($data->year_prev[0]->principal,2) }}</td>
+		<td style="text-align: right">{{ number_format($data->year_prev[0]->interest,2) }}</td>
+		<td style="text-align: right">{{ number_format($data->year_prev[0]->total,2) }}</td>
+		<td style="text-align: right">{{ number_format($data->year_prev[0]->balance,2) }}</td>
 	</tr>
 	@endif
 	<tr>
