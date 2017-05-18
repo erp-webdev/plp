@@ -230,9 +230,9 @@
 		     	@permission(['officer'])
 				@if($loan->status == $utils->getStatusIndex('officer'))
 				<div class="clearfix"></div>
-				<button type="submit" name="deny" class="btn btn-danger btn-sm pull-right"><i class="fa fa-thumbs-down"></i> Deny</button>
-				<button type="submit" name="approve" class="btn btn-success btn-sm pull-right"><i class="fa fa-thumbs-up"></i> Approve</button>
-				<button type="statusubmit" name="calculate" class="btn btn-default btn-sm pull-right"><i class="fa fa-calculator"></i> Calculate</button>
+				<button type="submit" name="deny" class="btn btn-danger btn-sm pull-right" onsubmit="startLoading()"><i class="fa fa-thumbs-down"></i> Deny</button>
+				<button type="submit" name="approve" class="btn btn-success btn-sm pull-right" onsubmit="startLoading()"><i class="fa fa-thumbs-up"></i> Approve</button>
+				<button type="statusubmit" name="calculate" class="btn btn-default btn-sm pull-right" onsubmit="startLoading()"><i class="fa fa-calculator"></i> Calculate</button>
 				@endif
 				@endif
 			</form>
@@ -277,8 +277,8 @@
 		    	</fieldset>
 				@permission(['custodian'])
 		    	@if($loan->status != $utils->getStatusIndex('paid') && count($deductions) > 0)
-		    	<button type="submit" name="submit" class="btn btn-sm btn-success pull-right"><i class="fa fa-save"></i> Save</button>
-		    	<a class="btn btn-sm btn-warning pull-right" href="{{ route('deductions.recal', $loan->id) }}"><i class="fa fa-save"></i> Recalculate Deductions</a>
+		    	<button type="submit" name="submit" class="btn btn-sm btn-success pull-right" onsubmit="startLoading()"><i class="fa fa-save"></i> Save</button>
+		    	<a class="btn btn-sm btn-warning pull-right" href="{{ route('deductions.recal', $loan->id) }}" onsubmit="startLoading()"><i class="fa fa-save"></i> Recalculate Deductions</a>
 		    	@endif
 		    	@endpermission
 	    	</form>
@@ -291,7 +291,7 @@
 	<div class="modal-footer">
 		@permission(['custodian'])
 		@if($loan->status == $utils->getStatusIndex('inc'))
-	    <a type="button" class="btn btn-success btn-sm" href="{{ route('loan.complete', $loan->id) }}">Paid</a>
+	    <a type="button" class="btn btn-success btn-sm" href="{{ route('loan.complete', $loan->id) }}" onsubmit="startLoading()">Paid</a>
 	    @endif
 	    @endpermission
 	   <a type="button" class="btn btn-default btn-sm" href="{{ route('loan.print', $loan->id) }}" target="_blank"><i class="fa fa-print"></i> Print</a>

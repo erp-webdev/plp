@@ -112,8 +112,8 @@
     . As surety, I hereby authorize Megaworld Corporation to deduct from the salary, allowances, bonuses and other benefits without any need of prior notice, any outstanding balance of the Applicant's loan including interest and penalty until full payment thereof in case of applican's default, resignation, termination, dismissal or failure to pay amortization relating to the loan.</p>
     <button type="button" class="btn btn-default btn-sm" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
     @if($loan->guarantor_status == null && $loan->status == $utils->getStatusIndex('guarantor'))
-    <button type="submit" name="deny" class="btn btn-danger btn-sm"><i class="fa fa-thumbs-down"></i> I Disagree</button>
-    <button type="submit" name="approve" class="btn btn-success"><i class="fa fa-thumbs-up"></i> I Agree</button>
+    <button type="submit" name="deny" class="btn btn-danger btn-sm" onsubmit="startLoading()"><i class="fa fa-thumbs-down"></i> I Disagree</button>
+    <button type="submit" name="approve" class="btn btn-success" onsubmit="startLoading()"><i class="fa fa-thumbs-up"></i> I Agree</button>
     @endif
   </div>
 </form>

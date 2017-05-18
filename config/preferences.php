@@ -11,15 +11,16 @@ return [
 
 	// Employee Notification
 	'notif_subjects' => [
-		'check_signed' => 'EFund Check Is Now Ready!',
-		'check_released' => 'EFund Check Has Been Released!',
-		'check_signed_cust' => "Applicant's Check Is Now Ready!",
-		'check_released_cust' => "Applicant's Check Has Been Released!",
-		'payroll' => 'New EFund Deduction Schedule!', 
-		'approved' => 'EFund Application Approved!',
-		'created'	=> 'New EFund Application!',
-		'verified'	=> 'EFund Application Verified!',
-		'paid'		=> 'EFund Paid!'
+		'check_signed' 			=> 'EFund Check Is Now Ready!',
+		'check_released' 		=> 'EFund Check Has Been Released!',
+		'check_signed_cust' 	=> "Applicant's Check Is Now Ready!",
+		'check_released_cust' 	=> "Applicant's Check Has Been Released!",
+		'payroll' 				=> 'New EFund Deduction Schedule!', 
+		'approved' 				=> 'EFund Application Approved!',
+		'created'				=> 'New EFund Application!',
+		'verified'				=> 'EFund Application Verified!',
+		'paid'					=> 'EFund Paid!',
+		'denied'				=> 'EFund Application Denied!'
 	],
 
 	// eFund System
