@@ -22,7 +22,7 @@
             <div class="navbar page-title">
                 <h2>Megaworld eFund <i style="font-size:10px">(v1.0)</i></h2>
             </div>
-                
+               
                 @yield('content')
             </div>
         </div>
@@ -39,7 +39,9 @@
     </script>
     <script src="{{ url('/') }}/assets/js/tour.js" ></script>
     <script type="text/javascript">
-        // My Efunds Index
+        // Dashboard Tour Initialization
+        tour.init();
+        tour.start();
 
         function nextTour() {
            this.tour.next();
@@ -47,7 +49,6 @@
 
         $(function() {
             $( "input.datepicker" ).datepicker({ dateFormat: 'yy-mm-dd' });
-          
         });
     </script>
     

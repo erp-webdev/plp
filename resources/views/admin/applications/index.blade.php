@@ -86,41 +86,11 @@
 @section('scripts')
 <script type="text/javascript">
 
-var myEfundSteps = [
-	{
-      element: "#refreshBtn",
-      title: "Refresh",
-      content: "Click this to refresh the page and reset search filters.",
-      backdrop: true,
-      backdropContainer : '#app-layout',
-      
-    },
-    {
-      element: "table",
-      title: "EFund Application Listing",
-      content: "All your applications are listed here. You can monitor your application's progress by looking at the status indicated.",
-      placement: 'top',
-      backdrop: true,
-      backdropContainer : '#app-layout',
-    },
-    {
-      element: ".btn-success:contains('Apply Loan')",
-      title: "Applying a Loan",
-      content: "Click this button to create and submit a new or reavailment loan applications. Try it!",
-      reflex: true,
-      // next: -1,
-      backdrop: true,
-      backdropContainer : '#wrapper',
-      reflex: true,
-    }];
-
-
 if(tour.ended()){
 	var myEF1 = new Tour({
 		name: 'EFund_Tour_App1',
-		steps: myEfundSteps,
+		steps: MyEFund_index,
 	});
-
 
 	myEF1.init();
 	myEF1.start();
@@ -132,7 +102,6 @@ function find() {
 	var $searchUrl = "{{ route('applications.index') }}" + "?show=" + $show + "&search=" + $search;
 	window.location.href = $searchUrl;
 }
-
 
 </script>
 @endsection

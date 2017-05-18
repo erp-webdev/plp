@@ -21,7 +21,7 @@ function setWrapperStatus(){
 				@permission(['application_list', 'application_view', 'application_create', 'application_edit', 'application_delete'])
 				<a id="myEfunds" class="btn btn-primary sidebar-menu <?php if(Session::get('menu')=='myloans') echo 'active'?>" role="button" href="{{ route('applications.index') }}">
 					<img src="{{ url('efund_sm.png') }}" width="20px" class="pull-right">
-  					My eFunds 
+  					My EFunds 
 				</a>
 				@endpermission
 				@permission(['loan_list', 'loan_view', 'loan_edit'])
@@ -88,10 +88,10 @@ function setWrapperStatus(){
 					    Maintenance
 					</a>
 				@endpermission
-					<a id="docMenu" class="btn btn-primary sidebar-submenu <?php if(Session::get('menu')=='faq') echo 'active'?>" href="{{ url('admin/documentation') }}">
+					<!-- <a id="docMenu" class="btn btn-primary sidebar-submenu <?php if(Session::get('menu')=='faq') echo 'active'?>" href="{{ url('admin/documentation') }}">
 						<i class="fa fa-question pull-right"></i>
 					    Documentation
-					</a>
+					</a> -->
 					<a id="tutMenu" class="btn btn-primary sidebar-submenu" onclick="restartTour()">
 						<i class="fa fa-map-marker pull-right"></i>
 					    Take a tour!

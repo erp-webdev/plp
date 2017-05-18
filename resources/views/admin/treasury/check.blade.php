@@ -108,7 +108,7 @@
             <div class="form-group">
              <label>CV Date</label>
               @if($loan->check_created_at == null && $loan->status == $utils->getStatusIndex('treasury'))
-              <input type="date" name="cv_date" class="form-control input-sm" required>
+              <input name="cv_date" class="form-control input-sm datepicker" type="text" pattern="[0-9]{4}-(0[1-9]|1[012])-(0[1-9]|1[0-9]|2[0-9]|3[01])" placeholder="YYYY-MM-DD" required>
              @else
               <span>
                   {{ date('j F y', strtotime($loan->cv_date)) }}
@@ -128,7 +128,7 @@
              <div class="form-group">
               <label>Check’s Issue Date</label>
               @if($loan->check_created_at == null && $loan->status == $utils->getStatusIndex('treasury'))
-              <input type="date" name="check_released" class="form-control input-sm" required>
+              <input name="check_released" id="datep" class="datepicker form-control input-sm " type="text" pattern="[0-9]{4}-(0[1-9]|1[012])-(0[1-9]|1[0-9]|2[0-9]|3[01])" placeholder="YYYY-MM-DD" required>
                @else
               <span>
                   {{ date('j F y', strtotime($loan->check_released)) }}
@@ -152,9 +152,14 @@
   <div class="modal-footer">
     <button type="button" class="btn btn-default btn-sm" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
     @if($loan->check_created_at == null && $loan->status == $utils->getStatusIndex('treasury'))
-    <button type="submit" name="approve" class="btn btn-success btn-sm"><i class="fa fa-send"></i> Submit</button>
+    <button type="submit" name="approve" class="btn btn-success btn-sm" onsubmit="startLoading()"><i class="fa fa-send"></i> Submit</button>
     @elseif($loan->released == null && $loan->status == $utils->getStatusIndex('release'))
-    <button type="submit" name="release" class="btn btn-success btn-sm"><i class="fa fa-send"></i> Release Check</button>
+    <button type="submit" name="release" class="btn btn-success btn-sm" onsubmit="startLoading()"><i class="fa fa-send"></i> Release Check</button>
     @endif
   </div>
 </form>
+<script type="text/javascript">
+   $(function() {
+        $( "input.datepicker" ).datepicker({ dateFormat: 'yy-mm-dd' });
+    });
+</script>

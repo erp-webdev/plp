@@ -1,4 +1,4 @@
-@extends('admin.layouts.app')
+extends('admin.layouts.app')
 @section('content')
 <div class="row">
 	<div class="col-xs-12 col-sm-12 col-md-12">
@@ -55,6 +55,16 @@
 		url = url + "&to=" + $('input[name=to]').val();
 
 		window.location.href = url;
+	}
+
+	if(tour.ended()){
+		var ledgerTourShow = new Tour({
+			name: 'Ledger_Tour_show',
+			steps: Ledger_steps_show,
+		});
+
+		ledgerTourShow.init();
+		ledgerTourShow.start();
 	}
 </script>
 @endsection

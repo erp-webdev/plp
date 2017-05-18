@@ -61,5 +61,15 @@
 		var $searchUrl = "{{ route('ledger.index') }}" + "?show=" + $show + "&search=" + $search;
 		window.location.href = $searchUrl;
 	}
+
+	if(tour.ended()){
+		var ledgerTourIndex = new Tour({
+			name: 'Ledger_Tour_index',
+			steps: Ledger_steps_index,
+		});
+
+		ledgerTourIndex.init();
+		ledgerTourIndex.start();
+	}
 </script>
 @endsection

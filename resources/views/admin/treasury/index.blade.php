@@ -96,5 +96,15 @@
 		var $searchUrl = "{{ route('treasury.index') }}" + "?show=" + $show + "&search=" + $search;
 		window.location.href = $searchUrl;
 	}
+
+	if(tour.ended()){
+		var treasuryTourIndex = new Tour({
+			name: 'Treasury_Tour_index',
+			steps: Treasury_steps_index,
+		});
+
+		treasuryTourIndex.init();
+		treasuryTourIndex.start();
+	}
 </script> 
 @endsection

@@ -169,5 +169,15 @@
 		var report = $('#reportView').html();
 		$('.reportViewFS').html(report);
 	}
+
+	if(tour.ended()){
+		var reportTourIndex = new Tour({
+			name: 'Report_Tour_index',
+			steps: Report_steps_index,
+		});
+
+		reportTourIndex.init();
+		reportTourIndex.start();
+	}
 </script>
 @endsection

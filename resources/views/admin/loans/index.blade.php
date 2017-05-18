@@ -22,7 +22,7 @@
 	                        <div class="form-group col-xs-12 col-sm-4 col-md-4">
 	                                <span class="col-xs-12 col-sm-3 col-md-3">Date</span>
 	                                <div class="col-xs-12 col-sm-9 col-md-9">
-	                                      <input name="deductionDate" class="datepicker form-control" ng-model="deductionDate" max="<?php //echo date('Y-m-d'); ?>" onchange="loadBatchDeduction('{{ route('loan.deduction.list') }}', this)" required>
+	                                      <input name="deductionDate" class="datepicker form-control" ng-model="deductionDate" max="<?php //echo date('Y-m-d'); ?>" onchange="loadBatchDeduction('{{ route('loan.deduction.list') }}', this)" placeholder="YYYY-MM-DD" required>
 	                                </div>
 
 	                        </div>
@@ -42,7 +42,7 @@
 							<div class="clearfix"></div>
                         </div>
                         <div class="modal-footer">
-                            <button id="applyDeduction" type="submit" name="save" class="btn btn-sm btn-success" disabled><i class="fa fa-save"></i> Apply Deductions</button>
+                            <button id="applyDeduction" type="submit" name="save" class="btn btn-sm btn-success" disabled><i class="fa fa-save" onsubmit="startLoading()"></i> Apply Deductions</button>
                         </div>
                		</form>
       			</div><!-- /.modal-content -->
@@ -62,7 +62,7 @@
 		                </div>
 		                <div class="clearfix"></div>
 	                    <div class="modal-footer">
-	                        <button type="submit" name="send" class="btn btn-sm btn-success" onclick="startLoading()"><i class="fa fa-send"></i> Send Email</button>
+	                        <button type="submit" name="send" class="btn btn-sm btn-success" onsubmit="startLoading()"><i class="fa fa-send"></i> Send Email</button>
 	                    </div>
 	                </form>
 	               
@@ -79,25 +79,42 @@
 			<a class="btn btn-sm btn-primary pull-right" style="margin-right: 10px" href="{{ route('upload.show') }}"><i class="fa fa-upload"></i> Import</a>
 			@endpermission
 			<hr>
-			@if ($message = Session::get('success'))
-	            <div class="col-xs-12 col-sm-12 col-md-12">
-	                <div class="alert alert-success">
-	                	<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-						  <span aria-hidden="true">&times;</span>
-						</button>
-	                    <p>{{ $message }}</p>
-	                </div>
-	            </div>
-	        @elseif ($message = Session::get('error'))
-	            <div class="col-xs-12 col-sm-12 col-md-12">
-	                <div class="alert alert-danger">
-	                	<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-						  <span aria-hidden="true">&times;</span>
-						</button>
-	                    <p>{{ $message }}</p>
-	                </div>
-	            </div>
-	        @endif
+			 @if ($message = Session::get('success'))
+                    <div class="col-xs-12 col-sm-12 col-md-12">
+                        <div class="alert alert-success">
+                            <p>{{ $message }}</p>
+                        </div>
+                    </div>
+                @elseif ($message = Session::get('error'))
+                    <div class="col-xs-12 col-sm-12 col-md-12">
+                        <div class="alert alert-danger">
+                            <p>{{ $message }}</p>
+                        </div>
+                    </div>
+                @elseif ($message = Session::get('info'))
+                    <div class="col-xs-12 col-sm-12 col-md-12">
+                        <div class="alert alert-info">
+                            <p>{{ $message }}</p>
+                        </div>
+                    </div>
+                @elseif ($message = Session::get('warning'))
+                    <div class="col-xs-12 col-sm-12 col-md-12">
+                        <div class="alert alert-warning">
+                            <p>{{ $message }}</p>
+                        </div>
+                    </div>
+                @elseif(count($errors)>0)
+                <div class="col-xs-12 col-sm-12 col-md-12">
+                    <div class="alert alert-danger col-xs-12 col-sm-5 col-md-5">
+                        <strong>Whoops!</strong> There were some problems with your input.<br><br>
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                </div>    
+                @endif
 			<div class="table-responsive">
 				<div class="form-horizontal ">
 					<div class="form-group col-xs-12 col-sm-2 col-md-2">
@@ -211,80 +228,12 @@
 	if(tour.ended()){
 		var loansTour = new Tour({
 			name: 'EFund_Tour_loan',
+			steps: Transaction_index,
 		});
 
-		loansTour.addStep({
-		    element: "table",
-		    title: "Transactions Listing",
-		    content: "All EFund applications are listed and monitored here. It provides a summary of applications and their status.",
-		    backdrop: true,
-		    backdropContainer : '#app-layout',
-		    placement: 'top',
-		  });
-
-	  	loansTour.addStep({
-		    element: $('#search').closest('div.input-group'),
-		    title: "Search Bar",
-		    content: "You can search transactions here by providing Ctrl No, Employee ID, or Date of application.",
-		    backdrop: true,
-		    backdropContainer : '#app-layout',
-		    placement: 'left',
-		  });
-
-	  if($('a.btn-info:contains(" Batch Deductions")').length){
-	    loansTour.addStep({
-	      element: $('a.btn-info:contains(" Batch Deductions")'),
-	      title: "Batch Processing of Deductions",
-	      content: "You can process deductions of all employees with schedule of deductions on the set date. Click the button!",
-	      backdrop: true,
-	      backdropContainer : '#app-layout',
-	    });
-
-	    // loansTour.addStep({
-	    //   element: $('input[name="deductionDate"]').closest('.form-group'),
-	    //   title: "Deduction Date",
-	    //   content: "Chosee date of deductions. This will retrieve all emloyees with loan deductions on the set date.",
-	    //   backdrop: true,
-	    //   backdropContainer : '#app-layout',
-	    //   onShow: function(){
-	    //     $('.modal').attr('style', 'z-index:5000');
-	    //     $('.modal-backdrop').attr('style', 'z-index:1000');
-	    //   }
-	    // });
-
-	    // loansTour.addStep({
-	    //   element: $('input[name="d_arno"]').closest('.form-group'),
-	    //   title: "AR Number",
-	    //   content: "AR number is required to process the deductions.",
-	    //   backdrop: true,
-	    //   backdropContainer : '#app-layout',
-	    // });
-
-	    // loansTour.addStep({
-	    //   element: $('input[name="save"]'),
-	    //   title: "Applying the Deductions",
-	    //   content: "Clicking this button will apply the deductions with the AR # to all the listed employees. Applied deductions are automatically posted in the employee's ledger respectively.",
-	    //   backdrop: true,
-	    //   backdropContainer : '#app-layout',
-	    // });
-	  }
-
-	if($('i.fa-upload').closest('a').length){
-	  loansTour.addStep({
-	    element: $('i.fa-upload').closest('a'),
-	    title: "Importing Existing Data",
-	    content: "Import existing data to the EFund system. Importing data is critical to the system and must follow proper data formats. Imported data can not be undone.",
-	    backdrop: true,
-	    backdropContainer : '#app-layout',
-	    placement: 'left'
-	  });
-
-
+		loansTour.init();
+		loansTour.start();
 	}
-
-	loansTour.init();
-	loansTour.start();
-}
 
 
 $('#dataTable thead').on('click', 'th', function () {

@@ -227,20 +227,20 @@
 			@if($loan->status == $utils->getStatusIndex('saved'))
 			<div class="row" style="border-top: 1px solid #ccc; padding-top: 10px">
 				<div class="col-md-4">
-					<button id="verify" name="verify" class="btn btn-primary btn-block" onclick="startLoading()"><i class="fa fa-save"></i> Verify</button>
+					<button id="verify" name="verify" class="btn btn-primary btn-block" onsubmit="startLoading()"><i class="fa fa-save"></i> Verify</button>
 				</div>
 				<div class="col-md-4">
-					<button id="submit" name="submit" class="btn btn-success btn-block" <?php if(!isset($loan)) echo 'disabled'; ?> onclick="startLoading()"><i class="fa fa-send"></i> Submit Now</button>
+					<button id="submit" name="submit" class="btn btn-success btn-block" <?php if(!isset($loan)) echo 'disabled'; ?> onsubmit="startLoading()"><i class="fa fa-send"></i> Submit Now</button>
 				</div>
 			</div>
 			@endif
 		@else
 			<div class="row" style="border-top: 1px solid #ccc; padding-top: 10px">
 				<div class="col-md-4">
-					<button id="verify" name="verify" class="btn btn-primary btn-block" onclick=""><i class="fa fa-save"></i> Verify</button>
+					<button id="verify" name="verify" class="btn btn-primary btn-block" onsubmit=""><i class="fa fa-save"></i> Verify</button>
 				</div>
 				<div class="col-md-4">
-					<button id="submit" name="submit" class="btn btn-success btn-block" <?php if(!isset($loan)) echo 'disabled'; ?> onclick=""><i class="fa fa-send"></i> Submit Now</button>
+					<button id="submit" name="submit" class="btn btn-success btn-block" <?php if(!isset($loan)) echo 'disabled'; ?> onsubmit="startLoading()"><i class="fa fa-send"></i> Submit Now</button>
 				</div>
 			</div>
 		@endif	
@@ -312,180 +312,15 @@
 </script>
 <script type="text/javascript">
 
-	var myEfundSteps = [
-    {
-      element: $("span:contains('Type of Application')").closest('.col-md-6'),
-      title: "Type of Application and Previous Balance",
-      content: "By default, type of application is already determined by the system, so you don't have to choose here. If this is your first time to apply, click New else Reavailment. <br><br> Your previous balance is displayed here. This must always be 0.00 to proceed to application.",
-      backdrop: true,
-      backdropContainer : '#app-layout',
-      placement: 'bottom',
-      prev: -1,
-    },
-    {
-      element: $("input[name='loc']").closest('.form-group'),
-      title: "Local / Direct Line #",
-      content: "Provide your local number or direct line.",
-      backdrop: true,
-      backdropContainer : '#app-layout',
-      placement: 'bottom',
-    },
-    {
-      element: $("input[name='term_mos']").closest('.form-group'),
-      title: "Terms",
-      content: "Select number of months to pay your loan. Your first loan application of the year can be set to up 12 months while second availment can only be paid until December of the same year.",
-      backdrop: true,
-      backdropContainer : '#app-layout',
-      placement: 'bottom',
-    },
-    {
-      element: $("input[name='loan_amount']").closest('.form-group'),
-      title: "Loan Amount",
-      content: "Enter loan amount. Your loan amount range varies base on your position as indicated below the input box. Loan amount above minimum requires you to provide your guarantor as well.",
-      backdrop: true,
-      backdropContainer : '#app-layout',
-      placement: 'bottom',
-    },
-    {
-      element: $("input[name='interest']").closest('.form-group'),
-      title: "Interest",
-      content: "Interest is the loan interest percentage set by EFund Administrator.",
-      backdrop: true,
-      backdropContainer : '#app-layout',
-      placement: 'bottom',
-    },
-    {
-      element: $("span:contains('Total')").closest('.form-group'),
-      title: "Total",
-      content: "Total is the total amount to be deducted on your account.",
-      backdrop: true,
-      backdropContainer : '#app-layout',
-      placement: 'bottom',
-    },
-    {
-      element: $("span:contains('# of payments to be made*')").closest('.form-group'),
-      title: "Number of payments",
-      content: "Twice the terms you set is the number of payments to be made. Payment is twice a month or every payroll cut-off.",
-      backdrop: true,
-      backdropContainer : '#app-layout',
-      placement: 'bottom',
-    },
-    {
-      element: $("span:contains('Every payroll deductions*')").closest('.form-group'),
-      title: "Deductions",
-      content: "Automatic deductions to be made from your salary every cut-off until your loan is fully paid.",
-      backdrop: true,
-      backdropContainer : '#app-layout',
-      placement: 'bottom',
-    },
-    {
-      element: $("h4:contains('Employee Information ')"),
-      title: "Employee Information",
-      content: "Click the arrow down to expand your employment information.",
-      backdrop: true,
-      backdropContainer : '#app-layout',
-      placement: 'bottom',
-    },
-    {
-      element: $("input[name='head']").closest('div.col-md-4'),
-      title: "Endorser",
-      content: "Enter Employee ID of your Immediate Head or Department head who will be your endorser.",
-      backdrop: true,
-      backdropContainer : '#app-layout',
-      placement: 'top',
-      onNext: function(){
-		if($('#surety').attr('style') == 'display: none'){
-			myEF2.addStep(
-			  {
-			    element: $("input[name='loan_amount']").closest('.form-group'),
-			    title: "Activating Guarantor",
-			    content: "Try providing a loan amount above minimum to activate the guarantor.",
-			    backdrop: true,
-			    backdropContainer : '#app-layout',
-			    placement: 'bottom',
-			    reflex: true,
-			    onNext: function(){
-			    	if($("input[name='loan_amount']").val() <= $("input[name='loan_amount']").attr('min')){
-			    		myEF2.prev();
-			    	}
-			    }
-			  });
-		}
-      }
-    },
-];
-
-	
-
 if(tour.ended()){
 	var myEF2 = new Tour({
 		name: 'EFund_Tour_App2',
-		steps: myEfundSteps,
+		steps: MyEFund_create,
 		orphan: true,
 		onEnd: function(){
 			window.location.reload();
 		}
 	});
-
-	
-
-    myEF2.addSteps([
-      {
-        element: $("#surety_input").closest('div#surety'),
-        title: "Guarantor",
-        content: "Enter employee ID of your guarantor. This is required if you have a loan amount above minimum.",
-        backdrop: true,
-        backdropContainer : '#app-layout',
-        placement: 'bottom',
-        reflex: true,
-        orphan: false,
-        onShow: function(){
-        	$("input[name='loan_amount']").val($("input[name='loan_amount']").attr('min') + 500);
-        }
-      },
-      {
-        element: $("#verify"),
-        title: "Verifying your Application",
-        content: "Click this button to verify and validate your applications. This will inform you if you can submit the form or check data for corrections.",
-        backdrop: true,
-        backdropContainer : '#app-layout',
-        placement: 'top',
-        onShow: function(){
-          $('form').attr('action', '');
-          $('#verify').removeAttr('disabled');
-        }
-      },
-      {
-        element: $("#submit"),
-        title: "Submitting your Application",
-        content: "Click this button to submit your applications. You cannot modify your application form once submitted. Your application will be received first by your endorser.  ",
-        backdrop: true,
-        backdropContainer : '#app-layout',
-        placement: 'top',
-        onShow: function(){
-          $('form').attr('action', '');
-          $('#submit').removeAttr('disabled');
-        }
-      },
-      {
-        title: "Loan Application",
-        content: "Once you submitted an application, it will be provided with a control number. You shall received an email if a check is ready for your claiming. A schedule of payroll deductions is also included in the email.",
-        backdrop: true,
-        backdropContainer : '#app-layout',
-      },
-      {
-        title: "Payroll Deductions",
-        content: "EFund Custodian shall update your ledger every payroll cut-off until you are fully paid.",
-        backdrop: true,
-        backdropContainer : '#app-layout',
-      },
-      {
-        title: "Fully Paid",
-        content: "You will be notified once your application has been fully paid. You may now apply for a new application.",
-        backdrop: true,
-        backdropContainer : '#app-layout',
-      }
-    ]);
 
 	myEF2.init();
 	myEF2.start();

@@ -35,7 +35,7 @@
 		<div class="col-xs-12 col-sm-12 col-md-12">
 			<h1>Loans</h1>
 			<a href="{{ route('payroll.index') }}" class="btn btn-sm btn-default"><i class="fa fa-refresh"></i> Refresh</a>
-			<a class="btn btn-sm btn-default" data-toggle="modal" data-target="#deductions">Deductions List</a>
+			<a id="deductionList" class="btn btn-sm btn-default" data-toggle="modal" data-target="#deductions">Deductions List</a>
 			
 			<hr>
 			@if ($message = Session::get('success'))
@@ -128,5 +128,14 @@
 		window.location.href = $searchUrl;
 	}
 
+	if(tour.ended()){
+		var payrollTourIndex = new Tour({
+			name: 'Payroll_Tour_index',
+			steps: Payroll_steps_index,
+		});
+
+		payrollTourIndex.init();
+		payrollTourIndex.start();
+	}
 </script> 
 @endsection
