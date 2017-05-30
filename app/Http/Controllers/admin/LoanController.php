@@ -250,7 +250,7 @@ class LoanController extends Controller
                             //Process not empty column
                             if(!empty(trim($key)) && $value != null){
 
-                                if(in_array($key, ['empid', 'mos', 'amount', 'deductions', 'startofdeductions', 'endorserempid', 'type', 'status']) && empty($value)){
+                                if(in_array($key, ['empid', 'mos', 'amount', 'deductions', 'startofdeductions', 'type', 'status']) && empty($value)){
                                     array_push($loansWithError, $this->createError('Required Field. '.$sheet->getTitle().'.row['. $ctr .'].column[' . $key .'].value[' . $value .']' , $cols));
                                 }
 
