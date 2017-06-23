@@ -21,6 +21,7 @@
 		small{
 			font-size: 10px
 		}
+		
 	</style>
 </head>
 <body>
@@ -250,6 +251,8 @@
 		<td style="text-align: right">Printed by: ({{ Auth::user()->id }}) {{ strtolower(Auth::user()->name) }} </td>
 	</tr>
 </table>
-
+<script type="text/javascript">
+	window.print()
+</script>
 </body>
 </html>

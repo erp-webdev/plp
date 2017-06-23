@@ -39,75 +39,125 @@ class ReportController extends Controller
 
     public function show($type)
     {
-    	$fromDate = '';
-    	$toDate = '';
-    	$EmpID = '';
-    	$status = '';
         $sort = 'FullName';
+        $format = 'view';
+        $title = "Megaworld Employeess fund Report";
 
-    	if(isset($_GET['dateFrom']))
-    		$fromDate = $_GET['dateFrom'];
-    	
-    	if(isset($_GET['dateTo']))
-    		$toDate = $_GET['dateTo'];
+        if(isset($_GET['format'])){
+            $format = $_GET['format']; 
+        }
 
-    	if(isset($_GET['EmpID']))
-    		$EmpID = $_GET['EmpID'];
-    	
-    	if(isset($_GET['status']))
-    		$status = $_GET['status'];
+        $filters = [
+            'control',
+            'EmpID',
+            'empName', 
+            'checkRelease', 
+            'totalAmount', 
+            'totalDeduction', 
+            'deductionPerPayday', 
+            'startDeduction', 
+            'created_at',
+            'sort',
+            'guarantor',
+            'cvno',
+            'cvdate',
+            'checkno',
+            'principal',
+            'status',
+            'interest',
+            'payroll'
+        ];
 
-        if(isset($_GET['sort']))
-            $sort = $_GET['sort'];
+        $args = [];
 
-        $args = [   'dateFrom' => $fromDate, 
-                    'dateTo' => $toDate, 
-                    'EmpID' => $EmpID, 
-                    'status' => $status, 
-                    'sort' => $sort
-                ];
+        foreach ($filters as $filter) {
+            if(isset($_GET[$filter])){
+                $args += [$filter => $_GET[$filter]];
+            }
+        }
+        $view = '';
+
+        $loans = [];
+        $ledger = [];
 
     	switch ($type) {
     		case 'payroll':
     			$loans = $this->payrollReport($args);
 
-				return view('admin.reports.payrollNotif')
+				$view = view('admin.reports.payrollNotif')
 					->withLoans($loans)
 					->withUtils($this->utils);
-    		
+    		break;
 			case 'summary':
 				$loans = $this->summaryReport($args);
 
-				return view('admin.reports.summary')
+				$view = view('admin.reports.summary')
 					->withLoans($loans)
 					->withUtils($this->utils);
+            break;
 
 			case 'ledger':
 				$ledger = $this->ledgerReport($args);
 
-	    		return view('admin.ledger.ledger')
+	    		$view = view('admin.ledger.ledger')
 	    			->withLedgers($ledger)
 	    			->withUtils($this->utils);
+            break;
 
             case 'monthly':
 
                $data = $this->monthlyReport($args);
-                return view('admin.reports.monthly')->withData($data);
+                $view = view('admin.reports.monthly')->withData($data);
+            break;
 
             case 'deduction':
 
                $data = $this->deductionReport($args);
-                return view('admin.reports.deduction')->withData($data);
+                $view = view('admin.reports.deduction')->withData($data);
+            break;
 
             case 'resigned':
 
                $data = $this->resignedReport($args);
-                return view('admin.reports.resigned')->withData($data);
+                $view = view('admin.reports.resigned')->withData($data);
+            break;
 	    			
     		default:
-    			return $type;
+    			$view = $type;
     	}
-		
+
+        if(in_array($format, ['pdf', 'xlsx', 'html'])){
+            return $this->export($format, $type, $view, $title, $loans);
+
+        }else if($format == 'view'){
+            return $this->preview($format, $type, $view, $title, $loans);
+        }
+    }
+
+    public function export($format, $type, $view, $title, $loans = [])
+    {
+        if($format == 'html' || $format == 'pdf'){
+
+            if($type == 'summary')
+                return $this->stream($view, $format, 'legal', 'landscape', "EMPLOYEES' FUND SUMMARY");
+            elseif($type == 'payroll')
+                return $this->stream($view, $format, 'legal', 'landscape', "EMPLOYEES' FUND PAYROLL NOTIFICATION");
+            else
+                return $this->stream($view, $format, 'letter', 'landscape', "");
+
+        }else if($format == 'xlsx' || $format == 'csv'){
+
+            return $this->formatExcel($loans, $type, $format, $title, $view);
+        }else{
+            // Preview
+            return $view;
+
+        }
+    }
+
+    public function preview($format, $type, $view, $title, $loans = [])
+    {
+        return $view;
     }
 
     public function generate($type)
@@ -120,31 +170,37 @@ class ReportController extends Controller
         $sort = 'FullName';
         $title = 'Megaworld Efund System';
 
-        if(isset($_GET['dateFrom']))
-            $fromDate = $_GET['dateFrom'];
-        
-        if(isset($_GET['dateTo']))
-            $toDate = $_GET['dateTo'];
+        $filters = [
+            'control',
+            'EmpID',
+            'empName', 
+            'checkRelease', 
+            'totalAmount', 
+            'totalDeduction', 
+            'deductionPerPayday', 
+            'startDeduction', 
+            'fromDate',
+            'toDate',
+            'sort',
+            'guarantor',
+            'cvno',
+            'cvdate',
+            'checkno',
+            'principal',
+            'status',
+            'interest',
+            'payroll'
+        ];
 
-        if(isset($_GET['EmpID']))
-            $EmpID = $_GET['EmpID'];
-        
-        if(isset($_GET['status']))
-            $status = $_GET['status'];
+        $args = [];
+        $args += ['sort' => $sort];
 
-         if(isset($_GET['format']))
-            $format = $_GET['format'];
+        foreach ($filters as $filter) {
+            if(isset($_GET[$filter])){
+                $args += [$filter => $_GET[$filter]];
+            }
+        }
 
-        if(isset($_GET['sort']))
-            $sort = $_GET['sort'];
-
-        $args = [   'dateFrom' => $fromDate, 
-                    'dateTo' => $toDate, 
-                    'EmpID' => $EmpID, 
-                    'status' => $status, 
-                    'sort' => $sort
-                ];
-        
         $html = '';
         $loans = [];
         $ledger = [];
@@ -249,9 +305,28 @@ class ReportController extends Controller
 
     public function payrollReport($args)
     {
+
           return Loan:: where(function($query) use ($args){
-                    if(!empty($arg['dateFrom']) && !empty($arg['dateTo'])){
-                        $query->where('start_of_deductions', '>=', $arg['dateFrom'])->where('start_of_deductions', '<=', $arg['dateTo']);
+
+                    // Check of Release
+                    $dateRange = explode("-", $args['checkRelease']);
+                    if(!empty(trim($dateRange[0])) && !empty(trim($dateRange[1]))){
+                        $query->where('check_released', '>=', trim($dateRange[0]))->where('check_released', '<=', trim($dateRange[1]));
+                    }
+
+                    $dateRange = explode("-", $args['checkRelease']);
+                    if(!empty(trim($dateRange[0])) && !empty(trim($dateRange[1]))){
+                        $query->where('start_of_deductions', '>=', trim($dateRange[0]))->where('start_of_deductions', '<=', trim($dateRange[1]));
+                    }
+
+                    // $dateRange = explode("-", $args['created_at']);
+                    // if(!empty(trim($dateRange[0])) && !empty(trim($dateRange[1]))){
+                    //     $query->where('created_at', '>=', trim($dateRange[0]))->where('created_at', '<=', trim($dateRange[1]));
+                    // }
+
+                    $names = explode(' ', $args['empName']);
+                    foreach ($names as $name) {
+                        $query->orWhere('FullName', 'LIKE', '%' . $name . '%');
                     }
 
                     if(!empty($args['EmpID'])){
@@ -324,12 +399,13 @@ class ReportController extends Controller
 
     public function deductionReport($args)
     {
-        $employees = DB::table('viewEmployeeWithNoDeductions')->get();
-        $total = DB::select('EXEC spGetTotalEmployeesWithNoDeductions');
+        $employees = DB::table('viewEmployeeWithNoDeductions')->where('date', $args['payroll'])->get();
+        $total = DB::select('EXEC spGetTotalEmployeesWithNoDeductions ?', [$args['payroll']]);
 
         return (object)[
             'employees' => $employees,
-            'total' => $total
+            'total' => $total,
+            'payroll' => $args['payroll']
         ];
     }
 

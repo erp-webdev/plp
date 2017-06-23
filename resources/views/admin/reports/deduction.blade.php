@@ -17,7 +17,9 @@
 		<td colspan="6" style="font-weight: bold; padding: 0px">EMPLOYEE'S FUND REPORT</td>	
 	</tr>
 	<tr>
-		<td colspan="6" style=" padding: 0px">List of Employees with Outstanding but without Deduction</td>	
+		<td colspan="6" style=" padding: 0px">List of Employees with Outstanding but without Deduction
+		<br>Payroll Period: {{ $data->payroll }}
+		</td>	
 	</tr>
 		<tr>
 		<td colspan="6">&nbsp;</td>
