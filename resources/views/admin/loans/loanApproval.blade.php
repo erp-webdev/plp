@@ -256,12 +256,26 @@
 		    				<td style="width: 25px"	>
 	    						<input type="hidden" name="eFundData_id[]" value="{{ $deduction->eFundData_id }}">
 		    					<input class="form-control input-sm" type="hidden" name="id[]" value="{{ $deduction->id }}">
-		    					<input  class="form-control input-sm" type="text" name="ar_no[]" value="{{ $deduction->ar_no }}" <?php if(!empty($deduction->ar_no)) echo 'readonly'; ?>>
+		    					<input  class="form-control input-sm" type="text" name="ar_no[]" value="{{ $deduction->ar_no }}" <?php 
+		    						if(!empty($deduction->ar_no)) 
+		    							echo 'readonly'; 
+		    						elseif($deduction->date >= date('Y-m-d'))
+		    							echo 'readonly';
+
+		    					?>>
 		    				</td>
-		    				<td style="width: 25px"><input class="form-control input-sm" type="number" step="any" name="amount[]" value="{{ $deduction->amount }}" <?php if(!empty($deduction->ar_no)) echo 'readonly'; ?>></td>
+		    				<td style="width: 25px"><input class="form-control input-sm" type="number" step="any" name="amount[]" value="{{ round($deduction->amount, 2) }}" 
+		    				<?php 
+		    					if(!empty($deduction->ar_no)) 
+		    						echo 'readonly'; 
+		    					elseif($deduction->date >= date('Y-m-d'))
+		    						echo 'readonly';
+
+		    				?>></td>
 		    				<td style="width: 25px"><input class="form-control input-sm" type="number" step="any" name="balance[]" value="{{ number_format($deduction->balance, 2, '.', '') }}" disabled ></td>
 		    			</tr>
-		    			<?php $totalAmount += $deduction->amount;  
+		    			<?php 
+		    				$totalAmount += $deduction->amount;  
 		    					if(!empty(trim($deduction->ar_no)))
 		    						$totalBalance = $deduction->balance;
 		    			?>
@@ -278,7 +292,7 @@
 				@permission(['custodian'])
 		    	@if($loan->status != $utils->getStatusIndex('paid') && count($deductions) > 0)
 		    	<button type="submit" name="submit" class="btn btn-sm btn-success pull-right" onsubmit="startLoading()"><i class="fa fa-save"></i> Save</button>
-		    	<a class="btn btn-sm btn-warning pull-right" href="{{ route('deductions.recal', $loan->id) }}" onsubmit="startLoading()"><i class="fa fa-save"></i> Recalculate Deductions</a>
+		    	<a class="btn btn-sm btn-warning pull-right" onclick="confirm_recalculation('{{ route('deductions.recal', $loan->id) }}')"><i class="fa fa-save"></i> Recalculate Deductions</a>
 		    	@endif
 		    	@endpermission
 	    	</form>

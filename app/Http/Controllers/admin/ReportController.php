@@ -389,6 +389,9 @@ class ReportController extends Controller
 
         $total = DB::select('EXEC spGetTotalOutstandingBalance');
 
+        $records = DB::table('viewMonthlyReport')->get();
+        return $records;
+
         return (object)[
             'year_prev' => $year_prev,
             'year_cur'  => $year_cur,

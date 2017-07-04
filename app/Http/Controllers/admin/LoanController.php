@@ -120,7 +120,7 @@ class LoanController extends Controller
             $loan->approved = 1;
             $loan->approved_by = Auth::user()->employee_id;
             $loan->approved_at = date('Y-m-d H:i:s');
-            $loan->status = $this->utils->setStatus($loan->status);
+            $loan->status = $this->utils->setStatus($utils->getStatusIndex('officer'));
             $loan->remarks = trim($request->remarks);
             $loan->save();
 
@@ -163,11 +163,31 @@ class LoanController extends Controller
                 $deduction->updated_by = Auth::user()->id;
                 $deduction->save();
 
+                // If the amount is less than the expected deduction amo                   unt per cutoff, 
+                // make adjustment on deductions.
+                if($request->amount[$i] < $loan->deductions){
+                    $total_paid = Deduction::where('eFundData_id', $loan->id)
+                        ->sum('amount');
+                    $balance = $loan->total - $total_paid;
+                    $remaining_months_to_pay = Deduction::where('date', '>', $deduction->date)
+                        ->where('eFundData_id', $loan->id)
+                        ->count();
+                    
+                    $adjusted_balance = $balance * (1 + ($loan->interest/100));
+                    $new_deduction = $adjusted_balance / $remaining_months_to_pay;
+                    $new_total = $total_paid + $adjusted_balance;
+                    Loan::where('id', $loan->id)->update([
+                        'total' => round($new_total, 2),
+                        'deductions' => round($new_deduction, 2)
+                        ]);
+                }
+
                 // Update Balance
-                DB::select('EXEC updateBalance ?', [$request->id[$i]]);
+                DB::update('EXEC updateBalance ?', [$request->id[$i]]);
             }
         }
 
+        
         DB::commit();
 
         return redirect()->route('admin.loan');//->withSuccess(trans('loan.application.deduction'));
@@ -503,7 +523,7 @@ class LoanController extends Controller
                     );
 
                     // Update Balance
-                    DB::select('EXEC updateBalance ?', [$request->$id]);
+                    DB::update('EXEC updateBalance ?', [$request->$id]);
                 }
             }
         }

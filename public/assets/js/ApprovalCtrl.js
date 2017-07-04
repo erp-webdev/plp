@@ -40,7 +40,7 @@ app.controller('ApprovalCtrl', function($scope, $http, $filter) {
 	    }, function myError(response) {
 	        $('#emailModalBody').html('Something went wrong! Please try again.');
 	    });
-	}
+	};
 
 });
 
@@ -57,4 +57,12 @@ function loadBatchDeduction($url, event) {
            	$('#deductionBatch').html('Something went wrong! Please try again.');
           },
     });
+}
+
+function confirm_recalculation($url) {
+	if(confirm("Are you sure you want to relcalculate deductions?")){
+		startLoading();
+    	window.location.href  = $url;
+    }  else
+    	return false;
 }

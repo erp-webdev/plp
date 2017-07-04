@@ -72,6 +72,10 @@ class LedgerController extends Controller
                     ->orderBy('ctrl_no', 'asc')
                     ->get();
 
+        if(count($ledger) <= 0){
+            abort(404);
+        }
+
     	$employee = Employee::where('EmpID', $EmpID)->first();
         $balance = Loan::where('EmpID', $EmpID)->sum('balance');
 

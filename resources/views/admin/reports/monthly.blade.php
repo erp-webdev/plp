@@ -30,31 +30,53 @@
 		<th>total <br>amount</th>
 		<th>outstanding <br>balance</th>
 	</tr>
-	@if(count($data->year_prev) > 0)
+	<?php 
+		$previous_year = '';
+		if(count($data) > 0)
+			// Calculate previous year records
+			$previous_year = (object)['total_count' => 0, 'principal' => 0, 'interest' => 0, 'total' => 0, 'paid' => 0, 'balance' => 0];
+
+			foreach ($data as $record) {
+				if( $record->app_year < date('Y')){
+					$previous_year->total_count = $record->total_count;
+					$previous_year->principal += $record->principal;
+					$previous_year->interest += $record->interest;
+					$previous_year->total += $record->total;
+					$previous_year->balance += $record->balance;
+				}
+			}
+	 ?>	
 	<tr>
 		<td>As of December 31, {{ date('Y') - 1 }}</td>
-		<td style="text-align: center;">{{ $data->year_prev[0]->total_count }}</td>
-		<td style="text-align: right">{{ number_format($data->year_prev[0]->principal,2) }}</td>
-		<td style="text-align: right">{{ number_format($data->year_prev[0]->interest,2) }}</td>
-		<td style="text-align: right">{{ number_format($data->year_prev[0]->total,2) }}</td>
-		<td style="text-align: right">{{ number_format($data->year_prev[0]->balance,2) }}</td>
+		<td style="text-align: center;">{{ $previous_year->total_count }}</td>
+		<td style="text-align: right">{{ number_format($previous_year->principal,2) }}</td>
+		<td style="text-align: right">{{ number_format($previous_year->interest,2) }}</td>
+		<td style="text-align: right">{{ number_format($previous_year->total,2) }}</td>
+		<td style="text-align: right">{{ number_format($previous_year->balance,2) }}</td>
 	</tr>
-	@endif
 	<tr>
 		<td style="text-align: center">Y{{ date('Y') }}</td>
 		<td colspan="5">&nbsp;</td>
 	</tr>
 	@for($i = 1; $i <= 12; $i++)
-		@if($i <= date('n'))
-			@foreach($data->year_cur as $row)
-				@if($row->app_month == $i)
+		@if(date('n') < $i)
+			<?php break; ?>
+		@endif
+		<?php $with_records = false; ?>
+		@foreach($data as $row)
+			@if($row->app_year != date('Y'))
+				<?php continue; ?>
+			@endif
+
+			@if($row->app_month == $i)
+				<?php $with_records = true; ?>
 				<tr>
 					<td>
 					<?php 
-					$monthNum  = $i;
-					$dateObj   = DateTime::createFromFormat('!m', $monthNum);
-					$monthName = $dateObj->format('F'); // March
-					echo $monthName; 
+						$monthNum  = $i;
+						$dateObj   = DateTime::createFromFormat('!m', $monthNum);
+						$monthName = $dateObj->format('F'); // March
+						echo $monthName; 
 					?>
 					</td>
 					<td style="text-align: center;">{{ $row->total_count }}</td>
@@ -63,32 +85,46 @@
 					<td style="text-align: right">{{ number_format($row->total, 2) }}</td>
 					<td style="text-align: right">{{ number_format($row->balance, 2) }}</td>
 				</tr>
-				@else
-				<tr>
-					<td>
-					<?php 
+			@endif
+		@endforeach
+		@if(!$with_records)
+			<tr>
+				<td>
+				<?php 
 					$monthNum  = $i;
 					$dateObj   = DateTime::createFromFormat('!m', $monthNum);
 					$monthName = $dateObj->format('F'); // March
 					echo $monthName; 
-					?>
-					</td>
-					<td style="text-align: center;">0</td>
-					<td style="text-align: right">0.00</td>
-					<td style="text-align: right">0.00</td>
-					<td style="text-align: right">0.00</td>
-					<td style="text-align: right">0.00</td>
-				</tr>
-				@endif
-			@endforeach
-		@endif 	
+				?>
+				</td>
+				<td style="text-align: center;">0</td>
+				<td style="text-align: right">0.00</td>
+				<td style="text-align: right">0.00</td>
+				<td style="text-align: right">0.00</td>
+				<td style="text-align: right">0.00</td>
+			</tr>
+		@endif
 	@endfor
+	<?php 
+	
+	$total = $previous_year;
+
+	foreach ($data as $record) {
+		if($record->app_year == date('Y')){
+			$total->total_count += $record->total_count;
+			$total->principal += $record->principal;
+			$total->interest += $record->interest;
+			$total->total += $record->total;
+			$total->balance += $record->balance;
+		}
+	}
+	 ?>
 	<tr style="border-top: 1px solid; border-bottom-style: double; border-color: black; font-weight: bold">
 		<td>Total</td>
-		<td style="text-align: center;">{{ $data->total[0]->total_count }}</td>
-		<td style="text-align: right">{{ number_format($data->total[0]->principal, 2) }}</td>
-		<td style="text-align: right">{{ number_format($data->total[0]->interest, 2) }}</td>
-		<td style="text-align: right">{{ number_format($data->total[0]->total, 2) }}</td>
-		<td style="text-align: right">{{ number_format($data->total[0]->balance, 2) }}</td>
+		<td style="text-align: center;">{{ $total->total_count }}</td>
+		<td style="text-align: right">{{ number_format($total->principal, 2) }}</td>
+		<td style="text-align: right">{{ number_format($total->interest, 2) }}</td>
+		<td style="text-align: right">{{ number_format($total->total, 2) }}</td>
+		<td style="text-align: right">{{ number_format($total->balance, 2) }}</td>
 	</tr>
 </table>

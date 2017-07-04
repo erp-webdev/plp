@@ -88,7 +88,7 @@
 							<td style="text-align: left"><?php if($ledger->eFundData_id != $prevId) echo  $ledger->cv_date; ?></td>
 							<td style="text-align: left"><?php if($ledger->eFundData_id != $prevId) echo  $ledger->check_released; ?></td>
 							<td style="text-align: left"><?php if($ledger->eFundData_id != $prevId) echo  $ledger->loan_amount; ?></td>
-							<td style="text-align: right"><?php if($ledger->eFundData_id != $prevId) echo  number_format($ledger->loan_amount_interest,2); ?></td>
+							<td style="text-align: right"><?php if($ledger->eFundData_id != $prevId) echo  $ledger->loan_amount_interest; ?></td>
 							<td><?php  if($ledger->eFundData_id != $prevId) echo  number_format($ledger->total,2); ?></td>
 							<td><?php if($ledger->eFundData_id != $prevId) echo  $ledger->terms_month; ?></td>
 							<td style="text-align: right"><?php if($ledger->eFundData_id != $prevId) echo  number_format($ledger->deductions,2); ?></td>
@@ -108,7 +108,7 @@
 												$amount_paid += $x->amount;
 										}
 										
-										echo round($ledger->total - $amount_paid,2);
+										echo round($ledger->total - $amount_paid,2);	
 									}
 								}
 

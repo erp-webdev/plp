@@ -1,4 +1,4 @@
-@extends('admin.layouts.app')
+	@extends('admin.layouts.app')
 @section('content')
 <style media="screen" style="css">
 .box{
@@ -203,7 +203,7 @@
 	            text: 'EFund Applications By Rank'
 	        },
 	        legend: {
-	        	display: true,
+	        	display: false,
 	        	position: 'right',
 	        }
 	    }	

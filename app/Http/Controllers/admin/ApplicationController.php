@@ -89,18 +89,25 @@ class ApplicationController extends Controller
         $guarantor = $this->getGuarantor();
 
         $allow_max = Preference::name('allow_over_max');
-    	return view('admin.applications.create')->withLoan($loan)
-                ->withEmployee($employee)
-                ->withRecords($records)
-                ->withInterest($interest->value)
-                ->withTerms($terms)
-                ->withBalance($balance)
-                ->withMonths($months)
-                ->with('records_this_year', $records_this_year)
-                ->with('overMax', $allow_max->value)
-                ->withEndorser($endorser)
-                ->withGuarantor($guarantor)
+
+        if($loan->status < 1)
+        {
+        	return view('admin.applications.create')->withLoan($loan)
+                    ->withEmployee($employee)
+                    ->withRecords($records)
+                    ->withInterest($interest->value)
+                    ->withTerms($terms)
+                    ->withBalance($balance)
+                    ->withMonths($months)
+                    ->with('records_this_year', $records_this_year)
+                    ->with('overMax', $allow_max->value)
+                    ->withEndorser($endorser)
+                    ->withGuarantor($guarantor)
+                    ->withUtils(new Utils());
+        }else{
+            return view('admin.applications.show')->withLoan($loan)
                 ->withUtils(new Utils());
+        }
     }
 
     public function create()
