@@ -11,6 +11,7 @@ Route::get('/wrapper', function(){
 		Session::set('wrapper', 'active');
 });
 
+
 Route::get('/verify/employee', ['uses' => 'Auth\AuthController@verifyEmployee']);
 
 Route::auth();
