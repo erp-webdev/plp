@@ -120,7 +120,7 @@ class LoanController extends Controller
             $loan->approved = 1;
             $loan->approved_by = Auth::user()->employee_id;
             $loan->approved_at = date('Y-m-d H:i:s');
-            $loan->status = $this->utils->setStatus($utils->getStatusIndex('officer'));
+            $loan->status = $this->utils->setStatus($this->utils->getStatusIndex('officer'));
             $loan->remarks = trim($request->remarks);
             $loan->save();
 

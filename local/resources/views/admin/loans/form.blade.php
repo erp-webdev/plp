@@ -207,7 +207,7 @@
 		</td>
 		<td style="width: 100px; border-bottom: 2px solid black">
 			@if($loan->approved == 1)
-			{{ $loan->approved_FullName }}
+			<!-- {{ $loan->approved_FullName }} -->
 			@endif</td>
 		<td></td>
 	</tr>
