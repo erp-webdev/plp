@@ -531,5 +531,18 @@ class Utils
         
     }
 
+    /**
+     *
+     * Generate new Check Voucher Number
+     * 
+     */
+    public function generateCheckVoucherNumber(){
+        $last_cv_no = Preference::name('cv_no');
+        $last_cv_no->value += 1;
+        $last_cv_no->save();
+
+        return $last_cv_no->value;
+    }
+
 }
 

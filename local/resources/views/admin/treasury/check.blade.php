@@ -1,4 +1,4 @@
-<form class="form-horizontal table-responsive" style="font-size: 12px" action="{{ route('treasury.approve') }}" method="post">
+<form class="form-horizontal table-responsive" style="font-size: 12px" action="{{ route('treasury.approve') }}" method="post" ng-app="ApprovalApp" ng-controller="ApprovalCtrl">
   <input type="hidden" name="_token" value="{{ csrf_token() }}">
   <input type="number" name="id" value="{{ $loan->id }}" style="display: none">
   <div class="modal-header">
@@ -92,74 +92,62 @@
         </table>
         <hr>
         <div>
-          @if($loan->check_created_at == null && $loan->status == $utils->getStatusIndex('treasury'))
-            <span class="bg-danger help-block">To be filled up only when check is ready for release.</span>
-          @endif
-          <div class="col-xs-12 col-sm-6 col-md-6">
-              
-            <div class="form-group">
-              <label>CV No</label>
-              @if($loan->check_created_at == null && $loan->status == $utils->getStatusIndex('treasury'))
-              <input type="text" name="cv_no" class="form-control input-sm" required>
-             @else
-              <span>{{ $loan->cv_no }}</span>
-              @endif
-            </div>
-            <div class="form-group">
-             <label>CV Date</label>
-              @if($loan->check_created_at == null && $loan->status == $utils->getStatusIndex('treasury'))
-              <input name="cv_date" class="form-control input-sm datepicker" type="text" pattern="[0-9]{4}-(0[1-9]|1[012])-(0[1-9]|1[0-9]|2[0-9]|3[01])" placeholder="YYYY-MM-DD" required>
-             @else
-              <span>
-                  {{ date('j F y', strtotime($loan->cv_date)) }}
+          @if(empty($loan->cv_no) && $loan->status == $utils->getStatusIndex('treasury'))
+            <div class="col-xs-12 col-sm-12 col-md-12 text-center" id="cvBtnContainer">
+              <a class="btn btn-default" onclick="genCV({{ $loan->id }})">Generate Check Voucher</a>
+              <span class="loading-cv" style="display: none">
+                <i class="fa fa-spin fa-spinner" ></i> Generating check voucher... <br>
               </span>
-              @endif
+              <span class="checkvoucher"></span>
+              <br>
+              <br>
             </div>
-          </div>
-           <div class="col-xs-12 col-sm-6 col-md-6">
-            <div class="form-group">
-              <label>Check No</label>
-              @if($loan->check_created_at == null && $loan->status == $utils->getStatusIndex('treasury'))
-              <input type="text" name="check_no" class="form-control input-sm" required>
-               @else
-              <span>{{ $loan->check_no }}</span>
-              @endif
-            </div>
-             <div class="form-group">
-              <label>Check’s Issue Date</label>
-              @if($loan->check_created_at == null && $loan->status == $utils->getStatusIndex('treasury'))
-              <input name="check_released" id="datep" class="datepicker form-control input-sm " type="text" pattern="[0-9]{4}-(0[1-9]|1[012])-(0[1-9]|1[0-9]|2[0-9]|3[01])" placeholder="YYYY-MM-DD" required>
-               @else
-              <span>
-                  {{ date('j F y', strtotime($loan->check_released)) }}
-              </span>
-              @endif
-            </div>
-            <div class="form-group">
-              <label>Released At</label>
-              @if($loan->check_created_at != null && $loan->status != $utils->getStatusIndex('treasury'))
-              <span>
-                @if(!empty($loan->released))
-                  {{ date('j F y h:i A', strtotime($loan->released)) }}
+          @else
+              <div class="col-xs-12 col-sm-12 col-md-12">
+                Check Voucher No.: <strong>{{ $loan->cv_no }}</strong> <br>
+                Check Voucher Date: <strong>{{ date('j F y', strtotime($loan->cv_date)) }}</strong><br>
+                @if(empty($loan->check_no))
+                <span class="bg-danger help-block">To be filled up only when check is already signed and ready for release.</span>
+                  <div class="col-xs-12 col-sm-6 col-md-6">
+                    Check No.: <input type="text" name="check_no" class="form-control input-sm"> 
+                  </div>
+                  <div class="col-xs-12 col-sm-6 col-md-6">
+                    Check Date: <input name="check_released" id="datep" class="datepicker form-control input-sm " type="text" pattern="[0-9]{4}-(0[1-9]|1[012])-(0[1-9]|1[0-9]|2[0-9]|3[01])" placeholder="YYYY-MM-DD">
+                  </div>
+                @else
+                  Check No.: <strong>{{ $loan->check_no }}</strong> <br>
+                  Check Date: <strong>{{ date('j F y', strtotime($loan->check_released)) }}</strong>
                 @endif
-              </span>
-              @endif
-            </div>
-          </div>
-        </div>
+              </div>
+          @endif
   </div>
   <div class="clearfix"></div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-default btn-sm" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
-    @if($loan->check_created_at == null && $loan->status == $utils->getStatusIndex('treasury'))
-    <button type="submit" name="approve" class="btn btn-success btn-sm" onsubmit="startLoading()"><i class="fa fa-send"></i> Submit</button>
-    @elseif($loan->released == null && $loan->status == $utils->getStatusIndex('release'))
-    <button type="submit" name="release" class="btn btn-success btn-sm" onsubmit="startLoading()"><i class="fa fa-send"></i> Release Check</button>
+
+    @if(!empty($loan->cv_no))
+      <a href="{{ route('treasury.voucher.print', $loan->id) }}" class="btn btn-default btn-sm" target="_blank"><i class="fa fa-print"></i> Print Check Voucher</a>
     @endif
+    <button type="submit" name="cancel" class="btn btn-danger btn-sm" onsubmit="startLoading(); validate('cancel')"><i class="fa fa-ban"></i> Cancel</button>
+    @if(!empty($loan->cv_no) && $loan->status == $utils->getStatusIndex('treasury'))
+    <button type="submit" name="approve" class="btn btn-success btn-sm" onsubmit="startLoading(); validate('submit')"><i class="fa fa-send"></i> Submit</button>
+    @elseif($loan->released == null && $loan->status == $utils->getStatusIndex('release'))
+    <button type="submit" name="release" class="btn btn-success btn-sm" onsubmit="startLoading(); validate('release')"><i class="fa fa-send"></i> Release Check</button>
+    @endif
+    <button type="button" class="btn btn-default btn-sm" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
+
+
   </div>
 </form>
 <script type="text/javascript">
    $(function() {
         $( "input.datepicker" ).datepicker({ dateFormat: 'yy-mm-dd' });
     });
+
+   function validate($action){
+      if($action == 'submit')
+        if($('input[name="check_no"]').val() == '' || $('input[name="check_released"]').val() == '')
+          alert('Check No and Check Date are required');
+
+      return confirm('Do you really want to ' + $action + ' the form?');
+   }
 </script>

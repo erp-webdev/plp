@@ -74,8 +74,11 @@ Route::group(['prefix' => '/', 'middleware' => ['auth']], function(){
 
 	// Treasury
 	Route::get('treasury', ['as' => 'treasury.index', 'uses' => 'admin\TreasuryController@index', 'middleware' => ['permission:treasurer']]);
+	Route::get('treasury/print', ['as' => 'treasury.print', 'uses' => 'admin\TreasuryController@printReport', 'middleware' => ['permission:treasurer']]);
 	Route::post('treasury/approve', ['as' => 'treasury.approve', 'uses' => 'admin\TreasuryController@approve', 'middleware' => ['permission:treasurer']]);
 	Route::get('treasury/show/{id}', ['as' => 'treasury.show', 'uses' => 'admin\TreasuryController@show', 'middleware' => ['permission:treasurer']]);
+	Route::get('treasury/generate/voucher/{id}', ['as' => 'treasury.voucher', 'uses' => 'admin\TreasuryController@generateCheckVoucher', 'middleware' => ['permission:treasurer']]);
+	Route::get('treasury/print/voucher/{id}', ['as' => 'treasury.voucher.print', 'uses' => 'admin\TreasuryController@printCheckVoucher', 'middleware' => ['permission:treasurer']]);
 
 	// Payroll
 	Route::get('payroll', ['as' => 'payroll.index', 'uses' => 'admin\PayrollController@index', 'middleware' => ['permission:payroll']]);

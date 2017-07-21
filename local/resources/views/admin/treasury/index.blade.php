@@ -1,26 +1,29 @@
 @extends('admin.layouts.app')
 @section('content')
-  <div class="modal fade" tabindex="-1" role="dialog" id="loan">
+<div class="modal fade" tabindex="-1" role="dialog" id="loan">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         
       </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
   </div><!-- /.modal -->
-
+  
 	<div class="row" ng-app="ApprovalApp" ng-controller="ApprovalCtrl">
+		
+
 		<div class="col-xs-12 col-sm-12 col-md-12">
 			<h1>Treasury</h1>
-			<button class="btn btn-sm btn-default"><i class="fa fa-refresh"></i> Refresh</button>
+			<a class="btn btn-sm btn-default" href="{{ route('treasury.index') }}"><i class="fa fa-refresh"></i> Refresh</a>
+			<a class="btn btn-sm btn-default" href="{{ route('treasury.print') }}?key=<?php if(isset($_GET['key'])) echo $_GET['key']; if(isset($_GET['search'])) echo "&search=" . $_GET['search']; ?>" target="_blank"><i class="fa fa-print"></i> Print</a>
 			<hr>
-			<div class="table-responsive">
+			<div class="table-responsive" style="height: 100%">
 				<div class="form-horizontal ">
 					<div class="form-group col-xs-12 col-sm-2 col-md-2">
 						<span class="col-xs-12 col-md-3 col-sm-3">
 							Show
 						</span>
 						<?php $show = 0; if(isset($_GET['show'])) $show = $_GET['show']; ?>
-						<div class="col-xs-12 col-md-9 col-sm-9">
+						<div class="col-xs-12 col-md-8 col-sm-8">
 							<select class="form-control input-sm" id="show" onchange="find()">
 								<option value="0"  <?php if($show==0) echo 'selected'; ?>>All</option>
 								<option value="10" selected  <?php if($show==10) echo 'selected'; ?>>10</option>
@@ -30,8 +33,44 @@
 							</select>
 						</div>
 					</div>
-				 	<div class="input-group col-xs-12 col-sm-3 col-md-3 pull-right">
-						<input type="search" id="search" class="form-control input-sm"  placeholder="Search" value="<?php if(isset($_GET['search'])) echo $_GET['search']; ?>">
+				 	<div class="input-group col-xs-12 col-sm-4 col-md-4 pull-right">
+				 		<div class="input-group-btn">
+					 		<button class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown"><span class="dropdown-text">
+					 			<?php  
+					 				if(isset($_GET['key'])) {
+					 					if($_GET['key'] == 'ctrl')
+					 						echo 'Control No';
+					 					else if($_GET['key'] == 'name')
+					 						echo 'Name';
+					 					else if($_GET['key'] == 'date')
+					 						echo 'Date Applied';
+					 					else if($_GET['key'] == 'cv')
+					 						echo 'CV No';
+					 					else if($_GET['key'] == 'check')
+					 						echo 'Check No';
+					 					else if($_GET['key'] == 'release')
+					 						echo 'Release Date';
+					 					else
+					 						echo 'Select';
+				 					}else
+					 						echo 'Select';
+					 				
+					 			?>
+					 		</span> <span class="caret"></span></button>
+				 			<input type="hidden" id="field" value="<?php if(isset($_GET['key'])) echo $_GET['key']; ?>">
+					 		<ul class="dropdown-menu">
+					 			<li><a onclick="setSearchField(this)" value="ctrl">Control No</a></li>
+					 			<li><a onclick="setSearchField(this)" value="name">Name</a></li>
+					 			<li><a onclick="setSearchField(this)" value="date">Date Applied</a></li>
+					 			<li><a onclick="setSearchField(this)" value="cv">CV No</a></li>
+					 			<li><a onclick="setSearchField(this)" value="check">Check No</a></li>
+					 			<li><a onclick="setSearchField(this)" value="release">Release Date</a></li>
+					 		</ul>
+				 		</div>
+				 		<div id="searchWrapper">
+				 			<input type="search" id="search" class="form-control input-sm" style="display: none" placeholder="Search" value="<?php if(isset($_GET['search'])) echo $_GET['search']; ?>">
+				 			<input type="search" id="search1" class="form-control input-sm"  placeholder="Search" value="<?php if(isset($_GET['search'])) echo $_GET['search']; ?>">
+				 		</div>
 						<a class="input-group-addon btn btn-success btn-sm" onclick="find()"><i class="fa fa-search"></i></a>
 				 	</div>
 			    </div>
@@ -89,12 +128,23 @@
 <script type="text/javascript" src="{{ url('/assets/js/ApprovalCtrl.js') }}"></script>
 <script type="text/javascript">
 	var $showUrl = "{{ route('treasury.show', 0) }}";
+	var $cv = "{{ route('treasury.voucher', 0) }}";
+	var searchInputId = '#search';
 
 	function find() {
 		var $show = $('#show').val();
-		var $search = $('#search').val();
-		var $searchUrl = "{{ route('treasury.index') }}" + "?show=" + $show + "&search=" + $search;
+		var $key = $('#field').val();
+		var $search = $(searchInputId).val();
+		var $searchUrl = "{{ route('treasury.index') }}" + "?key=" + $key +"&show=" + $show + "&search=" + $search;
 		window.location.href = $searchUrl;
+	}
+
+	function genCV($id) {
+		
+		var scope = angular.element($('.row')).scope();
+		scope.$apply(function(){
+			scope.generateCheckVoucher($id);
+		})
 	}
 
 	if(tour.ended()){
@@ -106,5 +156,68 @@
 		treasuryTourIndex.init();
 		treasuryTourIndex.start();
 	}
+	var input = $('#search');
+	$('#search1').daterangepicker();
+
+	function setSearchField(event) {
+		if(event.attributes.value.value == 'ctrl'){
+			$('#field')[0].value = event.attributes.value.value;
+			$('span.dropdown-text').text(event.text);
+			$('searchWrapper').html(input[0]);
+			showSearchField(0);
+
+		}else if(event.attributes.value.value == 'name'){
+			$('#field')[0].value = event.attributes.value.value;
+			$('span.dropdown-text').text(event.text);
+			$('searchWrapper').html(input[0]);
+			showSearchField(0);
+
+		}else if(event.attributes.value.value == 'date'){
+			$('#field')[0].value = event.attributes.value.value;
+			$('span.dropdown-text').text(event.text);
+			showSearchField(1);
+
+		}else if(event.attributes.value.value == 'cv'){
+			$('#field')[0].value = event.attributes.value.value;
+			$('searchWrapper').html(input[0]);
+			$('span.dropdown-text').text(event.text);
+			showSearchField(0);
+
+		}else if(event.attributes.value.value == 'check'){
+			$('#field')[0].value = event.attributes.value.value;
+			$('searchWrapper').html(input[0]);
+			$('span.dropdown-text').text(event.text);
+			showSearchField(0);
+
+		}else if(event.attributes.value.value == 'release'){
+			$('#field')[0].value = event.attributes.value.value;
+			$('span.dropdown-text').text(event.text);
+			showSearchField(1);
+			
+		}
+	}
+
+	function showSearchField(int) {
+		if(int == 1){
+			$('#search').hide();
+			$('#search1').show();
+			searchInputId = '#search1';
+		}else{
+			$('#search1').hide();
+			$('#search').show();
+			searchInputId = '#search';
+		}
+	}
+
+	$(document).ready(function() {
+		$key = '<?php if(isset($_GET['key'])) echo $_GET['key']; ?>';
+		$search = '<?php if(isset($_GET['search'])) echo $_GET['search']; ?>';
+
+		if($key == 'date' || $key == 'release'){
+			showSearchField(1);
+		}else{
+			showSearchField(0);
+		}
+	});
 </script> 
 @endsection

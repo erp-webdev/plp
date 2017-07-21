@@ -12,7 +12,25 @@ app.controller('ApprovalCtrl', function($scope, $http, $filter) {
 	        $('.modal-content').html('Something went wrong! Please try again.');
 	    });
 	};
-		$scope.deductionDate = '';
+
+	$scope.generateCheckVoucher = function($id){
+		$('#cvBtnContainer a').hide();
+		$('.loading-cv').show();
+
+		$http({
+			method : "GET",
+			url : $cv + $id,
+			cache: false,
+		}).then(function mySucces(response){
+			$scope.loadLoan($id);
+		}, function myError(response){
+			$('.checkvoucher').html('Something went wrong! Please try again!')
+			$('#cvBtnContainer a').show();
+			$('.loading-cv').hide();
+		});
+	}
+
+	$scope.deductionDate = '';
 
 	$scope.loadBatchDeduction = function($url){
 

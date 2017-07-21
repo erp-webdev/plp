@@ -20,6 +20,7 @@ return [
 		'created'				=> 'New EFund Application!',
 		'verified'				=> 'EFund Application Verified!',
 		'paid'					=> 'EFund Paid!',
+		'paid_payroll'			=> 'EFund Fully Paid Notification',
 		'denied'				=> 'EFund Application Denied!'
 	],
 

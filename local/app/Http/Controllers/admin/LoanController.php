@@ -193,6 +193,12 @@ class LoanController extends Controller
         return redirect()->route('admin.loan');//->withSuccess(trans('loan.application.deduction'));
     }
 
+    /**
+     * Complete Loan applications fo employee. 
+     * Fully paid account
+     * @param  int $id eFundLoan ID
+     * 
+     */
     public function complete($id)
     {
         DB::beginTransaction();

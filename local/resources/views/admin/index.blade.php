@@ -33,6 +33,7 @@
 			 ?>
 			 <h2><?php echo $greetings . ucwords(strtolower(Auth::user()->name)) . "!"; ?></h2>
 			 <hr>
+			 
 		</div>
 	</div>
 	<div class="row">
