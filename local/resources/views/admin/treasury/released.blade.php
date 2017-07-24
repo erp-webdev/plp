@@ -35,10 +35,10 @@
 		@foreach($loans as $loan)
 		<tr>
 			<td style="padding: 5px">{{ $loan->FullName }}</td>
-			<td style="padding: 5px">{{ $loan->cv_no }}</td>
-			<td style="padding: 5px">{{ $loan->check_no }}</td>
+			<td style="padding: 5px; text-align: center;">{{ $loan->cv_no }}</td>
+			<td style="padding: 5px; text-align: center;">{{ $loan->check_no }}</td>
 			<td style="padding: 5px; text-align: right">{{ number_format($loan->loan_amount, 2, '.', ',') }}</td>
-			<td style="padding: 5px">{{ isset($loan->check_released) ? date('m/d/Y', $loan->check_released) : '' }}</td>
+			<td style="padding: 5px; text-align: center;">{{ isset($loan->check_released) ? date('m/d/Y', strtotime($loan->check_released)) : '' }}</td>
 		</tr>
 		@endforeach
 	</tbody>
