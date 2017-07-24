@@ -48,7 +48,7 @@ app.controller('ApprovalCtrl', function($scope, $http, $filter) {
 
 	$scope.loadPayrollList = function($url){
 
-		$('.modal-body').html("<span class='col-sm-12' style='padding: 10px'><i class='fa fa-spin fa-spinner'></i> Please wait while we are retrieving records...</span>");
+		$('#emailModalBody').html("<span class='col-sm-12' style='padding: 10px'><i class='fa fa-spin fa-spinner'></i> Please wait while we are retrieving records...</span>");
 		
 		$http({
 	        method : "GET",
