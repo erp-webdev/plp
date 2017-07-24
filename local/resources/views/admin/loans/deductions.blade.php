@@ -21,10 +21,10 @@
                                 <td>{{ $emp->EmpID }}</td>
                                 <td>{{ utf8_encode($emp->FullName) }}</td>
                                 <td>
-                                  <input type="number" name="deduction{{ $emp->id }}" class="form-control input-sm" value="{{ $emp->deductions }}" disabled>
+                                  <input type="number" name="deduction{{ $emp->id }}" class="form-control input-sm" value="{{ floatval($emp->deductions) }}" step="0.01" disabled>
                                 </td>
                                 <td>
-                                  <input type="number" name="amount{{ $emp->id }}" class="form-control input-sm amount" value="<?php if(!empty(trim($emp->ar_no))) echo $emp->amount; else echo $emp->deductions; ?>" <?php if(!empty(trim($emp->ar_no))) echo 'disabled'; ?> onchange="updateARAmount()">
+                                  <input type="number" name="amount{{ $emp->id }}" class="form-control input-sm amount" value="<?php if(!empty(trim($emp->ar_no))) echo floatval($emp->amount); else echo floatval($emp->deductions); ?>" <?php if(!empty(trim($emp->ar_no))) echo 'disabled'; ?> onchange="updateARAmount()" >
                                 </td>
                             </tr>
                            @endforeach
