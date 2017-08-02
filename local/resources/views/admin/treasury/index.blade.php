@@ -139,12 +139,26 @@
 		window.location.href = $searchUrl;
 	}
 
+	function checkCVn() {
+		if(!$('#check_no')[0].value.trim()){
+			$('#cvBtn').prop({disabled: 'disabled'});
+		}else{
+			$('#cvBtn').prop({disabled: ''});
+		}
+	}
+
 	function genCV($id) {
-		
-		var scope = angular.element($('.row')).scope();
-		scope.$apply(function(){
-			scope.generateCheckVoucher($id);
-		})
+		var cn = $('#check_no')[0];
+
+		if(cn.value == ''){
+			$('#check_no').closest('.form-group').addClass('has-error');
+			alert('Please provide Check No.');
+		}else{
+			var scope = angular.element($('.row')).scope();
+			scope.$apply(function(){
+				scope.generateCheckVoucher($id, $('#check_no')[0].value);
+			})
+		}
 	}
 
 	if(tour.ended()){

@@ -66,7 +66,7 @@
 						<div class="col-md-8"><span ng-bind="date | date: 'Y'"></span></div>
 					</div>
 					<div class="form-group">
-						<span class="col-md-4">Local / Direct Line</span>
+						<span class="col-md-4">Local / Direct Line*</span>
 						<div class="col-md-8"><input type="text" name="loc" ng-model="loc" class="form-control input-sm" placeholder="loc. 322" required></div>
 					</div>
 				</div>

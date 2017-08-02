@@ -24,12 +24,12 @@
 	<br>
 	<br>
 	<table style="width: 100%; border-collapse: collapse; display: table">
-	<thead style="border-top: 2px solid #373737; border-bottom: 2px solid #373737;">
-		<th style="padding: 5px" >Name</th>
-		<th style="padding: 5px" >CV #</th>
-		<th style="padding: 5px" >Check #</th>
-		<th style="padding: 5px" >Amount</th>
-		<th style="padding: 5px" >Released</th>
+	<thead style="border-top: 0px solid #373737; border-bottom: 1px solid #373737;">
+		<th style="padding: 5px; text-align: left;" >Name</th>
+		<th style="padding: 5px; text-align: center;" >CV #</th>
+		<th style="padding: 5px; text-align: center;" >Check #</th>
+		<th style="padding: 5px; text-align: right;" >Amount</th>
+		<th style="padding: 5px; text-align: center;" >Released</th>
 	</thead>
 	<tbody>
 		@foreach($loans as $loan)

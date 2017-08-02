@@ -168,7 +168,9 @@
 								<td>{!! $utils->formatStatus($loan->status) !!}</td>
 								<td>
 									<a data-toggle="modal" data-target="#loan" ng-click="loadLoan({{ $loan->id }})" class="btn btn-sm btn-info" title="View Loan Application" data-toggle="tooltip"><i class="fa fa-eye"></i></a>
+									@if(in_array($loan->status, [$utils->getStatusIndex('inc'), $utils->getStatusIndex('paid')]))
 									<a href="{{ route('ledger.show', $loan->EmpID) }}" class="btn btn-sm btn-default" title="Ledger" data-toggle="tooltip"><i class="fa fa-calculator"></i></a>
+									@endif
 								</td>
 							</tr>
 						@endforeach

@@ -149,6 +149,7 @@ class TreasuryController extends Controller
             $treasury->eFundData_id = $id;
             $treasury->cv_no = $this->utils->generateCheckVoucherNumber();
             $treasury->cv_date = date('Y-m-d');
+            $treasury->check_no = $_GET['cn'];
             $treasury->created_by = Auth::user()->id;
             $treasury->save();
             
@@ -180,7 +181,7 @@ class TreasuryController extends Controller
                 $treasury = new Treasury();
 
     		$treasury->eFundData_id = $request->id;
-            $treasury->check_no = $request->check_no;
+            // $treasury->check_no = $request->check_no;
     		$treasury->check_released = $request->check_released;
     		$treasury->created_by = Auth::user()->id;
     		$treasury->save();

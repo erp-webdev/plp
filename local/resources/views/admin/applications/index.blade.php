@@ -63,7 +63,13 @@
 							<td style="text-align: right">{{ number_format($loan->loan_amount, 2, '.', ',') }}</td>
 							<td style="text-align: right">{{ number_format(($loan->loan_amount * ($loan->interest / 100)), 2, '.', ',') }}</td>
 							<td style="text-align: right">{{ number_format($loan->total, 2, '.', ',') }}</td>
-							<td style="font-size: 14px">{!! $utils->formatStatus($loan->status) !!}</td>
+							<td style="font-size: 14px">
+							@if($loan->status == 5 && empty($loan->check_released))
+								<label class="label label-info">Approved</label>
+							@else
+								{!! $utils->formatStatus($loan->status) !!}
+							@endif
+							</td>
 							<td>
 								<div class="btn-group">
 									<a class="btn btn-sm btn-info" title="View Application" data-toggle="tooltip" href="{{ route('applications.show', $loan->id) }}"><i class="fa fa-eye"></i></a>

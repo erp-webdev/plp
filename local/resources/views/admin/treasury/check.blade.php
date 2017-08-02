@@ -1,3 +1,4 @@
+<link rel="stylesheet" type="text/css" href="{{ url('/assets/css/daterangepicker.css') }}">
 <form class="form-horizontal table-responsive" style="font-size: 12px" action="{{ route('treasury.approve') }}" method="post" ng-app="ApprovalApp" ng-controller="ApprovalCtrl">
   <input type="hidden" name="_token" value="{{ csrf_token() }}">
   <input type="number" name="id" value="{{ $loan->id }}" style="display: none">
@@ -93,10 +94,12 @@
         <hr>
         <div>
           @if(empty($loan->cv_no) && $loan->status == $utils->getStatusIndex('treasury'))
-            <div class="col-xs-12 col-sm-12 col-md-12 text-center" id="cvBtnContainer">
-              <a class="btn btn-default" onclick="genCV({{ $loan->id }})">Generate Check Voucher</a>
-              <span class="loading-cv" style="display: none">
-                <i class="fa fa-spin fa-spinner" ></i> Generating check voucher... <br>
+            <div class="col-xs-12 col-sm-12 col-md-12" id="cvBtnContainer">
+                <label >Check No.</label>
+                <input type="text" id="check_no" class="form-control" style="width: 182px" onchange="checkCVn()">
+              <button type="button" class="btn btn-default" id="cvBtn" onclick="genCV({{ $loan->id }})" disabled>Generate Check Voucher</button>
+              <span class="loading-cv" style="display: none;">
+                <i class="fa fa-spin fa-spinner"></i> Generating check voucher... <br>
               </span>
               <span class="checkvoucher"></span>
               <br>
@@ -106,16 +109,16 @@
               <div class="col-xs-12 col-sm-12 col-md-12">
                 Check Voucher No.: <strong>{{ $loan->cv_no }}</strong> <br>
                 Check Voucher Date: <strong>{{ date('j F y', strtotime($loan->cv_date)) }}</strong><br>
-                @if(empty($loan->check_no))
+                Check No.: <strong>{{ $loan->check_no }}</strong> <br>
+                @if(empty($loan->check_released))
                 <span class="bg-danger help-block">To be filled up only when check is already signed and ready for release.</span>
-                  <div class="col-xs-12 col-sm-6 col-md-6">
+                 <!--  <div class="col-xs-12 col-sm-6 col-md-6">
                     Check No.: <input type="text" name="check_no" class="form-control input-sm"> 
-                  </div>
+                  </div> -->
                   <div class="col-xs-12 col-sm-6 col-md-6">
-                    Check Date: <input name="check_released" id="datep" class="datepicker form-control input-sm " type="text" pattern="[0-9]{4}-(0[1-9]|1[012])-(0[1-9]|1[0-9]|2[0-9]|3[01])" placeholder="YYYY-MM-DD">
+                    Check Date: <input name="check_released" type="date" id="datep" class="datepicker-range form-control input-sm " type="text" placeholder="mm/dd/yyyy">
                   </div>
                 @else
-                  Check No.: <strong>{{ $loan->check_no }}</strong> <br>
                   Check Date: <strong>{{ date('j F y', strtotime($loan->check_released)) }}</strong>
                 @endif
               </div>
@@ -151,3 +154,4 @@
       return confirm('Do you really want to ' + $action + ' the form?');
    }
 </script>
+<script type="text/javascript" src="{{ url('/assets/js/daterangepicker.js') }}"></script>

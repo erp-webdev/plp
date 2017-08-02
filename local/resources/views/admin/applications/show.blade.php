@@ -28,7 +28,13 @@
 						</tr>
 						<tr>
 							<td><label>Status</label></td>
-							<td>{!! $utils->formatStatus($loan->status) !!}</td>
+							<td>
+							@if($loan->status == 5 && empty($loan->check_released))
+								<label class="label label-info">Approved</label>
+							@else
+								{!! $utils->formatStatus($loan->status) !!}
+							@endif
+							</td>
 						</tr>
 						<tr>
 							<td><label>Date</label></td>

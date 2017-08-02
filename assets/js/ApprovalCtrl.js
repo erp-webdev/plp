@@ -13,21 +13,27 @@ app.controller('ApprovalCtrl', function($scope, $http, $filter) {
 	    });
 	};
 
-	$scope.generateCheckVoucher = function($id){
+	$scope.generateCheckVoucher = function($id, $checkCvn){
 		$('#cvBtnContainer a').hide();
 		$('.loading-cv').show();
-
-		$http({
-			method : "GET",
-			url : $cv + $id,
-			cache: false,
-		}).then(function mySucces(response){
-			$scope.loadLoan($id);
-		}, function myError(response){
-			$('.checkvoucher').html('Something went wrong! Please try again!')
-			$('#cvBtnContainer a').show();
-			$('.loading-cv').hide();
-		});
+		var cn = $checkCvn;
+		if(cn.value != ''){
+			$http({
+				method : "GET",
+				url : $cv + $id + "?cn=" + cn,
+				cache: false,
+			}).then(function mySucces(response){
+				$scope.loadLoan($id);
+			}, function myError(response){
+				$('.checkvoucher').html('Something went wrong! Please try again!')
+				$('#cvBtnContainer a').show();
+				$('.loading-cv').hide();
+			});
+		}else{
+			$('#check_no').closest('.form-group').addClass('has-error');
+			alert('Please provide Check No.');
+			return;
+		}
 	}
 
 	$scope.deductionDate = '';
