@@ -265,14 +265,12 @@ class LoanController extends Controller
                 foreach ($data as $sheet) {
                     foreach($sheet as $cols){
                         $ctr++;
-
                         foreach ($cols as $key => $value) {
                             // Sheet columns
                             if($key == 'ctrlno')
                                 if(!empty($value))
                                    if(Loan::where('ctrl_no', $value)->count() > 0)
                                         array_push($loansWithError, $this->createError('Loan Ctrl No Exists from the database. '.$sheet->getTitle().'.row['. $ctr .'].column[' . $key .'].value[' . $value .']' , $cols));
-
                             //Process not empty column
                             if(!empty(trim($key)) && $value != null){
 
@@ -289,7 +287,6 @@ class LoanController extends Controller
                                     if($value != 'NEW' || $value != 'REAVAILMENT')
                                         array_push($loansWithError, $this->createError('Invalid Type. '.$sheet->getTitle().'.row['. $ctr .'].column[' . $key .'].value[' . $value .']', $cols));
                             }
-
                             // Check column data type if it matches required corresponding column
                             $dates = ['appdate', 'startofdeductions'];
                             $numbers = ['mos', 'amount', 'deductions',];
@@ -340,7 +337,7 @@ class LoanController extends Controller
             $eFundData->local_dir_line = $loan->loc;
             $eFundData->terms_month = $loan->mos;
             $eFundData->loan_amount = $loan->amount;
-            $eFundData->interest = $loan->interest;
+            $eFundData->interest = 1;
             $eFundData->deductions = $loan->deductions;
             $eFundData->start_of_deductions = $loan->startofdeductions;
             $eFundData->approved_by = Auth::user()->employee_id;

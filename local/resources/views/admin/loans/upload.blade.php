@@ -61,7 +61,7 @@
 							<thead>
 								<thead>
 								@foreach($loans[0] as $key => $value)
-									<th>{{ $key }}<?php if($key != 'loc') echo '*'; ?></th>
+									<th>{{ $key }}
 								@endforeach
 								</thead>
 								<tbody>
@@ -78,7 +78,7 @@
 					</div>
 			    </div>
 			    <div role="tabpanel" class="tab-pane" id="ledger">
-			    	@if(count($ledgers) > 0)
+			    	@if(isset($ledgers) && count($ledgers) > 0)
 			    	<div class="table-responsive">
 			    		<table class="table table-bordered table-hover table-condensed">
 			    			<thead>
