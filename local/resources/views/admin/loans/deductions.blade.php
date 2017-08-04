@@ -2,7 +2,7 @@
     <div id="deductionList">
            <table class="table table-condensed table-striped table-hover">
                    <thead>
-                           <th></th>
+                           <th><input type="checkbox" class="select_all" onclick="selectAll(this)"></th>
                            <th>Control #</th>
                            <th>EmpID</th>
                            <th >Employee Name</th>

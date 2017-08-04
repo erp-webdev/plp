@@ -63,7 +63,7 @@
 				<div class="col-md-6">
 					<div class="form-group">
 						<span class="col-md-4">Date</span	>
-						<div class="col-md-8"><span ng-bind="date | date: 'Y'"></span></div>
+						<div class="col-md-8"><span ng-bind="date | date: 'shortDate'"></span></div>
 					</div>
 					<div class="form-group">
 						<span class="col-md-4">Local / Direct Line*</span>
@@ -259,7 +259,7 @@
 		// Saved
 		var $id = {{ $loan->id }};
 		var $type = {{ $loan->type }};
-		var $date = '{{ $loan->created_at }}';
+		var $date = '{{ date("j F Y", strtotime($loan->created_at)) }}';
 		var $loc = '{{ $loan->local_dir_line }}';
 		var $term = {{ $loan->terms_month }};
 		var $loan_amount = {{ $loan->loan_amount }};

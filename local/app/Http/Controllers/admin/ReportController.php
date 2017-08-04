@@ -105,9 +105,11 @@ class ReportController extends Controller
             break;
 
             case 'monthly':
+                if(empty($args['created_at']))
+                    $args['created_at'] = date('m/d/Y');
 
                $data = $this->monthlyReport($args);
-                $view = view('admin.reports.monthly')->withData($data);
+                $view = view('admin.reports.monthly')->withData($data)->withArgs($args);
             break;
 
             case 'deduction':
@@ -245,7 +247,8 @@ class ReportController extends Controller
         }elseif($type == 'monthly'){
             $html = view('admin.reports.monthly')
                     ->withData($data)
-                    ->withUtils($this->utils);
+                    ->withUtils($this->utils)
+                    ->withArgs($args);
         }elseif($type == 'deduction'){
             $html = view('admin.reports.deduction')
                     ->withData($data)
@@ -381,15 +384,16 @@ class ReportController extends Controller
 
     public function monthlyReport($args)
     {
-        $year_prev = DB::select('EXEC spGetPreviousYearOutstandingBalance');
+        // $year_prev = DB::select('EXEC spGetPreviousYearOutstandingBalance');
 
-        $year_cur = DB::table('viewMonthlyReport')
-                        ->where('app_year', date('Y'))
-                        ->orderBy('app_month', 'asc')->get();
+        // $year_cur = DB::table('viewMonthlyReport')
+        //                 ->where('app_year', date('Y'))
+        //                 ->orderBy('app_month', 'asc')->get();
 
-        $total = DB::select('EXEC spGetTotalOutstandingBalance');
+        // $total = DB::select('EXEC spGetTotalOutstandingBalance');
 
-        $records = DB::table('viewMonthlyReport')->get();
+        // $records = DB::table('viewMonthlyReport')->get();
+        $records = DB::select('EXEC spMonthlyReport ?, ?', ['1900-01-01', $args['created_at']]);
         return $records;
 
         return (object)[

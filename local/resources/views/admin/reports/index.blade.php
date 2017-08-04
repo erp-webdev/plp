@@ -60,9 +60,8 @@
 					Start of Deductions
 					<input name="startDeduction" class="form-control  input-sm datepicker-range" placeholder="mm/dd/yyyy">
 				</div>	
-
 				<div class="form-group  col-xs-12 col-sm-4 col-md-4 col-lg-4">
-					Application Date <input class="form-control input-sm datepicker-range" name="created_at" placeholder="mm/dd/yyyy">
+					Application Date <input class="form-control input-sm datepicker-single" name="created_at" placeholder="mm/dd/yyyy">
 				</div>
 				<div class="form-group  col-xs-12 col-sm-4 col-md-4 col-lg-4">
 					Payroll Period <input class="form-control input-sm datepicker-single" name="payroll" placeholder="mm/dd/yyyy">

@@ -52,7 +52,7 @@ function showReport(event, format) {
 				'totalDeduction', 
 				'deductionPerPayday', 
 				'startDeduction', 
-				// 'created_at',
+				'created_at',
 				'toDate',
 				'sort',
 				'status'
@@ -67,7 +67,7 @@ function showReport(event, format) {
 				'totalDeduction', 
 				'deductionPerPayday', 
 				'startDeduction', 
-				// 'created_at',
+				'created_at',
 				'sort',
 				'guarantor',
 				'cvno',
@@ -79,7 +79,7 @@ function showReport(event, format) {
 			],
 
 			monthly: [
-
+				'created_at'
 			],
 
 			cutoff: [

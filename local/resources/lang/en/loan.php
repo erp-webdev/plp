@@ -8,7 +8,7 @@ return [
 
 	/*----------  Loan Application  ----------*/
 	'application' => [
-		'success'			=> 'Loan application has been submitted successfully! Please wait until all approvers approved your request.  Thank You!',
+		'success'			=> 'Congratulations, you have succesfully submitted your loan application! You will receive an email when your cheque is ready for claiming.  Thank You!',
 		'failed' 			=> 'Loan application failed to submit. Please try again!',
 		'delete'			=> 'Loan application was successfully deleted.',
 		'approved'			=> 'Loan application has been approved successfully.',
@@ -37,9 +37,9 @@ return [
 		'minimum'	=> 'Loan amount below minimum loanable!',
 		'maximum'	=> 'Loan amount above maximum loanable!',
 		'active'  	=> 'Employee is not found or has been deactivated!',
-		'guarantor' => 'Invalid Guarantor. Guarantor may not be active or a regular employee or may have a standing balance.',
+		'guarantor' => 'Invalid Guarantor. Guarantor may not be active, regular employee, one of your signatories or may have a standing balance.',
 		'guaranteed_amount' => 'Specified guarantor has insufficient amount that can be guaranteed on your application.',
-		'endorser' 	=> 'Invalid Endorser. Endorser may not be active or a regular employee.',
+		'endorser' 	=> 'Invalid Endorser. Endorser may not be active, regular employee or one of your signatories.',
 		'arExists' 	=> 'Failed to update deductions. AR # already exists from our records.',
 	],
 

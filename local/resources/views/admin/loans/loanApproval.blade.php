@@ -256,22 +256,9 @@
 		    				<td style="width: 25px"	>
 	    						<input type="hidden" name="eFundData_id[]" value="{{ $deduction->eFundData_id }}">
 		    					<input class="form-control input-sm" type="hidden" name="id[]" value="{{ $deduction->id }}">
-		    					<input  class="form-control input-sm" type="text" name="ar_no[]" value="{{ $deduction->ar_no }}" <?php 
-		    						if(!empty($deduction->ar_no)) 
-		    							echo 'readonly'; 
-		    						elseif($deduction->date >= date('Y-m-d'))
-		    							echo 'readonly';
-
-		    					?>>
+		    					<input  class="form-control input-sm" type="text" name="ar_no[]" value="{{ $deduction->ar_no }}" >
 		    				</td>
-		    				<td style="width: 25px"><input class="form-control input-sm" type="number" step="any" name="amount[]" value="{{ round($deduction->amount, 2) }}" 
-		    				<?php 
-		    					if(!empty($deduction->ar_no)) 
-		    						echo 'readonly'; 
-		    					elseif($deduction->date >= date('Y-m-d'))
-		    						echo 'readonly';
-
-		    				?>></td>
+		    				<td style="width: 25px"><input class="form-control input-sm" type="number" step="any" name="amount[]" value="{{ round($deduction->amount, 2) }}" ></td>
 		    				<td style="width: 25px"><input class="form-control input-sm" type="number" step="any" name="balance[]" value="{{ number_format($deduction->balance, 2, '.', '') }}" disabled ></td>
 		    			</tr>
 		    			<?php 

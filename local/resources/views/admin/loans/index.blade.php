@@ -237,6 +237,14 @@
 	}
 
 
+	function selectAll(event) {
+		$('td input:checkbox').each(function() {
+			$(this).prop('checked', event.checked);
+			updateARAmount()
+		});
+	}
+
+
 $('#dataTable thead').on('click', 'th', function () {
   $sort = $(this).attr('value');
   if($by == 'desc')

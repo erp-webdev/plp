@@ -61,6 +61,7 @@
 				</ul>
 			</div>
 			@endpermission
+			<!--  -->
 			@if(count($notifications) > 0)
 			<div class="col-xs-12 col-sm-12 col-md-12">
 				<div class="list-group" style="">

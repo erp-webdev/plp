@@ -86,7 +86,16 @@ class ApplicationController extends Controller
             $months = Preference::name('payment_term');
 
         $endorser = $this->getEndorser();
+        if(count($endorser) > 0)
+            $endorser = $endorser[0];
+        else
+            $endorser = '';
+
         $guarantor = $this->getGuarantor();
+        if(count($guarantor) > 0)
+            $guarantor = $guarantor[0];
+        else
+            $guarantor = '';
 
         $allow_max = Preference::name('allow_over_max');
 
@@ -135,8 +144,17 @@ class ApplicationController extends Controller
             $months = $this->utils->getTermMonths();
         $allow_max = Preference::name('allow_over_max');
 
-        $endorser = $this->getEndorser();
+         $endorser = $this->getEndorser();
+        if(count($endorser) > 0)
+            $endorser = $endorser[0];
+        else
+            $endorser = '';
+
         $guarantor = $this->getGuarantor();
+        if(count($guarantor) > 0)
+            $guarantor = $guarantor[0];
+        else
+            $guarantor = '';
 
     	return view('admin.applications.create')
     	->withEmployee($employee)
@@ -276,7 +294,7 @@ class ApplicationController extends Controller
         }
     }
 
-     public function checkValidity($request)
+     public function  checkValidity($request)
     {
         // Loan Application validation and verifier
         $errors = [];
@@ -313,10 +331,10 @@ class ApplicationController extends Controller
                 array_push($errors, trans('loan.validation.maximum'));
 
         // Endorser
-        if(!$this->validateEndorser($request->head))
+        if(!$this->validateEndorser($request->head)){
             array_push($errors, trans('loan.validation.endorser'));
-        else if($this->getEndorser() != $request->head){
-            // Check expected against inputted guarantor
+        }else if(!in_array($request->head, $this->getEndorser())){
+            // Check if endorser belongs to the valid signatories of the employee
             array_push($errors, trans('loan.validation.endorser'));
         }
         
@@ -327,7 +345,7 @@ class ApplicationController extends Controller
             else
                 if(!$this->validateGuaranteedAmount($request->surety, $request->loan_amount))
                     array_push($errors, trans('loan.validation.guaranteed_amount'));
-            else if($this->getGuarantor() != $request->surety){
+            else if(!in_array($request->surety, $this->getGuarantor())){
                 // Check expected against inputted guarantor
                 array_push($errors, trans('loan.validation.guarantor'));
             }
@@ -339,55 +357,40 @@ class ApplicationController extends Controller
     public function getEndorser()
     {
         $endorser = DB::table('viewSignatories')->where('EmpID', Auth::user()->employee_id)->first();
+        $valid_signatories = [];
 
-        if(!empty($endorser)){
-            if(!empty($endorser->SIGNATORYID1) && $this->validateEndorser($endorser->SIGNATORYID1)){
-                $endorser = $endorser->SIGNATORYID1;
-            }else if(!empty($endorser->SIGNATORYID2) && $this->validateEndorser($endorser->SIGNATORYID2)){
-                $endorser = $endorser->SIGNATORYID2;
-            }else if(!empty($endorser->SIGNATORYID3) && $this->validateEndorser($endorser->SIGNATORYID2)){
-                $endorser = $endorser->SIGNATORYID3;
-            }else if(!empty($endorser->SIGNATORYID4) && $this->validateEndorser($endorser->SIGNATORYID4)){
-                $endorser = $endorser->SIGNATORYID4;
-            }else if(!empty($endorser->SIGNATORYID5) && $this->validateEndorser($endorser->SIGNATORYID5)){
-                $endorser = $endorser->SIGNATORYID5;
-            }else if(!empty($endorser->SIGNATORYID6) && $this->validateEndorser($endorser->SIGNATORYID6)){
-                $endorser = $endorser->SIGNATORYID6;
-            }else{
-                $endorser = '';
+        // Creates a list of valid signatories
+        foreach ($endorser as $key => $value) {
+            if(in_array($key, ['SIGNATORYID1', 'SIGNATORYID2', 'SIGNATORYID3', 'SIGNATORYID4', 'SIGNATORYID5', 'SIGNATORYID6'])){
+                if(!empty($value)){
+                    if($this->validateEndorser($value)){
+                        array_push($valid_signatories, $value);
+                    }
+                }
             }
-        }else{
-            $endorser = '';
         }
 
-        return $endorser;
+        return $valid_signatories;
     }
 
     public function getGuarantor()
     {
-         $guarantor = DB::table('viewSignatories')->where('EmpID', Auth::user()->employee_id)->first();
+        $guarantor = DB::table('viewSignatories')->where('EmpID', Auth::user()->employee_id)->first();
 
-        if(!empty($guarantor)){
-            if(!empty($guarantor->SIGNATORYID1) && $this->validateGuarantor($guarantor->SIGNATORYID1)){
-                $guarantor = $guarantor->SIGNATORYID1;
-            }else if(!empty($guarantor->SIGNATORYID2) && $this->validateGuarantor($guarantor->SIGNATORYID2)){
-                $guarantor = $guarantor->SIGNATORYID2;
-            }else if(!empty($guarantor->SIGNATORYID3) && $this->validateGuarantor($guarantor->SIGNATORYID2)){
-                $guarantor = $guarantor->SIGNATORYID3;
-            }else if(!empty($guarantor->SIGNATORYID4) && $this->validateGuarantor($guarantor->SIGNATORYID4)){
-                $guarantor = $guarantor->SIGNATORYID4;
-            }else if(!empty($guarantor->SIGNATORYID5) && $this->validateGuarantor($guarantor->SIGNATORYID5)){
-                $guarantor = $guarantor->SIGNATORYID5;
-            }else if(!empty($guarantor->SIGNATORYID6) && $this->validateGuarantor($guarantor->SIGNATORYID6)){
-                $guarantor = $guarantor->SIGNATORYID6;
-            }else{
-                $guarantor = '';
+        $valid_signatories = [];
+
+        // Creates a list of valid signatories
+        foreach ($guarantor as $key => $value) {
+            if(in_array($key, ['SIGNATORYID1', 'SIGNATORYID2', 'SIGNATORYID3', 'SIGNATORYID4', 'SIGNATORYID5', 'SIGNATORYID6'])){
+                if(!empty($value)){
+                    if($this->validateEndorser($value)){
+                        array_push($valid_signatories, $value);
+                    }
+                }
             }
-        }else{
-            $guarantor = '';
         }
 
-        return $guarantor;
+        return $valid_signatories;
     }
 
 
@@ -511,6 +514,7 @@ class ApplicationController extends Controller
         if(empty(Employee::where('EmpID', $EmpID)->active()->regular()->first()))
             $valid = false;
 
+        // Endorser must not be the employee him/herself
         if($EmpID == Auth::user()->employee_id)
             $valid = false;
 

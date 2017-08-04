@@ -292,7 +292,7 @@ class LoanController extends Controller
                             $numbers = ['mos', 'amount', 'deductions',];
                             // Check date format
                             if(in_array($key, $dates))
-                                if(date('n/d/Y', strtotime($value)) != $value)
+                                if(date('n/j/Y', strtotime($value)) != $value)
                                     array_push($loansWithError, $this->createError('Invalid Date. '.$sheet->getTitle().'.row['. $ctr .'].column[' . $key .'].value[' . $value .']', $cols));
 
                              

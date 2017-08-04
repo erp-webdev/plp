@@ -68,8 +68,8 @@ class DashboardController extends Controller
 
             if($lastYearCount > 0){
                 $prop = (object)[
-                            'type'  => 'bar',
-                            'label' => 'EFund Applications ' . $lastYear,
+                            'type'  => 'line',
+                            'label' => 'EFund ' . $lastYear,
                             'data'  => $appLastYear,
                             ];
 
@@ -80,7 +80,7 @@ class DashboardController extends Controller
 
                 $prop = (object)[
                     'type'              => 'bar',
-                    'label'             => 'EFund Applications ' . $thisYear,
+                    'label'             => 'EFund ' . $thisYear,
                     'data'              => $appThisYear,
                     'borderWidth'       => 0,
                     'backgroundColor'   => 
