@@ -109,7 +109,7 @@ class DashboardController extends Controller
     {
 
         $year = [
-            DB::table('DashboardView')->whereBetween('approved_at', [$year . '-01-01 00:00:00', $year . '-01-' . $this->getDaysOfMonth($year, '01') . ' 23:59:59'])->count(),       
+            DB::table('DashboardView')->whereBetween('approved_at', [$year . '-01-01 00:00:00', $year . '-01-' . $this->getDaysOfMonth($year, '01') . ' 23:59:59'])->count(),  
             DB::table('DashboardView')->whereBetween('approved_at', [$year . '-02-01 00:00:00', $year . '-02-' . $this->getDaysOfMonth($year, '02') . ' 23:59:59'])->count(),       
             DB::table('DashboardView')->whereBetween('approved_at', [$year . '-03-01 00:00:00', $year . '-03-' . $this->getDaysOfMonth($year, '03') . ' 23:59:59'])->count(),       
             DB::table('DashboardView')->whereBetween('approved_at', [$year . '-04-01 00:00:00', $year . '-04-' . $this->getDaysOfMonth($year, '04') . ' 23:59:59'])->count(),       
@@ -128,10 +128,7 @@ class DashboardController extends Controller
 
     public function getDaysOfMonth($Y, $m)
     {
-        $date = new \DateTime(date( $Y . '-'. $m .'-d'));
-        $date->format($Y . '-'. $m .'-d');
-
-        return date_format($date, 't');
+        return date("t",mktime(0,0,0,$m,1,$Y));
     }
 
     /*=====  End of Yearly Application Statistics  ======*/
