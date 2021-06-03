@@ -155,6 +155,7 @@ class LoanController extends Controller
         if(count($request->eFundData_id) > 0)
             $loan = Loan::where('id', $request->eFundData_id[0])->first();
 
+        // Save deductions on Schedule
         for($i = 0; $i < count($request->id); $i++){
             if(!empty(trim($request->ar_no[$i]))){
                 $deduction = Deduction::find($request->id[$i]);
@@ -163,34 +164,66 @@ class LoanController extends Controller
                 $deduction->updated_by = Auth::user()->id;
                 $deduction->save();
 
-                // If the amount is less than the expected deduction amo                   unt per cutoff, 
+                // If the amount is less than the expected deduction amount per cutoff, 
                 // make adjustment on deductions.
                 if($request->amount[$i] < $loan->deductions){
-                    $total_paid = Deduction::where('eFundData_id', $loan->id)
-                        ->sum('amount');
-                    $balance = $loan->total - $total_paid;
-                    $remaining_months_to_pay = Deduction::where('date', '>', $deduction->date)
-                        ->where('eFundData_id', $loan->id)
-                        ->count();
-                    
-                    $adjusted_balance = $balance * (1 + ($loan->interest/100));
-                    $new_deduction = $adjusted_balance / $remaining_months_to_pay;
-                    $new_total = $total_paid + $adjusted_balance;
-                    Loan::where('id', $loan->id)->update([
-                        'total' => round($new_total, 2),
-                        'deductions' => round($new_deduction, 2)
-                        ]);
+                   $this->updateBalance($loan->id, $deduction->date, $loan->interest, $loan->total);
                 }
 
                 // Update Balance
                 DB::update('EXEC updateBalance ?', [$request->id[$i]]);
             }
+
         }
 
+        // Save manually added deductions; deductions not specified in the schedule
+        for($i = 0; $i < count($request->date); $i++){
+            if(!empty(trim($request->date[$i])) || !empty($request->amount1[$i])){
+                $deduction = new Deduction();
+                $deduction->eFundData_id = $loan->id;
+                $deduction->date = $request->date[$i];
+                $deduction->ar_no = $request->arno[$i];
+                $deduction->amount = $request->amount1[$i];
+                $deduction->updated_by = Auth::user()->id;
+                $deduction->save();
+
+                // If the amount is less than the expected deduction amount per cutoff, 
+                // make adjustment on deductions.
+                if($request->amount1[$i] < $loan->deductions){
+                   $this->updateBalance($loan->id, $deduction->date, $loan->interest, $loan->total);
+                }
+
+                // Update Balance
+                DB::update('EXEC updateBalance ?', [$deduction->id]);
+            }
+        }
         
         DB::commit();
 
         return redirect()->route('admin.loan');//->withSuccess(trans('loan.application.deduction'));
+    }
+
+    /**
+     * Update / Adjust balance
+     * 
+     */
+    public function updateBalance($loan_id, $deduction_date, $interest, $total)
+    {
+         $total_paid = Deduction::where('eFundData_id', $loan_id)
+            ->sum('amount');
+        $balance = $total - $total_paid;
+        $remaining_months_to_pay = Deduction::where('date', '>', $deduction_date)
+            ->where('eFundData_id', $loan_id)
+            ->count();
+        
+        $adjusted_balance = $balance * (1 + ($interest/100));
+        $new_deduction = $adjusted_balance / $remaining_months_to_pay;
+        $new_total = $total_paid + $adjusted_balance;
+        Loan::where('id', $loan_id)->update([
+            'total' => round($new_total, 2),
+            'deductions' => round($new_deduction, 2)
+            ]);
+
     }
 
     /**
@@ -274,14 +307,14 @@ class LoanController extends Controller
                             //Process not empty column
                             if(!empty(trim($key)) && $value != null){
 
-                                if(in_array($key, ['empid', 'mos', 'amount', 'deductions', 'startofdeductions', 'type', 'status']) && empty($value)){
+                                if(in_array($key, ['empid', 'mos', 'principal', 'deductions', 'startofdeductions', 'type', 'status']) && empty($value)){
                                     array_push($loansWithError, $this->createError('Required Field. '.$sheet->getTitle().'.row['. $ctr .'].column[' . $key .'].value[' . $value .']' , $cols));
                                 }
 
-                                if($key == 'status'){
-                                    if(!in_array(strtoupper($value), ['PAID', 'INC', 'DENIED']))
-                                        array_push($loansWithError, $this->createError('Invalid Status. '.$sheet->getTitle().'.row['. $ctr .'].column[' . $key .'].value[' . $value .']', $cols));
-                                }
+                                // if($key == 'status'){
+                                //     if(!in_array(strtoupper($value), ['PAID', 'INC', 'DENIED']))
+                                //         array_push($loansWithError, $this->createError('Invalid Status. '.$sheet->getTitle().'.row['. $ctr .'].column[' . $key .'].value[' . $value .']', $cols));
+                                // }
 
                                 if(strtoupper(trim($value)) == 'type')
                                     if($value != 'NEW' || $value != 'REAVAILMENT')
@@ -291,9 +324,9 @@ class LoanController extends Controller
                             $dates = ['appdate', 'startofdeductions'];
                             $numbers = ['mos', 'amount', 'deductions',];
                             // Check date format
-                            if(in_array($key, $dates))
-                                if(date('n/j/Y', strtotime($value)) != $value)
-                                    array_push($loansWithError, $this->createError('Invalid Date. '.$sheet->getTitle().'.row['. $ctr .'].column[' . $key .'].value[' . $value .']', $cols));
+                            // if(in_array($key, $dates))
+                            //     if(date('Y-m-d H:i:s', strtotime($value)) != $value)
+                            //         array_push($loansWithError, $this->createError('Invalid Date. '.$sheet->getTitle().'.row['. $ctr .'].column[' . $key .'].value[' . $value .']', $cols));
 
                              
                             // Check numeric values
@@ -336,14 +369,14 @@ class LoanController extends Controller
             $eFundData->EmpID = $loan->empid;
             $eFundData->local_dir_line = $loan->loc;
             $eFundData->terms_month = $loan->mos;
-            $eFundData->loan_amount = $loan->amount;
+            $eFundData->loan_amount = $loan->principal;
             $eFundData->interest = 1;
             $eFundData->deductions = $loan->deductions;
-            $eFundData->start_of_deductions = $loan->startofdeductions;
+            $eFundData->start_of_deductions = date('Y-m-d H:i:s', strtotime($loan->startofdeductions));
             $eFundData->approved_by = Auth::user()->employee_id;
             $eFundData->approved_at =  date('Y-m-d H:i:s', strtotime($loan->appdate));
             $eFundData->payroll_verified = 1;
-            $eFundData->total = round($loan->amount + ($loan->amount * 0.01 * $loan->mos), 2);
+            $eFundData->total = round($loan->principal + ($loan->principal * 0.01 * $loan->mos), 2);
 
             // Type
             if(strtoupper(trim($loan->type)) == 'NEW')
@@ -351,8 +384,9 @@ class LoanController extends Controller
             elseif(strtoupper(trim($loan->type)) == 'REAVAILMENT')
                 $eFundData->type = 1;
             else{
-                array_push($loansWithError, $this->createError('Invalid Type', $loan));
-                continue;
+                $eFundData->type = 1;
+                // array_push($loansWithError, $this->createError('Invalid Type', $loan));
+                // continue;
             }
 
             // Status
@@ -369,11 +403,13 @@ class LoanController extends Controller
                 $eFundData->approved = 1;
             }
             else{
-                array_push($loansWithError, $this->createError('Invalid Status', $loan));
-                continue;
+                $eFundData->status = $this->utils->getStatusIndex('inc');
+                $eFundData->approved = 1;
             }
 
             $eFundData->save();
+            $log = new Log();
+            $log->writeToLog(json_encode($eFundData));
 
             if(!empty($loan->endorserempid)){
                 // Endorser
@@ -451,13 +487,21 @@ class LoanController extends Controller
                     // End of Month (EOM)
                     $deductionDate = date('Y-m-t', strtotime($deductionDate));
                 }else{
-                    $deductionDate = date('Y-m-d', strtotime("+15 days", strtotime($deductionDate)));
+                    $deductionDate = date('Y-m-15', strtotime("+15 days", strtotime($deductionDate)));
                 }
 
                 if(date('Y-m-d', strtotime($deductionDate)) <= date('Y-m-d')){
                     $deduction->ar_no = '-';
                     $deduction->amount = $loan->deductions;
                     $deduction->balance = $balance;
+
+                    if($balance < 0){
+                        $deduction->amount -= abs($balance);
+                        $deduction->balance = 0;
+                        $eFundData->status = $this->utils->getStatusIndex('paid');
+                        $eFundData->save();
+                    }
+
                     //Compute balance
                     $balance = $balance - $loan->deductions;
                 }

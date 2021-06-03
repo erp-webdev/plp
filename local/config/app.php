@@ -2,9 +2,9 @@
 
 return [
 
-    /*
+    /*##
     |--------------------------------------------------------------------------
-    | Application Environment
+    | Application Environment for Efund
     |--------------------------------------------------------------------------
     |
     | This value determines the "environment" your application is currently
@@ -12,7 +12,7 @@ return [
     | services your application utilizes. Set this in your ".env" file.
     |
     */
-
+	'env_default' => 'local',
     'env' => env('APP_ENV', 'production'),
 
     /*

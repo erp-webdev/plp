@@ -18,16 +18,25 @@ class Ledger extends Model
 
     public function getDateAttribute($value)
     {
+        $dt = \DateTime::createFromFormat('M j Y H:i:s:A', $this->attributes['date']);
+        return $dt->format('d-M-y') ;
+
     	return date('d-M-y', strtotime($value));
     }
 
     public function getCheckReleasedAttribute($value)
     {
+        $dt = \DateTime::createFromFormat('M j Y H:i:s:A', $value);
+        return $dt->format('d-M-y') ;
+
     	return date('d-M-y', strtotime($value));
     }
 
     public function getCvDateAttribute($value)
     {
+        $dt = \DateTime::createFromFormat('M j Y H:i:s:A', $value);
+        return $dt->format('d-M-y') ;
+        
         return date('d-M-y', strtotime($value));
     }
 

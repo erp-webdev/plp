@@ -14,7 +14,7 @@
 </style>
 <table class="table-responsive" style="width: 100%">
 	<tr>
-		<td colspan="6" style="font-weight: bold; padding: 0px">EMPLOYEE'S FUND REPORT</td>	
+		<td colspan="6" style="font-weight: bold; padding: 0px">PERSONAL LOAN PROGRAM REPORT</td>	
 	</tr>
 	<tr>
 		<td colspan="6" style=" padding: 0px">List of Resigned Employees with Outstanding Balance</td>	

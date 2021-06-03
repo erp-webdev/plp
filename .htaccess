@@ -4,6 +4,11 @@
     </IfModule>
 
     RewriteEngine On
+    
+    ### Add two lines for fix error 500 ###
+    Options -Indexes
+    php_flag xcache.cacher 0
+    #######################################
 
     # Redirect Trailing Slashes If Not A Folder...
     RewriteCond %{REQUEST_FILENAME} !-d

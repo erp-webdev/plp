@@ -10,6 +10,7 @@ use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 use Auth;
 use eFund\Employee;
 use eFund\Role;
+use DB;
 
 class AuthController extends Controller
 {
@@ -91,8 +92,14 @@ class AuthController extends Controller
     {
         $employee = Employee::where('EmpID', $_GET['employee_id'])->active()->regular()->first();
         if(empty($employee)){
+            $employee = DB::table('viewHREmpMasterGL')->where('EmpID', $_GET['employee_id'])
+                ->where('Active', 1)
+                ->where('EmpStatus', 'RG')
+                ->first();
+
             // Employee not found or deactivated
-            return 0;
+            if(empty($employee))
+                return 0;
         }
 
         $user = User::where('employee_id', $employee->EmpID)->get();

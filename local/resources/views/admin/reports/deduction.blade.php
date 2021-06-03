@@ -14,7 +14,7 @@
 </style>
 <table class="table-responsive" style="width: 100%">
 	<tr>
-		<td colspan="6" style="font-weight: bold; padding: 0px">EMPLOYEE'S FUND REPORT</td>	
+		<td colspan="6" style="font-weight: bold; padding: 0px">Personal Loan Program REPORT</td>	
 	</tr>
 	<tr>
 		<td colspan="6" style=" padding: 0px">List of Employees with Outstanding but without Deduction

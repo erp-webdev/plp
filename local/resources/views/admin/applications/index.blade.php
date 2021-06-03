@@ -3,7 +3,7 @@
 @section('content')
 	<div class="row">
 		<div class="col-xs-12 col-sm-12 col-md-12">
-			<h1>My eFunds</h1>
+			<h1>My Loans</h1>
 			<a class="btn btn-sm btn-default" href="{{ route('applications.index') }}"><i class="fa fa-refresh"></i> Refresh</a>
 			<a href="{{ route('applications.create') }}" class="btn btn-sm btn-success">Apply Loan</a>
 			<hr>

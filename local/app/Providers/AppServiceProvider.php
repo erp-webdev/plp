@@ -25,10 +25,10 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
 
-        User::deleted(function ($user) {
-            $log = new Log();
-            $log->write('Delete', $user->getTable(), $user);
-        });
+        // User::deleted(function ($user) {
+        //     $log = new Log();
+        //     $log->write('Delete', $user->getTable(), $user);
+        // });
 
         User::saved(function ($user) {
             $log = new Log();

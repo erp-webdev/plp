@@ -1,6 +1,5 @@
 <?php
-
-/**
+/*****************************************************************************
  * Laravel - A PHP Framework For Web Artisans
  *
  * @package  Laravel
@@ -18,7 +17,7 @@
 | loading any of our classes later on. It feels nice to relax.
 |
 */
-
+$app_ = 'efund app';
 require __DIR__.'/local/bootstrap/autoload.php';
 
 /*

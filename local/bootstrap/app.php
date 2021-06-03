@@ -1,6 +1,6 @@
 <?php
 
-/*
+/*##### EFUND APP ######
 |--------------------------------------------------------------------------
 | Create The Application
 |--------------------------------------------------------------------------
@@ -10,7 +10,7 @@
 | the IoC container for the system binding all of the various parts.
 |
 */
-
+$app_ = 'efund';
 $app = new Illuminate\Foundation\Application(
     realpath(__DIR__.'/../')
 );

@@ -21,7 +21,7 @@ var tour = new Tour({
     {
       element: "",
       title: "<strong>Hi, " + username + "!</strong>",
-      content: "Welcome to Megaworld EFund Online System! <br> Follow steps of this tutorial to get familiar on how to use this system. Click <strong>End tour</strong> if you like to skip tutorial. Are your ready? Click <strong>Next</strong>!",
+      content: "Welcome to Personal Loan Program Online System! <br> Follow steps of this tutorial to get familiar on how to use this system. Click <strong>End tour</strong> if you like to skip tutorial. Are your ready? Click <strong>Next</strong>!",
       onNext: function(){
         $('.fa fa-bars').addClass('tour-step-element-reflex');
       },
@@ -53,8 +53,8 @@ if($('#myEfunds').length){
   tour.addStep(
     {
       element: "#myEfunds",
-      title: "My eFunds",
-      content: "This where you can submit your eFund applications. Your eFunds are listed here. You can also monitor of their status as they are being approved. Click the menu button to learn more! Click Next to skip.",
+      title: "My Loans",
+      content: "This where you can submit your personal loan applications. Your personal loans are listed here. You can also monitor of their status as they are being approved. Click the menu button to learn more! Click Next to skip.",
       backdrop: true,
       backdropContainer : '#sidebar',
     });
@@ -64,7 +64,7 @@ if($('#loansMenu').length){
   tour.addStep({
     element: "#loansMenu",
     title: "Transactions",
-    content: "All EFund applications are listed and monitored here. EFund Officer can approve applications here.",
+    content: "All perosnal loan applications are listed and monitored here. Personal Loan Program Officer can approve applications here.",
     backdrop: true,
     backdropContainer : '#sidebar',
   });
@@ -150,7 +150,7 @@ if($('#prefMenu').length){
   tour.addStep({
     element: "#prefMenu",
     title: "Maintenance",
-    content: "Manage EFund System settings and preferences.",
+    content: "Manage System settings and preferences.",
     backdrop: true,
     backdropContainer : '#sidebar',
     onShow: function(){
@@ -230,7 +230,7 @@ var MyEFund_index = [
     },
     {
       element: "table",
-      title: "EFund Application Listing",
+      title: "Personal Loan Application Listing",
       content: "All your applications are listed here. You can monitor your application's progress by looking at the status indicated.",
       placement: 'top',
       backdrop: true,
@@ -417,7 +417,7 @@ var Transaction_index = [
   {
     element: "table",
     title: "Transactions Listing",
-    content: "All EFund applications are listed and monitored here. It provides a summary of applications and their corresponding status.",
+    content: "All personal loan applications are listed and monitored here. It provides a summary of applications and their corresponding status.",
     backdrop: true,
     backdropContainer : '#app-layout',
     placement: 'top',
@@ -590,7 +590,7 @@ var Payroll_steps_index = [
   {
     element: "table",  
     title: "Payroll Verification",
-    content: "Listing of Efund applications for payroll verifications",
+    content: "Listing of personal loan applications for payroll verifications",
     backdrop: true,
     backdropContainer : '#app-layout',
     placement: 'top',
@@ -599,7 +599,7 @@ var Payroll_steps_index = [
   {
     element: "#deductionList",  
     title: "Deductions List",
-    content: "Generate a list of active efund applications and with deduction schedule.",
+    content: "Generate a list of active personal loan applications and with deduction schedule.",
     backdrop: true,
     backdropContainer : '#app-layout',
     placement: 'bottom',
@@ -617,7 +617,7 @@ var Treasury_steps_index = [
   {
     element: "table",  
     title: "Check and Voucher",
-    content: "Listing of all approved Efund applications that are for encoding of check and voucher.",
+    content: "Listing of all approved personal loan applications that are for encoding of check and voucher.",
     backdrop: true,
     backdropContainer : '#app-layout',
     placement: 'top',

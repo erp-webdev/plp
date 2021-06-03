@@ -210,7 +210,13 @@
 			      		<td>
 			      			<td class="l">Start of Deduction</td>
 			      			<td> @if(!empty($loan->start_of_deductions))
-			      				 	{{ date('j F Y', strtotime($loan->start_of_deductions)) }}
+			      				 	<?php 
+
+			      				 		$dt = \DateTime::createFromFormat('M j Y H:i:s:A', $loan->start_of_deductions);
+								    	echo $dt->format('Y M j') ;
+
+			      				 	 ?>
+
 			      				 @endif
 			      			</td>
 			      		</td>
@@ -240,19 +246,20 @@
 	    <div role="tabpanel" class="tab-pane table-responsive" id="scheds">
 	    	<form action="{{ route('loan.deduction') }}" method="post">
 	    		<input type="hidden" name="_token" value="{{ csrf_token() }}">
+	    		<input type="hidden" name="id" value="{{ $loan->id }}">
 		    	<fieldset <?php if($loan->status == $utils->getStatusIndex('paid')) echo 'disabled'; ?>>
-	    		<table class="table table-condensed table-hover table-striped">
+	    		<table class="table table-condensed table-hover table-striped" id="dtable">
 		    		<thead>
 		    			<th>Date</th>
 		    			<th>Payments AR #</th>
 		    			<th>Amount</th>
 		    			<th>Balance</th>
 		    		</thead>
-		    		<tbody>
+		    		<tbody id="dd">
 		    			<?php $totalAmount = 0; $totalBalance = 0; ?>
 		    			@foreach($deductions as $deduction)
-		    			<tr>
-		    				<td >{{ date('j-M-y', strtotime($deduction->date)) }}</td>
+		    			<tr >
+		    				<td >{{ $deduction->date }}</td>
 		    				<td style="width: 25px"	>
 	    						<input type="hidden" name="eFundData_id[]" value="{{ $deduction->eFundData_id }}">
 		    					<input class="form-control input-sm" type="hidden" name="id[]" value="{{ $deduction->id }}">
@@ -267,6 +274,8 @@
 		    						$totalBalance = $deduction->balance;
 		    			?>
 		    			@endforeach
+		    		</tbody>
+		    		<tbody>
 		    			<tr>
 		    				<td><strong>Total</strong></td>
 		    				<td>&nbsp;</td>
@@ -278,6 +287,7 @@
 		    	</fieldset>
 				@permission(['custodian'])
 		    	@if($loan->status != $utils->getStatusIndex('paid') && count($deductions) > 0)
+		    	<button type="button" id="new_deduction" class="btn btn-sm btn-default"><i class="fa fa-plus"></i> New Deduction</button>
 		    	<button type="submit" name="submit" class="btn btn-sm btn-success pull-right" onsubmit="startLoading()"><i class="fa fa-save"></i> Save</button>
 		    	<a class="btn btn-sm btn-warning pull-right" onclick="confirm_recalculation('{{ route('deductions.recal', $loan->id) }}')"><i class="fa fa-save"></i> Recalculate Deductions</a>
 		    	@endif

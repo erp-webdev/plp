@@ -14,7 +14,7 @@
 </style>
 <table class="table-responsive" style="width: 100%">
 	<tr>
-		<td colspan="6" style="font-weight: bold">EMPLOYEE'S FUND REPORT</td>	
+		<td colspan="6" style="font-weight: bold">PERSONAL LOAN PROGRAM REPORT</td>	
 	</tr>
 	<tr>
 		<td colspan="6">As of <u>{{ date('j F Y', strtotime($args['created_at'])) }}</u></td>	

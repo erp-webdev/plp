@@ -40,7 +40,7 @@
     <div class="row">
         <div class="col-xs-12 col-sm-6 col-md-4">
             <div class="login-title login-box panel" style="text-align:center; background-color: #ffffff;">
-                <p style="text-align: center; margin-top: 15px; margin-bottom: 0px"><strong>Megaworld eFund</strong></p>
+                <p style="text-align: center; margin-top: 15px; margin-bottom: 0px"><strong>{{ env('APP_NAME') }}</strong></p>
                 <p style="text-align: center; font-size: 10px">(v1.0)</p>
             </div>
             <div class="panel login-box">

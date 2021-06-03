@@ -3,7 +3,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <!-- <meta http-equiv="X-UA-Compatible" content="IE=edge"> -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Megaworld eFund</title>
+    <title>{{ env('APP_NAME') }}</title>
     <link rel="shortcut icon" type="image-png" href="{{ url('/') }}/favicon.ico">
     <link rel="stylesheet" href="{{ url('/') }}/assets/fa/css/font-awesome.min.css">
     <link rel="stylesheet" href="{{ url('/') }}/assets/css/bootstrap.min.css">
@@ -20,6 +20,16 @@
         }
 
     </style>
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-159577526-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-159577526-1');
+</script>
+	
 </head>
 <body id="app-layout">
         @yield('modals')
@@ -27,7 +37,7 @@
             @include('admin.layouts.sidebar')
             <div id="page-content-wrapper">
             <div class="navbar page-title">
-                <h2>Megaworld eFund <i style="font-size:10px">(v1.0)</i></h2>
+                <h2>{{ env('APP_NAME') }} <i style="font-size:10px">(v1.0)</i></h2>
             </div>
                
                 @yield('content')

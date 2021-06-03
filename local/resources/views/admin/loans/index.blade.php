@@ -256,7 +256,23 @@ $('#dataTable thead').on('click', 'th', function () {
 
 });
 
+var row = '<tr>' +
+		'<td style="width: 25px"><div class="col-md-1"><span class="close ddclose">&times;</span></div><div class="col-md-10"><input type="date" name="date[]" class="form-control" required></div></td>'+
+		'<td style="width: 25px"	>'+
+		'	<input  class="form-control input-sm" type="text" name="arno[]" value="" required>'+
+		'</td>'+
+		'<td style="width: 25px"><input class="form-control input-sm" type="number" step="any" name="amount1[]" value="" required></td>'+
+		'<td style="width: 25px"><input class="form-control input-sm" type="number" step="any" value="" disabled ></td>'+
+	'</tr>';
 
+$(document).on('click', '#new_deduction', function(event) {
+	
+	$('#dd').append(row);
 
+});
+
+$(document).on('click', '.ddclose', function(event){
+	$(this).closest('tr').remove();
+});
 </script> 
 @endsection
