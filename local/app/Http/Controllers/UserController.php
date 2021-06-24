@@ -53,7 +53,8 @@ class UserController extends Controller
     {
         $this->validate($request, [
             'name' => 'required',
-            'employee_id' => 'required|unique:users',
+			'employee_id' => 'required|unique:users',
+            'database' => 'required',
             // 'password' => 'required|same:confirm-password',
             'roles' => 'required'
         ]);
@@ -68,7 +69,8 @@ class UserController extends Controller
             $user->setTable('users');
             $user->name  = $request->name;
             $user->email = $employee->EmailAdd;
-            $user->employee_id = $request->employee_id;
+			$user->employee_id = $request->employee_id;
+            $user->DBNAME = $request->database;
             $user->password = Hash::make($request->employee_id);;
             $user->save();
 
