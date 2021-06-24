@@ -11,8 +11,8 @@
     <meta name="viewport" content="width=device-width">
     <!--[if !mso]><!--><meta http-equiv="X-UA-Compatible" content="IE=edge"><!--<![endif]-->
     <title>{{ config('preferences.app') }}</title>
-    
-    
+
+
     <style type="text/css" id="media-query">
       body {
         margin: 0;
@@ -158,7 +158,7 @@
               <!--[if (!mso)&(!IE)]><!-->
                 <div style="border-top: 0px solid transparent; border-left: 0px solid transparent; border-bottom: 0px solid transparent; border-right: 0px solid transparent; padding-top:20px; padding-bottom:20px; padding-right: 0px; padding-left: 0px;"><!--<![endif]-->
 
-                  
+
                     <!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 10px; padding-left: 10px; padding-top: 10px; padding-bottom: 0px;"><![endif]-->
                   <div style="padding-right: 10px; padding-left: 10px; padding-top: 10px; padding-bottom: 0px;">
                 	  <div style="font-size:12px;line-height:14px;color:#EDEDED;font-family:Arial, 'Helvetica Neue', Helvetica, sans-serif;text-align:left;">
@@ -178,7 +178,7 @@
                 </div>
                 <!--[if mso]></td></tr></table><![endif]-->
 
-                  
+
               <!--[if (!mso)&(!IE)]><!--></div><!--<![endif]-->
 
               </div>
@@ -186,9 +186,9 @@
           <!--[if (mso)|(IE)]></td></tr></table></td></tr></table><![endif]-->
         </div>
       </div>
-    </div>   
+    </div>
 
-    @yield('content')    
+    @yield('content')
 
     <div style="background-color:#444444;">
       <div style="Margin: 0 auto;min-width: 320px;max-width: 500px;width: 500px;width: calc(19000% - 98300px);overflow-wrap: break-word;word-wrap: break-word;word-break: break-word;background-color: transparent;" class="block-grid ">
@@ -200,14 +200,14 @@
               <div style="background-color: transparent; width: 100% !important;">
               <!--[if (!mso)&(!IE)]><!--><div style="border-top: 0px solid transparent; border-left: 0px solid transparent; border-bottom: 0px solid transparent; border-right: 0px solid transparent; padding-top:25px; padding-bottom:25px; padding-right: 0px; padding-left: 0px;"><!--<![endif]-->
 
-                  
+
                     <!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 10px; padding-left: 10px; padding-top: 10px; padding-bottom: 10px;"><![endif]-->
 <div style="padding-right: 10px; padding-left: 10px; padding-top: 10px; padding-bottom: 10px;">
-	<div style="font-size:12px;line-height:14px;color:#bbbbbb;font-family:Arial, 'Helvetica Neue', Helvetica, sans-serif;text-align:left;"><p style="margin: 0;font-size: 18px;line-height: 22px;text-align: center"><span style="font-size: 14px; line-height: 16px;">This is a system generated email.<br>Megaworld EFund System v1.0</span></p><p style="margin: 0;font-size: 18px;line-height: 21px;text-align: center"><span style="font-size: 14px; line-height: 16px;">Megaworld Corporation | ISM Department | All Rights Reserved&nbsp;© 2017</span></p></div>
+	<div style="font-size:12px;line-height:14px;color:#bbbbbb;font-family:Arial, 'Helvetica Neue', Helvetica, sans-serif;text-align:left;"><p style="margin: 0;font-size: 18px;line-height: 22px;text-align: center"><span style="font-size: 14px; line-height: 16px;">This is a system generated email.<br>Megaworld Personal Loan Application System v1.0</span></p><p style="margin: 0;font-size: 18px;line-height: 21px;text-align: center"><span style="font-size: 14px; line-height: 16px;">Megaworld Corporation | ISM Department | All Rights Reserved&nbsp;© 2017</span></p></div>
 </div>
 <!--[if mso]></td></tr></table><![endif]-->
 
-                  
+
               <!--[if (!mso)&(!IE)]><!--></div><!--<![endif]-->
               </div>
             </div>

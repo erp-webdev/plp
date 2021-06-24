@@ -18,8 +18,8 @@
 	<br>
 	<br>
 
-	Regards, 
+	Regards,
 	<br>
-	eFund Admin
+	Personal Loan Application Admin
 	</div>
 @endsection
