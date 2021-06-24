@@ -38,11 +38,7 @@
 				<div class="col-xs-12 col-sm-12 col-md-12">
 	                <div class="form-group">
 	                    <strong>Database:</strong>
-						<select name="DBNAME" class="form-select form-select-sm">
-							@foreach($databases as $database)
-								<option value="{{ $database->DBNAME }}" {{ $database->DBNAME == $user->DBNAME ? 'selected' : '' }}>{{ $database->DBNAME }}</option>
-							@endforeach
-						</select>
+						{{ $user->DBNAME }}
 	                </div>
 	            </div>
 
