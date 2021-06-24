@@ -40,7 +40,7 @@ class UserController extends Controller
     {
 		$databases = Employee::select('DBNAME')->distinct()->get();
         $roles = Role::All('display_name','id');
-        return view('admin.users.create',compact('roles'))->withDatabase($databases);
+        return view('admin.users.create',compact('roles'))->withDatabases($databases);
     }
 
     /**
