@@ -31,7 +31,7 @@
 				// 		 $greetings "Good night, ";
 				//  }
 			 ?>
-			 <h2><?php echo $greetings . ucwords(strtolower(Auth::user()->name)) . "!"; ?></h2>
+			 <h2><?php echo $greetings . ucwords(strtolower(Auth::user()->name)) . "!" . '--' . auth()->user()->DBNAME; ?></h2>
 			 <hr>
 			 
 		</div>
