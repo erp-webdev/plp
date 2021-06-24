@@ -90,34 +90,40 @@ class AuthController extends Controller
 
     public function verifyEmployee()
     {
-        $employee = Employee::where('EmpID', $_GET['employee_id'])->active()->regular()->first();
-        if(empty($employee)){
-            $employee = DB::table('viewHREmpMasterGL')->where('EmpID', $_GET['employee_id'])
-                ->where('Active', 1)
-                ->where('EmpStatus', 'RG')
-                ->first();
+        $employees = Employee::where('EmpID', $_GET['employee_id'])->active()->regular()->get();
 
-            // Employee not found or deactivated
-            if(empty($employee))
-                return 0;
-        }
+		foreach($employees as $employee){
+			if(empty($employee)){
+	            $employee = DB::table('viewHREmpMasterGL')->where('EmpID', $_GET['employee_id'])
+	                ->where('Active', 1)
+	                ->where('EmpStatus', 'RG')
+	                ->first();
 
-        $user = User::where('employee_id', $employee->EmpID)->get();
+	            // Employee not found or deactivated
+	            if(empty($employee))
+	                return 0;
+	        }
 
-        if(count($user) == 0){
-            // Create user for first time use
-            $user = new User();
-            $user->setTable('users');   
-            $user->name  = $employee->FName;
-            $user->email = $employee->EmailAdd;
-            $user->employee_id = $employee->EmpID;
-            $user->password = bcrypt($employee->EmpID);
-            $user->active = 1;
-            $user->save();
+	        $user = User::where('employee_id', $employee->EmpID)->get();
 
-            $role = Role::where('name','User')->get()->first();    
-            $user->attachRole($role);
-        }
+	        if(count($user) == 0){
+	            // Create user for first time use
+	            $user = new User();
+	            $user->setTable('users');
+	            $user->name  = $employee->FName;
+	            $user->email = $employee->EmailAdd;
+	            $user->employee_id = $employee->EmpID;
+	            $user->password = bcrypt($employee->EmpID);
+				$user->DBNAME = $employee->DBNAME;
+	            $user->active = 1;
+	            $user->save();
+
+	            $role = Role::where('name','User')->get()->first();
+	            $user->attachRole($role);
+	        }
+
+		}
+
 
         return 1;
     }
