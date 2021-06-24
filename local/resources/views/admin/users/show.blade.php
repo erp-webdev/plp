@@ -1,5 +1,5 @@
 @extends('admin.layouts.app')
- 
+
 @section('content')
     <div class="col-xs-12 col-sm-12 col-md-12 margin-tb">
         <div>
@@ -33,6 +33,12 @@
         <div class="form-group">
             <strong>Active:</strong>
 			<?php if($user->active=='1') echo 'True'; else echo 'False'; ?>
+        </div>
+    </div>
+	<div class="col-xs-12 col-sm-12 col-md-12">
+        <div class="form-group">
+            <strong>Active:</strong>
+			{{ $user->DBNAME }}
         </div>
     </div>
     <div class="col-xs-12 col-sm-12 col-md-12">

@@ -102,8 +102,9 @@ class UserController extends Controller
      */
     public function show($id)
     {
+		$databases = Employee::select('DBNAME')->distinct()->get();
         $user = User::withoutGlobalScope('active')->find($id);
-        return view('admin.users.show')->with('user', $user);
+        return view('admin.users.show')->with('user', $user)->withDatabases($databases);
     }
     /**
      * Show the form for editing the specified resource.
@@ -113,10 +114,11 @@ class UserController extends Controller
      */
     public function edit($id)
     {
+		$databases = Employee::select('DBNAME')->distinct()->get();
         $user = User::withoutGlobalScope('active')->find($id);
         $roles = Role::All('display_name','id');
         $userRole = DB::table('role_user')->where('user_id',$id)->get();
-            return view('admin.users.edit',compact('user','roles','userRole'));
+            return view('admin.users.edit',compact('user','roles','userRole'))->withDatabases($databases);
     }
 
     /**

@@ -1,5 +1,5 @@
 @extends('admin.layouts.app')
- 
+
 @section('content')
     <div class="col-xs-12 col-sm-12 col-md-12 margin-tb">
         <div>
@@ -10,7 +10,7 @@
         </div>
         <hr/>
     </div>
-    
+
     <div class="col-xs-12 col-sm-5 col-md-5">
         <form method="POST" action="{{ route('users.update', $user->id) }}">
             <input name="_method" type="hidden" value="PATCH">
@@ -18,7 +18,7 @@
             <div class="row">
                 <div class="col-xs-12 col-sm-12 col-md-12">
                     <div class="form-group">
-                        <strong>Name:</strong>
+                        <strong>Employee ID:</strong>
                         <input type="text" name="ID" placeholder="ID" class="form-control" value="{{ $user->employee_id }}" readonly>
                     </div>
                 </div>
@@ -29,12 +29,22 @@
                     </div>
                 </div>
                 <div >
-                    <div class="col-xs-12 col-sm-12 col-md-12">
-                        <div class="form-group" >
-                            <strong>Email:</strong>
-                            <input type="text" name="email" placeholder="Email" class="form-control" value="{{ $user->email }}" <?php if(Auth::user()->id != $user->id){ echo 'readonly';} ?>>
-                        </div>
+                <div class="col-xs-12 col-sm-12 col-md-12">
+                    <div class="form-group" >
+                        <strong>Email:</strong>
+                        <input type="text" name="email" placeholder="Email" class="form-control" value="{{ $user->email }}" <?php if(Auth::user()->id != $user->id){ echo 'readonly';} ?>>
                     </div>
+                </div>
+				<div class="col-xs-12 col-sm-12 col-md-12">
+	                <div class="form-group">
+	                    <strong>Database:</strong>
+						<select name="DBNAME" class="form-select form-select-sm">
+							@foreach($databases as $database)
+								<option value="{{ $database->DBNAME }}" {{ $database->DBNAME == $user->DBNAME ? 'selected' : '' }}>{{ $database->DBNAME }}</option>
+							@endforeach
+						</select>
+	                </div>
+	            </div>
 
                     <!-- <div class="col-xs-12 col-sm-12 col-md-12">
                         <div class="form-group">
@@ -56,12 +66,12 @@
                     </div>
                 </div>
                 <div class="col-xs-12 col-sm-12 col-md-12">
-                    <div class="form-group" 
+                    <div class="form-group"
                         <strong>Roles:</strong>
-                        <?php 
+                        <?php
                             foreach ($roles as $role) {
                                 $checked = false;
-                                foreach ($userRole as $userrole) { 
+                                foreach ($userRole as $userrole) {
                                     if($userrole->role_id==$role->id)
                                         $checked=true;
                                 } ?>
