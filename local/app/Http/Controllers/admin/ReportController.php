@@ -24,7 +24,7 @@ use eFund\Http\Controllers\admin\DashboarController;
 class ReportController extends Controller
 {
 	private $utils;
-   
+
 	function __construct()
 	{
 		Session::set('menu', 'reports');
@@ -33,7 +33,7 @@ class ReportController extends Controller
 
     public function index()
     {
-    	
+
     	return view('admin.reports.index');
     }
 
@@ -44,18 +44,18 @@ class ReportController extends Controller
         $title = "Megaworld Employeess fund Report";
 
         if(isset($_GET['format'])){
-            $format = $_GET['format']; 
+            $format = $_GET['format'];
         }
 
         $filters = [
             'control',
             'EmpID',
-            'empName', 
-            'checkRelease', 
-            'totalAmount', 
-            'totalDeduction', 
-            'deductionPerPayday', 
-            'startDeduction', 
+            'empName',
+            'checkRelease',
+            'totalAmount',
+            'totalDeduction',
+            'deductionPerPayday',
+            'startDeduction',
             'created_at',
             'sort',
             'guarantor',
@@ -123,7 +123,7 @@ class ReportController extends Controller
                $data = $this->resignedReport($args);
                 $view = view('admin.reports.resigned')->withData($data);
             break;
-	    			
+
     		default:
     			$view = $type;
     	}
@@ -175,12 +175,12 @@ class ReportController extends Controller
         $filters = [
             'control',
             'EmpID',
-            'empName', 
-            'checkRelease', 
-            'totalAmount', 
-            'totalDeduction', 
-            'deductionPerPayday', 
-            'startDeduction', 
+            'empName',
+            'checkRelease',
+            'totalAmount',
+            'totalDeduction',
+            'deductionPerPayday',
+            'startDeduction',
             'fromDate',
             'toDate',
             'sort',
@@ -277,12 +277,12 @@ class ReportController extends Controller
 
             return $this->formatExcel($loans, $type, $format, $title, $html);
         }
-        
+
     }
 
     public function stream($html, $format = 'html', $size = 'letter', $orientation = 'landscape', $title = "EMPLOYEES' FUND REPORT")
     {
-      
+
         if($format == 'html'){
 
             $report = (object)['title' => $title, 'html' => $html];
@@ -292,18 +292,18 @@ class ReportController extends Controller
             return $html;
 
         }elseif($format == 'pdf'){
-            
+
             $report = (object)['title' => $title, 'html' => $html];
 
             $pdf = PDF::loadView('admin.reports.layout', ['report' => $report])->setPaper($size, $orientation)->setWarnings(false);
-            return $pdf->stream('saa.pdf'); 
+            return $pdf->stream('saa.pdf');
 
         }elseif($format == 'xlsx'){
 
         }elseif($format == 'csv'){
 
         }
-        
+
     }
 
     public function payrollReport($args)
@@ -346,7 +346,7 @@ class ReportController extends Controller
                         elseif($args['status'] == 4)
                             $query->where('status', $this->utils->getStatusIndex('denied'));
                     }
-                    
+
                 })->orderBy($args['sort'], 'asc')->get();
     }
 
@@ -372,7 +372,7 @@ class ReportController extends Controller
                     elseif($args['status'] == 4)
                         $query->where('status', $this->utils->getStatusIndex('denied'));
                 }
-                
+
             })->orderBy($args['sort'], 'asc')->get();
     }
 
@@ -426,7 +426,7 @@ class ReportController extends Controller
             'total' => $total
         ];
     }
-   
+
 
     public function formatExcel($loans, $type, $format = 'xlsx', $title = 'Megaworld EFund System', $html = [])
     {
@@ -450,7 +450,7 @@ class ReportController extends Controller
 
         }else if($type == 'summary'){
             $data = [];
-            
+
             foreach($loans as $row){
                 $newRow = [
                     'Control #' => $row->ctrl_no,
@@ -463,7 +463,8 @@ class ReportController extends Controller
                     'CHECK NO' => $row->check_no,
                     'Date of check release' => date('Y-m-d', strtotime($row->released)),
                     'Principal' => number_format($row->loan_amount, 2),
-                    'LOAN AMOUNT Interest' => number_format($row->loan_amount * $row->int_amount, 2),
+					// 'LOAN AMOUNT Interest' => number_format($row->loan_amount * $row->int_amount, 2),
+                    'LOAN AMOUNT Interest' => number_format($row->int_amount, 2),
                     'Total' => number_format($row->total, 2),
                     'Payment Terms (no. of mos)' => $row->terms_month,
                     'Deduction per payroll period' => number_format($row->deductions, 2),
@@ -534,7 +535,7 @@ class ReportController extends Controller
             $data->stats = DB::table('DashboardView')->first();
             // Yearly Income (5 years)
             $data->incomeDatasets = $dashboard->incomeDatasets();
-            
+
             // Monthly Income of the current year
             $data->IncomeMonthlyDatasets = $dashboard->incomeMonthlyDatasets(date('Y'));
         }
