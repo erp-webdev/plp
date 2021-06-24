@@ -92,6 +92,10 @@ class AuthController extends Controller
     {
         $employees = Employee::where('EmpID', $_GET['employee_id'])->active()->regular()->get();
 
+		if ($employees->isEmpty()) {
+			return 0;
+		}
+
 		foreach($employees as $employee){
 			if(empty($employee)){
 	            $employee = DB::table('viewHREmpMasterGL')->where('EmpID', $_GET['employee_id'])

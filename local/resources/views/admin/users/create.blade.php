@@ -1,5 +1,5 @@
 @extends('admin.layouts.app')
- 
+
 @section('content')
     <div class="col-xs-12 col-sm-12 col-md-12 margin-tb">
         <div class="">
@@ -44,6 +44,16 @@
                     <input type="text" name="employee_id" class="form-control" placeholder="Employee ID" value="{{ Input::old('employee_id') }}">
                 </div>
             </div>
+			<div class="col-xs-12 col-sm-12 col-md-12">
+                <div class="form-group">
+                    <strong>Database:</strong>
+					<select name="database" class="form-select form-select-sm">
+						@foreach($databases as $database)
+							<option value="{{ $database }}">{{ $database }}</option>
+						@endforeach
+					</select>
+                </div>
+            </div>
             <!-- <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group">
                     <strong>Password:</strong>
@@ -59,7 +69,7 @@
             <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group">
                     <strong>Role:</strong>
-                     <?php 
+                     <?php
                         foreach ($roles as $role) { ?>
                             <li style=" list-style-type:none"><input type="checkbox" name="roles[]" value="{{ $role->id }}"> {{ $role->display_name  }} </li>
                         <?php } ?>

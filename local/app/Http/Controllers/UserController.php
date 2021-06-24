@@ -38,8 +38,9 @@ class UserController extends Controller
      */
     public function create()
     {
+		$databases = Employee::select('DBNAME')->distinct()->get();
         $roles = Role::All('display_name','id');
-        return view('admin.users.create',compact('roles'));
+        return view('admin.users.create',compact('roles'))->withDatabase($databases);
     }
 
     /**
@@ -73,9 +74,9 @@ class UserController extends Controller
 
             if(!empty($request->input('roles'))) {
                 foreach($request->input('roles') as $role) {
-                    $user->attachRole($role);  
-                    
-                    $log = new Log(); 
+                    $user->attachRole($role);
+
+                    $log = new Log();
                     $model = ['user' => $user->id, 'role' => $role];
                     $log->writeOnly('Insert', 'role_user', $model);
                 }
@@ -88,7 +89,7 @@ class UserController extends Controller
                             ->with('error','Employee was not found!');
         }
 
-       
+
     }
 
     /**
@@ -138,13 +139,13 @@ class UserController extends Controller
                 'roles' => 'required'
             ]);
         }
-       
+
         $input = $request->all();
 
-        if(!empty($input['password'])){ 
+        if(!empty($input['password'])){
             $input['password'] = Hash::make($input['password']);
         }else{
-            $input = array_except($input,array('password'));    
+            $input = array_except($input,array('password'));
         }
 
         if(!empty($request->input('active')))
@@ -155,17 +156,17 @@ class UserController extends Controller
         $user = User::withoutGlobalScope('active')->find($id);
         $user->setTable('users');
         $user->update($input);
-        
+
         $model = DB::table('role_user')->where('user_id',$id)->get();
         DB::table('role_user')->where('user_id',$id)->delete();
-        $log = new Log(); 
+        $log = new Log();
         $log->writeOnly('Delete', 'role_user', $model);
-        
+
         if(!empty($request->input('roles'))) {
             foreach($request->input('roles') as $role) {
-                $user->attachRole($role);   
+                $user->attachRole($role);
 
-                $log = new Log(); 
+                $log = new Log();
                 $model = ['user' => $user->id, 'role' => $role];
                 $log->writeOnly('Insert', 'role_user', $model);
             }
