@@ -49,7 +49,7 @@
                     <strong>Database:</strong>
 					<select name="database" class="form-select form-select-sm">
 						@foreach($databases as $database)
-							<option value="{{ $database }}">{{ $database }}</option>
+							<option value="{{ $database->DBNAME }}">{{ $database->DBNAME }}</option>
 						@endforeach
 					</select>
                 </div>
