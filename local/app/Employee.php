@@ -18,7 +18,7 @@ class Employee extends Model
 
     public function scopeCurrent($scope)
     {
-        dd('auth:'.Auth::user()->employee_id);
+        dd('auth:'.Auth::user()->DBNAME);
         return $scope->where('EmpID', Auth::user()->employee_id)
                 ->where('DBNAME', Auth::user()->DBNAME);
     }
