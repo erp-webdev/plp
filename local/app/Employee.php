@@ -2,7 +2,7 @@
 
 namespace eFund;
 
-use User;
+use eFund\User;
 use Auth;
 use eFund\Utilities\Utils;
 use Illuminate\Database\Eloquent\Model;
