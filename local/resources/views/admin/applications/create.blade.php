@@ -262,7 +262,7 @@
 		var $date = '{{ date("j F Y", strtotime($loan->created_at)) }}';
 		var $loc = '{{ $loan->local_dir_line }}';
 		var $term = {{ $loan->terms_month }};
-		var $loan_amount = {{ $loan->loan_amount }};
+		var $loan_amount = {{ $loan->loan_amount or 0 }};
 		var $interest = {{ $loan->interest }};
 		var $total = {{ $loan->total }};
 		var $deductions = {{ $loan->deductions }};
