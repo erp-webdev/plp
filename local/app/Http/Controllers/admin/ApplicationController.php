@@ -72,9 +72,9 @@ class ApplicationController extends Controller
         // Employee Information
         $employee = Employee::current()->first();
         // Loan Application Counts
-        $records = Loan::employee()->notDenied()->count();
+        $records = Loan::employee($employee)->notDenied()->count();
         // Loan Application Counts within the current year
-        $records_this_year = Loan::employee()->yearly()->notDenied()->count();
+        $records_this_year = Loan::employee($employee)->yearly()->notDenied()->count();
         // Interest percentage
         $interest = Preference::name('interest');
         // Employee Term Limits
@@ -404,7 +404,7 @@ class ApplicationController extends Controller
     public function getPreviousLoan($id  = 0)
     {
         $employee = Employee::current()->first();
-        $loan = Loan::current($employee)
+        $loan = Loan::employee($employee)
                     ->whereNotIn('status', [0,9])
                     ->where('id', '<>', $id)
                     ->first();
@@ -415,7 +415,7 @@ class ApplicationController extends Controller
     public function getStandingBalance($id  = 0)
     {
         $employee = Employee::current()->first();
-        $balance = Loan::current($employee)
+        $balance = Loan::employee($employee)
                     ->whereNotIn('status', [0,9])
                     ->where('id', '<>', $id)
                     ->sum('balance');
