@@ -94,10 +94,10 @@
 					<div class="col-md-8">
 						<div class="input-group">
 							<span class="input-group-addon">Php</span>
-							<input name="loan_amount" type="number" class="form-control input-sm" name="loan_amount" ng-model="loan" required ng-change="computeTotal()" ng-keyup="computeTotal()" step="500" max="<?php if($overMax == 0) echo $terms->max_amount; ?>">
+							<input name="loan_amount" type="number" class="form-control input-sm" name="loan_amount" ng-model="loan" required ng-change="computeTotal()" ng-keyup="computeTotal()" step="500" max="<?php if($overMax == 0) echo $terms->max_loan_amount; ?>">
 							<span class="input-group-addon">.00</span>
 						</div>
-						<span class="help-block">Min: {{ $terms->min_loan_amount }} - Max: {{ $terms->max_loan_amount }}</span>
+						<span class="help-block">Min: {{ $terms->min_loan_loan_amount }} - Max: {{ $terms->max_loan_loan_amount }}</span>
 					</div>
 				</div>
 				<div class="form-group">
@@ -270,8 +270,8 @@
 		var $head_refno = "{{ $loan->endorser_refno }}";
 		var $surety = "{{ $loan->guarantor_EmpID }}";
 		var $surety_refno = "{{ $loan->guarantor_refno }}";
-		var $loan_max = {{ $terms->max_amount }};
-		var $loan_min = {{ $terms->min_amount }};
+		var $loan_max = {{ $terms->max_loan_amount }};
+		var $loan_min = {{ $terms->min_loan_amount }};
 	@elseif(!empty(old('loan_amount')))
 		// New With Errors
 		var $id = 0;
@@ -287,8 +287,8 @@
 		var $head_refno = "";
 		var $surety = "{{ old('surety') }}";
 		var $surety_refno = "";
-		var $loan_max = {{ $terms->max_amount }};
-		var $loan_min = {{ $terms->min_amount }};
+		var $loan_max = {{ $terms->max_loan_amount }};
+		var $loan_min = {{ $terms->min_loan_amount }};
 	@else
 		// New
 		var $id = 0;
@@ -296,7 +296,7 @@
 		var $date = "{{ date('j F Y') }}";
 		var $loc = "";
 		var $term = 1;
-		var $loan_amount = {{ $terms->min_amount }};
+		var $loan_amount = {{ $terms->min_loan_amount }};
 		var $interest = {{ $interest }};
 		var $total = 0;
 		var $deductions = 0;
@@ -304,8 +304,8 @@
 		var $head_refno = "";
 		var $surety ="{{ $guarantor }}";
 		var $surety_refno = "";
-		var $loan_max = {{ $terms->max_amount }};
-		var $loan_min = {{ $terms->min_amount }};
+		var $loan_max = {{ $terms->max_loan_amount }};
+		var $loan_min = {{ $terms->min_loan_amount }};
 	@endif
 
 	
