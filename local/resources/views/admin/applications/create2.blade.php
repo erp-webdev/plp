@@ -48,7 +48,7 @@
 	<input type="number" id="id" name="id" ng-model="id" style="display: none">
 		<div class="row">
 			<div class="col-xs-12 col-sm-8 col-md-8">
-				<div class="col-md-8">
+				<div class="col-md-6">
 					<span>Type of Application</span> <br>
                     <div>
                         <label style="font-weight: normal">
@@ -65,6 +65,7 @@
                         <span> Balance</span>
                         <u>{{ number_format($balance, 2, '.', ',') }}</u>
                     </div>
+					<br>
                     <div>
                         <label style="font-weight: normal">
                             <input type="radio" name="special" value="0" ng-checked="type == 0" readonly> REGULAR
