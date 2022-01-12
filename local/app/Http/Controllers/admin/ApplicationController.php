@@ -71,7 +71,6 @@ class ApplicationController extends Controller
 
         // Employee Information
         $employee = Employee::current()->first();
-        dd($employee);
         // Loan Application Counts
         $records = Loan::employee()->notDenied()->count();
         // Loan Application Counts within the current year
