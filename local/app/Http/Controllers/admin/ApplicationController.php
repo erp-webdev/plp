@@ -163,7 +163,7 @@ class ApplicationController extends Controller
         else
             $guarantor = '';
 
-    	return view('admin.applications.create_2')
+    	return view('admin.applications.create2')
     	->withEmployee($employee)
     	->withRecords($records)
     	->withInterest($interest->value)
