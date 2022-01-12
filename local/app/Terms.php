@@ -12,8 +12,9 @@ class Terms extends Model
 
     public function scopeGetRankLimits($query, $employee)
     {
-		$rank = $employee->RankDesc;
-		$hire = $employee->HireDate;
+		dd($employee);
+		// $rank = $employee->RankDesc;
+		// $hire = $employee->HireDate;
 		/*
     	if(str_contains(strtolower($rank), 'rank')){
     		if(str_contains(strtolower($rank), 'file')){
