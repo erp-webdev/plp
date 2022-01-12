@@ -279,7 +279,7 @@
 		var $date = "{{ date('j F Y') }}";
 		var $loc = "{{ old('loc') }}";
 		var $term = {{ old('term_mos') }};
-		var $loan_amount = {{ old('loan_amount') }};
+		var $loan_amount = 0{{ old('loan_amount') }};
 		var $interest = {{ $interest }};
 		var $total = 0;
 		var $deductions = 0;
