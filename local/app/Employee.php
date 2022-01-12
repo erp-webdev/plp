@@ -20,7 +20,6 @@ class Employee extends Model
     public function scopeCurrent($scope)
     {
         $user = User::find(Auth::user()->id);
-        dd($user); 
         return $scope->where('EmpID', $user->employee_id)
                 ->where('DBNAME', $user->DBNAME);
     }
