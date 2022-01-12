@@ -11,6 +11,7 @@ use Session;
 use eFund\Log;
 use eFund\Loan;
 use eFund\Terms;
+use eFund\SepcialTerm;
 use eFund\GLimits;
 use eFund\Ledger;
 use eFund\Endorser;
@@ -124,7 +125,8 @@ class ApplicationController extends Controller
         // Count saved applications
         $saved = Loan::employee()->status(0)->count();
         if($saved > 0)
-            return redirect()->back()->withError('Cannot apply loan! Please submit or cancel other SAVED application first.');
+            return redirect()->back()
+                ->withError('Cannot apply loan! Please submit or cancel other SAVED application first.');
 
         // Employee Information
     	$employee = Employee::current()->first();
@@ -135,13 +137,16 @@ class ApplicationController extends Controller
         // Interest percentage
     	$interest = Preference::name('interest');
         // Employee Term Limits
-    	$terms = Terms::getRankLimits($employee->RankDesc);
+    	$terms = Terms::getRankLimits($employee);
+        // Special Loan limits
+        $special_loan = SpecialTerm::getRankLimits($employee);
         // Employee Standing balance
         $balance = $this->getStandingBalance();
         // Allowable # of months
         $months = 12;
         if($records_this_year > 0)
             $months = $this->utils->getTermMonths();
+            
         $allow_max = Preference::name('allow_over_max');
 
          $endorser = $this->getEndorser();
