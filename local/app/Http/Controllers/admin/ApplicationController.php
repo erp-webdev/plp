@@ -409,7 +409,10 @@ class ApplicationController extends Controller
                     ->where('id', '<>', $id)
                     ->first();
 
-        return $loan;
+        if(empty($loan))
+            return 0;
+
+        return $loan->loan_amount;
     }
 
     public function getStandingBalance($id  = 0)
