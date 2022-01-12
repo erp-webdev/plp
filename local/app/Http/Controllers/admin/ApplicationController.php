@@ -130,6 +130,7 @@ class ApplicationController extends Controller
 
         // Employee Information
     	$employee = Employee::current()->first();
+        echo 'emp'; exit;
         // Loan Application Counts
     	$records = Loan::employee()->notDenied()->count();
         // Loan Application Counts within the current year based on the application date
