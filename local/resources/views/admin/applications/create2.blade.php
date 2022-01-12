@@ -60,7 +60,7 @@
                             @endif
                         </label> <br>
                         <span>Previous loan amount:</span> 
-                        <u>{{ number_format($previous_loan->loan_amount, 2, '.', ',') }}</u>
+                        <u>{{ number_format($previous_loan->loan_amount or 0, 2, '.', ',') }}</u>
                         <br>
                         <span> Balance</span>
                         <u>{{ number_format($balance, 2, '.', ',') }}</u>
