@@ -17,9 +17,10 @@ class Loan extends Model
         $this->utils = new Utils();
     }
 
-    public function scopeEmployee($query)
+    public function scopeEmployee($query, $employee)
     {
-    	return $query->where('EmpID', Auth::user()->employee_id);
+    	return $query->where('EmpID', $employee->employee_id)
+            ->where('DBNAME', $employee->DBNAME);
     }
 
     public function scopeYearly($query)

@@ -122,18 +122,18 @@ class ApplicationController extends Controller
 
     public function create()
     {
+        // Employee Information
+    	$employee = Employee::current()->first();
         // Count saved applications
-        $saved = Loan::employee()->status(0)->count();
+        $saved = Loan::employee($employee)->status(0)->count();
         if($saved > 0)
             return redirect()->back()
                 ->withError('Cannot apply loan! Please submit or cancel other SAVED application first.');
 
-        // Employee Information
-    	$employee = Employee::current()->first();
         // Loan Application Counts
-    	$records = Loan::employee()->notDenied()->count();
+    	$records = Loan::employee($employee)->notDenied()->count();
         // Loan Application Counts within the current year based on the application date
-        $records_this_year = Loan::employee()->yearly()->notDenied()->count();
+        $records_this_year = Loan::employee($employee)->yearly()->notDenied()->count();
         // Interest percentage
     	$interest = Preference::name('interest');
         // Employee Term Limits
@@ -142,6 +142,8 @@ class ApplicationController extends Controller
         $special_loan = SpecialTerm::getRankLimits($employee);
         // Employee Standing balance
         $balance = $this->getStandingBalance();
+        // Previous loan application
+        $previous_loan = $this->getPreviousLoan();
         // Allowable # of months
         $months = 12;
         if($records_this_year > 0)
@@ -172,7 +174,8 @@ class ApplicationController extends Controller
         ->with('overMax', $allow_max->value)
         ->withEndorser($endorser)
         ->withGuarantor($guarantor)
-        ->withUtils(new Utils());
+        ->withUtils(new Utils())
+        ->withPreviousLoan($previous_loan);
     }
 
 
@@ -398,10 +401,21 @@ class ApplicationController extends Controller
         return $valid_signatories;
     }
 
+    public function getPreviousLoan($id  = 0)
+    {
+        $employee = Employee::current()->first();
+        $loan = Loan::current($employee)
+                    ->whereNotIn('status', [0,9])
+                    ->where('id', '<>', $id)
+                    ->first();
+
+        return $loan;
+    }
 
     public function getStandingBalance($id  = 0)
     {
-        $balance = Loan::where('EmpID', Auth::user()->employee_id)
+        $employee = Employee::current()->first();
+        $balance = Loan::current($employee)
                     ->whereNotIn('status', [0,9])
                     ->where('id', '<>', $id)
                     ->sum('balance');
