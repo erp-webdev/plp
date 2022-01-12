@@ -42,7 +42,7 @@
 		</div>
 	</div>
 	<input type="hidden" id="getEmployeeURL" value="{{ url('/getEmployee') }}">
-	<form class="form form-horizontal" action="{{ route('applications.store') }}" method="post" ">
+	<form class="form form-horizontal" action="{{ route('applications.store') }}" method="post" >
 	<input type="hidden" name="_token" value="{{ csrf_token() }}">
 	<input type="number" id="id" name="id" ng-model="id" style="display: none">
 		<div class="row">
