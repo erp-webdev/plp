@@ -97,7 +97,7 @@
 							<input name="loan_amount" type="number" class="form-control input-sm" name="loan_amount" ng-model="loan" required ng-change="computeTotal()" ng-keyup="computeTotal()" step="500" max="<?php if($overMax == 0) echo $terms->max_loan_amount; ?>">
 							<span class="input-group-addon">.00</span>
 						</div>
-						<span class="help-block">Min: {{ $terms->min_loan_loan_amount }} - Max: {{ $terms->max_loan_loan_amount }}</span>
+						<span class="help-block">Min: {{ $terms->min_loan_amount }} - Max: {{ $terms->max_loan_amount }}</span>
 					</div>
 				</div>
 				<div class="form-group">
