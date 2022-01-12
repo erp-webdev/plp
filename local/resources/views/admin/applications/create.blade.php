@@ -104,7 +104,7 @@
 					<span class="col-md-4">Interest </span>
 					<div class="col-md-8">
 						<div class="input-group">
-							<input type="text" class="form-control input-sm" ng-model="interest" name="interest" disabled>
+							<input type="text" class="form-control input-sm" ng-model="interest" name="interest" value="{{ $interest }}" disabled>
 							<span class="input-group-addon">%</span>
 						</div>
 					</div>
