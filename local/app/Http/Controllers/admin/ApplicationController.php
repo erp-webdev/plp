@@ -11,7 +11,7 @@ use Session;
 use eFund\Log;
 use eFund\Loan;
 use eFund\Terms;
-use eFund\SepcialTerm;
+use eFund\SpecialTerm;
 use eFund\GLimits;
 use eFund\Ledger;
 use eFund\Endorser;
