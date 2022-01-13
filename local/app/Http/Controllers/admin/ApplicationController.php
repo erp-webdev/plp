@@ -505,7 +505,7 @@ class ApplicationController extends Controller
         $emp = Employee::select('RankDesc')->current()->first();
         $terms = Terms::getRankLimits($emp);
 
-        if($amount < 1000)//$terms->min_amount)
+        if($amount < 1000)//$terms->min_loan_amount)
             return false;
         else
             return true;
@@ -517,7 +517,7 @@ class ApplicationController extends Controller
         $emp = Employee::select('RankDesc')->current()->first();
         $terms = Terms::getRankLimits($emp);
 
-        if($amount > $terms->min_amount)
+        if($amount > $terms->min_loan_amount)
             return true;
         else
             return false;
@@ -528,7 +528,7 @@ class ApplicationController extends Controller
         $emp = Employee::select('RankDesc')->current()->first();
         $terms = Terms::getRankLimits($emp);
 
-        if($amount > $terms->max_amount)
+        if($amount > $terms->max_loan_amount)
             return true;
         else
             return false;
@@ -592,7 +592,7 @@ class ApplicationController extends Controller
         if($totalGuaranteedAmount < $gAmountLimit->Amount){
             // Total guaranteed amount of active accounts
             // is less than the maximum limit of a guarantor's rank
-            if($gAmountLimit->Amount - $totalGuaranteedAmount < $amount - $terms->min_amount){
+            if($gAmountLimit->Amount - $totalGuaranteedAmount < $amount - $terms->min_loan_amount){
                 // Total guaranteed amount is not sufficient to 
                 // guarantee min amount of the loan application.
                 $valid = false;
