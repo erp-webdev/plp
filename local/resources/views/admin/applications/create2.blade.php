@@ -47,7 +47,7 @@
 	<input type="hidden" name="_token" value="{{ csrf_token() }}">
 	<input type="number" id="id" name="id" ng-model="id" style="display: none">
 		<div class="row">
-			<div class="col-xs-12 col-sm-8 col-md-8">
+			<div class="col-xs-12 col-sm-6 col-md-6">
 				<div class="col-md-6">
 					<span>Type of Application</span> <br>
                     <div>
@@ -93,7 +93,7 @@
 			</div>
 		</div>
 		<div class="row" style="border-top: 1px solid #ccc">
-			<div class="col-xs-12 col-sm-8 col-md-8">
+			<div class="col-xs-12 col-sm-6 col-md-6">
 				<h4 href="#my_info">Employee Information </h4>
 				<div id="my_info">
 						<h4></h4>
