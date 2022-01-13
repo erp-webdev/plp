@@ -228,6 +228,7 @@ class ApplicationController extends Controller
                 $loan->total = $this->utils->getTotalLoan($request->loan_amount, $interest->value, $request->term_mos);
                 $loan->deductions = $this->utils->computeDeductions($request->term_mos, $request->loan_amount);
                 $loan->status = $this->utils->setStatus();
+                $loan->DBNAME = $employee->DBNAME;
                 $loan->save();
 
                 // Create Endorser
@@ -452,7 +453,7 @@ class ApplicationController extends Controller
     public function validateType($type, $id = 0)
     {
         // Loan Application Counts
-        $loans = Loan::employee()->notDenied()->count();
+        $loans = Loan::current()->notDenied()->count();
 
         if($type == 0){
             if($id == 0 && $loans == 0){

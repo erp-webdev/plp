@@ -94,7 +94,7 @@
 		</div>
 		<div class="row" style="border-top: 1px solid #ccc">
 			<div class="col-xs-12 col-sm-8 col-md-8">
-				<h4 href="#my_info">Employee Information <i class="fa fa-caret-down"></i></h4>
+				<h4 href="#my_info">Employee Information </h4>
 				<div id="my_info">
 						<h4></h4>
 						<div class="form-group" >
