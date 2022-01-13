@@ -141,7 +141,7 @@
 						</div>
 				</div>
 			</div>
-			<div class="col-md-8" >
+			<div class="col-md-6" >
 				<h4>Loan Information</h4>
 				<div class="form-group" >
 					<span class="col-md-4">Terms*</span>
@@ -181,7 +181,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="col-md-8">
+			<div class="col-md-6">
 				<!-- Deductions Table -->
 				<h4>Deductions</h4>
 				<div class="form-group">
