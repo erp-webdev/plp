@@ -453,7 +453,8 @@ class ApplicationController extends Controller
     public function validateType($type, $id = 0)
     {
         // Loan Application Counts
-        $loans = Loan::current()->notDenied()->count();
+        $employee = Employee::current()->first();
+        $loans = Loan::employee($employee)->notDenied()->count();
 
         if($type == 0){
             if($id == 0 && $loans == 0){
