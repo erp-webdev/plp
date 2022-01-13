@@ -526,7 +526,7 @@ class ApplicationController extends Controller
     public function validateMaxAmount($amount)
     {
         $emp = Employee::select('RankDesc')->current()->first();
-        $terms = Terms::getRankLimits($emp->RankDesc);
+        $terms = Terms::getRankLimits($emp);
 
         if($amount > $terms->max_amount)
             return true;
