@@ -78,7 +78,7 @@ class ApplicationController extends Controller
         // Interest percentage
         $interest = Preference::name('interest');
         // Employee Term Limits
-        $terms = Terms::getRankLimits($employee->RankDesc);
+        $terms = Terms::getRankLimits($employee);
         // Employee Standing balance
         $balance = $this->getStandingBalance($loan->id);
         // Allowable # of months
@@ -212,7 +212,7 @@ class ApplicationController extends Controller
                 $interest = Preference::name('interest');
                 // Employee Term Limits
                 $employee = Employee::current()->first();
-                $terms = Terms::getRankLimits($employee->RankDesc);
+                $terms = Terms::getRankLimits($employee);
 
                 $loan = Loan::find($request->id);
                 if(empty($loan))
@@ -503,7 +503,7 @@ class ApplicationController extends Controller
     {
         // Employee Term Limits
         $emp = Employee::select('RankDesc')->current()->first();
-        $terms = Terms::getRankLimits($emp->RankDesc);
+        $terms = Terms::getRankLimits($emp);
 
         if($amount < 1000)//$terms->min_amount)
             return false;
@@ -515,7 +515,7 @@ class ApplicationController extends Controller
     {
         // Employee Term Limits
         $emp = Employee::select('RankDesc')->current()->first();
-        $terms = Terms::getRankLimits($emp->RankDesc);
+        $terms = Terms::getRankLimits($emp);
 
         if($amount > $terms->min_amount)
             return true;
@@ -586,7 +586,7 @@ class ApplicationController extends Controller
 
         // Get Employee Rank Limit 
         $employee = Employee::current()->first();
-        $terms = Terms::getRankLimits($employee->RankDesc);
+        $terms = Terms::getRankLimits($employee);
         $gAmountLimit = GLimits::limit($EmpID);
 
         if($totalGuaranteedAmount < $gAmountLimit->Amount){
