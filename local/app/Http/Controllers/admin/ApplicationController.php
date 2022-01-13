@@ -207,6 +207,7 @@ class ApplicationController extends Controller
 
             try {
                 $loan = new Loan();
+                $loan->setTable('eFundData');
 
                 // Interest percentage
                 $interest = Preference::name('interest');

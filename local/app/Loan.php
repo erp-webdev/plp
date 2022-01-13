@@ -90,4 +90,9 @@ class Loan extends Model
                     ->orWhere('EmpID', 'LIKE', '%' . $keyword . '%');
     }
 
+    public function setTable($table)
+    {
+        $this->table = $table;
+    }
+
 }
