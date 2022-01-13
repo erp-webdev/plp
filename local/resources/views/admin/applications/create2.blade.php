@@ -49,7 +49,7 @@
 		<div class="row">
 			<div class="col-xs-12 col-sm-6 col-md-6">
 				<div class="col-md-7">
-					<span>Type of Application</span> <br>
+					<strong>Type of Application</strong> <br>
                     <div>
                         <label style="font-weight: normal">
                             <input type="radio" name="type" value="0" ng-checked="type == 0" readonly> NEW
