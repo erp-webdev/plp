@@ -47,9 +47,9 @@ class ApplicationController extends Controller
             $search = $_GET['search'];
 
         $employee = Employee::current()->first();
-        $loans = Loan::orderBy('ctrl_no', 'desc')
-                    ->employee($employee)
+        $loans = Loan::employee($employee)
                     ->search($search)
+                    ->orderBy('ctrl_no', 'desc')
                     ->paginate($show);
 
     	return view('admin.applications.index')
