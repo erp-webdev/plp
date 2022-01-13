@@ -430,7 +430,9 @@ class ApplicationController extends Controller
     public function validateAvailment()
     {
         // Loan Application Counts within the current year
-        $loans = Loan::employee()->yearly()->notDenied()->count();
+        $employee = Employee::current()->first();
+
+        $loans = Loan::employee($employee)->yearly()->notDenied()->count();
         $max_availment = Preference::name('max_availment');
 
         if($loans >= $max_availment->value)
