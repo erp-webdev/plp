@@ -77,12 +77,12 @@
 				</div>
 				<div class="col-md-6">
 					<div class="form-group">
-						<span class="col-md-4">Date</span	>
-						<div class="col-md-8"><span ng-bind="date | date: 'shortDate'"></span></div>
+						<span class="col-md-6">Date</span	>
+						<div class="col-md-6"><span ng-bind="date | date: 'shortDate'"></span></div>
 					</div>
 					<div class="form-group">
-						<span class="col-md-4">Local / Direct Line*</span>
-						<div class="col-md-8"><input type="text" name="loc" ng-model="loc" class="form-control input-sm" placeholder="loc. 322" required></div>
+						<span class="col-md-6">Local / Direct Line*</span>
+						<div class="col-md-6"><input type="text" name="loc" ng-model="loc" class="form-control input-sm" placeholder="loc. 322" required></div>
 					</div>
 				</div>
 			</div>
