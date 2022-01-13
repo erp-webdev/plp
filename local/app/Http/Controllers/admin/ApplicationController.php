@@ -46,8 +46,9 @@ class ApplicationController extends Controller
         if(isset($_GET['search']))
             $search = $_GET['search'];
 
+        $employee = Employee::current()->first();
         $loans = Loan::orderBy('ctrl_no', 'desc')
-                    ->employee()
+                    ->employee($employee)
                     ->search($search)
                     ->paginate($show);
 
