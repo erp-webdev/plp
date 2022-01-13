@@ -207,7 +207,6 @@ class ApplicationController extends Controller
 
             try {
                 $loan = new Loan();
-                $loan->setTable('eFundData');
 
                 // Interest percentage
                 $interest = Preference::name('interest');
@@ -219,6 +218,8 @@ class ApplicationController extends Controller
                 if(empty($loan))
                     $loan = new Loan();
 
+                $loan->setTable('eFundData');
+                
                 $loan->ctrl_no = '0000';
                 $loan->type = $request->type;
                 $loan->EmpID = Auth::user()->employee_id;
