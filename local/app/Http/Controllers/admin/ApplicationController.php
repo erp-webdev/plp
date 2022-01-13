@@ -479,7 +479,8 @@ class ApplicationController extends Controller
 
     public function validateTerms($terms)
     {
-        $records_this_year = Loan::employee()->yearly()->notDenied()->count();
+        $employee = Employee::current()->first();
+        $records_this_year = Loan::employee($employee)->yearly()->notDenied()->count();
         $allowedMonths = $this->utils->getTermMonths();
         if($records_this_year > 0)
             if($terms > $allowedMonths)
