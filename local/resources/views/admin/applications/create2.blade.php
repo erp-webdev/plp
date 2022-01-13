@@ -93,70 +93,9 @@
 			</div>
 		</div>
 		<div class="row" style="border-top: 1px solid #ccc">
-			<div class="col-md-4" >
-				<h4>Loan Information</h4>
-				<div class="form-group" >
-					<span class="col-md-4">Terms*</span>
-					<div class="col-md-8">
-						<div class="input-group">
-							<input type="number" name="term_mos" min="1" max="{{ $months }}" class="form-control input-sm" ng-model="mos" required>
-							<span class="input-group-addon">Month(s)</span>
-						</div>
-					</div>
-				</div>
-				<div class="form-group" id="loan_amount">
-					<span class="col-md-4">Loan Amount</span>
-					<div class="col-md-8">
-						<div class="input-group">
-							<span class="input-group-addon">Php</span>
-							<input name="loan_amount" type="number" class="form-control input-sm" name="loan_amount" ng-model="loan" required ng-change="computeTotal()" ng-keyup="computeTotal()" step="500" max="<?php if($overMax == 0) echo $terms->max_loan_amount; ?>">
-							<span class="input-group-addon">.00</span>
-						</div>
-						<span class="help-block">Min: {{ $terms->min_loan_amount }} - Max: {{ $terms->max_loan_amount }}</span>
-					</div>
-				</div>
-				<div class="form-group">
-					<span class="col-md-4">Interest </span>
-					<div class="col-md-8">
-						<div class="input-group">
-							<input type="text" class="form-control input-sm" ng-model="interest" name="interest" value="{{ $interest }}" disabled>
-							<span class="input-group-addon">%</span>
-						</div>
-					</div>
-				</div>
-				<div class="form-group">
-					<span class="col-md-4">Total </span>
-					<div class="col-md-8">
-						<div class="input-group">
-							<span style="font-size: 14px; font-weight: bold" ng-bind="total | currency: 'Php '" ng-init="computeTotal()"></span>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="col-md-4">
-				<!-- Deductions Table -->
-				<h4>Deductions</h4>
-				<div class="form-group">
-					<span class="col-md-8"># of payments to be made*</span>
-					<div class="col-md-4">
-						<span ng-bind="paymentCtr"></span>
-					</div>
-				</div>
-				<div class="form-group">
-					<span class="col-md-8">Every payroll deductions*</span>
-					<div class="col-md-4">
-						<span ng-bind="deductions | currency: 'Php '"></span>
-					</div>
-				</div>
-				<div class="alert alert-info">
-					*Terms applied are subject to changes by the eFund Custodian, 
-					thus the *no. of payments and *payroll deductions may change as well. <br>
-				</div>
-			</div>
-			<div class="col-xs-12 col-sm-4 col-md-4">
-				
-				<h4 data-toggle="collapse" data-parent="#accordion" href="#my_info">Employee Information <i class="fa fa-caret-down"></i></h4>
-				<div id="my_info" class="panel-collapse collapse">
+			<div class="col-xs-12 col-sm-8 col-md-8">
+				<h4 href="#my_info">Employee Information <i class="fa fa-caret-down"></i></h4>
+				<div id="my_info">
 						<h4></h4>
 						<div class="form-group" >
 							<span class="col-md-4">Employee ID</span>
@@ -202,6 +141,67 @@
 						</div>
 				</div>
 			</div>
+			<div class="col-md-8" >
+				<h4>Loan Information</h4>
+				<div class="form-group" >
+					<span class="col-md-4">Terms*</span>
+					<div class="col-md-8">
+						<div class="input-group">
+							<input type="number" name="term_mos" min="1" max="{{ $months }}" class="form-control input-sm" ng-model="mos" required>
+							<span class="input-group-addon">Month(s)</span>
+						</div>
+					</div>
+				</div>
+				<div class="form-group" id="loan_amount">
+					<span class="col-md-4">Loan Amount</span>
+					<div class="col-md-8">
+						<div class="input-group">
+							<span class="input-group-addon">Php</span>
+							<input name="loan_amount" type="number" class="form-control input-sm" name="loan_amount" ng-model="loan" required ng-change="computeTotal()" ng-keyup="computeTotal()" step="500" max="<?php if($overMax == 0) echo $terms->max_loan_amount; ?>">
+							<span class="input-group-addon">.00</span>
+						</div>
+						<span class="help-block">You are qualified up to {{ number_format($terms->max_loan_amount, 2, '.', ',') }}</span>
+					</div>
+				</div>
+				<div class="form-group">
+					<span class="col-md-4">Interest </span>
+					<div class="col-md-8">
+						<div class="input-group">
+							<input type="text" class="form-control input-sm" ng-model="interest" name="interest" value="{{ $interest }}" disabled>
+							<span class="input-group-addon">%</span>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<span class="col-md-4">Total </span>
+					<div class="col-md-8">
+						<div class="input-group">
+							<span style="font-size: 14px; font-weight: bold" ng-bind="total | currency: 'Php '" ng-init="computeTotal()"></span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-8">
+				<!-- Deductions Table -->
+				<h4>Deductions</h4>
+				<div class="form-group">
+					<span class="col-md-8"># of payments to be made*</span>
+					<div class="col-md-4">
+						<span ng-bind="paymentCtr"></span>
+					</div>
+				</div>
+				<div class="form-group">
+					<span class="col-md-8">Every payroll deductions*</span>
+					<div class="col-md-4">
+						<span ng-bind="deductions | currency: 'Php '"></span>
+					</div>
+				</div>
+				<div class="alert alert-info">
+					*Terms applied are subject to changes by the eFund Custodian, 
+					thus the *no. of payments and *payroll deductions may change as well. <br>
+				</div>
+			</div>
+			
 		</div>
 		<div class="row" style="border-top: 1px solid #ccc">
 			<div class="col-md-4">
