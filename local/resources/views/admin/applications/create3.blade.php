@@ -51,7 +51,7 @@
         <table class="table">
             <tbody>
                 <tr>
-                    <th colspan="2"><h3>Employee Information</h3></th>
+                    <th colspan="2"><h3>EMPLOYEE INFORMATION</h3></th>
                 </tr>
                 <tr>
                     <th>NAME</th>
