@@ -1,27 +1,12 @@
 @extends('admin.layouts.app')
 
 @section('content')
-	<div id="new-loan-modal" class="modal">
-		<div class="modal-dialog modal-lg">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h2 class="modal-title">New Loan Application</h2>
-				</div>
-				<div class="modal-body">
-					
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-small btn-success">Submit</button>
-				</div>
-			</div>
-		</div>
-	</div>
+
 	<div class="row">
 		<div class="col-xs-12 col-sm-12 col-md-12">
 			<h1>My Loans</h1>
 			<a class="btn btn-sm btn-default" href="{{ route('applications.index') }}"><i class="fa fa-refresh"></i> Refresh</a>
-			<a href="{{ route('applications.create') }}" class="btn btn-sm btn-success">Apply Loan</a>
-			<button data-toggle="modal" data-target="#new-loan-modal" class="btn btn-sm btn-primary">New Loan</button>
+			<a href="{{ route('applications.create') }}" class="btn btn-sm btn-primary">New Loan</a>
 			<hr>
 			@if ($message = Session::get('success'))
                 <div class="col-xs-12 col-sm-12 col-md-12">
