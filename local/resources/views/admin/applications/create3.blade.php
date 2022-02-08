@@ -10,7 +10,11 @@
                 </tr>
                 <tr>
                     <td><input id="type" name="type" type="radio"><label for="">NEW</label> </td>
-                    <td><input id="type" name="type" type="radio"><label for="">RE-AVAILMENT</label> </td>
+                    <td>
+                        <input id="type" name="type" type="radio"><label for="">RE-AVAILMENT</label>    
+                        <br> <span>Previous loan amount: </span>
+                        <br> <span>Balance: </span>
+                    </td>
                 </tr>
             </tbody>
         </table>
