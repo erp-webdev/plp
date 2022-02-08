@@ -9,8 +9,8 @@
                     <td colspan="2">TYPE OF APPLICATION</td>
                 </tr>
                 <tr>
-                    <td><input id="type" name="type" type="radio">New</td>
-                    <td><input id="type" name="type" type="radio">Re-availment</td>
+                    <td><input id="type" name="type" type="radio"><label for="">NEW</label> </td>
+                    <td><input id="type" name="type" type="radio"><label for="">RE-AVAILMENT</label> </td>
                 </tr>
             </tbody>
         </table>
