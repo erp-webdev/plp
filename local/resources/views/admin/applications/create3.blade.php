@@ -6,12 +6,12 @@
         <table class="table">
             <tbody>
                 <tr>
-                    <td colspan="2"><h3>TYPE OF APPLICATION</h3></td>
+                    <td colspan="2"><h3>APPLICATION FORM</h3></td>
                 </tr>
                 <tr>
-                    <td><input id="type" name="type" type="radio"><label for=""> NEW</label> </td>
+                    <td><label for=""><input id="type" name="type" type="radio"> NEW</label> </td>
                     <td>
-                        <input id="type" name="type" type="radio"><label for=""> RE-AVAILMENT</label>    
+                    <label for=""><input id="type" name="type" type="radio"> RE-AVAILMENT</label>    
                         <br> <span>Previous loan amount: </span>
                         <br> <span>Balance: </span>
                     </td>
