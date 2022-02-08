@@ -8,8 +8,8 @@
                 <td colspan="2">TYPE OF APPLICATION</td>
             </tr>
             <tr>
-                <td><input type="checkbox">New</td>
-                <td><input type="checkbox">Re-availment</td>
+                <td><input type="radio">New</td>
+                <td><input type="radio">Re-availment</td>
             </tr>
         </tbody>
     </table>
