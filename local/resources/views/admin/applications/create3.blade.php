@@ -21,7 +21,7 @@
                     <td><label for=""><input type="radio" name="special"> SPECIAL</label></td>
                 </tr>
                 <tr>
-                    <td>Local / Direct Line</td>
+                    <th>Local / Direct Line</th>
                     <td><input type="text" name="" class="form-control"></td>
                 </tr>
             </tbody>
