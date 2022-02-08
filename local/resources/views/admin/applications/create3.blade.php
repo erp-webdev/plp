@@ -33,7 +33,7 @@
                     <td><input type="text" class="form-control"></td>
                 </tr>
                 <tr>
-                    <th>Endorsed By</th>
+                    <th>ENDORSED BY</th>
                     <td><input type="text" class="form-control"></td>
                 </tr>
                 <tr>
