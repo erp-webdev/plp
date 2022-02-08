@@ -20,6 +20,10 @@
                     <td><label for=""><input type="radio" name="special"> REGULAR</label></td>
                     <td><label for=""><input type="radio" name="special"> SPECIAL</label></td>
                 </tr>
+                <tr>
+                    <td>Date: </td>
+                    <td>Local / Direct Line</td>
+                </tr>
             </tbody>
         </table>
     </div>
