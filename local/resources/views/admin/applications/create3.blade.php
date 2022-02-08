@@ -24,6 +24,15 @@
                     <th>Local / Direct Line</th>
                     <td><input type="text" name="" class="form-control"></td>
                 </tr>
+                <tr>
+                    <th>LOAN AMOUNT</th>
+                    <td><input type="text" class="form-control"></td>
+                </tr>
+                <tr>
+                    <th>Purpose</th>
+                    <td><input type="text" class="form-control"></td>
+                </tr>
+                
             </tbody>
         </table>
     </div>
