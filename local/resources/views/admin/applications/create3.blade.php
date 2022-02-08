@@ -8,10 +8,8 @@
                 <td colspan="2">TYPE OF APPLICATION</td>
             </tr>
             <tr>
-                <td colspan="2">
-                    <input type="radio">New
-                    <input type="radio">Re-availment
-                </td>
+                <td><input id="type" type="radio">New</td>
+                <td><input id="type" type="radio">Re-availment</td>
             </tr>
         </tbody>
     </table>
