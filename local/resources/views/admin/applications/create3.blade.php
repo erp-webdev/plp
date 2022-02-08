@@ -32,6 +32,14 @@
                     <th>PURPOSE</th>
                     <td><input type="text" class="form-control"></td>
                 </tr>
+                <tr>
+                    <th>Endorsed By</th>
+                    <td><input type="text" class="form-control"></td>
+                </tr>
+                <tr>
+                    <th>SURETY/CO-BORROWER</th>
+                    <td><input type="text" class="form-control"></td>
+                </tr>
 
             </tbody>
         </table>
