@@ -40,9 +40,15 @@
                     <th>SURETY/CO-BORROWER</th>
                     <td><input type="text" class="form-control"></td>
                 </tr>
-
+                <tr>
+                    <td colspan="2"><button type="button" class="btn btn-sm btn-primary">Submit Loan Application</button></td>
+                </tr>
             </tbody>
         </table>
+    </div>
+
+    <div class="col-md-6 col-sm-6">
+        
     </div>
 </div>
 
