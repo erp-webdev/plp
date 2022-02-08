@@ -21,8 +21,8 @@
                     <td><label for=""><input type="radio" name="special"> SPECIAL</label></td>
                 </tr>
                 <tr>
-                    <td>Date: </td>
                     <td>Local / Direct Line</td>
+                    <td><input type="text" name="" class="form-control"></td>
                 </tr>
             </tbody>
         </table>
