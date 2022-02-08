@@ -103,7 +103,7 @@ class ApplicationController extends Controller
 
         if($loan->status < 1)
         {
-        	return view('admin.applications.create3')->withLoan($loan)
+        	return view('admin.applications.create')->withLoan($loan)
                     ->withEmployee($employee)
                     ->withRecords($records)
                     ->withInterest($interest->value)
@@ -164,7 +164,7 @@ class ApplicationController extends Controller
         else
             $guarantor = '';
 
-    	return view('admin.applications.create2')
+    	return view('admin.applications.create3')
     	->withEmployee($employee)
     	->withRecords($records)
     	->withInterest($interest->value)
