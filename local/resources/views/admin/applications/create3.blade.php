@@ -48,7 +48,34 @@
     </div>
 
     <div class="col-md-6 col-sm-6">
-        
+        <table class="table">
+            <tbody>
+                <tr>
+                    <th>NAME</th>
+                    <td>{{ $employee->FullName }}</td>
+                </tr>
+                <tr>
+                    <th>EMPLOYEE NO.</th>
+                    <td>{{ $employee->EmpID }}</td>
+                </tr>
+                <tr>
+                    <th>POSITION</th>
+                    <td>{{ $employee->PositionDesc }}</td>
+                </tr>
+                <tr>
+                    <th>DEPARTMENT</th>
+                    <td>{{ $employee->DeptDesc }}</td>
+                </tr>
+                <tr>
+                    <th>DATE HIRED</th>
+                    <td>{{ date('j F Y', strtotime($employee->HireDate)) }}</td>
+                </tr>
+                <tr>
+                    <th>REGULARIZATION DATE</th>
+                    <td>{{ date('j F Y', strtotime($employee->PermanencyDate)) }}</td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 </div>
 
