@@ -41,7 +41,7 @@
                     <td><input type="text" class="form-control"></td>
                 </tr>
                 <tr>
-                    <td colspan="2"><button type="button" class="btn btn-sm btn-primary">Submit Loan Application</button></td>
+                    <td colspan="2"><button type="button" class="btn btn-primary">Submit Loan Application</button></td>
                 </tr>
             </tbody>
         </table>
