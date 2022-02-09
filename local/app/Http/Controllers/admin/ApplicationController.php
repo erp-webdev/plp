@@ -180,14 +180,11 @@ class ApplicationController extends Controller
     }
 
 
-    public function getEmployee($EmpID = '')
+    public function getEmployee(Request $request)
     {
-        if(empty($EmpID)){
-            $EmpID =  $_GET['EmpID'];
-        }
 
-        $employee = Employee::select('FullName')
-                    ->where('EmpID', $EmpID)
+        $employee = Employee::where('FullName', 'LIKE', '%' . $request->search . '%')
+                    ->orWhere('EmpID', 'LIKE', '%' . $request->search . '%')
                     ->where('Active', 1)
                     ->first();
 
