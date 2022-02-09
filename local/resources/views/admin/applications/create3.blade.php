@@ -5,13 +5,20 @@
         <div class="modal-content">
             <div class="modal-header">
                 Search Employee
+                <span class="pull-right">
+                    <input type="text" class="form-control" id="search">
+                </span>
             </div>
             <div class="modal-body">
-                <table class="table">
-                    <tr>
-                        <th>EmpID</th>
-                        <th>Name</th>
-                    </tr>
+                <table id="search_employee_table" class="table">
+                    <thead>
+                        <tr>
+                            <th>EmpID</th>
+                            <th>Name</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
                 </table>
             </div>
         </div>
