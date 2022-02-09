@@ -46,7 +46,7 @@
                                 <input type="text" class="form-control" name="endorsed_by" 
                                 value="{{ !empty($endorser) ? $endorser->SIGNATORYID1 : '' }}">
                                 <span class="input-group-btn">
-                                    <button class="btn btn-default"><i class="fa fa-search"></i></button>
+                                    <button class="btn btn-default"><i class="fa fa-search"></i> te</button>
                                 </span>    
                             </div>
                             <input type="hidden" class="form-control" name="endorsed_dbname" 
