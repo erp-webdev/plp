@@ -157,7 +157,7 @@
                         "<tr>" +
                             "<td>" + valueOfElement['EmpID'] + "</td>" +
                             "<td>" + valueOfElement['FullName'] + "</td>" +
-                        "</tr>";
+                        "</tr>"
                      );
                 });                 
             }
