@@ -1,5 +1,22 @@
 @extends('admin.layouts.app')
 @section('content')
+<div class="modal fade-in">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                Search Employee
+            </div>
+            <div class="modal-body">
+                <table>
+                    <tr>
+                        <th>EmpID</th>
+                        <th>Name</th>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
 <form class="form form-horizontal" action="{{ route('applications.store2') }}" method="post" >
 <input type="hidden" name="_token" value="{{ csrf_token() }}">
     <div class="container-fluid">
@@ -70,7 +87,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td colspan="2" class=""><button type="button" class="btn btn-primary pull-right">Submit Loan Application</button></td>
+                        <td colspan="2" class=""><button type="submit" name="continue" class="btn btn-primary pull-right">Continue</button></td>
                     </tr>
                 </tbody>
             </table>
