@@ -106,6 +106,10 @@
                         <th>REGULARIZATION DATE</th>
                         <td>{{ date('j F Y', strtotime($employee->PermanencyDate)) }}</td>
                     </tr>
+                    <tr>
+                        <th>No. of Years in the Company</th>
+                        <td>{{  }}</td>
+                    </tr>
                 </tbody>
             </table>
         </div>
