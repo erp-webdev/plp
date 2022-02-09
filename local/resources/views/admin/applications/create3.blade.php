@@ -10,15 +10,15 @@
                         <td colspan="2"><h3>APPLICATION FORM</h3></td>
                     </tr>
                     <tr>
-                        <td><label for=""><input id="type" name="type" type="radio" value="0" required> NEW</label> </td>
+                        <td><label for=""><input id="type" name="type" type="radio" value="0" {{ $records == 0 ? 'selected' : '' }} required> NEW</label> </td>
                         <td>
-                        <label for=""><input id="type" name="type" type="radio" value="1" required> RE-AVAILMENT</label>    
+                        <label for=""><input id="type" name="type" type="radio" value="1" {{ $records > 0 ? 'selected' : '' }} required> RE-AVAILMENT</label>    
                             <br> <span>Previous loan amount: {{ number_format($previous_loan, 2, '.', ',') }}</span>
                             <br> <span>Balance: {{ number_format($balance, 2, '.', ',') }}</span>
                         </td>
                     </tr>
                     <tr>
-                        <td><label for=""><input type="radio" name="special" value="0" required> REGULAR</label></td>
+                        <td><label for=""><input type="radio" name="special" value="0" selected required> REGULAR</label></td>
                         <td><label for=""><input type="radio" name="special" value="1" required> SPECIAL</label></td>
                     </tr>
                     <tr>
