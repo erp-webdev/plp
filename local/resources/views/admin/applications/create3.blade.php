@@ -152,6 +152,7 @@
             data: {search: $('#search').val() },
             success: function (response) {
                 $('#search_employee_table tbody').html('');
+
                 $.each(response, function (indexInArray, valueOfElement) { 
                      $('#search_employee_table tbody').append(
                         "<tr>" +

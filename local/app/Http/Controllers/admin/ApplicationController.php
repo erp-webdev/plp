@@ -186,7 +186,7 @@ class ApplicationController extends Controller
         $employee = Employee::where('FullName', 'LIKE', '%' . $request->search . '%')
                     ->orWhere('EmpID', 'LIKE', '%' . $request->search . '%')
                     ->where('Active', 1)
-                    ->first();
+                    ->get();
 
         return $employee;
     }
