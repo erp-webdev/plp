@@ -73,7 +73,7 @@
                         <td>
                             <div class="input-group">
                                 <input type="text" class="form-control" id="endorsed_by" name="endorsed_by" 
-                                value="{{ !empty($endorser) ? $endorser->SIGNATORYID1 : '' }}">
+                                value="{{ !empty($endorser) ? $endorser->SIGNATORYID1 : '' }}" readonly>
                                 <span class="input-group-btn">
                                     <a class="btn btn-default" data-toggle="modal" data-target="#search_employee" onclick="search_input = 'endorsed'"><i class="fa fa-search"></i> Search</a>
                                 </span>    
@@ -88,7 +88,7 @@
                         <td>
                             <div class="input-group">
                                 <input type="text" class="form-control" id="guarantor_by" name="guarantor_by" 
-                                value="{{ !empty($guarantor) ? $guarantor->SIGNATORYID1 : '' }}">
+                                value="{{ !empty($guarantor) ? $guarantor->SIGNATORYID1 : '' }}" readonly>
                                 <span class="input-group-btn">
                                     <a class="btn btn-default" data-toggle="modal" data-target="#search_employee" onclick="search_input = 'guarantor'"><i class="fa fa-search"></i> Search</a>
                                 </span>    
@@ -167,7 +167,7 @@
                     var db = item['DBNAME'];
 
                     $('#search_employee_table tbody').append(
-                    '<tr onclick="setApprover(''' + empid + ''',''' + name + ''', '''+ db + ''')">' +
+                    '<tr onclick="setApprover()">' +
                         "<td>" + item['EmpID'] + "</td>" +
                         "<td>" + item['FullName'] + "</td>" +
                     "</tr>"
