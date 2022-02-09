@@ -6,7 +6,12 @@
             <div class="modal-header">
                 Search Employee
                 <span class="pull-right">
-                    <input type="text" class="form-control" id="search" placeholder="Search..." class="form-control">
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="search" placeholder="Search..." class="form-control">
+                        <span class="input-group-btn">
+                            <button id="butotn" class="btn btn-default"><i class="fa fa-search"></i></button>
+                        </span>
+                    </div>
                 </span>
             </div>
             <div class="modal-body">
