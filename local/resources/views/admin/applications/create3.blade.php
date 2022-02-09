@@ -7,7 +7,7 @@
                 Search Employee
             </div>
             <div class="modal-body">
-                <table>
+                <table class="table">
                     <tr>
                         <th>EmpID</th>
                         <th>Name</th>
