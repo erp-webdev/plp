@@ -191,10 +191,7 @@ class ApplicationController extends Controller
                     ->where('Active', 1)
                     ->first();
 
-        if(!empty($employee))
-            return $employee->FullName;
-        else 
-            return '';
+        return $employee;
     }
 
     public function store(Request $request)

@@ -7,9 +7,9 @@
                 Search Employee
                 <span class="">
                     <div class="input-group">
-                        <input type="text" class="form-control" id="search" placeholder="Search..." class="form-control">
+                        <input type="text" class="form-control" id="search" placeholder="Search..." autocomplete="off" class="form-control">
                         <span class="input-group-btn">
-                            <button id="butotn" class="btn btn-default"><i class="fa fa-search"></i> Search</button>
+                            <button id="butotn" onclick="search()" class="btn btn-default"><i class="fa fa-search"></i> Search</button>
                         </span>
                     </div>
                 </span>
@@ -144,4 +144,26 @@
         </div>
     </div>
 </form>
+@endsection
+@section('scripts')
+<script>
+    function search(){
+        $.ajax({
+            type: "get",
+            url: "url",
+            data: {search: $('#search').val() },
+            success: function (response) {
+                $('#search_employee_table tbody').html('');
+                $.each(response, function (indexInArray, valueOfElement) { 
+                     $('#search_employee_table tbody').append(
+                        "<tr>" +
+                            "<td>" + valueOfElement['EmpID'] + "</td>" +
+                            "<td>" + valueOfElement['FullName'] + "</td>" +
+                        "</tr>";
+                     );
+                });                 
+            }
+        });
+    }
+</script>
 @endsection
