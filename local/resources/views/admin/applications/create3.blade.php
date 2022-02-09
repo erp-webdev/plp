@@ -108,7 +108,7 @@
                     </tr>
                     <tr>
                         <th>No. of Years in the Company</th>
-                        <td>{{  }}</td>
+                        <td>{{ $employee->tenure  }}</td>
                     </tr>
                 </tbody>
             </table>
