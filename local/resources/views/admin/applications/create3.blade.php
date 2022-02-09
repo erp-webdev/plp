@@ -5,7 +5,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 Search Employee
-                <span class="pull-right">
+                <span class="">
                     <div class="input-group">
                         <input type="text" class="form-control" id="search" placeholder="Search..." class="form-control">
                         <span class="input-group-btn">
