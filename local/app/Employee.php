@@ -86,7 +86,7 @@ class Employee extends Model
         $month1 = date('m', $ts1);
         $month2 = date('m', $ts2);
 
-        // years since hire date
-        return round(((($year2 - $year1) * 12) + ($month2 - $month1)) / 12, 2);
+        // months since hire date
+        return (($year2 - $year1) * 12) + ($month2 - $month1);
     }
 }

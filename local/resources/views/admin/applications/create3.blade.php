@@ -108,7 +108,7 @@
                     </tr>
                     <tr>
                         <th>No. of Years in the Company</th>
-                        <td>{{ $employee->tenure  }}</td>
+                        <td>{{ (int)($employee->tenure / 12) }} years, {{ $employee->tenure%12 }} months</td>
                     </tr>
                 </tbody>
             </table>
