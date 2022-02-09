@@ -90,7 +90,7 @@
                                 <input type="text" class="form-control" id="guarantor_by" name="guarantor_by" 
                                 value="{{ !empty($guarantor) ? $guarantor->SIGNATORYID1 : '' }}">
                                 <span class="input-group-btn">
-                                    <a class="btn btn-default" data-toggle="modal" data-target="#search_employee" onclick="search_input = 'guarantor'><i class="fa fa-search"></i> Search</a>
+                                    <a class="btn btn-default" data-toggle="modal" data-target="#search_employee" onclick="search_input = 'guarantor'"><i class="fa fa-search"></i> Search</a>
                                 </span>    
                             </div>
                             <input type="hidden" class="form-control" id="guarantor_dbname" name="guarantor_dbname" 
