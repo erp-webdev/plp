@@ -144,8 +144,6 @@
         </div>
     </div>
 </form>
-@endsection
-@section('scripts')
 <script>
     function search(){
         $.ajax({
