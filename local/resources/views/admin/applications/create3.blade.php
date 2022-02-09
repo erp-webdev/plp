@@ -28,7 +28,10 @@
                     <tr>
                         <th>LOAN AMOUNT</th>
                         <td>
-                            <input type="number" name="loan_amount" class="form-control" min="<?php echo $terms->min_loan_amount; ?>" max="<?php echo $terms->max_loan_amount; ?>" required>
+                            <input type="number" name="loan_amount" class="form-control" 
+                                    min="<?php echo $terms->min_loan_amount; ?>" 
+                                    max="<?php echo $terms->max_loan_amount; ?>" 
+                                    value="{{ $terms->max_loan_amount }}" required>
                             <span class="help-block">You are qualified up to {{ number_format($terms->max_loan_amount, 2, '.', ',') }}</span>
                         </td>
                     </tr>
