@@ -107,7 +107,7 @@
                         <td>{{ date('j F Y', strtotime($employee->PermanencyDate)) }}</td>
                     </tr>
                     <tr>
-                        <th>No. of Years in the Company</th>
+                        <th>YEARS IN THE COMPANY</th>
                         <td>{{ (int)($employee->tenure / 12) }} years, {{ $employee->tenure%12 }} months</td>
                     </tr>
                 </tbody>
