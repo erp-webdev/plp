@@ -152,17 +152,17 @@ class ApplicationController extends Controller
             
         $allow_max = Preference::name('allow_over_max');
 
-         $endorser = $this->getEndorser();
-        if(count($endorser) > 0)
-            $endorser = $endorser[0];
-        else
-            $endorser = '';
+        $endorser = $this->getEndorser();
+        // if(count($endorser) > 0)
+        //     $endorser = $endorser[0];
+        // else
+        //     $endorser = '';
 
         $guarantor = $this->getGuarantor();
-        if(count($guarantor) > 0)
-            $guarantor = $guarantor[0];
-        else
-            $guarantor = '';
+        // if(count($guarantor) > 0)
+        //     $guarantor = $guarantor[0];
+        // else
+        //     $guarantor = '';
 
     	return view('admin.applications.create3')
     	->withEmployee($employee)
@@ -374,6 +374,7 @@ class ApplicationController extends Controller
     public function getEndorser()
     {
         $endorser = DB::table('viewSignatories')->where('EmpID', Auth::user()->employee_id)->first();
+        return $endorser;
         $valid_signatories = [];
 
         // Creates a list of valid signatories
@@ -393,7 +394,7 @@ class ApplicationController extends Controller
     public function getGuarantor()
     {
         $guarantor = DB::table('viewSignatories')->where('EmpID', Auth::user()->employee_id)->first();
-
+        return $guarantor;
         $valid_signatories = [];
 
         // Creates a list of valid signatories

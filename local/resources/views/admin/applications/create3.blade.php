@@ -41,7 +41,13 @@
                     </tr>
                     <tr>
                         <th>ENDORSED BY</th>
-                        <td><input type="text" class="form-control" name="endorsed_by"></td>
+                        <td>
+                            <input type="text" class="form-control" name="endorsed_by" 
+                                value="{{ !empty($endorser) ? $endorser->SIGNATORYID1 : '' }}">
+                            <input type="hidden" class="form-control" name="endorsed_dbname" 
+                                value="{{ !empty($endorser) ? $endorser->SIGNATORYDB1 : '' }}">
+                            <span id="endorser_name">{{ !empty($endorser) ? $endorser->FullName : '' }}</span>    
+                        </td>
                     </tr>
                     <tr>
                         <th>SURETY/CO-BORROWER</th>
