@@ -163,7 +163,7 @@
 
                 $.each(response, function (index, item) { 
                      $('#search_employee_table tbody').append(
-                        "<tr onclick='setApprover('"+ item['EmpID'] +"', '"+item['FullName']+"', '"+item['DBNAME']+"')'>" +
+                        "<tr onclick="setApprover('"+ item['EmpID'] +"', '"+item['FullName']+"', '"+item['DBNAME']+"')">" +
                             "<td>" + item['EmpID'] + "</td>" +
                             "<td>" + item['FullName'] + "</td>" +
                         "</tr>"
