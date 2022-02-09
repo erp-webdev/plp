@@ -46,7 +46,7 @@
                                 <input type="text" class="form-control" name="endorsed_by" 
                                 value="{{ !empty($endorser) ? $endorser->SIGNATORYID1 : '' }}">
                                 <span class="input-group-btn">
-                                    <button class="btn btn-default"><i class="fa fa-search"></i> te</button>
+                                    <button class="btn btn-default"><i class="fa fa-search"></i> Search</button>
                                 </span>    
                             </div>
                             <input type="hidden" class="form-control" name="endorsed_dbname" 
@@ -57,8 +57,13 @@
                     <tr>
                         <th>SURETY/CO-BORROWER</th>
                         <td>
-                            <input type="text" class="form-control" name="guarantor_by" 
+                            <div class="input-group">
+                                <input type="text" class="form-control" name="guarantor_by" 
                                 value="{{ !empty($guarantor) ? $guarantor->SIGNATORYID1 : '' }}">
+                                <span class="input-group-btn">
+                                    <button class="btn btn-default"><i class="fa fa-search"></i> Search</button>
+                                </span>    
+                            </div>
                             <input type="hidden" class="form-control" name="guarantor_dbname" 
                                 value="{{ !empty($guarantor) ? $guarantor->SIGNATORYDB1 : '' }}">
                             <span id="guarantor_name">{{ !empty($guarantor) ? $guarantor->SIGNATORY1 : '' }}</span>    
