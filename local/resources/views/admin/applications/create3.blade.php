@@ -9,7 +9,7 @@
                     <div class="input-group">
                         <input type="text" class="form-control" id="search" placeholder="Search..." class="form-control">
                         <span class="input-group-btn">
-                            <button id="butotn" class="btn btn-default"><i class="fa fa-search"></i> </button>
+                            <button id="butotn" class="btn btn-default"><i class="fa fa-search"></i> Search</button>
                         </span>
                     </div>
                 </span>
