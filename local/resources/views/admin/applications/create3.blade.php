@@ -162,12 +162,16 @@
                 $('#search_employee_table tbody').html('');
 
                 $.each(response, function (index, item) { 
-                     $('#search_employee_table tbody').append(
-                        "<tr onclick="setApprover('"+ item['EmpID'] +"', '"+item['FullName']+"', '"+item['DBNAME']+"')">" +
-                            "<td>" + item['EmpID'] + "</td>" +
-                            "<td>" + item['FullName'] + "</td>" +
-                        "</tr>"
-                     );
+                    var empid = item['EmpID'];
+                    var name = item['FullName'];
+                    var db = item['DBNAME'];
+
+                    $('#search_employee_table tbody').append(
+                    '<tr onclick="setApprover(''' + empid + ''',''' + name + ''', '''+ db + ''')">' +
+                        "<td>" + item['EmpID'] + "</td>" +
+                        "<td>" + item['FullName'] + "</td>" +
+                    "</tr>"
+                    );
                 });                 
             }
         });
