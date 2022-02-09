@@ -1,85 +1,89 @@
 @extends('admin.layouts.app')
 @section('content')
+<form class="form form-horizontal" action="{{ route('applications.store2') }}" method="post" >
+<input type="hidden" name="_token" value="{{ csrf_token() }}">
+    <div class="container-fluid">
+        <div class="col-md-6 col-sm-6"> 
+            <table class="table">
+                <tbody>
+                    <tr>
+                        <td colspan="2"><h3>APPLICATION FORM</h3></td>
+                    </tr>
+                    <tr>
+                        <td><label for=""><input id="type" name="type" type="radio" value="0" required> NEW</label> </td>
+                        <td>
+                        <label for=""><input id="type" name="type" type="radio" value="1" required> RE-AVAILMENT</label>    
+                            <br> <span>Previous loan amount: {{ number_format($previous_loan, 2, '.', ',') }}</span>
+                            <br> <span>Balance: {{ number_format($balance, 2, '.', ',') }}</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label for=""><input type="radio" name="special" value="0" required> REGULAR</label></td>
+                        <td><label for=""><input type="radio" name="special" value="1" required> SPECIAL</label></td>
+                    </tr>
+                    <tr>
+                        <th>LOCAL / DIRECT LINE</th>
+                        <td><input type="text" name="local" class="form-control" required></td>
+                    </tr>
+                    <tr>
+                        <th>LOAN AMOUNT</th>
+                        <td>
+                            <input type="number" name="loan_amount" class="form-control" min="<?php echo $terms->min_loan_amount; ?>" max="<?php echo $terms->max_loan_amount; ?>" required>
+                            <span>You are qualified up to {{ number_format($terms->max_loan_amount, 2, '.', ',') }}</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>PURPOSE</th>
+                        <td><input type="text" class="form-control" name="purpose" value=""></td>
+                    </tr>
+                    <tr>
+                        <th>ENDORSED BY</th>
+                        <td><input type="text" class="form-control" name="endorsed_by"></td>
+                    </tr>
+                    <tr>
+                        <th>SURETY/CO-BORROWER</th>
+                        <td><input type="text" class="form-control" name="guaranteed_by"></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" class=""><button type="button" class="btn btn-primary pull-right">Submit Loan Application</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
 
-<div class="container-fluid">
-    <div class="col-md-6 col-sm-6"> 
-        <table class="table">
-            <tbody>
-                <tr>
-                    <td colspan="2"><h3>APPLICATION FORM</h3></td>
-                </tr>
-                <tr>
-                    <td><label for=""><input id="type" name="type" type="radio"> NEW</label> </td>
-                    <td>
-                    <label for=""><input id="type" name="type" type="radio"> RE-AVAILMENT</label>    
-                        <br> <span>Previous loan amount: </span>
-                        <br> <span>Balance: </span>
-                    </td>
-                </tr>
-                <tr>
-                    <td><label for=""><input type="radio" name="special"> REGULAR</label></td>
-                    <td><label for=""><input type="radio" name="special"> SPECIAL</label></td>
-                </tr>
-                <tr>
-                    <th>LOCAL / DIRECT LINE</th>
-                    <td><input type="text" name="" class="form-control"></td>
-                </tr>
-                <tr>
-                    <th>LOAN AMOUNT</th>
-                    <td><input type="text" class="form-control"></td>
-                </tr>
-                <tr>
-                    <th>PURPOSE</th>
-                    <td><input type="text" class="form-control"></td>
-                </tr>
-                <tr>
-                    <th>ENDORSED BY</th>
-                    <td><input type="text" class="form-control"></td>
-                </tr>
-                <tr>
-                    <th>SURETY/CO-BORROWER</th>
-                    <td><input type="text" class="form-control"></td>
-                </tr>
-                <tr>
-                    <td colspan="2" class=""><button type="button" class="btn btn-primary pull-right">Submit Loan Application</button></td>
-                </tr>
-            </tbody>
-        </table>
+        <div class="col-md-6 col-sm-6">
+            <table class="table">
+                <tbody>
+                    <tr>
+                        <th colspan="2"><h3>EMPLOYEE INFORMATION</h3></th>
+                    </tr>
+                    <tr>
+                        <th>NAME</th>
+                        <td>{{ $employee->FullName }}</td>
+                    </tr>
+                    <tr>
+                        <th>EMPLOYEE NO.</th>
+                        <td>{{ $employee->EmpID }}</td>
+                    </tr>
+                    <tr>
+                        <th>POSITION</th>
+                        <td>{{ $employee->PositionDesc }}</td>
+                    </tr>
+                    <tr>
+                        <th>DEPARTMENT</th>
+                        <td>{{ $employee->DeptDesc }}</td>
+                    </tr>
+                    <tr>
+                        <th>DATE HIRED</th>
+                        <td>{{ date('j F Y', strtotime($employee->HireDate)) }}</td>
+                    </tr>
+                    <tr>
+                        <th>REGULARIZATION DATE</th>
+                        <td>{{ date('j F Y', strtotime($employee->PermanencyDate)) }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
-
-    <div class="col-md-6 col-sm-6">
-        <table class="table">
-            <tbody>
-                <tr>
-                    <th colspan="2"><h3>EMPLOYEE INFORMATION</h3></th>
-                </tr>
-                <tr>
-                    <th>NAME</th>
-                    <td>{{ $employee->FullName }}</td>
-                </tr>
-                <tr>
-                    <th>EMPLOYEE NO.</th>
-                    <td>{{ $employee->EmpID }}</td>
-                </tr>
-                <tr>
-                    <th>POSITION</th>
-                    <td>{{ $employee->PositionDesc }}</td>
-                </tr>
-                <tr>
-                    <th>DEPARTMENT</th>
-                    <td>{{ $employee->DeptDesc }}</td>
-                </tr>
-                <tr>
-                    <th>DATE HIRED</th>
-                    <td>{{ date('j F Y', strtotime($employee->HireDate)) }}</td>
-                </tr>
-                <tr>
-                    <th>REGULARIZATION DATE</th>
-                    <td>{{ date('j F Y', strtotime($employee->PermanencyDate)) }}</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-</div>
-
+</form>
 @endsection

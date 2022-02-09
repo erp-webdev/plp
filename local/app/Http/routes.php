@@ -60,6 +60,7 @@ Route::group(['prefix' => '/', 'middleware' => ['auth']], function(){
 	Route::get('applications/show/{id}', ['as' => 'applications.show', 'uses' => 'admin\ApplicationController@show','middleware' => ['permission:application_view']]);
 	Route::get('applications/create', ['as' => 'applications.create', 'uses' => 'admin\ApplicationController@create','middleware' => ['permission:application_create']]);
 	Route::post('applications', ['as' => 'applications.store', 'uses' => 'admin\ApplicationController@store','middleware' => ['permission:application_create']]);
+	Route::post('applications_submit', ['as' => 'applications.store2', 'uses' => 'admin\ApplicationController@store2','middleware' => ['permission:application_create']]);
 	Route::get('applications/destroy/{id}',['as'=>'applications.destroy','uses'=>'admin\ApplicationController@destroy','middleware' => ['permission:application_delete']]);
 
 	// Endorsements

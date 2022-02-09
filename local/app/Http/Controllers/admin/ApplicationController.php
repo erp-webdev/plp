@@ -306,7 +306,12 @@ class ApplicationController extends Controller
         }
     }
 
-     public function  checkValidity($request)
+    public function store2(Request $request)
+    {
+        
+    }
+
+    public function  checkValidity($request)
     {
         // Loan Application validation and verifier
         $errors = [];
