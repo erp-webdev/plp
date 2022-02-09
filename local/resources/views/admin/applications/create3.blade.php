@@ -148,7 +148,7 @@
     function search(){
         $.ajax({
             type: "get",
-            url: "url",
+            url: "{{ url('/getEmployee') }}",
             data: {search: $('#search').val() },
             success: function (response) {
                 $('#search_employee_table tbody').html('');
