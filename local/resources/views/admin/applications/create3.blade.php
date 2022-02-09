@@ -4,7 +4,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h3>Search Employee</h3>
+                Search Employee
                 <span class="pull-right">
                     <input type="text" class="form-control" id="search" class="form-control">
                 </span>
