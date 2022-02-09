@@ -45,11 +45,10 @@
                             <div class="input-group">
                                 <input type="text" class="form-control" name="endorsed_by" 
                                 value="{{ !empty($endorser) ? $endorser->SIGNATORYID1 : '' }}">
-                                <span class="input-group-addon">
-                                    <button class="btn btn-sm btn-default"><i class="fa fa-search"></i></button>
+                                <span class="input-group-btn">
+                                    <button class="btn btn-default"><i class="fa fa-search"></i></button>
                                 </span>    
                             </div>
-                            
                             <input type="hidden" class="form-control" name="endorsed_dbname" 
                                 value="{{ !empty($endorser) ? $endorser->SIGNATORYDB1 : '' }}">
                             <span id="endorser_name">{{ !empty($endorser) ? $endorser->SIGNATORY1 : '' }}</span>    
