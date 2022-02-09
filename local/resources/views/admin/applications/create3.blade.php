@@ -72,28 +72,28 @@
                         <th>ENDORSED BY</th>
                         <td>
                             <div class="input-group">
-                                <input type="text" class="form-control" name="endorsed_by" 
+                                <input type="text" class="form-control" id="endorsed_by" name="endorsed_by" 
                                 value="{{ !empty($endorser) ? $endorser->SIGNATORYID1 : '' }}">
                                 <span class="input-group-btn">
-                                    <a class="btn btn-default" data-toggle="modal" data-target="#search_employee"><i class="fa fa-search"></i> Search</a>
+                                    <a class="btn btn-default" data-toggle="modal" data-target="#search_employee" onclick="search_input = 'endorsed'"><i class="fa fa-search"></i> Search</a>
                                 </span>    
                             </div>
-                            <input type="hidden" class="form-control" name="endorsed_dbname" 
+                            <input type="hidden" class="form-control" id="endorsed_dbname" name="endorsed_dbname" 
                                 value="{{ !empty($endorser) ? $endorser->SIGNATORYDB1 : '' }}">
-                            <span id="endorser_name">{{ !empty($endorser) ? $endorser->SIGNATORY1 : '' }}</span>    
+                            <span id="endorsed_name">{{ !empty($endorser) ? $endorser->SIGNATORY1 : '' }}</span>    
                         </td>
                     </tr>
                     <tr>
                         <th>SURETY/CO-BORROWER</th>
                         <td>
                             <div class="input-group">
-                                <input type="text" class="form-control" name="guarantor_by" 
+                                <input type="text" class="form-control" id="guarantor_by" name="guarantor_by" 
                                 value="{{ !empty($guarantor) ? $guarantor->SIGNATORYID1 : '' }}">
                                 <span class="input-group-btn">
-                                    <a class="btn btn-default" data-toggle="modal" data-target="#search_employee"><i class="fa fa-search"></i> Search</a>
+                                    <a class="btn btn-default" data-toggle="modal" data-target="#search_employee" onclick="search_input = 'guarantor'><i class="fa fa-search"></i> Search</a>
                                 </span>    
                             </div>
-                            <input type="hidden" class="form-control" name="guarantor_dbname" 
+                            <input type="hidden" class="form-control" id="guarantor_dbname" name="guarantor_dbname" 
                                 value="{{ !empty($guarantor) ? $guarantor->SIGNATORYDB1 : '' }}">
                             <span id="guarantor_name">{{ !empty($guarantor) ? $guarantor->SIGNATORY1 : '' }}</span>    
                         </td>
@@ -145,6 +145,14 @@
     </div>
 </form>
 <script>
+    var search_input = '';
+
+    function setApprover(EmpID, Name, DB){
+        $('#' + search_input + "_by").val(EmpID);
+        $('#' + search_input + "_name").val(Name);
+        $('#' + search_input + "_dbname").val(DB);
+    }
+
     function search(){
         $.ajax({
             type: "get",
@@ -153,11 +161,11 @@
             success: function (response) {
                 $('#search_employee_table tbody').html('');
 
-                $.each(response, function (indexInArray, valueOfElement) { 
+                $.each(response, function (index, item) { 
                      $('#search_employee_table tbody').append(
-                        "<tr>" +
-                            "<td>" + valueOfElement['EmpID'] + "</td>" +
-                            "<td>" + valueOfElement['FullName'] + "</td>" +
+                        "<tr onclick='setApprover('"+ item['EmpID'] +"', '"+item['FullName']+"', '"+item['DBNAME']+"')'>" +
+                            "<td>" + item['EmpID'] + "</td>" +
+                            "<td>" + item['FullName'] + "</td>" +
                         "</tr>"
                      );
                 });                 
