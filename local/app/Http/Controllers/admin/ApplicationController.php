@@ -89,13 +89,13 @@ class ApplicationController extends Controller
 
         $endorser = $this->getEndorser();
         if(count($endorser) > 0)
-            $endorser = $endorser[0];
+            $endorser = $endorser->SIGNATORYID1;
         else
             $endorser = '';
 
         $guarantor = $this->getGuarantor();
         if(count($guarantor) > 0)
-            $guarantor = $guarantor[0];
+            $guarantor = $guarantor->SIGNATORYID1;
         else
             $guarantor = '';
 
