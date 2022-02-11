@@ -506,7 +506,7 @@ class ApplicationController extends Controller
             $guarantors['SIGNATORYID3'],
             $guarantors['SIGNATORYID4'],
             $guarantors['SIGNATORYID5'],
-            $guarantors['SIGNATORYID6'])){
+            $guarantors['SIGNATORYID6']])){
                 // Check expected against inputted guarantor
                 array_push($errors, trans('loan.validation.guarantor'));
             }
