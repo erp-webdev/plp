@@ -480,21 +480,34 @@ class ApplicationController extends Controller
                 array_push($errors, trans('loan.validation.maximum'));
 
         // Endorser
+        $endorsers = $this->getEndorser();
         if(!$this->validateEndorser($request->endorsed_by, $request->endorsed_dbname)){
             array_push($errors, trans('loan.validation.endorser'));
-        }else if(!in_array($request->head, $this->getEndorser())){
+        }else if(!in_array($request->endorsed_by, [$endorsers['SIGNATORYID1'],
+        $endorsers['SIGNATORYID2'],
+        $endorsers['SIGNATORYID3'],
+        $endorsers['SIGNATORYID4'],
+        $endorsers['SIGNATORYID5'],
+        $endorsers['SIGNATORYID6']])){
             // Check if endorser belongs to the valid signatories of the employee
             array_push($errors, trans('loan.validation.endorser'));
         }
         
         // Guarantor
+            else if(!in_array($request->guarantor_by, )){
+                $guarnators = 
         if($this->validateAboveMinAmount($request->loan_amount)){
             if(!$this->validateGuarantor($request->guarantor_by, $request->guarantor_dbname))
                 array_push($errors, trans('loan.validation.guarantor'));
             else
                 if(!$this->validateGuaranteedAmount($request->guarantor_by, $request->guarantor_dbname, $request->loan_amount))
                     array_push($errors, trans('loan.validation.guaranteed_amount'));
-            else if(!in_array($request->guarantor_by, $this->getGuarantor())){
+            else if(!in_array($request->guarantor_by, [$guarantors['SIGNATORYID1'],
+            $guarantors['SIGNATORYID2'],
+            $guarantors['SIGNATORYID3'],
+            $guarantors['SIGNATORYID4'],
+            $guarantors['SIGNATORYID5'],
+            $guarantors['SIGNATORYID6'])){
                 // Check expected against inputted guarantor
                 array_push($errors, trans('loan.validation.guarantor'));
             }
