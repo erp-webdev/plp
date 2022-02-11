@@ -11,6 +11,8 @@ use Auth;
 use eFund\Employee;
 use eFund\Role;
 use DB;
+use Illuminate\Http\Request;
+
 
 class AuthController extends Controller
 {
@@ -130,6 +132,14 @@ class AuthController extends Controller
 
 
         return 1;
+    }
+
+    protected function getCredentials(Request $request)
+    {
+        $credentials = $request->only($this->loginUsername(), 'password');
+
+        $credentials['active'] = 1;
+        return $credentials;
     }
 
 

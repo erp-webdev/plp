@@ -302,6 +302,115 @@ class ApplicationController extends Controller
 
     public function store2(Request $request)
     {
+        $msg = '';
+        $errors = $this->checkValidity($request);
+
+        if(count($errors) == 0){
+
+            DB::beginTransaction();
+
+            try {
+                $loan = new Loan();
+
+                // Interest percentage
+                $interest = Preference::name('interest');
+                // Employee Term Limits
+                $employee = Employee::current()->first();
+                $terms = Terms::getRankLimits($employee);
+
+                $loan = Loan::find($request->id);
+                if(empty($loan))
+                    $loan = new Loan();
+
+                $loan->setTable('eFundData');
+                
+                $loan->ctrl_no = '0000';
+                $loan->type = $request->type;
+                $loan->EmpID = Auth::user()->employee_id;
+                $loan->loan_amount = $request->loan_amount;
+                $loan->local_dir_line = $request->loc;
+                $loan->interest = $interest->value;
+                $loan->terms_month = $request->term_mos;
+                $loan->total = $this->utils->getTotalLoan($request->loan_amount, $interest->value, $request->term_mos);
+                $loan->deductions = $this->utils->computeDeductions($request->term_mos, $request->loan_amount);
+                $loan->status = $this->utils->setStatus();
+                $loan->DBNAME = $employee->DBNAME;
+                $loan->save();
+
+                // Create Endorser
+                $endorser = Endorser::firstOrNew(['eFundData_id' => $loan->id]);
+                // $endorser->refno = $this->utils->generateReference();
+                $endorser->eFundData_id = $loan->id;
+                $endorser->EmpID = $request->head;
+                $endorser->save();
+                
+                $loan->endorser_id = $endorser->id;
+                $loan->save();
+
+                // Create Guarantor if applicable
+                $guarantor = Guarantor::firstOrNew(['eFundData_id' => $loan->id]);
+
+                if($this->validateAboveMinAmount($request->loan_amount)){
+                    // $guarantor->refno = $this->utils->generateReference();
+                    $guarantor->eFundData_id = $loan->id;
+                    $guarantor->EmpID = $request->surety;
+                    $guarantor->save();
+                    
+                    $loan->guarantor_id = $guarantor->id;
+                    $loan->save();
+                }else{
+                    // Delete guarantor record if exists
+                    $g = DB::table('guarantors')->where('eFundData_id', $loan->id)->get();
+                    DB::table('guarantors')->where('eFundData_id', $loan->id)->delete();
+                    $log = new Log();
+                    $log->writeOnly('Delete', 'guarantors', $g);
+                }
+
+                if(isset($_POST['verify'])){
+
+                    $msg = trans('loan.application.verified');
+                    
+                }else{
+
+                    // Save and Submit
+                    $loan = Loan::find($request->id);
+                    $loan->ctrl_no = $this->utils->generateCtrlNo();
+                    $loan->status = $this->utils->setStatus($loan->status, $loan->endorser_id);
+                    $loan->created_at = date('Y-m-d H:i:s');
+                    $loan->save();
+
+                    $msg = trans('loan.application.success');
+
+                    // Notification
+                    $notif = new NotificationController();
+                    $notif->notifyAppSubmission($loan);
+
+                    Event::fire(new LoanCreated($loan));
+                }
+
+                DB::commit();
+
+                return redirect()->route('applications.show', $loan->id)->withSuccess($msg);
+
+            } catch (Exception $e) {
+
+                DB::rollback();
+                $request->flash();
+
+                return redirect()->back()->withError(trans('error.general'))->withLoan($loan)->withInput();
+            }
+                
+
+        }else{
+
+            $request->flash();
+            return redirect()->back()->withErrors($errors)->withInput();
+
+        }
+    }
+
+    public function store2(Request $request)
+    {
         
     }
 
