@@ -369,7 +369,6 @@ class ApplicationController extends Controller
                 
 
         }
-    }
 
     public function create_loan(Request $request)
     {
