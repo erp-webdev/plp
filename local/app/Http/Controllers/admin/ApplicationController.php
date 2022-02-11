@@ -315,7 +315,7 @@ class ApplicationController extends Controller
         try {
 
             // Create Loan Record
-            $loan = $this->create_loan(Request $request);
+            $loan = $this->create_loan($request);
 
             // Create Endorser
             $endorser = $this->create_endorser($loan, $request->endorsed_by, $requst->endorsed_dbname)
