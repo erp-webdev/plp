@@ -466,7 +466,7 @@ class ApplicationController extends Controller
             array_push($errors, trans('loan.validation.terms'));
 
         // Regular and Active Employee
-        if(!$this->validateEmployeeStatus(Auth::user()->employee_id))
+        if(!$this->validateEmployeeStatus(Auth::user()->employee_id, Auth::user()->DBNAME))
             array_push($errors, trans('loan.validation.regular'));
 
         // Minimum Loan amount
