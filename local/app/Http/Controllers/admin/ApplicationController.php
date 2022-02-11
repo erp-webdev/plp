@@ -318,11 +318,11 @@ class ApplicationController extends Controller
             $loan = $this->create_loan($request);
 
             // Create Endorser
-            $endorser = $this->create_endorser($loan, $request->endorsed_by, $requst->endorsed_dbname)
+            $endorser = $this->create_endorser($loan, $request->endorsed_by, $requst->endorsed_dbname);
             $loan->endorser_id = $endorser->id;
 
             // Create Guarantor
-            $guarantor = $this->create_guarantor($loan, $request->guarantor_by, $request->guarantor_dbname)
+            $guarantor = $this->create_guarantor($loan, $request->guarantor_by, $request->guarantor_dbname);
             $loan->guarantor_id = $guarantor->id;
 
             if($request->special == 1){
