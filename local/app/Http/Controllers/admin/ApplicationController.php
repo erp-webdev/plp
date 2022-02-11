@@ -305,110 +305,144 @@ class ApplicationController extends Controller
         $msg = '';
         $errors = $this->checkValidity($request);
 
-        if(count($errors) == 0){
-            DB::beginTransaction();
-            try {
-                $loan = new Loan();
-
-                // Interest percentage
-                $interest = Preference::name('interest');
-                // Employee Term Limits
-                $employee = Employee::current()->first();
-                $terms = Terms::getRankLimits($employee);
-
-                $loan = Loan::find($request->id);
-                if(empty($loan))
-                    $loan = new Loan();
-
-                $loan->setTable('eFundData');
-                
-                $loan->ctrl_no = '0000';
-                $loan->type = $request->type;
-                $loan->EmpID = Auth::user()->employee_id;
-                $loan->loan_amount = $request->loan_amount;
-                $loan->local_dir_line = $request->loc;
-                $loan->interest = $interest->value;
-                $loan->terms_month = $request->term_mos;
-                $loan->total = $this->utils->getTotalLoan($request->loan_amount, $interest->value, $request->term_mos);
-                $loan->deductions = $this->utils->computeDeductions($request->term_mos, $request->loan_amount);
-                $loan->status = $this->utils->setStatus();
-                $loan->DBNAME = $employee->DBNAME;
-                $loan->save();
-
-                // Create Endorser
-                $endorser = Endorser::firstOrNew(['eFundData_id' => $loan->id]);
-                // $endorser->refno = $this->utils->generateReference();
-                $endorser->eFundData_id = $loan->id;
-                $endorser->EmpID = $request->endorsed_by;
-                $endorser->DBNAME = $request->endorsed_dbname;
-                $endorser->save();
-                
-                $loan->endorser_id = $endorser->id;
-                $loan->save();
-
-                // Create Guarantor if applicable
-                $guarantor = Guarantor::firstOrNew(['eFundData_id' => $loan->id]);
-
-                if($this->validateAboveMinAmount($request->loan_amount)){
-                    // $guarantor->refno = $this->utils->generateReference();
-                    $guarantor->eFundData_id = $loan->id;
-                    $guarantor->EmpID = $request->guarantor_by;
-                    $guarantor->DBNAME = $request->guarantor_dbname;
-                    $guarantor->save();
-                    
-                    $loan->guarantor_id = $guarantor->id;
-                    $loan->save();
-                }else{
-                    // Delete guarantor record if exists
-                    $g = DB::table('guarantors')->where('eFundData_id', $loan->id)->get();
-                    DB::table('guarantors')->where('eFundData_id', $loan->id)->delete();
-                    $log = new Log();
-                    $log->writeOnly('Delete', 'guarantors', $g);
-                }
-
-                if(isset($_POST['verify'])){
-
-                    $msg = trans('loan.application.verified');
-                    
-                }else{
-
-                    // Save and Submit
-                    $loan = Loan::find($request->id);
-                    $loan->ctrl_no = $this->utils->generateCtrlNo();
-                    $loan->status = $this->utils->setStatus($loan->status, $loan->endorser_id);
-                    $loan->created_at = date('Y-m-d H:i:s');
-                    $loan->save();
-
-                    $msg = trans('loan.application.success');
-
-                    // Notification
-                    $notif = new NotificationController();
-                    $notif->notifyAppSubmission($loan);
-
-                    Event::fire(new LoanCreated($loan));
-                }
-
-                DB::commit();
-
-                return redirect()->route('applications.show', $loan->id)->withSuccess($msg);
-
-            } catch (Exception $e) {
-
-                DB::rollback();
-                $request->flash();
-
-                return redirect()->back()->withError(trans('error.general'))->withLoan($loan)->withInput();
-            }
-                
-
-        }else{
-
+        if(count($errors) > 0){
             $request->flash();
             return redirect()->back()->withErrors($errors)->withInput();
+        }
+
+        DB::beginTransaction();
+
+        try {
+
+            // Create Loan Record
+            $loan = $this->create_loan(Request $request);
+
+            // Create Endorser
+            $endorser = $this->create_endorser($loan, $request->endorsed_by, $requst->endorsed_dbname)
+            $loan->endorser_id = $endorser->id;
+
+            // Create Guarantor
+            $guarantor = $this->create_guarantor($loan, $request->guarantor_by, $request->guarantor_dbname)
+            $loan->guarantor_id = $guarantor->id;
+
+            if($request->special == 1){
+                // Create company nurse endorsement
+                $company_nurse = $this->create_company_nurse_endorsement($loan);
+
+            }
+            
+            $loan->save();
+            
+            if(isset($_POST['verify'])){
+
+                $msg = trans('loan.application.verified');
+                
+            }else{
+
+                // Save and Submit
+                $loan = Loan::find($request->id);
+                $loan->ctrl_no = $this->utils->generateCtrlNo();
+                $loan->status = $this->utils->setStatus($loan->status, $loan->endorser_id);
+                $loan->created_at = date('Y-m-d H:i:s');
+                $loan->save();
+
+                $msg = trans('loan.application.success');
+
+                // Notification
+                $notif = new NotificationController();
+                $notif->notifyAppSubmission($loan);
+
+                Event::fire(new LoanCreated($loan));
+            }
+
+            DB::commit();
+
+            return redirect()->route('applications.show', $loan->id)->withSuccess($msg);
+
+        } catch (Exception $e) {
+
+            DB::rollback();
+            $request->flash();
+
+            return redirect()->back()->withError(trans('error.general'))->withLoan($loan)->withInput();
+        }
+                
 
         }
     }
 
+    public function create_loan(Request $request)
+    {
+        $loan = new Loan();
+
+        // Interest percentage
+        $interest = Preference::name('interest');
+        // Employee Term Limits
+        $employee = Employee::current()->first();
+        $terms = Terms::getRankLimits($employee);
+
+        $loan->setTable('eFundData');
+        
+        $loan->ctrl_no = '0000';
+        $loan->type = $request->type;
+        $loan->special = $request->special;
+        $loan->EmpID = Auth::user()->employee_id;
+        $loan->DBNAME = $employee->DBNAME;
+
+        $loan->loan_amount = $request->loan_amount;
+        $loan->local_dir_line = $request->local;
+
+        if($request->special == 1){
+            // Special Loan, no interest at 2 years payment
+            $loan->interest = 0;
+            $loan->terms_month = 24;
+        }else{
+            $loan->interest = $interest->value;
+            // count remaining months until december
+            $loan->terms_month = 12 - date('n');
+        }
+
+        $loan->total = $this->utils->getTotalLoan(
+                $request->loan_amount, 
+                $loan->interest, 
+                $loan->terms_month);
+
+        $loan->deductions = $this->utils->computeDeductions(
+                $loan->terms_month, 
+                $request->loan_amount);
+
+        $loan->status = $this->utils->setStatus();
+        $loan->save();
+
+        return $loan;
+    }
+
+    public function create_endorser(Loan $loan, $endorser_empid, $endorser_dbname)
+    {
+        $endorser = Endorser::firstOrNew(['eFundData_id' => $loan->id]);
+        $endorser->eFundData_id = $loan->id;
+        $endorser->EmpID = $endorser_empid;
+        $endorser->DBNAME = $endorser_dbname;
+        $endorser->save();
+
+        return $endorser;
+    }
+
+    public function create_guarantor(Loan $loan, $guarantor_empid, $guarantor_dbname)
+    {
+        $guarantor = Guarantor::firstOrNew(['eFundData_id' => $loan->id]);
+        $guarantor->eFundData_id = $loan->id;
+        $guarantor->EmpID = $guarantor_empid;
+        $guarantor->DBNAME = $guarantor_dbname;
+        $guarantor->save();
+
+        return $guarantor;
+    }
+
+    public function create_company_nurse_endorsement(Loan $loan, $nurse_empid, $nurse_dbname)
+    {
+        // TODO:
+    }
 
     public function  checkValidity($request)
     {
@@ -447,7 +481,7 @@ class ApplicationController extends Controller
                 array_push($errors, trans('loan.validation.maximum'));
 
         // Endorser
-        if(!$this->validateEndorser($request->head)){
+        if(!$this->validateEndorser($request->endorsed_by, $request->endorsed_dbname)){
             array_push($errors, trans('loan.validation.endorser'));
         }else if(!in_array($request->head, $this->getEndorser())){
             // Check if endorser belongs to the valid signatories of the employee
@@ -456,12 +490,12 @@ class ApplicationController extends Controller
         
         // Guarantor
         if($this->validateAboveMinAmount($request->loan_amount)){
-            if(!$this->validateGuarantor($request->surety))
+            if(!$this->validateGuarantor($request->guarantor_by, $request->guarantor_dbname))
                 array_push($errors, trans('loan.validation.guarantor'));
             else
-                if(!$this->validateGuaranteedAmount($request->surety, $request->loan_amount))
+                if(!$this->validateGuaranteedAmount($request->guarantor_by, $request->guarantor_dbname, $request->loan_amount))
                     array_push($errors, trans('loan.validation.guaranteed_amount'));
-            else if(!in_array($request->surety, $this->getGuarantor())){
+            else if(!in_array($request->guarantor_by, $this->getGuarantor())){
                 // Check expected against inputted guarantor
                 array_push($errors, trans('loan.validation.guarantor'));
             }
@@ -597,9 +631,11 @@ class ApplicationController extends Controller
         return true;
     }
 
-    public function validateEmployeeStatus($EmpID)
+    public function validateEmployeeStatus($EmpID, $DB)
     {
-        $emp = Employee::where('EmpID', $EmpID)->regular()->active()->count();
+        $emp = Employee::where('EmpID', $EmpID)
+                ->where('DBNAME', $DB)
+                ->regular()->active()->count();
 
         if($emp > 0)
             return true;
@@ -642,11 +678,13 @@ class ApplicationController extends Controller
             return false;
     }
 
-    public function validateEndorser($EmpID)
+    public function validateEndorser($EmpID, $DB)
     {
         $valid = true;
 
-        if(empty(Employee::where('EmpID', $EmpID)->active()->regular()->first()))
+        if(empty(Employee::where('EmpID', $EmpID)
+                    ->where('DBNAME', $DB)
+                    ->active()->regular()->first()))
             $valid = false;
 
         // Endorser must not be the employee him/herself
@@ -656,19 +694,14 @@ class ApplicationController extends Controller
         return $valid;
     }
 
-    public function validateGuarantor($EmpID)
+    public function validateGuarantor($EmpID, $DB)
     {
         $valid = true;
 
-        if($this->validateEmployeeStatus($EmpID)){
-            // Check Balance
-            $balance = Loan::where('EmpID', $EmpID)
-                        ->whereNotIn('status', [0,9])
-                        ->sum('balance');
-
-            if($balance > 0)
-                $valid = false;
-        }
+        if(empty(Employee::where('EmpID', $EmpID)
+                    ->where('DBNAME', $DB)
+                    ->active()->regular()->first()))
+            $valid = false;
 
         // Guarantor must not be the employee him/herself
         if($EmpID == Auth::user()->employee_id)
@@ -684,11 +717,11 @@ class ApplicationController extends Controller
 
     }
 
-    public function validateGuaranteedAmount($EmpID, $amount)
+    public function validateGuaranteedAmount($EmpID, $DB, $amount)
     {
         $valid = true;
         // Check Guarateed amount total
-        $totalGuaranteedAmount = Guarantor::guaranteedAmountLimit($EmpID)->sum('guaranteed_amount');
+        $totalGuaranteedAmount = Guarantor::guaranteedAmountLimit($EmpID, $DB)->sum('guaranteed_amount');
         if(empty($totalGuaranteedAmount))
             $totalGuaranteedAmount = 0;
 

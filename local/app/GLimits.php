@@ -10,9 +10,11 @@ class GLimits extends Model
     protected $table = 'guaranteedAmountLimit';
     public $timestamps = false;	
 
-    public function scopeLimit($scope, $EmpID)
+    public function scopeLimit($scope, $EmpID, $DB)
     {
-    	$guarantor = Employee::where('EmpID', $EmpID)->first();
+    	$guarantor = Employee::where('EmpID', $EmpID)
+            ->where('DBNAME', $DB)
+            ->first();
 
     	if(str_contains(strtolower($guarantor->RankDesc), 'supervisor'))
             return $this->where('RankDesc','like', '%supervisor%')->first();

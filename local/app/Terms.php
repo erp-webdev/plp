@@ -4,13 +4,14 @@ namespace eFund;
 
 use Illuminate\Database\Eloquent\Model;
 use eFund\Log;
+use eFund\Employee;
 
 class Terms extends Model
 {
     protected $table = 'loanable_amount';
     public $timestamps = false;	
 
-    public function scopeGetRankLimits($query, $employee)
+    public function scopeGetRankLimits($query, Employee $employee)
     {
 		$rank = $employee->RankDesc;
 		$hire = $employee->HireDate;

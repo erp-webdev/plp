@@ -65,9 +65,11 @@ class Guarantor extends Model
     }
 
     // Get Total Guaranted Amount of Guarantors on Active Loan Applications
-    public function scopeGuaranteedAmountLimit($scope, $EmpID)
+    public function scopeGuaranteedAmountLimit($scope, $EmpID, $DB)
     {
-        return $scope->where('guarantor_status', 1)->where('EmpID', $EmpID)
+        return $scope->where('guarantor_status', 1)
+            ->where('EmpID', $EmpID)
+            ->where('DBNAME', $DB)
             ->where('status', '>', 2)->where('status', '<', 8);
     }
 }

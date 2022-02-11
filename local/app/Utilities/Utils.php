@@ -135,7 +135,7 @@ class Utils
      * @return int 
      *
      */
-    public function setStatus($status = null, $withSurety = null)
+    public function setStatus($status = null, $withSurety = 1)
     {
     	if($status == null){
     		return 0;
