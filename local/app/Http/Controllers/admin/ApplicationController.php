@@ -306,9 +306,7 @@ class ApplicationController extends Controller
         $errors = $this->checkValidity($request);
 
         if(count($errors) == 0){
-
             DB::beginTransaction();
-
             try {
                 $loan = new Loan();
 
@@ -341,7 +339,8 @@ class ApplicationController extends Controller
                 $endorser = Endorser::firstOrNew(['eFundData_id' => $loan->id]);
                 // $endorser->refno = $this->utils->generateReference();
                 $endorser->eFundData_id = $loan->id;
-                $endorser->EmpID = $request->head;
+                $endorser->EmpID = $request->endorsed_by;
+                $endorser->DBNAME = $request->endorsed_dbname;
                 $endorser->save();
                 
                 $loan->endorser_id = $endorser->id;
@@ -353,7 +352,8 @@ class ApplicationController extends Controller
                 if($this->validateAboveMinAmount($request->loan_amount)){
                     // $guarantor->refno = $this->utils->generateReference();
                     $guarantor->eFundData_id = $loan->id;
-                    $guarantor->EmpID = $request->surety;
+                    $guarantor->EmpID = $request->guarantor_by;
+                    $guarantor->DBNAME = $request->guarantor_dbname;
                     $guarantor->save();
                     
                     $loan->guarantor_id = $guarantor->id;
@@ -408,6 +408,7 @@ class ApplicationController extends Controller
 
         }
     }
+
 
     public function  checkValidity($request)
     {

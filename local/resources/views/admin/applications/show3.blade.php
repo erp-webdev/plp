@@ -1,4 +1,5 @@
 @extends('admin.layouts.app')
+
 @section('content')
 <div id="search_employee" class="modal fade-in">
     <div class="modal-dialog">
