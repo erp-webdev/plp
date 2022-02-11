@@ -739,7 +739,7 @@ class ApplicationController extends Controller
         // Get Employee Rank Limit 
         $employee = Employee::current()->first();
         $terms = Terms::getRankLimits($employee);
-        $gAmountLimit = GLimits::limit($EmpID);
+        $gAmountLimit = GLimits::limit($EmpID, $DB);
 
         if($totalGuaranteedAmount < $gAmountLimit->Amount){
             // Total guaranteed amount of active accounts
