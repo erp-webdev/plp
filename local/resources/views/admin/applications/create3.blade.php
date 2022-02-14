@@ -15,7 +15,7 @@
                 </span>
             </div>
             <div class="modal-body">
-                <table id="search_employee_table" class="table">
+                <table id="search_employee_table" class="table table-hover table-striped">
                     <thead>
                         <tr>
                             <th>EmpID</th>
@@ -149,10 +149,11 @@
 <script>
     var search_input = '';
 
-    function setApprover(EmpID, Name, DB){
-        $('#' + search_input + "_by").val(EmpID);
-        $('#' + search_input + "_name").val(Name);
-        $('#' + search_input + "_dbname").val(DB);
+    function setApprover(event){
+        var data = $(event).data('empid');
+        $('#' + search_input + "_by").val($(event).data('empid'));
+        $('#' + search_input + "_name").val($(event).data('name'));
+        $('#' + search_input + "_dbname").val($(event).data('db'));
     }
 
     function search(){
@@ -164,16 +165,15 @@
                 $('#search_employee_table tbody').html('');
 
                 $.each(response, function (index, item) { 
-                    var empid = item['EmpID'];
-                    var name = item['FullName'];
-                    var db = item['DBNAME'];
 
                     $('#search_employee_table tbody').append(
-                    '<tr onclick="setApprover()">' +
+                    '<tr onclick="setApprover(this)" data-empid="'+ item['EmpID'] +'" data-db="'+ item['DBNAME'] +'" data-name="'+ item['FullName'] +'">' +
                         "<td>" + item['EmpID'] + "</td>" +
                         "<td>" + item['FullName'] + "</td>" +
                     "</tr>"
                     );
+
+                    $('#search_employee').modal('hide');
                 });                 
             }
         });

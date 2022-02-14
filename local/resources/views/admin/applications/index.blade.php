@@ -21,6 +21,7 @@
                     </div>
                 </div>
             @endif
+			
             <div class="table-responsive">
             	<div class="form-horizontal ">
 					<div class="form-group col-xs-12 col-sm-2 col-md-2">
