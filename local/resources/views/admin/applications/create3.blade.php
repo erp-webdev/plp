@@ -154,6 +154,8 @@
         $('#' + search_input + "_by").val($(event).data('empid'));
         $('#' + search_input + "_name").val($(event).data('name'));
         $('#' + search_input + "_dbname").val($(event).data('db'));
+
+        $('#search_employee').modal('hide');
     }
 
     function search(){
@@ -172,8 +174,6 @@
                         "<td>" + item['FullName'] + "</td>" +
                     "</tr>"
                     );
-
-                    $('#search_employee').modal('hide');
                 });                 
             }
         });
