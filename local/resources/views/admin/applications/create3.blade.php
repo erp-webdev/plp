@@ -154,7 +154,7 @@
         var data1 = $(event).data('name');
         var data2 = $(event).data('db');
         $('#' + search_input + "_by").val($(event).data('empid'));
-        $('#' + search_input + "_name").val($(event).data('name'));
+        $('#' + search_input + "_name").html($(event).data('name'));
         $('#' + search_input + "_dbname").val($(event).data('db'));
 
         $('#search_employee').modal('hide');
