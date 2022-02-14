@@ -150,9 +150,6 @@
     var search_input = '';
 
     function setApprover(event){
-        var data = $(event).data('empid');
-        var data1 = $(event).data('name');
-        var data2 = $(event).data('db');
         $('#' + search_input + "_by").val($(event).data('empid'));
         $('#' + search_input + "_name").html($(event).data('name'));
         $('#' + search_input + "_dbname").val($(event).data('db'));
