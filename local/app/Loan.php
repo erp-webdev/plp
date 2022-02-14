@@ -19,7 +19,7 @@ class Loan extends Model
 
     public function scopeEmployee($query, $employee)
     {
-        dd($employee->DBNAME);
+        dd($employee->employee_id);
     	return $query->where('EmpID', $employee->employee_id)
             ->where('DBNAME', $employee->DBNAME);
     }
