@@ -52,8 +52,6 @@ class ApplicationController extends Controller
                     // ->orderBy('ctrl_no', 'desc')
                     // ->paginate($show);
 
-        dd($employee);
-
     	return view('admin.applications.index')
                 ->withLoans($loans)
                 ->withUtils($this->utils);
