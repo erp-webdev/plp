@@ -19,9 +19,13 @@ class Loan extends Model
 
     public function scopeEmployee($query, $employee)
     {
-        dd($employee->employee_id);
-    	return $query->where('EmpID', $employee->employee_id)
+        if($this->table == 'viewLoan')
+    	    return $query->where('EmpID', $employee->EmpID)
+                ->where('DBNAME', $employee->DBNAME);
+        
+        return $query->where('EmpID', $employee->employee_id)
             ->where('DBNAME', $employee->DBNAME);
+
     }
 
     public function scopeYearly($query)
