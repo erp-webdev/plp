@@ -127,6 +127,7 @@
                                     max="<?php echo $terms->max_loan_amount; ?>" 
                                     value="
                                     <?php
+                                    dd(old('loan_amount'));
                                         if(!empty(old('loan_amount')))
                                             echo old('loan_amount');
                                         else
