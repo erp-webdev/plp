@@ -60,7 +60,7 @@
                             <input type="number" name="loan_amount" class="form-control" 
                                     min="<?php echo $terms->min_loan_amount; ?>" 
                                     max="<?php echo $terms->max_loan_amount; ?>" 
-                                    value="{{ round($loan->loan_amount, 0) }}" 
+                                    value="{{ old('loan_amount') or round($loan->loan_amount, 0) }}" 
                                     step="500"
                                     required>
                             <span class="help-block">You are qualified up to {{ number_format($terms->max_loan_amount, 2, '.', ',') }}</span>
@@ -68,14 +68,18 @@
                     </tr>
                     <tr>
                         <th>PURPOSE</th>
-                        <td><input type="text" class="form-control" name="purpose" value="{{ $loan->purpose }}" required></td>
+                        <td><input type="text" class="form-control" name="purpose"  value="{{ old('purpose') or $loan->purpose }}" required></td>
                     </tr>
                     <tr>
                         <th>ENDORSED BY</th>
                         <td>
                             <div class="input-group">
                                 <input type="text" class="form-control" id="endorsed_by" name="endorsed_by" 
-                                value="{{ !empty($endorser) ? $endorser->SIGNATORYID1 : '' }}" readonly>
+                                value="
+                                
+                                {{ !empty($endorser) ? $endorser->SIGNATORYID1 : '' }}
+                                
+                                " readonly>
                                 <span class="input-group-btn">
                                     <a class="btn btn-default" data-toggle="modal" data-target="#search_employee" onclick="search_input = 'endorsed'"><i class="fa fa-search"></i> Search</a>
                                 </span>    

@@ -94,12 +94,30 @@
                         </td>
                     </tr>
                     <tr>
-                        <td><label for=""><input type="radio" name="special" value="0" checked required> REGULAR</label></td>
-                        <td><label for=""><input type="radio" name="special" value="1" required> SPECIAL</label></td>
+                        <td><label for=""><input type="radio" name="special" 
+                            value="0" 
+                            <?php
+                                if(!empty(old('special'))){
+                                    if(old('special') == 0)
+                                        echo 'checked';
+                                }else{
+                                    echo 'checked';
+                                }
+                            ?>
+                            required> REGULAR</label></td>
+                        <td><label for=""><input type="radio" name="special" 
+                            value="1" 
+                            <?php
+                                if(!empty(old('special'))){
+                                    if(old('special') == 1)
+                                        echo 'checked';
+                                }
+                            ?>
+                            required> SPECIAL</label></td>
                     </tr>
                     <tr>
                         <th>LOCAL / DIRECT LINE</th>
-                        <td><input type="text" name="local" class="form-control" required></td>
+                        <td><input type="text" name="local" class="form-control" value="{{ old('local') }}" required></td>
                     </tr>
                     <tr>
                         <th>LOAN AMOUNT</th>
