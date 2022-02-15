@@ -89,7 +89,7 @@
                                         }
                                             
                                     ?>
-                                    required> NEW</label> </td>
+                                    required> {{ $loan->type }} NEW</label> </td>
                         <td>
                         <label for="">
                             <input id="type" name="type" type="radio" 
