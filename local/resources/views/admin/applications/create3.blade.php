@@ -138,7 +138,7 @@
                     </tr>
                     <tr>
                         <th>LOCAL / DIRECT LINE</th>
-                        <td><input type="text" name="local" class="form-control" value="{{ $loan->local or old('local') }}" required></td>
+                        <td><input type="text" name="local" class="form-control" value="{{ $loan->local_dir_line or old('local') }}" required></td>
                     </tr>
                     <tr>
                         <th>LOAN AMOUNT</th>
