@@ -37,9 +37,9 @@ return [
 		'minimum'	=> 'Loan amount below minimum loanable!',
 		'maximum'	=> 'Loan amount above maximum loanable!',
 		'active'  	=> 'Employee is not found or has been deactivated!',
-		'guarantor' => 'Invalid Guarantor. Guarantor may not be active, regular employee, one of your signatories or may have a standing balance.',
+		'guarantor' => 'Invalid Guarantor. Guarantor should be regular employee or one of your signatories or may have a standing balance.',
 		'guaranteed_amount' => 'Specified guarantor has insufficient amount that can be guaranteed on your application.',
-		'endorser' 	=> 'Invalid Endorser. Endorser may not be active, regular employee or one of your signatories.',
+		'endorser' 	=> 'Invalid Endorser. Endorser should be regular employee or one of your signatories.',
 		'arExists' 	=> 'Failed to update deductions. AR # already exists from our records.',
 	],
 
