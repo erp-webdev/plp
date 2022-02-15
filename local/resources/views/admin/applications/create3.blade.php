@@ -77,7 +77,10 @@
                                 <input id="type" name="type" type="radio" 
                                     value="0" 
                                     <?php 
-                                        if(!empty(old('type'))){
+                                        if(!empty($loan->type)){
+                                            if($loan->type == 0)
+                                                echo 'checked';
+                                        }elseif(!empty(old('type'))){
                                             if(old('type') == 0)
                                                 echo 'checked';
                                         } elseif($records == 0 )
@@ -90,7 +93,10 @@
                             <input id="type" name="type" type="radio" 
                             value="1" 
                             <?php 
-                                if(!empty(old('type'))){
+                                if(!empty($loan->type)){
+                                    if($loan->type == 1)
+                                        echo 'checked';
+                                }elseif(!empty(old('type'))){
                                     if(old('type') == 1)
                                         echo 'checked';
                                 } elseif($records != 0 )
@@ -106,7 +112,10 @@
                         <td><label for=""><input type="radio" name="special" 
                             value="0" 
                             <?php
-                                if(!empty(old('special'))){
+                                if(!empty($loan->special)){
+                                    if($loan->special == 0)
+                                        echo 'checked';
+                                }elseif(!empty(old('special'))){
                                     if(old('special') == 0)
                                         echo 'checked';
                                 }else{
@@ -117,7 +126,10 @@
                         <td><label for=""><input type="radio" name="special" 
                             value="1" 
                             <?php
-                                if(!empty(old('special'))){
+                                if(!empty($loan->special)){
+                                    if($loan->special == 1)
+                                        echo 'checked';
+                                }if(!empty(old('special'))){
                                     if(old('special') == 1)
                                         echo 'checked';
                                 }
@@ -126,7 +138,7 @@
                     </tr>
                     <tr>
                         <th>LOCAL / DIRECT LINE</th>
-                        <td><input type="text" name="local" class="form-control" value="{{ old('local') }}" required></td>
+                        <td><input type="text" name="local" class="form-control" value="{{ $loan->local or old('local') }}" required></td>
                     </tr>
                     <tr>
                         <th>LOAN AMOUNT</th>
