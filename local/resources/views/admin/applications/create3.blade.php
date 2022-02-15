@@ -89,7 +89,7 @@
                                         }
                                             
                                     ?>
-                                    required> {{ $loan->type }} NEW</label> </td>
+                                    required>{{ var_dump(empty($loan->type)) }} NEW</label> </td>
                         <td>
                         <label for="">
                             <input id="type" name="type" type="radio" 
