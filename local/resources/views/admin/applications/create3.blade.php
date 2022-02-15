@@ -78,7 +78,7 @@
                                     value="0" 
                                     <?php 
                                         if(isset($loan->type)){
-                                            if($loan->type == false)
+                                            if($loan->type == 0)
                                                 echo 'checked';
                                         }else{
                                             if(!empty(old('type'))){
