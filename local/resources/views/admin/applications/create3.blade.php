@@ -78,7 +78,7 @@
                                     value="0" 
                                     <?php 
                                         var_dump($loan->type);
-                                        if(isset($loan->type) ){
+                                        if(isset($loan->type)){
                                             if($loan->type == 0)
                                                 echo 'checked';
                                         }else{
