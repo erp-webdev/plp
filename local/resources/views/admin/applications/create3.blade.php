@@ -61,7 +61,16 @@
             <table class="table">
                 <tbody>
                     <tr>
-                        <td colspan="2"><h3>APPLICATION FORM</h3></td>
+                        <td colspan="2"><h3>APPLICATION FORM
+                            <span style="font-size: 14px; font-weight: normal">
+                                @if(isset($loan))
+                                    {!! $utils->formatStatus($loan->status) !!}
+                                @endif
+                            </span>   
+                            @if(isset($loan))
+                                <h4><?php if(isset($loan)) if($loan->ctrl_no != '0000') echo 'Ctrl No: '. $loan->ctrl_no; ?></h4>
+                            @endif 
+                        </h3></td>
                     </tr>
                     <tr>
                         <td><label for="">
