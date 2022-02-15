@@ -163,6 +163,12 @@
                             <span class="help-block">You are qualified up to {{ number_format($terms->max_loan_amount, 2, '.', ',') }}</span>
                         </td>
                     </tr>
+
+                    @if(isset($loan->id))
+                    <tr>
+                        <td></td>
+                    </tr>
+                    @endif
                     <tr>
                         <th>PURPOSE</th>
                         <td><input type="text" class="form-control" name="purpose" value="{{ $loan->purpose or old('purpose') }}" required></td>
