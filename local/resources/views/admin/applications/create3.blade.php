@@ -77,7 +77,7 @@
                                 <input id="type" name="type" type="radio" 
                                     value="0" 
                                     <?php 
-                                        if(!empty($loan->type) || $loan->type == 0 ){
+                                        if(!empty($loan->type) ){
                                             if($loan->type == 0)
                                                 echo 'checked';
                                         }else{
