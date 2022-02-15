@@ -40,7 +40,7 @@
                         <td colspan="2"><h3>APPLICATION FORM</h3></td>
                     </tr>
                     <tr>
-                        <td><label for=""><input id="type" name="type" type="radio" value="0" {{ $loan->type == 0 ? 'checked' : '' }} required> NEW</label> </td>
+                        <td><label for=""><input id="type" name="type" type="radio" value="0" data-test="{{ $loan->type }}" {{ $loan->type == 0 ? 'checked' : '' }} required> NEW</label> </td>
                         <td>
                         <label for=""><input id="type" name="type" type="radio" value="1" {{ $loan->type == 1 ? 'checked' : '' }} required> RE-AVAILMENT</label>    
                             <br> <span>Previous loan amount: {{ number_format($previous_loan, 2, '.', ',') }}</span>
