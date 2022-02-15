@@ -74,8 +74,9 @@
                     </tr>
                     <tr>
                         <td><label for="">
-                                <input id="type" name="type" type="radio" 
+                                <input id="type" name="type"  type="radio" 
                                     value="0" 
+                                    data-test="{{ $loan->type }}"
                                     <?php 
                                         if(isset($loan->type)){
                                             if($loan->type == 0)
