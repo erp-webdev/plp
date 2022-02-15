@@ -77,7 +77,7 @@
                                 <input id="type" name="type" type="radio" 
                                     value="0" 
                                     <?php 
-                                        if(!empty($loan->type)){
+                                        if(!empty($loan->type) || $loan->type == 0 ){
                                             if($loan->type == 0)
                                                 echo 'checked';
                                         }else{
@@ -89,7 +89,7 @@
                                         }
                                             
                                     ?>
-                                    required>{{ var_dump(empty($loan->type)) }} NEW</label> </td>
+                                    required> NEW</label> </td>
                         <td>
                         <label for="">
                             <input id="type" name="type" type="radio" 
