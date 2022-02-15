@@ -379,6 +379,8 @@ class ApplicationController extends Controller
     public function create_loan(Request $request)
     {
         $loan = new Loan();
+        if(!empty($request->id))
+            $loan = Loan::find($request->id);
 
         // Interest percentage
         $interest = Preference::name('interest');
