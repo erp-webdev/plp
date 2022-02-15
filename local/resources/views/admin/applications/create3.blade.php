@@ -167,7 +167,13 @@
                         <td>
                             <div class="input-group">
                                 <input type="text" class="form-control" id="endorsed_by" name="endorsed_by" 
-                                value="{{ !empty($endorser) ? $endorser->SIGNATORYID1 : '' }}" readonly>
+                                value="<?php 
+                                    if(!empty($loan->endorser_EmpID)){
+                                        echo $loan->endorser_EmpID;
+                                    }else if(!empty($endorser)){
+                                        echo $endorser->SIGNATORYID1;
+                                    }
+                                ?>" readonly>
                                 <span class="input-group-btn">
                                     <a class="btn btn-default" data-toggle="modal" data-target="#search_employee" onclick="search_input = 'endorsed'"><i class="fa fa-search"></i> Search</a>
                                 </span>    
