@@ -160,7 +160,7 @@
                     </tr>
                     <tr>
                         <th>PURPOSE</th>
-                        <td><input type="text" class="form-control" name="purpose" value="{{ old('purpose') }}" required></td>
+                        <td><input type="text" class="form-control" name="purpose" value="{{ $loan->purpose or old('purpose') }}" required></td>
                     </tr>
                     <tr>
                         <th>ENDORSED BY</th>
