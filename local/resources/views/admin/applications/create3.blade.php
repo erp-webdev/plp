@@ -179,8 +179,20 @@
                                 </span>    
                             </div>
                             <input type="hidden" class="form-control" id="endorsed_dbname" name="endorsed_dbname" 
-                                value="{{ !empty($endorser) ? $endorser->SIGNATORYDB1 : '' }}">
-                            <span id="endorsed_name">{{ !empty($endorser) ? $endorser->SIGNATORY1 : '' }}</span>    
+                                value="<?php 
+                                if(!empty($loan->endorser_dbname)){
+                                    echo $loan->endorser_dbname;
+                                }else if(!empty($endorser)){
+                                    echo $endorser->SIGNATORYDB1;
+                                }
+                            ?>">
+                            <span id="endorsed_name"><?php 
+                                if(!empty($loan->endorser_FullName)){
+                                    echo $loan->endorser_FullName;
+                                }else if(!empty($endorser)){
+                                    echo $endorser->SIGNATORY1;
+                                }
+                            ?></span>    
                         </td>
                     </tr>
                     <tr>
@@ -188,14 +200,32 @@
                         <td>
                             <div class="input-group">
                                 <input type="text" class="form-control" id="guarantor_by" name="guarantor_by" 
-                                value="{{ !empty($guarantor) ? $guarantor->SIGNATORYID1 : '' }}" readonly>
+                                value="<?php 
+                                if(!empty($loan->guarantor_EmpID)){
+                                    echo $loan->guarantor_EmpID;
+                                }else if(!empty($guarantor)){
+                                    echo $guarantor->SIGNATORYID1;
+                                }
+                            ?>" readonly>
                                 <span class="input-group-btn">
                                     <a class="btn btn-default" data-toggle="modal" data-target="#search_employee" onclick="search_input = 'guarantor'"><i class="fa fa-search"></i> Search</a>
                                 </span>    
                             </div>
                             <input type="hidden" class="form-control" id="guarantor_dbname" name="guarantor_dbname" 
-                                value="{{ !empty($guarantor) ? $guarantor->SIGNATORYDB1 : '' }}">
-                            <span id="guarantor_name">{{ !empty($guarantor) ? $guarantor->SIGNATORY1 : '' }}</span>    
+                                value="<?php 
+                                if(!empty($loan->guarantor_EmpID)){
+                                    echo $loan->guarantor_EmpID;
+                                }else if(!empty($guarantor)){
+                                    echo $guarantor->SIGNATORYDB1;
+                                }
+                            ?>">
+                            <span id="guarantor_name"><?php 
+                                if(!empty($loan->guarantor_FullName)){
+                                    echo $loan->guarantor_FullName;
+                                }else if(!empty($guarantor)){
+                                    echo $guarantor->SIGNATORY1;
+                                }
+                            ?></span>    
                         </td>
                     </tr>
                     <tr>
