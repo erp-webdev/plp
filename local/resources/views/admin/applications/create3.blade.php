@@ -125,7 +125,8 @@
                             <input type="number" name="loan_amount" class="form-control" 
                                     min="<?php echo $terms->min_loan_amount; ?>" 
                                     max="<?php echo $terms->max_loan_amount; ?>" 
-                                    value="{{ round($terms->max_loan_amount, 0) }}" 
+                                    value="
+                                    {{ old('loan_amount') or round($terms->max_loan_amount, 0) }}" 
                                     step="500"
                                     required>
                             <span class="help-block">You are qualified up to {{ number_format($terms->max_loan_amount, 2, '.', ',') }}</span>
@@ -133,7 +134,7 @@
                     </tr>
                     <tr>
                         <th>PURPOSE</th>
-                        <td><input type="text" class="form-control" name="purpose" value="" required></td>
+                        <td><input type="text" class="form-control" name="purpose" value="{{ old('purpose') }}" required></td>
                     </tr>
                     <tr>
                         <th>ENDORSED BY</th>
