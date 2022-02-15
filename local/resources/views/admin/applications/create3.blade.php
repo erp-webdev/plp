@@ -126,7 +126,13 @@
                                     min="<?php echo $terms->min_loan_amount; ?>" 
                                     max="<?php echo $terms->max_loan_amount; ?>" 
                                     value="
-                                    {{ old('loan_amount') or round($terms->max_loan_amount, 0) }}" 
+                                    <?php
+                                        if(!empty(old('loan_amount')))
+                                            echo old('loan_amount');
+                                        else
+                                            echo round($terms->max_loan_amount, 0);
+                                    ?>
+                                    " 
                                     step="500"
                                     required>
                             <span class="help-block">You are qualified up to {{ number_format($terms->max_loan_amount, 2, '.', ',') }}</span>
