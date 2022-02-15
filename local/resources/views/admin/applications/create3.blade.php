@@ -147,7 +147,9 @@
                                     min="<?php echo $terms->min_loan_amount; ?>" 
                                     max="<?php echo $terms->max_loan_amount; ?>" 
                                     value="<?php 
-                                        if(!empty(old('loan_amount')))
+                                        if(!empty($loan->loan_amount)){
+                                            echo $loan->loan_amount;
+                                        }elseif(!empty(old('loan_amount')))
                                             echo old('loan_amount');
                                         else
                                             echo round($terms->max_loan_amount, 0); ?>" 
