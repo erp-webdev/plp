@@ -80,11 +80,13 @@
                                         if(!empty($loan->type)){
                                             if($loan->type == 0)
                                                 echo 'checked';
-                                        }elseif(!empty(old('type'))){
-                                            if(old('type') == 0)
+                                        }else{
+                                            if(!empty(old('type'))){
+                                                if(old('type') == 0)
+                                                    echo 'checked';
+                                            } elseif($records == 0 )
                                                 echo 'checked';
-                                        } elseif($records == 0 )
-                                            echo 'checked';
+                                        }
                                             
                                     ?>
                                     required> NEW</label> </td>
@@ -96,11 +98,13 @@
                                 if(!empty($loan->type)){
                                     if($loan->type == 1)
                                         echo 'checked';
-                                }elseif(!empty(old('type'))){
-                                    if(old('type') == 1)
+                                }else{
+                                    if(!empty(old('type'))){
+                                        if(old('type') == 1)
+                                            echo 'checked';
+                                    } elseif($records != 0 )
                                         echo 'checked';
-                                } elseif($records != 0 )
-                                    echo 'checked';
+                                }
                                     
                             ?> 
                             required> RE-AVAILMENT</label>    
@@ -272,43 +276,7 @@
                 </tbody>
             </table>
         </div>
-        <div class="col-md-6 col-sm-6">
-            <table class="table">
-                <tbody>
-                    <tr>
-                        <th colspan="2"><h3>EMPLOYEE INFORMATION</h3></th>
-                    </tr>
-                    <tr>
-                        <th>NAME</th>
-                        <td>{{ $employee->FullName }}</td>
-                    </tr>
-                    <tr>
-                        <th>EMPLOYEE NO.</th>
-                        <td>{{ $employee->EmpID }}</td>
-                    </tr>
-                    <tr>
-                        <th>POSITION</th>
-                        <td>{{ $employee->PositionDesc }}</td>
-                    </tr>
-                    <tr>
-                        <th>DEPARTMENT</th>
-                        <td>{{ $employee->DeptDesc }}</td>
-                    </tr>
-                    <tr>
-                        <th>DATE HIRED</th>
-                        <td>{{ date('j F Y', strtotime($employee->HireDate)) }}</td>
-                    </tr>
-                    <tr>
-                        <th>REGULARIZATION DATE</th>
-                        <td>{{ date('j F Y', strtotime($employee->PermanencyDate)) }}</td>
-                    </tr>
-                    <tr>
-                        <th>YEARS IN THE COMPANY</th>
-                        <td>{{ (int)($employee->tenure / 12) }} years, {{ $employee->tenure%12 }} months</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+        
     </div>
 </form>
 <script>
