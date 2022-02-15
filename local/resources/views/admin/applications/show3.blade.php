@@ -1,5 +1,4 @@
 @extends('admin.layouts.app')
-
 @section('content')
 <div id="search_employee" class="modal fade-in">
     <div class="modal-dialog">
@@ -16,7 +15,7 @@
                 </span>
             </div>
             <div class="modal-body">
-                <table id="search_employee_table" class="table">
+                <table id="search_employee_table" class="table table-hover table-striped">
                     <thead>
                         <tr>
                             <th>EmpID</th>
@@ -53,7 +52,7 @@
                     </tr>
                     <tr>
                         <th>LOCAL / DIRECT LINE</th>
-                        <td><input type="text" name="local" class="form-control" required></td>
+                        <td><input type="text" name="local" class="form-control" value="{{ $loan->local_dir_line }}" required></td>
                     </tr>
                     <tr>
                         <th>LOAN AMOUNT</th>
@@ -61,13 +60,15 @@
                             <input type="number" name="loan_amount" class="form-control" 
                                     min="<?php echo $terms->min_loan_amount; ?>" 
                                     max="<?php echo $terms->max_loan_amount; ?>" 
-                                    value="{{ $terms->max_loan_amount }}" required>
+                                    value="{{ round($loan->loan_amount, 0) }}" 
+                                    step="500"
+                                    required>
                             <span class="help-block">You are qualified up to {{ number_format($terms->max_loan_amount, 2, '.', ',') }}</span>
                         </td>
                     </tr>
                     <tr>
                         <th>PURPOSE</th>
-                        <td><input type="text" class="form-control" name="purpose" value="" required></td>
+                        <td><input type="text" class="form-control" name="purpose" value="{{ $loan->purpose }}" required></td>
                     </tr>
                     <tr>
                         <th>ENDORSED BY</th>
@@ -148,10 +149,12 @@
 <script>
     var search_input = '';
 
-    function setApprover(EmpID, Name, DB){
-        $('#' + search_input + "_by").val(EmpID);
-        $('#' + search_input + "_name").val(Name);
-        $('#' + search_input + "_dbname").val(DB);
+    function setApprover(event){
+        $('#' + search_input + "_by").val($(event).data('empid'));
+        $('#' + search_input + "_name").html($(event).data('name'));
+        $('#' + search_input + "_dbname").val($(event).data('db'));
+
+        $('#search_employee').modal('hide');
     }
 
     function search(){
@@ -163,12 +166,9 @@
                 $('#search_employee_table tbody').html('');
 
                 $.each(response, function (index, item) { 
-                    var empid = item['EmpID'];
-                    var name = item['FullName'];
-                    var db = item['DBNAME'];
 
                     $('#search_employee_table tbody').append(
-                    '<tr onclick="setApprover()">' +
+                    '<tr onclick="setApprover(this)" data-empid="'+ item['EmpID'] +'" data-db="'+ item['DBNAME'] +'" data-name="'+ item['FullName'] +'">' +
                         "<td>" + item['EmpID'] + "</td>" +
                         "<td>" + item['FullName'] + "</td>" +
                     "</tr>"

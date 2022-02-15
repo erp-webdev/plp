@@ -1,5 +1,30 @@
 @extends('admin.layouts.app')
 @section('content')
+@if(count($errors)>0)
+    <div class="col-xs-12 col-sm-12 col-md-12">
+        <div class="alert alert-danger col-xs-12 col-sm-5 col-md-5">
+            <strong>Attention!</strong><br><br>
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    </div>    
+@endif
+@if ($message = Session::get('success'))
+    <div class="col-xs-12 col-sm-12 col-md-12">
+        <div class="alert alert-success">
+            <p>{{ $message }}</p>
+        </div>
+    </div>
+@elseif ($message = Session::get('error'))
+    <div class="col-xs-12 col-sm-12 col-md-12">
+        <div class="alert alert-danger">
+            <p>{{ $message }}</p>
+        </div>
+    </div>
+@endif
 <div id="search_employee" class="modal fade-in">
     <div class="modal-dialog">
         <div class="modal-content">

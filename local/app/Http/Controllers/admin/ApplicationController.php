@@ -116,7 +116,7 @@ class ApplicationController extends Controller
                     ->withGuarantor($guarantor)
                     ->withUtils(new Utils());
         }else{
-            return view('admin.applications.show')->withLoan($loan)
+            return view('admin.applications.show3')->withLoan($loan)
                 ->withUtils(new Utils());
         }
     }
@@ -390,6 +390,8 @@ class ApplicationController extends Controller
 
         $loan->loan_amount = $request->loan_amount;
         $loan->local_dir_line = $request->local;
+
+        $loan->purpose = $request->purpose;
 
         if($request->special == 1){
             // Special Loan, no interest at 2 years payment
