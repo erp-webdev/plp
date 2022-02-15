@@ -127,10 +127,7 @@
                                     max="<?php echo $terms->max_loan_amount; ?>" 
                                     value="
                                     <?php
-                                        if(!empty(old('loan_amount')))
-                                            echo old('loan_amount');
-                                        else
-                                            echo round($terms->max_loan_amount, 0);
+                                        echo round($terms->max_loan_amount, 0);
                                     ?>
                                     " 
                                     step="500"
