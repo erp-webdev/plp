@@ -80,24 +80,29 @@ class ApplicationController extends Controller
         $interest = Preference::name('interest');
         // Employee Term Limits
         $terms = Terms::getRankLimits($employee);
+        $special_loan = SpecialTerm::getRankLimits($employee);
         // Employee Standing balance
-        $balance = $this->getStandingBalance($loan->id);
+        $balance = $this->getStandingBalance();
+        // Previous loan application
+        $previous_loan = $this->getPreviousLoan();
         // Allowable # of months
-        $months = $this->utils->getTermMonths();
-        if($records_this_year == 0)
-            $months = Preference::name('payment_term');
+        $months = 12;
+        if($records_this_year > 0)
+            $months = $this->utils->getTermMonths();
+            
+        $allow_max = Preference::name('allow_over_max');
 
         $endorser = $this->getEndorser();
-        if(count($endorser) > 0)
-            $endorser = $endorser->SIGNATORYID1;
-        else
-            $endorser = '';
+        // if(count($endorser) > 0)
+        //     $endorser = $endorser[0];
+        // else
+        //     $endorser = '';
 
         $guarantor = $this->getGuarantor();
-        if(count($guarantor) > 0)
-            $guarantor = $guarantor->SIGNATORYID1;
-        else
-            $guarantor = '';
+        // if(count($guarantor) > 0)
+        //     $guarantor = $guarantor[0];
+        // else
+        //     $guarantor = '';
 
         $allow_max = Preference::name('allow_over_max');
 
@@ -113,6 +118,7 @@ class ApplicationController extends Controller
                     ->with('records_this_year', $records_this_year)
                     ->with('overMax', $allow_max->value)
                     ->withEndorser($endorser)
+                    ->withPreviousLoan($previous_loan)
                     ->withGuarantor($guarantor)
                     ->withUtils(new Utils());
         }else{
