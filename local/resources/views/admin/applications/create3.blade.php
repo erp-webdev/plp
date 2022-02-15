@@ -64,9 +64,31 @@
                         <td colspan="2"><h3>APPLICATION FORM</h3></td>
                     </tr>
                     <tr>
-                        <td><label for=""><input id="type" name="type" type="radio" value="0" {{ $records == 0 ? 'checked' : '' }} required> NEW</label> </td>
+                        <td><label for="">
+                                <input id="type" name="type" type="radio" 
+                                    value="0" 
+                                    <?php 
+                                        if(!empty(old('type'))){
+                                            if(old('type') == 0)
+                                                echo 'checked';
+                                        } elseif($records == 0 )
+                                            echo 'checked';
+                                            
+                                    ?>
+                                    required> NEW</label> </td>
                         <td>
-                        <label for=""><input id="type" name="type" type="radio" value="1" {{ $records > 0 ? 'checked' : '' }} required> RE-AVAILMENT</label>    
+                        <label for="">
+                            <input id="type" name="type" type="radio" 
+                            value="1" 
+                            <?php 
+                                if(!empty(old('type'))){
+                                    if(old('type') == 1)
+                                        echo 'checked';
+                                } elseif($records != 0 )
+                                    echo 'checked';
+                                    
+                            ?> 
+                            required> RE-AVAILMENT</label>    
                             <br> <span>Previous loan amount: {{ number_format($previous_loan, 2, '.', ',') }}</span>
                             <br> <span>Balance: {{ number_format($balance, 2, '.', ',') }}</span>
                         </td>
