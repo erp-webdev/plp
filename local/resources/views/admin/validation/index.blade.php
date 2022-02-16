@@ -59,9 +59,9 @@
 					    </div>
 						<table class="table table-hover table-striped table-condensed">
 							<thead>
-								<th>Reference #</th>
 								<th>Control #</th>
 								<th>Employee</th>
+								<th>Department</th>
 								{{-- <th style="text-align: right">Loan Amount (Php)</th>
 								<th style="text-align: right">Total (Php)</th> --}}
 								<th>Action</th>
@@ -71,9 +71,9 @@
 
 								@foreach($loans as $item)
 									<tr>
-										<td>{{ $item->refno }}</td>
 										<td>{{ $item->ctrl_no }}</td>
 										<td>{{ $item->FullName	 }} <br>
+                                        <td>{{ $item->DeptDesc	 }} <br>
 										{{-- </td>
 										<td style="text-align: right">{{ number_format($item->loan_amount, 2, '.', ',') }}</td>
 										<td style="text-align: right">{{ number_format($item->total, 2, '.', ',') }}</td> --}}
