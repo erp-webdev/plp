@@ -34,9 +34,8 @@ class ValidationController extends Controller
         if(isset($_GET['search']))
             $search = $_GET['search'];
 
-    	$validations = Loan::notDenied()
-                        ->where('special', 1)
-                        ->status(1)
+    	$validations = Loan::where('special', 1)
+                        ->status(10)
                         ->whereNull('company_nurse')
                         ->search($search)
                         ->orderBy('id', 'desc')
