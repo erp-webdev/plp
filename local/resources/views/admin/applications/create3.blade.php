@@ -55,6 +55,7 @@
     </div>
 </div>
 <form class="form form-horizontal" action="{{ route('applications.store2') }}" method="post" >
+<input type="hidden" name="id" value="{{ $loan->id or '' }} ">
 <input type="hidden" name="_token" value="{{ csrf_token() }}">
     <div class="container-fluid">
         <div class="col-md-6 col-sm-6"> 
