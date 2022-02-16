@@ -216,6 +216,9 @@ class TreasuryController extends Controller
 
             // Check validity of terms based on Actual Start of Deduction on 2nd availment
             $term_expected = $this->utils->getTermMonths();
+            if($loan->special == 1)
+                $term_expected = 24;
+            
             if($records_this_year > 0){
                 if($loan->terms_month > $term_expected){
                     // If applied terms_month is more than the expected terms
