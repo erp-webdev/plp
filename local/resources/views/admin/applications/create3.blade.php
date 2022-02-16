@@ -115,7 +115,7 @@
                     </tr>
                     <tr>
                         <td><label for=""><input type="radio" id="special" name="special" 
-                            value="0" {{ ($loan->special) }}
+                            value="0" 
                             <?php
                                 
                                 if(isset($loan->special)){
