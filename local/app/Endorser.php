@@ -38,7 +38,11 @@ class Endorser extends Model
                     ->whereNotNull('company_nurse')
                     ->where('EmpID', Auth::user()->employee_id)
                     ->where('DBNAME', Auth::user()->DBNAME);
-                })->orWhere('special', 0);
+                })->orWhere(function($query){
+                    return $query->where('special', 1)
+                    ->where('EmpID', Auth::user()->employee_id)
+                    ->where('DBNAME', Auth::user()->DBNAME);
+                });
     }
 
     public function scopeForApproval($query)
