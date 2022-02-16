@@ -260,7 +260,7 @@ class LoanController extends Controller
     {
         $loan = Loan::findOrFail($id);
         $balance = Loan::where('EmpID', Auth::user()->employee_id)
-                        ->where('DBNAME', Auth::user()->DBNAME))
+                        ->where('DBNAME', Auth::user()->DBNAME)
                         ->whereNotIn('status', [0,8])
                         ->where('id', '<>', $id)
                         ->sum('balance');
