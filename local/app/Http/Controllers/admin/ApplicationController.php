@@ -352,7 +352,11 @@ class ApplicationController extends Controller
                 // Save and Submit
                 // $loan = Loan::find($request->id);
                 $loan->ctrl_no = $this->utils->generateCtrlNo();
-                $loan->status = 1;
+                if($loan->special == 1)
+                    $loan->status = 10;
+                else
+                    $loan->status = 1;
+
                 $loan->created_at = date('Y-m-d H:i:s');
                 $loan->save();
 
