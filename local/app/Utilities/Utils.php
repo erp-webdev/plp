@@ -68,7 +68,6 @@ class Utils
     {
         // Ctrl No: YYYY-MM-XXXX
         $loans = Loan::yearly()->count();
-        dd($loans);
         $loans = $loans + 1;
 
         return date('Y') . '-' . date('m') . '-' . str_pad($loans, 4, '0', STR_PAD_LEFT);
