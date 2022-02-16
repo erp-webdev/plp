@@ -97,12 +97,12 @@
 @section('scripts')
 <script type="text/javascript" src="{{ url('/assets/js/ApprovalCtrl.js') }}"></script>
 <script type="text/javascript">
-	var $showUrl = "{{ route('endorsements.show', 0) }}";
+	var $showUrl = "{{ route('validation.show', 0) }}";
 
 	function find() {
 		var $show = $('#show').val();
 		var $search = $('#search').val();
-		var $searchUrl = "{{ route('endorsements.index') }}" + "?show=" + $show + "&search=" + $search;
+		var $searchUrl = "{{ route('validation.index') }}" + "?show=" + $show + "&search=" + $search;
 		window.location.href = $searchUrl;
 	}
 </script> 
