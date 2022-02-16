@@ -129,17 +129,14 @@
                             ?>
                             required> REGULAR</label></td>
                         <td><label for=""><input type="radio" id="special" name="special" 
-                            value="1" 
-                            <?php
+                            value="1" <?php
                                 if(isset($loan->special)){
                                     if($loan->special == 1)
                                         echo 'checked';
                                 }if(!empty(old('special'))){
                                     if(old('special') == 1)
                                         echo 'checked';
-                                }
-                            ?>
-                            required> SPECIAL</label></td>
+                                } ?> required> SPECIAL</label></td>
                     </tr>
                     <tr>
                         <th>LOCAL / DIRECT LINE</th>
