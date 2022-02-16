@@ -616,7 +616,6 @@ class ApplicationController extends Controller
      * @return boolean
      *
      */
-    
     public function validateType($type, $id = 0)
     {
         return true;
@@ -727,7 +726,6 @@ class ApplicationController extends Controller
                     ->active()->regular()->first()))
             $valid = false;
 
-        dd($DB);
         // Guarantor must not be the employee him/herself
         if($EmpID == Auth::user()->employee_id)
             $valid = false;
