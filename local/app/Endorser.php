@@ -34,7 +34,7 @@ class Endorser extends Model
                 //             ->orWhereRaw('(select count(*) from guarantors where guarantors.eFundData_id = viewEndorser.eFundData_id) > 0'); 
                 // })
                 ->where(function($query){
-                    return $query-
+                    return $query
                     ->where('EmpID', Auth::user()->employee_id)
                     ->where('DBNAME', Auth::user()->DBNAME);
                 })->orWhere(function($query){
