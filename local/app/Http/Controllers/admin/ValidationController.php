@@ -79,6 +79,7 @@ class ValidationController extends Controller
             $loan_validation->company_nurse = Auth()->user()->name;
             $loan_validation->company_nurse_date = date('Y-m-d H:i:s');
             $loan_validation->company_nurse_status = 'VALID';
+            $loan_validation->status = 1;
             $loan_validation->save();
 
             Event::fire(new LoanCreated($loan_validation));
