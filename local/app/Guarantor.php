@@ -15,7 +15,8 @@ class Guarantor extends Model
     public function scopeGuarantors($query)
     {
     	return $query->whereRaw('eFundData_id in (select id from eFundData where status > 1)')
-    			->where('EmpID', Auth::user()->employee_id);
+    			->where('EmpID', Auth::user()->employee_id)
+                ->where('DBNAME', Auth::user()->DBNAME);
     }
 
     public function scopeForApproval($query)
