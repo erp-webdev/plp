@@ -96,13 +96,13 @@
 							<td>{{ $loan->cv_no }}</td>
 							<td>
 								@if(!empty($loan->cv_date))
-									{{ date('j F y', strtotime($loan->cv_date)) }}
+									{{ $loan->cv_date }}
 								@endif
 							</td>
 							<td>{{ $loan->check_no }}</td>
 							<td>
 								@if(!empty($loan->check_released))
-									{{ date('j F y', strtotime($loan->check_released)) }}
+									{{ $loan->check_released }}
 								@endif
 							</td>
 							<td>
