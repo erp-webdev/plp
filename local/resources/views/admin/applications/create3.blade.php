@@ -348,10 +348,10 @@
         }else{
             // special
             $('input[name="loan_amount"]')
-                .attr([
+                .attr({
                     'max' : {{ $special->max_loan_amount }},
                     'value' : {{ $special->max_loan_amount }}
-                ]);
+                });
 
             $('input[name="loan_amount"]').parent('td').find('.help-block')
                 .html('You are qualified up to ' +  {{ number_format($special->max_loan_amount, 2, '.', ',')
