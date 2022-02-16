@@ -42,7 +42,7 @@ class Endorser extends Model
                     return $query->where('special', 1)
                     ->where('EmpID', Auth::user()->employee_id)
                     ->where('DBNAME', Auth::user()->DBNAME);
-                });
+                })->where('status', '<>', 10);
     }
 
     public function scopeForApproval($query)
