@@ -47,7 +47,7 @@ function setWrapperStatus(){
 				</a>
 				@endpermission
 				@permission(['nurse'])
-				@if(\eFund\Loan::notDenied()->status(1)->where('special', 1)->whereNull('company_nurse')->count() > 0)
+				@if(\eFund\Loan::status(10)->where('special', 1)->whereNull('company_nurse')->count() > 0)
 				<a id="validationMenu" class="btn btn-primary sidebar-menu <?php if(Session::get('menu')=='validation') echo 'active'?>" role="button" href="{{ route('validation.index') }}">
 					<i class="fa fa-medkit pull-right"></i>
   					Special Validation 
