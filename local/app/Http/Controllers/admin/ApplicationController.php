@@ -703,7 +703,7 @@ class ApplicationController extends Controller
     {
         $employee = Employee::select('RankDesc')->current()->first();
         if($special == 0){
-            $terms = Terms::getRankLimits($emp);
+            $terms = Terms::getRankLimits($employee);
 
             if($amount > $terms->max_loan_amount)
                 return true;
