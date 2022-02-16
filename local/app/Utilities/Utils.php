@@ -194,7 +194,7 @@ class Utils
     {
         $label = 'default';
 
-        if(in_array($status, [1,2,3]))
+        if(in_array($status, [1,2,3, 10]))
             $label = 'info';
         else if(in_array($status, [4]))
             $label = 'primary';
