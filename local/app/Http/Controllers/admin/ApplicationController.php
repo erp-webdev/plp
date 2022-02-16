@@ -122,7 +122,9 @@ class ApplicationController extends Controller
                     ->withGuarantor($guarantor)
                     ->withUtils(new Utils());
         }else{
-            return view('admin.applications.show3')->withLoan($loan)
+            return view('admin.applications.show3')
+                ->withPreviousLoan($previous_loan)
+                ->withLoan($loan)
                 ->withUtils(new Utils());
         }
     }
