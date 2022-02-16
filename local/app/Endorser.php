@@ -21,7 +21,9 @@ class Endorser extends Model
     /**
      *
      * Select all endorsements that are for 
-     * approval, not denied by guarantors, and for the logged in employee
+     * approval, not denied by guarantors, 
+     * not for company nurse validation,
+     *  for the logged in employee
      *
      */
     public function scopeEndorsements($query)
@@ -31,7 +33,12 @@ class Endorser extends Model
                 //     $query->whereRaw('eFundData_id in (SELECT eFundData_id FROM guarantors WHERE status > 0)')
                 //             ->orWhereRaw('(select count(*) from guarantors where guarantors.eFundData_id = viewEndorser.eFundData_id) > 0'); 
                 // })
+                ->where(function($query){
+                    return $query->where('special', 1)
+                    ->whereNotNull('company_nurse');
+                })
                 ->where('EmpID', Auth::user()->employee_id);
+                ->where('DBNAME', Auth::user()->DBNAME);
     }
 
     public function scopeForApproval($query)
