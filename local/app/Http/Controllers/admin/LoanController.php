@@ -364,6 +364,7 @@ class LoanController extends Controller
         foreach ($loans as $loan) {
             // eFundData (Loan)
             $eFundData = new Loan();
+            if(isset($loan->ctrlno))
             if(empty($loan->ctrlno)){
                 // Create random id (5 chars)
                 $eFundData->ctrl_no = uniqid();
