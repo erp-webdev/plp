@@ -221,9 +221,8 @@ class TreasuryController extends Controller
                     // If applied terms_month is more than the expected terms
                     // Change loan terms and recompute deductions
                     $loan->terms_month = $term_expected;
-                    $interest = Preference::name('interest');
-                    $loan->total = $this->utils->getTotalLoan($loan->loan_amount, $interest->value, $term_expected);
-                    $loan->deductions = $this->utils->computeDeductions($loan->terms_month, $loan->loan_amount);
+                    $loan->total = $this->utils->getTotalLoan($loan->loan_amount, $loan->interest, $term_expected);
+                    $loan->deductions = $this->utils->computeDeductions($loan->terms_month, $loan->loan_amount, $loan->interest);
                     $loan->save();
 
                     // TODO: Notify Custodian
