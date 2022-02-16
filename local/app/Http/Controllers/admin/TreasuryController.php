@@ -222,7 +222,7 @@ class TreasuryController extends Controller
                     $loan->terms_month = $term_expected;
                     $interest = Preference::name('interest');
                     $loan->total = $this->utils->getTotalLoan($loan->loan_amount, $interest->value, $term_expected);
-                    $loan->deductions = $this->utils->computeDeductions($loan->term_mos, $loan->loan_amount);
+                    $loan->deductions = $this->utils->computeDeductions($loan->terms_month, $loan->loan_amount);
                     $loan->save();
 
                     // TODO: Notify Custodian
