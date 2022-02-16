@@ -79,7 +79,7 @@ class LoanController extends Controller
 
             // Loan Application Counts within the current year
             $records_this_year = Loan::where('EmpID', $loan->EmpID)
-                                    ->where('DBNAME', $loan->DBNAME))
+                                    ->where('DBNAME', $loan->DBNAME)
                                     ->where('id', '<>', $loan->id)
                                     ->yearly()
                                     ->notDenied()
