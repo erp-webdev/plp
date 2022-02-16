@@ -72,20 +72,24 @@ class LoanController extends Controller
             $loan = Loan::findOrFail((int)($id));
             $deductions = Deduction::where('eFundData_id', $loan->id)->orderBy('date')->get();
             $balance = Loan::where('EmpID', Auth::user()->employee_id)
+                        ->where('DBNAME', Auth::user()->DBNAME))
                         ->whereNotIn('status', [0,8])
                         ->where('id', '<>', $id)
                         ->sum('balance');
 
             // Loan Application Counts within the current year
             $records_this_year = Loan::where('EmpID', $loan->EmpID)
+                                    ->where('DBNAME', $loan->DBNAME))
                                     ->where('id', '<>', $loan->id)
                                     ->yearly()
                                     ->notDenied()
                                     ->count();
             // Employee Info
-            $employee = Employee::where('EmpID', $loan->EmpID)->first();
+            $employee = Employee::where('EmpID', $loan->EmpID)
+                            ->where('DBNAME', $loan->DBNAME)
+                            ->first();
             // Employee Term Limits
-            $terms = Terms::getRankLimits($employee->RankDesc);
+            $terms = Terms::getRankLimits($employee);
             // Allowable # of months
             $months = $this->utils->getTermMonths();
             if($records_this_year == 0)
@@ -256,6 +260,7 @@ class LoanController extends Controller
     {
         $loan = Loan::findOrFail($id);
         $balance = Loan::where('EmpID', Auth::user()->employee_id)
+                        ->where('DBNAME', Auth::user()->DBNAME))
                         ->whereNotIn('status', [0,8])
                         ->where('id', '<>', $id)
                         ->sum('balance');
