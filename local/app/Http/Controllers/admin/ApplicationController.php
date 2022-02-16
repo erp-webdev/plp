@@ -693,15 +693,25 @@ class ApplicationController extends Controller
             return false;
     }
 
-    public function validateMaxAmount($amount)
+    public function validateMaxAmount($amount, $special = 0)
     {
-        $emp = Employee::select('RankDesc')->current()->first();
-        $terms = Terms::getRankLimits($emp);
+        $employee = Employee::select('RankDesc')->current()->first();
+        if($special == 0){
+            $terms = Terms::getRankLimits($emp);
 
-        if($amount > $terms->max_loan_amount)
-            return true;
-        else
-            return false;
+            if($amount > $terms->max_loan_amount)
+                return true;
+            else
+                return false;
+        }else{
+            $terms = SpecialTerm::getRankLimits($employee);
+
+
+            if($amount > $terms->max_loan_amount)
+                return true;
+            else
+                return false;
+        }
     }
 
     public function validateEndorser($EmpID, $DB)
