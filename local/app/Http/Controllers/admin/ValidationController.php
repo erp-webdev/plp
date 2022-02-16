@@ -51,6 +51,7 @@ class ValidationController extends Controller
         try {
             $loan = Loan::findOrFail($id);
 
+            dd($loan->EmpID); 
             if($loan->EmpID != Auth::user()->employee_id)
                 abort(403);
 
