@@ -504,7 +504,6 @@ class ApplicationController extends Controller
         }
         
         // Guarantor
-        dd($request->guarantor_dbname);
         $guarantors = $this->getGuarantor();
         if($this->validateAboveMinAmount($request->loan_amount)){
             if(!$this->validateGuarantor($request->guarantor_by, $request->guarantor_dbname)){

@@ -236,7 +236,7 @@
                             <input type="hidden" class="form-control" id="guarantor_dbname" name="guarantor_dbname" 
                                 value="<?php 
                                 if(!empty($loan->guarantor_EmpID)){
-                                    echo $loan->guarantor_EmpID;
+                                    echo $loan->guarantor_dbname;
                                 }else if(!empty($guarantor)){
                                     echo $guarantor->SIGNATORYDB1;
                                 }
