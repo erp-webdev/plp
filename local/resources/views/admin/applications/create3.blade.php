@@ -167,7 +167,9 @@
                     @if(isset($loan->loan_amount))
                     <tr>
                         <th>TOTAL LOAN AMOUNT</th>
-                        <td><strong>{{  number_format($loan->loan_amount, 2, '.', ',') }} </strong> x <strong>{{ $loan->interest }}% </strong> interest x <strong>{{ $loan->terms_month }}</strong> months = <strong>{{ number_format($loan->total, 2, ',', '.')}}</strong>
+                        <td><strong>{{ $loan->interest }}% </strong> interest <br>
+                            <strong>{{ $loan->terms_month }}</strong> terms (months) <br>
+                            <h4>{{ number_format($loan->total, 2, ',', '.')}}</h4>
                         </td>
                     </tr>
                     <tr>

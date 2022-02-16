@@ -511,14 +511,15 @@ class ApplicationController extends Controller
             else
                 if(!$this->validateGuaranteedAmount($request->guarantor_by, $request->guarantor_dbname, $request->loan_amount))
                     array_push($errors, trans('loan.validation.guaranteed_amount'));
-            else if(!in_array($request->guarantor_by, [$guarantors->SIGNATORYID1,
-            $guarantors->SIGNATORYID2,
-            $guarantors->SIGNATORYID3,
-            $guarantors->SIGNATORYID4,
-            $guarantors->SIGNATORYID5,
-            $guarantors->SIGNATORYID6])){
-                // Check expected against inputted guarantor
-                array_push($errors, trans('loan.validation.guarantor'));
+            else 
+                if(!in_array($request->guarantor_by, [$guarantors->SIGNATORYID1,
+                    $guarantors->SIGNATORYID2,
+                    $guarantors->SIGNATORYID3,
+                    $guarantors->SIGNATORYID4,
+                    $guarantors->SIGNATORYID5,
+                    $guarantors->SIGNATORYID6])){
+                    // Check expected against inputted guarantor
+                    array_push($errors, trans('loan.validation.guarantor'));
             }
         }
 
