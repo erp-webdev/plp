@@ -1,4 +1,4 @@
-<form class="form-horizontal table-responsive" style="font-size: 12px" action="{{ route('endorsements.approve') }}" method="post">
+<form class="form-horizontal table-responsive" style="font-size: 12px" action="{{ route('validation.approve') }}" method="post">
     <input type="hidden" name="_token" value="{{ csrf_token() }}">
     <input type="number" name="id" value="{{ $loan->id }}" style="display: none">
     <div class="modal-header">

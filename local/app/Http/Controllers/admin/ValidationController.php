@@ -71,7 +71,6 @@ class ValidationController extends Controller
         if(isset($_POST['approve'])){
 
             $loan_validation = Loan::findOrFail($request->id);
-            dd($loan_validation);
             if($loan_validation->EmpID != Auth::user()->employee_id)
                 abort(403);
 
