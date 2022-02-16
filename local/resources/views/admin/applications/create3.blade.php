@@ -164,9 +164,14 @@
                         </td>
                     </tr>
 
-                    @if(isset($loan->id))
+                    @if(isset($loan->loan_amount))
                     <tr>
-                        <td></td>
+                        <td>Total Loan Amount</td>
+                        <td>{{  number_format($loan->loan_amount, 2, '.', ',') }} x {{ $loan->interest }}% interest x {{ $loan->terms_month }} months = {{ number_format($loan->total, 2, ',', '.')}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Payroll Deduction</td>
                     </tr>
                     @endif
                     <tr>
