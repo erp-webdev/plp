@@ -15,7 +15,7 @@ use eFund\Events\LoanDenied;
 use eFund\Events\EndorsementApproved;
 use eFund\Http\Controllers\Controller;
 
-class EndorsementController extends Controller
+class ValidationController extends Controller
 {
 	function __construct()
 	{
