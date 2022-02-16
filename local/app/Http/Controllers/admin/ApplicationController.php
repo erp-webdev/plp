@@ -426,7 +426,8 @@ class ApplicationController extends Controller
 
         $loan->deductions = $this->utils->computeDeductions(
                 $loan->terms_month, 
-                $request->loan_amount);
+                $request->loan_amount,
+                $loan->interest);
 
         $loan->status = $this->utils->setStatus();
         $loan->save();

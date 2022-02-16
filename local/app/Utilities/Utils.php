@@ -364,9 +364,9 @@ class Utils
      * @return float
      *
      */
-    public function computeDeductions($terms, $loan)
+    public function computeDeductions($terms, $loan, $int)
     {
-    	$int = Preference::name('interest');
+    	// $int = Preference::name('interest');
     	return round( ($loan + ($loan * ($int->value/100) * $terms)) / ($terms * 2), 2); 
     }
 
