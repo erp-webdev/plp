@@ -46,6 +46,12 @@ function setWrapperStatus(){
   					Treasury 
 				</a>
 				@endpermission
+				@if(\eFund\Loan::notDenied()->status(1)->where('special', 1)->whereNull('company_nurse')->count() > 0)
+				<a id="validationMenu" class="btn btn-primary sidebar-menu <?php if(Session::get('menu')=='validation') echo 'active'?>" role="button" href="{{ route('validation.index') }}">
+					<i class="fa fa-thumbs-up pull-right"></i>
+  					Special Validation 
+				</a>
+				@endif
 				@if(\eFund\Endorser::endorsements()->count() > 0)
 				<a id="endorsementsMenu" class="btn btn-primary sidebar-menu <?php if(Session::get('menu')=='endorsements') echo 'active'?>" role="button" href="{{ route('endorsements.index') }}">
 					<i class="fa fa-thumbs-up pull-right"></i>
