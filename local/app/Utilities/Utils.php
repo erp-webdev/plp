@@ -18,7 +18,8 @@ class Utils
                         "For Cheque Release"              , // [6]
     					"Active Account"                  , // [7]
                         "Paid"                            , // [8]
-                        "Denied"                            // [9]
+                        "Denied"                          , // [9]
+                        "Company Nurse's Validation"        // [10]
     				 ];
 
     private $types  = [	"New",
@@ -115,6 +116,8 @@ class Utils
                 return 8;
             case 'denied':
                 return 9;
+            case 'nurse':
+                return 10;
             default: 
                 return 0;
         }

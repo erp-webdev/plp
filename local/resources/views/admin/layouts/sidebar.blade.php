@@ -65,7 +65,6 @@ function setWrapperStatus(){
 				<a id="guarantorMenu" class="btn btn-primary sidebar-menu <?php if(Session::get('menu')=='guarantors') echo 'active'?>" role="button" href="{{ route('guarantors.index') }}">
 					<i class="fa fa-money pull-right"></i>
   					Guarantors 
-
 				</a>
 				@endif
 				@permission(['custodian'])
