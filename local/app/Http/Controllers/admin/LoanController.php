@@ -72,7 +72,7 @@ class LoanController extends Controller
             $loan = Loan::findOrFail((int)($id));
             $deductions = Deduction::where('eFundData_id', $loan->id)->orderBy('date')->get();
             $balance = Loan::where('EmpID', Auth::user()->employee_id)
-                        ->where('DBNAME', Auth::user()->DBNAME))
+                        ->where('DBNAME', Auth::user()->DBNAME)
                         ->whereNotIn('status', [0,8])
                         ->where('id', '<>', $id)
                         ->sum('balance');
