@@ -120,6 +120,7 @@ class ApplicationController extends Controller
                     ->withEndorser($endorser)
                     ->withPreviousLoan($previous_loan)
                     ->withGuarantor($guarantor)
+                    ->withSpecial($special_loan)
                     ->withUtils(new Utils());
         }else{
             return view('admin.applications.show3')
