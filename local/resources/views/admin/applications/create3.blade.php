@@ -333,6 +333,11 @@
         });
     }
 
+    
+</script>
+@endsection
+@section('scripts')
+<script>
     $(document).on('click', '#special', function(event){
         if($(this).val() == 0){
             // regular
