@@ -3,7 +3,7 @@
 namespace eFund\Listeners;
 
 use eFund\Http\Controllers\admin\EmailController;
-
+use DB;
 use eFund\Events\LoanCreated;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
