@@ -47,8 +47,6 @@
 					<u>__✓__ </u><i><strong> NEW</strong></i></u>
 				@else
 					<u>__✓__ </u><i><strong> REAVAILMENT</strong></i>
-					<br> <span>Previous loan amount: </span>
-					<br> <span>Balance: </span>
 				@endif
 			</td>
 			<td>&nbsp;</td>
@@ -71,18 +69,16 @@
 					<td class="u">{{ $loan->PositionDesc }}</td>
 					<td><strong>DEPARTMENT</strong></td>
 					<td class="u">{{ $loan->DeptDesc }}</td>
-			</tr>
+				</tr>
 				<tr>
 					<td><strong>DATE HIRED</strong></td>
 					<td class="u">{{ $loan->HireDate }}</td>
-					<td><strong>No of Years in the company:</strong></td>
-					<td class="u"></td>
+					
 				</tr>
 				<tr>
 					<td><strong>EMPLOYMENT REGULARIZATION DATE</strong></td>
 					<td class="u">{{ $loan->PermanencyDate }}</td>
-					<td><strong>PURPOSE:</strong></td>
-					<td class="u">{{ $loan->purpose }}</td>
+					
 				</tr>
 				<tr>
 					<td><strong>LOAN AMOUNT</strong></td>
