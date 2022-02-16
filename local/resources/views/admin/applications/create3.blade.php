@@ -173,7 +173,7 @@
                     <tr>
                         <th>PAYROLL DEDUCTION</th>
                         <td>
-                            <strong>{{ $loan->terms_month * 2 }}</strong> payroll x <strong>{{ number_format($loan->deductions, 2, '.', ',') }} per cutoff</strong> 
+                            <strong>{{ $loan->terms_month * 2 }}</strong> payroll x <strong>{{ number_format($loan->deductions, 2, '.', ',') }} </strong> per cutoff
                         </td>
                     </tr>
                     @endif
