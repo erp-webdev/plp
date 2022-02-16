@@ -49,13 +49,13 @@ class ValidationController extends Controller
     public function show($id)
     {
         try {
-            $endorsement = Endorser::findOrFail($id);
+            $loan = Loan::findOrFail($id);
 
-            if($endorsement->EmpID != Auth::user()->employee_id)
+            if($loan->EmpID != Auth::user()->employee_id)
                 abort(403);
 
-            return view('admin.endorsements.loanApproval')
-                ->withLoan($endorsement)
+            return view('admin.validation.validation')
+                ->withLoan($loan)
                 ->withUtils($this->utils);
         } catch (Exception $e) {
             abort(500);
