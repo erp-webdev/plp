@@ -72,7 +72,7 @@ class GuarantorController extends Controller
                 abort(403);
 
             return view('admin.guarantors.approval')
-                ->withLoan($guarantor)
+                ->withLoan($loan)
                 ->withTerms($terms)
                 ->withLimits($limits)
                 ->withUtils($this->utils);
