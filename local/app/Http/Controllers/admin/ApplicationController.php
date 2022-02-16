@@ -489,7 +489,7 @@ class ApplicationController extends Controller
         // Maximum Loan amount
         $allow_over_max = Preference::name('allow_over_max');
         if($allow_over_max->value != 1)
-            if($this->validateMaxAmount($request->loan_amount))
+            if($this->validateMaxAmount($request->loan_amount, $request->special))
                 array_push($errors, trans('loan.validation.maximum'));
 
         // Endorser
