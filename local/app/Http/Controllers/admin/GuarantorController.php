@@ -58,7 +58,7 @@ class GuarantorController extends Controller
             $guarantor = Guarantor::findOrFail($id);
             $loan = Loan::findOrFail($guarantor->eFundData_id);
             $employee = Employee::where('EmpID', $loan->EmpID)
-                            where('DBNAME', $loan->DBNAME)->first();
+                            ->where('DBNAME', $loan->DBNAME)->first();
             $terms = Terms::getRankLimits($employee);
 
             $limits = GLimits::limit($guarantor->EmpID, $guarantor->DBNAME);
