@@ -77,7 +77,7 @@ class ValidationController extends Controller
 
             $loan_validation->company_nurse = Auth()->user()->name;
             $loan_validation->company_nurse_date = date('Y-m-d H:i:s');
-            $loan_validation->company_nurse_status = 'VALID'
+            $loan_validation->company_nurse_status = 'VALID';
             $loan_validation->save();
 
             Event::fire(new LoanCreated($loan_validation));
@@ -97,7 +97,7 @@ class ValidationController extends Controller
 
             $loan_validation->company_nurse = Auth()->user()->name;
             $loan_validation->company_nurse_date = date('Y-m-d H:i:s');
-            $loan_validation->company_nurse_status = 'INVALID'
+            $loan_validation->company_nurse_status = 'INVALID';
             $loan_validation->save();
 
             $loan_validation->status = $this->utils->setStatus($this->utils->getStatusIndex('denied'));
