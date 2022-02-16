@@ -337,10 +337,10 @@
         if($(this).val() == 0){
             // regular
             $('input[name="loan_amount"]')
-                .attr([
+                .attr({
                     'max' : {{ $terms->max_loan_amount }},
                     'value' : {{ $terms->max_loan_amount }}
-                ]);
+                });
 
             $('input[name="loan_amount"]').parent('td').find('.help-block')
                 .html('You are qualified up to ' +  {{ number_format($terms->max_loan_amount, 2, '.', ',') }})
