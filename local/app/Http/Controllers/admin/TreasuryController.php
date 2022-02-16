@@ -47,6 +47,7 @@ class TreasuryController extends Controller
 
     	$loans = Loan::notDenied()
                     ->where('status', '>=' ,$this->utils->getStatusIndex('treasury'))
+                    ->where('status', '<>', 10)
                     ->where(function($query) use ($key, $search){
                         $searchRange = '';
 
