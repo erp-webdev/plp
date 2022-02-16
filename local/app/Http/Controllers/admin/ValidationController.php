@@ -14,6 +14,7 @@ use eFund\Utilities\Utils;
 use eFund\Events\LoanDenied;
 use eFund\Events\EndorsementApproved;
 use eFund\Http\Controllers\Controller;
+use eFund\Events\LoanCreated;
 
 class ValidationController extends Controller
 {
@@ -67,46 +68,44 @@ class ValidationController extends Controller
     {
         DB::beginTransaction();
         if(isset($_POST['approve'])){
-            $endorsement = Endorser::findOrFail($request->id);
-            if($endorsement->EmpID != Auth::user()->employee_id)
+            $loan_validation = Loan::findOrFail($request->id);
+            if($loan_validation->EmpID != Auth::user()->employee_id)
                 abort(403);
 
-            if($endorsement->signed_at != '--')
+            if(!empty(trim($loan_validation->company_nurse)))
                 return redirect()->back()->withSuccess(trans('loan.application.approved2'));
 
-            $endorsement->refno = $this->utils->generateReference();
-            $endorsement->signed_at = date('Y-m-d H:i:s');
-            $endorsement->endorser_status = 1;
-            $endorsement->save();
+            $loan_validation->company_nurse = Auth()->user()->name;
+            $loan_validation->company_nurse_date = date('Y-m-d H:i:s');
+            $loan_validation->company_nurse_status = 'VALID'
+            $loan_validation->save();
 
-            $loan = Loan::findOrFail($endorsement->eFundData_id);
-            $loan->status = $this->utils->setStatus($this->utils->getStatusIndex('endorser'), $loan->guarantor_id);
-            $loan->save();
-
-            Event::fire(new EndorsementApproved($loan));
+            Event::fire(new LoanCreated($loan_validation));
             DB::commit();
-            return redirect()->route('endorsements.index')
+
+            return redirect()->route('validation.index')
                     ->withSuccess(trans('loan.application.approved'));
+
         }else if(isset($_POST['deny'])){
-                $endorsement = Endorser::findOrFail($request->id);
-                if($endorsement->EmpID != Auth::user()->employee_id)
-                    abort(403);
 
-                if($endorsement->signed_at != '--')
-                    return redirect()->back()->withSuccess(trans('loan.application.denied2'));
+            $loan_validation = Loan::findOrFail($request->id);
+            if($loan_validation->EmpID != Auth::user()->employee_id)
+                abort(403);
 
-                $endorsement->refno = $this->utils->generateReference();
-                $endorsement->endorser_status = 0;
-                $endorsement->signed_at = date('Y-m-d H:i:s');
-                $endorsement->save();
+            if(!empty(trim($loan_validation->company_nurse)))
+                return redirect()->back()->withSuccess(trans('loan.application.denied2'));
 
-                $loan = Loan::findOrFail($endorsement->eFundData_id);
-                $loan->status = $this->utils->setStatus($this->utils->getStatusIndex('denied'));
-                $loan->save();
+            $loan_validation->company_nurse = Auth()->user()->name;
+            $loan_validation->company_nurse_date = date('Y-m-d H:i:s');
+            $loan_validation->company_nurse_status = 'INVALID'
+            $loan_validation->save();
 
-                Event::fire(new LoanDenied($loan));
+            $loan_validation->status = $this->utils->setStatus($this->utils->getStatusIndex('denied'));
+            $loan_validation->save();
+
+            Event::fire(new LoanDenied($loan_validation));
             DB::commit();
-            return redirect()->route('endorsements.index')
+            return redirect()->route('validation.index')
                     ->withSuccess(trans('loan.application.denied'));
         }else{
             // Unknown function
