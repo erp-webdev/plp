@@ -621,7 +621,7 @@ class ApplicationController extends Controller
         // Loan Application Counts
         $employee = Employee::current()->first();
         $loans = Loan::employee($employee)->notDenied()->count();
-
+        dd($loans);
         if($type == 0){
             if($id == 0 && $loans == 0){
                 return true;
@@ -747,7 +747,6 @@ class ApplicationController extends Controller
         if(empty($totalGuaranteedAmount))
             $totalGuaranteedAmount = 0;
 
-        dd($totalGuaranteedAmount);
         // Get Employee Rank Limit 
         $employee = Employee::current()->first();
         $terms = Terms::getRankLimits($employee);
