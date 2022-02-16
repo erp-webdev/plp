@@ -343,7 +343,7 @@
                 });
 
             $('input[name="loan_amount"]').parent('td').find('.help-block')
-                .html('You are qualified up to ' +  {{ number_format($terms->max_loan_amount, 2, '.', ',') }})
+                .html('You are qualified up to ' +  '{{ number_format($terms->max_loan_amount, 2, '.', ',') }}')
 
         }else{
             // special
