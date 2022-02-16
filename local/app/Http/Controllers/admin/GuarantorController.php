@@ -87,7 +87,7 @@ class GuarantorController extends Controller
     {
         DB::beginTransaction();
         if(isset($_POST['approve'])){
-            $guarantor = Guarantor::where('eFundData_id', $request->id . 1)->firstOrFail();
+            $guarantor = Guarantor::where('eFundData_id', $request->id)->firstOrFail();
             dd($guarantor);
             if($guarantor->EmpID != Auth::user()->employee_id)
                 abort(403);
