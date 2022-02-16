@@ -349,7 +349,6 @@ class ApplicationController extends Controller
                 // $loan = Loan::find($request->id);
                 $loan->ctrl_no = $this->utils->generateCtrlNo();
                 $loan->status = $this->utils->setStatus($loan->status, $loan->guarantor_id);
-                dd($loan->status);
                 $loan->created_at = date('Y-m-d H:i:s');
                 $loan->save();
 
