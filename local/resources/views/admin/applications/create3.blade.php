@@ -168,7 +168,7 @@
                     <tr>
                         <th>TOTAL LOAN AMOUNT</th>
                         <td><strong style="font-size: 16px">{{ number_format($loan->total, 2, ',', '.')}}</strong>
-                            at <strong>{{ $loan->interest }}% </strong> interest in <strong>{{ $loan->terms_month }}</strong> (months) <br>
+                            at <strong>{{ $loan->interest }}% </strong> interest in <strong>{{ $loan->terms_month }}</strong> months <br>
                             
                         </td>
                     </tr>
