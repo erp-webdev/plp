@@ -508,8 +508,6 @@ class ApplicationController extends Controller
         if($this->validateAboveMinAmount($request->loan_amount)){
             if(!$this->validateGuarantor($request->guarantor_by, $request->guarantor_dbname)){
                 array_push($errors, trans('loan.validation.guarantor'));
-                dd('tsk');
-            
             }else
                 if(!$this->validateGuaranteedAmount($request->guarantor_by, $request->guarantor_dbname, $request->loan_amount))
                     array_push($errors, trans('loan.validation.guaranteed_amount'));
@@ -729,6 +727,9 @@ class ApplicationController extends Controller
                     ->active()->regular()->first()))
             $valid = false;
 
+        dd(Employee::where('EmpID', $EmpID)
+        ->where('DBNAME', $DB)
+        ->active()->regular()->first());
         // Guarantor must not be the employee him/herself
         if($EmpID == Auth::user()->employee_id)
             $valid = false;
