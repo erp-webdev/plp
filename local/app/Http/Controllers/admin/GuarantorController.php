@@ -39,7 +39,7 @@ class GuarantorController extends Controller
             $guarantors[$i]->FullName = $guarantors[$i]->FullName;
         }
 
-        $GLimit = GLimits::limit(Auth::user()->employee_id);
+        $GLimit = GLimits::limit(Auth::user()->employee_id, Auth::user()->DBNAME);
         $GAmount = Guarantor::guaranteedAmountLimit(Auth::user()->employee_id)->sum('guaranteed_amount');
 
         $GAmount = $GLimit->Amount - $GAmount;
