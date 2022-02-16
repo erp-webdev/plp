@@ -727,7 +727,7 @@ class ApplicationController extends Controller
                     ->active()->regular()->first()))
             $valid = false;
 
-        dd($EmpID);
+        dd($DB);
         // Guarantor must not be the employee him/herself
         if($EmpID == Auth::user()->employee_id)
             $valid = false;
