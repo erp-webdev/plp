@@ -332,5 +332,30 @@
             }
         });
     }
+
+    $('input[name="special"]').on('change', function () {
+        if($(this).val() == 0){
+            // regular
+            $('input[name="loan_amount"]')
+                .attr([
+                    'max' : {{ $terms->max_loan_amount }},
+                    'value' : {{ $terms->max_loan_amount }}
+                ]);
+
+            $('input[name="loan_amount"]').parent('td').find('.help-block')
+                .html('You are qualified up to ' +  {{ number_format($terms->max_loan_amount, 2, '.', ',') }})
+
+        }else{
+            // special
+            $('input[name="loan_amount"]')
+                .attr([
+                    'max' : {{ $special->max_loan_amount }},
+                    'value' : {{ $special->max_loan_amount }}
+                ]);
+
+            $('input[name="loan_amount"]').parent('td').find('.help-block')
+                .html('You are qualified up to ' +  {{ number_format($special->max_loan_amount, 2, '.', ',')
+        }
+    });
 </script>
 @endsection

@@ -184,7 +184,8 @@ class ApplicationController extends Controller
         ->withEndorser($endorser)
         ->withGuarantor($guarantor)
         ->withUtils(new Utils())
-        ->withPreviousLoan($previous_loan);
+        ->withPreviousLoan($previous_loan)
+        ->withSpecial($special_loan);
     }
 
 
