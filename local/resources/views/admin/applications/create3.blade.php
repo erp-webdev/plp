@@ -158,7 +158,14 @@
                                             echo round($terms->max_loan_amount, 0); ?>" 
                                     step="500"
                                     required>
-                            <span class="help-block">You are qualified up to {{ number_format($terms->max_loan_amount, 2, '.', ',') }}</span>
+                            <span class="help-block">You are qualified up to 
+                                @if(isset($loan->special)) 
+                                    {{ number_format($special->max_loan_amount, 2, '.', ',') }}
+                                @else
+                                    {{ number_format($terms->max_loan_amount, 2, '.', ',') }}
+                                @endif                                
+                            </span>
+
                         </td>
                     </tr>
 
