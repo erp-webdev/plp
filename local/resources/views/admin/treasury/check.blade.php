@@ -119,7 +119,7 @@
                     Check Date: <input name="check_released" type="date" id="datep" class="datepicker-range form-control input-sm " type="text" placeholder="mm/dd/yyyy">
                   </div>
                 @else
-                  Check Date: <strong>{{ date('j F y', strtotime($loan->check_released)) }}</strong>
+                  Check Date: <strong>{{ date('Y-m-d', strtotime($loan->check_released)) }}</strong>
                 @endif
               </div>
           @endif
