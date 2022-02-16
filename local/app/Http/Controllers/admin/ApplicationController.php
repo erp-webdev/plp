@@ -379,7 +379,6 @@ class ApplicationController extends Controller
     public function create_loan(Request $request)
     {
         $loan = new Loan();
-        dd($request->id);
         if(!empty($request->id))
             $loan = Loan::find($request->id);
 
