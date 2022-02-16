@@ -506,9 +506,11 @@ class ApplicationController extends Controller
         // Guarantor
         $guarantors = $this->getGuarantor();
         if($this->validateAboveMinAmount($request->loan_amount)){
-            if(!$this->validateGuarantor($request->guarantor_by, $request->guarantor_dbname))
+            if(!$this->validateGuarantor($request->guarantor_by, $request->guarantor_dbname)){
                 array_push($errors, trans('loan.validation.guarantor'));
-            else
+                dd('tsk');
+            
+            }else
                 if(!$this->validateGuaranteedAmount($request->guarantor_by, $request->guarantor_dbname, $request->loan_amount))
                     array_push($errors, trans('loan.validation.guaranteed_amount'));
             else 
@@ -520,7 +522,6 @@ class ApplicationController extends Controller
                     $guarantors->SIGNATORYID6])){
                     // Check expected against inputted guarantor
                     array_push($errors, trans('loan.validation.guarantor'));
-                    dd('tsk');
                 }
         }
 
