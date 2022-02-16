@@ -334,11 +334,11 @@ class ApplicationController extends Controller
             $guarantor = $this->create_guarantor($loan, $request->guarantor_by, $request->guarantor_dbname);
             $loan->guarantor_id = $guarantor->id;
 
-            if($request->special == 1){
-                // Create company nurse endorsement
-                $company_nurse = $this->create_company_nurse_endorsement($loan);
+            // if($request->special == 1){
+            //     // Create company nurse endorsement
+            //     $company_nurse = $this->create_company_nurse_endorsement($loan);
 
-            }
+            // }
             
             $loan->save();
             
@@ -451,9 +451,9 @@ class ApplicationController extends Controller
         return $guarantor;
     }
 
-    public function create_company_nurse_endorsement(Loan $loan, $nurse_empid, $nurse_dbname)
+    public function create_company_nurse_endorsement(Loan $loan)
     {
-        // TODO:
+        
     }
 
     public function  checkValidity($request)

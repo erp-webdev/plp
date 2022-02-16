@@ -9,7 +9,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use eFund\Http\Controllers\admin\NotificationController;
 
-class NotifyEndorser extends EmailController
+class NotifyCompanyNurse extends EmailController
 {
     /**
      * Create the event listener.
@@ -30,17 +30,20 @@ class NotifyEndorser extends EmailController
     public function handle(LoanCreated $event)
     {
         if($event->loan->special == 1){
-            // Skip Endorsement when Company Nurse has yet to validate the loan application
-            if(empty($event->loan->company_nurse))
+            if(!empty($event->loan->company_nurse))
                 return;
         }
 
         $args = ['loan' => $event->loan];
         // Notification
         $notif = new NotificationController();
-        $notif->notifyEndorser($event->loan);
 
-        $this->send($event->loan->endorser_EmpID, config('preferences.notif_subjects.created', 'Loan Application Notification'), 'emails.endorsement', $args, $cc = '');
+        $nurses = DB::table('viewUserPermissions')->where('permission', 'nurse')->get();
+        foreach($nurses as $nurse){
+            $notif->notifyCompanyNurse($event->loan, $nurse->employee_id);
+            $this->send($nurse->employee_id, config('preferences.notif_subjects.created', 'Special Loan Application Notification'), 'emails.nurse_validation', $args, $cc = '');
+        }
 
+        
     }
 }

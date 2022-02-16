@@ -64,6 +64,17 @@ class NotificationController extends Controller
    		$this->post($to, $title, $msg, $type);
    	}
 
+	// Company Nurse Validation
+   	public function notifyCompanyNurse($loan, $nurse_empid)
+   	{
+   		$to = $nurse_empid;
+   		$title = 'New special loan application for validation';
+   		$msg = 'A special loan application for your validation. Control no.: ' . $loan->ctrl_no;
+   		$type = $this->getType(0);
+
+   		$this->post($to, $title, $msg, $type);
+   	}
+
    	// Endorser
    	public function notifyEndorser($loan)
    	{
