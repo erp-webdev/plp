@@ -211,7 +211,7 @@ class TreasuryController extends Controller
     		$loan->save();
 
             // Loan Application Counts within the current year based on the application date
-            $records_this_year = Loan::employee()->yearly()->notDenied()->count();
+            $records_this_year = Loan::yearly()->notDenied()->count();
 
             // Check validity of terms based on Actual Start of Deduction on 2nd availment
             $term_expected = $this->utils->getTermMonths();
