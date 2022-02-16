@@ -108,7 +108,7 @@
       Php <input type="hidden" name="guaranteed_amount" style="width: 100px" min="{{ $gAmount }}" value="{{ $gAmount }}" max="" required>
       <strong style="font-size: 14px">{{ number_format($gAmount, 2, '.', ',') }}</strong>
     @else
-      <span>Php {{ number_format($loan->guaranteed_amount, 2, '.', ',') }}</span>
+      <strong style="font-size: 14px">{{ number_format($loan->guaranteed_amount, 2, '.', ',') }}</strong>
     @endif
     . As surety, I hereby authorize Megaworld Corporation to deduct from the salary, allowances, bonuses and other benefits without any need of prior notice, any outstanding balance of the Applicant's loan including interest and penalty until full payment thereof in case of applican's default, resignation, termination, dismissal or failure to pay amortization relating to the loan.</p>
     <button type="button" class="btn btn-default btn-sm" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
