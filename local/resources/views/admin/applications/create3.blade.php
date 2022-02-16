@@ -115,9 +115,9 @@
                     </tr>
                     <tr>
                         <td><label for=""><input type="radio" id="special" name="special" 
-                            value="0" 
+                            value="0" {{ (isset($loan->special)) }}
                             <?php
-                                dd(isset($loan->special));
+                                
                                 if(isset($loan->special)){
                                     if($loan->special == 0)
                                         echo 'checked';
