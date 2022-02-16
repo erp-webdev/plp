@@ -108,7 +108,7 @@
           @else
               <div class="col-xs-12 col-sm-12 col-md-12">
                 Check Voucher No.: <strong>{{ $loan->cv_no }}</strong> <br>
-                Check Voucher Date: {{ $loan->cv_date }}<strong>{{ date('Y-m-d', strtotime($loan->cv_date)) }}</strong><br>
+                Check Voucher Date: <strong>{{ $loan->cv_date }}</strong><br>
                 Check No.: <strong>{{ $loan->check_no }}</strong> <br>
                 @if(empty($loan->check_released))
                 <span class="bg-danger help-block">To be filled up only when check is already signed and ready for release.</span>
