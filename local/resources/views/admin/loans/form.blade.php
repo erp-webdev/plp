@@ -233,7 +233,7 @@
 <table>
 	<tr>
 		<td colspan="4">
-			<p>This is to certify that I, <u>{{ $loan->FullName }}</u>, received the amount of <u>{{ $utils->formatNumber($loan->loan_amount) }}</u> as loan from the Megaworld Employees Fund. I agree to all the Terms and Conditions written above.</p><br><br><br>
+			<p>This is to certify that I, <u>{{ $loan->FullName }}</u>, received the amount of <u>{{ $utils->formatNumber($loan->loan_amount) }}</u> as loan from the Megaworld Personal Loan Program. I have agreed to all the Terms and Conditions written above. Furthermore, I hereby acknowledge my obligation to pay my loan amortization as it fall due. If in case there is no deduction made from my salary, I will notify the personal loan program custodian immediately that I will pay via cash to Treasury Department. I am aware that any undeducted / unpaid amount due shall be subject to an interest rate of 1% per mo. and will become immediately due and demandable.</p><br><br><br>
 		</td>
 	</tr>
 	<tr>
