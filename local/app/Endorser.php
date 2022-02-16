@@ -33,14 +33,15 @@ class Endorser extends Model
                 //     $query->whereRaw('eFundData_id in (SELECT eFundData_id FROM guarantors WHERE status > 0)')
                 //             ->orWhereRaw('(select count(*) from guarantors where guarantors.eFundData_id = viewEndorser.eFundData_id) > 0'); 
                 // })
+                ->where('EmpID', Auth::user()->employee_id)
+                ->where('DBNAME', Auth::user()->DBNAME);
                 ->where(function($query){
-                    return $query
-                    ->where('EmpID', Auth::user()->employee_id)
-                    ->where('DBNAME', Auth::user()->DBNAME);
-                })->orWhere(function($query){
-                    return $query
-                    ->where('EmpID', Auth::user()->employee_id)
-                    ->where('DBNAME', Auth::user()->DBNAME);
+                    return $query->where(function($query){
+                        return $query->where('special', 1)
+                            ->whereNotNull('company_nurse');
+                    })->orWhere(function($query){
+                        return $query->where('special', 0);
+                    });
                 });
     }
 
