@@ -114,7 +114,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td><label for=""><input type="radio" name="special" 
+                        <td><label for=""><input type="radio" id="special" name="special" 
                             value="0" 
                             <?php
                                 if(!empty($loan->special)){
@@ -128,7 +128,7 @@
                                 }
                             ?>
                             required> REGULAR</label></td>
-                        <td><label for=""><input type="radio" name="special" 
+                        <td><label for=""><input type="radio" id="special" name="special" 
                             value="1" 
                             <?php
                                 if(!empty($loan->special)){
