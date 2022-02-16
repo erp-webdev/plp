@@ -16,7 +16,15 @@ class Guarantor extends Model
     {
     	return $query->whereRaw('eFundData_id in (select id from eFundData where status > 1)')
     			->where('EmpID', Auth::user()->employee_id)
-                ->where('DBNAME', Auth::user()->DBNAME);
+                ->where('DBNAME', Auth::user()->DBNAME)
+                ->where(function($query){
+                    return $query->where(function($query){
+                        return $query->where('special', 1)
+                            ->whereNotNull('company_nurse');
+                    })->orWhere(function($query){
+                        return $query->where('special', 0);
+                    });
+                });
     }
 
     public function scopeForApproval($query)
