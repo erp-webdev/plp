@@ -333,7 +333,7 @@
         });
     }
 
-    $('input[name="special"]').on('click', function () {
+    $(document).on('input[name="special"]', 'click', function(event)){
         if($(this).val() == 0){
             // regular
             $('input[name="loan_amount"]')
