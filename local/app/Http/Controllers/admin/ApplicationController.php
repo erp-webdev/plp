@@ -549,6 +549,7 @@ class ApplicationController extends Controller
     {
         $guarantor = DB::table('viewSignatories')->where('EmpID', Auth::user()->employee_id)->first();
         return $guarantor;
+
         $valid_signatories = [];
 
         // Creates a list of valid signatories
@@ -746,6 +747,7 @@ class ApplicationController extends Controller
         if(empty($totalGuaranteedAmount))
             $totalGuaranteedAmount = 0;
 
+        dd($totalGuaranteedAmount);
         // Get Employee Rank Limit 
         $employee = Employee::current()->first();
         $terms = Terms::getRankLimits($employee);
