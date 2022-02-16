@@ -520,7 +520,8 @@ class ApplicationController extends Controller
                     $guarantors->SIGNATORYID6])){
                     // Check expected against inputted guarantor
                     array_push($errors, trans('loan.validation.guarantor'));
-            }
+                    dd('tsk');
+                }
         }
 
         return $errors;
