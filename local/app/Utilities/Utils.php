@@ -555,9 +555,9 @@ class Utils
         if(str_contains(strtolower($rank_desc), 'rank'))
             return 'RF';
         else if(str_contains(strtolower($rank_desc), 'supervisor'))
-            return 'SC'
+            return 'SC';
         else if(str_contains(strtolower($rank_desc), 'manager'))
-            return 'MA'
+            return 'MA';
         else if(str_contains(strtolower($rank_desc), 'Assistant Vice President') ||
         		str_contains(strtolower($rank_desc), 'Senior Assistant Vice President'))
             return 'AVP';
