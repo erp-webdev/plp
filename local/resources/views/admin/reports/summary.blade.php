@@ -41,17 +41,17 @@
 				<td>{{ $loan->EmpID }}</td>
 				<td>{{ ucwords(strtolower($loan->FullName)) }}</td>
 				<td>{{ ucwords(strtolower($loan->guarantor_FullName)) }}</td>
-				<td>{{ date('m/d/Y', strtotime($loan->created_at)) }}</td>
+				<td>{{ empty($loan->created_at) ? '' : date('m/d/Y', strtotime($loan->created_at)) }}</td>
 				<td>{{ $loan->cv_no }}</td>
-				<td>{{ date('m/d/Y', strtotime($loan->cv_date)) }}</td>
+				<td>{{ empty($loan->cv_date) ? '' : date('m/d/Y', strtotime($loan->cv_date)) }}</td>
 				<td>{{ $loan->check_no }}</td>
-				<td>{{ date('m/d/Y', strtotime($loan->released)) }}</td>
+				<td>{{ empty($loan->released) ? '' : date('m/d/Y', strtotime($loan->released)) }}</td>
 				<td style="text-align: right">{{ $utils->formatNumber($loan->loan_amount) }}</td>
 				<td style="text-align: right">{{ $utils->formatNumber($loan->int_amount) }}</td>
 				<td style="text-align: right">{{ $utils->formatNumber($loan->total) }}</td>
 				<td>{{ $loan->terms_month }}</td>
 				<td style="text-align: right">{{ $utils->formatNumber($loan->deductions) }}</td>
-				<td>{{ date('m/d/Y', strtotime($loan->start_of_deductions)) }}</td>
+				<td>{{ empty($loan->start_of_deductions) ? '' : date('m/d/Y', strtotime($loan->start_of_deductions)) }}</td>
 				<td style="text-align: right">{{ $utils->formatNumber($loan->paid_amount) }}</td>
 				<td style="text-align: right">{{ $utils->formatNumber(round($loan->balance, 2)) }}</td>
 				<td>{{ $loan->remarks }}</td>
