@@ -765,10 +765,10 @@ class ApplicationController extends Controller
             $valid = false;
 
         // Guarantor must not be the same rank of the applicant
-        $endorser_rank = $this->utils->getRank($endorser->RankDesc);
-        $applicant_rank = $this->utils->getRank($endorser->RankDesc);
+        $guarantor_rank = $this->utils->getRank($guarantor->RankDesc);
+        $applicant_rank = $this->utils->getRank($guarantor->RankDesc);
 
-        if($endorser_rank == $applicant_rank)
+        if($guarantor_rank == $applicant_rank)
             $valid = false;
 
         return $valid;
