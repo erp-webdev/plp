@@ -122,7 +122,7 @@
 	        			<td class="l">CV Date</td>
 	        			<td>
 	        				@if(!empty($loan->cv_date))
-	        				{{ $loan->cv_date }}
+	        				{{  date('M d, Y', strtotime($loan->cv_date)) }}
 	        				@endif
 	        			</td>
 	        		</td>
@@ -140,7 +140,7 @@
 	        			<td class="l">Check’s Issue Date</td>
 	        			<td>
 	        				@if(!empty($loan->check_released))
-	        				{{ $loan->check_released }}
+	        				{{  date('M d, Y', strtotime($loan->check_released)) }}
 	        				@endif
 	        			</td>
 		      			<td>
@@ -209,7 +209,7 @@
 			      	<tr>
 			      		<td>
 			      			<td class="l">Start of Deduction</td>
-			      			<td> {{ date('M d Y', strtotime($loan->start_of_deductions)) }}		</td>
+			      			<td> {{ date('M d, Y', strtotime($loan->start_of_deductions)) }}		</td>
 			      		</td>
 			      		<td>
 			      			<td class="l">Total</td>
