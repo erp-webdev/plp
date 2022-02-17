@@ -34,8 +34,7 @@ class Ledger extends Model
 
     public function getCvDateAttribute($value)
     {
-        $dt = \DateTime::createFromFormat('M j Y H:i:s:A', $value);
-        return $dt->format('d-M-y') ;
+        return date('M d, Y', strtotime($value)) ;
         
         return date('d-M-y', strtotime($value));
     }
