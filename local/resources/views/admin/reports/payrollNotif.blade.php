@@ -32,7 +32,7 @@
 				<td style="text-align: left; ">{{ $loan->ctrl_no }}</td>
 				<td style="text-align: left">{{ $loan->EmpID }}</td>
 				<td style="text-align: left">{{ ucwords(strtolower($loan->FullName)) }}</td>
-				<td style="text-align: center">{{ date('m/d/Y', strtotime($loan->released)) }}</td>
+				<td style="text-align: center">{{ empty($loan->released) ? '' : date('m/d/Y', strtotime($loan->released)) }}</td>
 				<td style="text-align: right">{{ $utils->formatNumber($loan->total) }}</td>
 				<td style="text-align: center">{{ $loan->terms_month * 2 }}</td>
 				<td style="text-align: right">{{ $utils->formatNumber($loan->deductions) }}</td>
