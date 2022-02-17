@@ -51,7 +51,13 @@
 					<br> <span>Balance: </span>
 				@endif
 			</td>
-			<td>&nbsp;</td>
+			<td>
+				@if($loan->special == 0)
+				<u>__✓__ </u><i><strong> REGULAR</strong></i></u> 
+				@else
+				<u>__✓__ </u><i><strong> SPECIAL</strong></i></u> <br>
+				@endif
+			</td>
 			<td><strong>LOCAL/DIRECT LINE</strong></td>
 			<td class="u">{{ $loan->loc_direct_line }}</td>
 		</tr>
