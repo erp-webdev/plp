@@ -163,7 +163,7 @@
 		<td style="width: 25%"><strong>Start of Payment</strong></td>
 		<td style="width: 25%" class="u">
 		@if(!empty($loan->start_of_deductions))
-			{{ $utils->formatDate($loan->start_of_deductions) }}
+			{{ $loan->start_of_deductions }}
 		@endif
 		</td>
 		<td style="width: 25%"><strong>Every Payroll deduction</strong></td>
