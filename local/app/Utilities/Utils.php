@@ -547,5 +547,23 @@ class Utils
         return $last_cv_no->value;
     }
 
+    /**
+     * Get Employee rank level
+     */
+    public function getRank($rank_desc)
+    {
+        if(str_contains(strtolower($rank_desc), 'rank'))
+            return 'RF';
+        else if(str_contains(strtolower($rank_desc), 'supervisor'))
+            return 'SC'
+        else if(str_contains(strtolower($rank_desc), 'manager'))
+            return 'MA'
+        else if(str_contains(strtolower($rank_desc), 'Assistant Vice President') ||
+        		str_contains(strtolower($rank_desc), 'Senior Assistant Vice President'))
+            return 'AVP';
+        else
+            return 'VP';
+    }
+
 }
 

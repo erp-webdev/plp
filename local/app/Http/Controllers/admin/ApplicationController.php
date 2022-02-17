@@ -724,13 +724,26 @@ class ApplicationController extends Controller
     {
         $valid = true;
 
-        if(empty(Employee::where('EmpID', $EmpID)
+        $endorser = Employee::where('EmpID', $EmpID)
                     ->where('DBNAME', $DB)
-                    ->active()->regular()->first()))
+                    ->active()->regular()->first();
+
+        if(empty($endorser))
             $valid = false;
 
         // Endorser must not be the employee him/herself
         if($EmpID == Auth::user()->employee_id)
+            $valid = false;
+
+        $applicant = Employee::where('EmpID', Auth::user()->employee_id)
+                    ->where('DBNAME', Auth::user()->DBNAME)
+                    ->first();
+
+        // Endorser must not be the same rank of the applicant
+        $endorser_rank = $this->utils->getRank($endorser->RankDesc);
+        $applicant_rank = $this->utils->getRank($endorser->RankDesc);
+
+        if($endorser_rank == $applicant_rank)
             $valid = false;
 
         return $valid;
@@ -740,13 +753,22 @@ class ApplicationController extends Controller
     {
         $valid = true;
 
-        if(empty(Employee::where('EmpID', $EmpID)
+        $guarantor = Employee::where('EmpID', $EmpID)
                     ->where('DBNAME', $DB)
-                    ->active()->regular()->first()))
+                    ->active()->regular()->first();
+                    
+        if(empty($guarantor))
             $valid = false;
 
         // Guarantor must not be the employee him/herself
         if($EmpID == Auth::user()->employee_id)
+            $valid = false;
+
+        // Guarantor must not be the same rank of the applicant
+        $endorser_rank = $this->utils->getRank($endorser->RankDesc);
+        $applicant_rank = $this->utils->getRank($endorser->RankDesc);
+
+        if($endorser_rank == $applicant_rank)
             $valid = false;
 
         return $valid;
