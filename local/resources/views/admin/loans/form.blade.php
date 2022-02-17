@@ -248,7 +248,7 @@
 <table style="border: 0px solid black">
 	<tr>
 		<td style="width: 45%; text-align: right"><strong><small>THIS FORM CANNOT BE REPRODUCED.</small></strong></td>
-		<td style="width: 25%; text-align: center"><small>(REVISED 01/12/17)</small></td>
+		{{-- <td style="width: 25%; text-align: center"><small>(REVISED 01/12/17)</small></td> --}}
 	</tr>
 	<tr style="font-size: 9px">
 		<td>Printed at: {{ date('m/d/Y H:i:s') }}</td>
