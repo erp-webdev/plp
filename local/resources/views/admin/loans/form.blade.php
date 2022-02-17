@@ -181,7 +181,7 @@
 		<td><strong>Check Release Date:</strong></td>
 		<td>
 		@if(!empty($loan->check_released))
-			{{ $utils->formatDate($loan->check_released) }}
+			{{ $loan->check_released }}
 		@endif
 		</td>
 	</tr>
