@@ -209,16 +209,7 @@
 			      	<tr>
 			      		<td>
 			      			<td class="l">Start of Deduction</td>
-			      			<td> @if(!empty($loan->start_of_deductions))
-			      				 	<?php 
-
-			      				 		$dt = \DateTime::createFromFormat('M j Y H:i:s', $loan->start_of_deductions);
-								    	echo $dt->format('Y M j') ;
-
-			      				 	 ?>
-
-			      				 @endif
-			      			</td>
+			      			<td> {{ $loan->start_of_deductions or '' }}		</td>
 			      		</td>
 			      		<td>
 			      			<td class="l">Total</td>
