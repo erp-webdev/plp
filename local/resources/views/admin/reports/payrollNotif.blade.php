@@ -38,7 +38,7 @@
 				<td style="text-align: right">{{ $utils->formatNumber($loan->deductions) }}</td>
 				<td style="text-align: center">
 				@if(is_object($loan->start_of_deductions))
-					{{ date_format($loan->start_of_deductions, 'Y/m/d') }}
+					{{ $loan->start_of_deductions }}
 				@else
 					{{ date('Y/m/d', strtotime($loan->start_of_deductions)) }}
 				@endif
