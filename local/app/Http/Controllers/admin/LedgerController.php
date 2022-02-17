@@ -70,6 +70,7 @@ class LedgerController extends Controller
                             ->where('created_at', '>=', $from);
                     })
                     ->orderBy('ctrl_no', 'asc')
+                    ->orderBy('date', 'asc')
                     ->get();
 
         if(count($ledger) <= 0){
