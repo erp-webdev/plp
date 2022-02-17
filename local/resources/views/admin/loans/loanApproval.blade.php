@@ -212,7 +212,7 @@
 			      			<td> @if(!empty($loan->start_of_deductions))
 			      				 	<?php 
 
-			      				 		$dt = \DateTime::createFromFormat('M j Y H:i:s:A', $loan->start_of_deductions);
+			      				 		$dt = \DateTime::createFromFormat('M j Y H:i:s', $loan->start_of_deductions);
 								    	echo $dt->format('Y M j') ;
 
 			      				 	 ?>
