@@ -393,6 +393,7 @@ class ApplicationController extends Controller
 
         // Interest percentage
         $interest = Preference::name('interest');
+        $interest_special = Preference::name('interest');
         // Employee Term Limits
         $employee = Employee::current()->first();
         $terms = Terms::getRankLimits($employee);
