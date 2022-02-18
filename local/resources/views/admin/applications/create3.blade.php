@@ -90,10 +90,10 @@
                                         }
                                             
                                     ?>
-                                    readonly required>  NEW</label> </td>
+                                     required>  NEW</label> </td>
                         <td>
                         <label for="">
-                            <input id="type" name="type" type="radio" 
+                            <input id="type" name="type" readonly type="radio" 
                             value="1" 
                             <?php 
                                 if(isset($loan->type)){
