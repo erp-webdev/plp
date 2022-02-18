@@ -108,7 +108,7 @@
                                 }
                                     
                             ?> 
-                            readonly required> RE-AVAILMENT</label>    
+                            readonly="readonly" required> RE-AVAILMENT</label>    
                             <br> <span>Previous loan amount: {{ number_format($previous_loan, 2, '.', ',') }}</span>
                             <br> <span>Balance: {{ number_format($balance, 2, '.', ',') }}</span>
                         </td>
