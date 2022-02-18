@@ -12,6 +12,7 @@
     <link href="{{ url('/assets/css/bootstrap-tour.min.css') }}" rel="stylesheet">
     <link href="{{ url('/assets/css/jquery-ui.css') }}" rel="stylesheet">
     <link href="{{ url('/assets/css/daterangepicker.css') }}" rel="stylesheet">
+    <link href="{{ url('/assets/css/jquery.confirm.min.css') }}" rel="stylesheet">
     <script src="{{ url('/assets/js/angular.min.js') }}"></script>
     <style type="text/css">
         .daterangepicker.dropdown-menu{
