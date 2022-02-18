@@ -291,9 +291,9 @@
                     </tr>
                     <tr>
                         @if(isset($loan->id))
-                        <td colspan="2" class=""><button type="submit" name="submit" class="btn btn-primary pull-right">Submit</button></td>
+                        <td colspan="2" class=""><button type="button" name="submit" class="btn btn-primary pull-right btnSave">Submit</button></td>
                         @else
-                        <td colspan="2" class=""><button type="submit" name="verify" class="btn btn-primary pull-right">Continue</button></td>
+                        <td colspan="2" class=""><button type="button" name="verify" class="btn btn-primary pull-right btnSave">Continue</button></td>
                         @endif
                     </tr>
                 </tbody>

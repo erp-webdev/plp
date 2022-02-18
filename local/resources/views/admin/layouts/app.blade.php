@@ -53,6 +53,7 @@
     <script src="{{ url('/assets/js/functions.js') }}" ></script>
     <script src="{{ url('/assets/js/moment.js') }}" ></script>
     <script src="{{ url('/assets/js/daterangepicker.js') }}" ></script>
+    <script src="{{ url('/assets/js/jquery.confirm.min.js') }}" ></script>
     <script type="text/javascript">
         var username = "{{ Auth::user()->name }}";
     </script>
