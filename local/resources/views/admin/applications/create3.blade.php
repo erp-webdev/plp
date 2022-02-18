@@ -190,7 +190,15 @@
                     <tr>
                         <th>Terms</th>
                         <td>
-                            <input type="number" name="terms" class="form-control" min="1" max="{{ $months }}" value="{{ isset($loan->id) ? $loan->terms_month : isset(old('terms')) ? old('terms') : $months }}">
+                            <input type="number" name="terms" class="form-control" min="1" max="{{ $months }}" value="<?php
+                                    if(isset($loan->id))
+                                        echo $loan->terms_month;
+                                    else
+                                        if(isset(old('terms')))
+                                            echo old('terms');
+                                        else
+                                            echo $months;
+                                ?>">
                         </td>
                     </tr>
 
@@ -205,7 +213,7 @@
                     <tr>
                         <th>PAYROLL DEDUCTION*</th>
                         <td>
-                            <strong>{{ $loan->terms_month * 2 }}</strong> terms x <strong>{{ number_format($loan->deductions, 2, '.', ',') }} </strong> per cutoff <br>
+                            <strong>{{ $loan->terms_month * 2 }}</strong> terms x <strong>{{ number_format($loan->deductions, 2, '.', ',') }} </strong> per pay day <br>
                             <i>*Terms applied are subject to changes by the eFund Custodian, thus the *no. of payments and *payroll deductions may change as well.</i>
                         </td>
                     </tr>
