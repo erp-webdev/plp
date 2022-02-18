@@ -193,11 +193,12 @@
                             <input type="number" name="terms" class="form-control" min="1" max="{{ $months }}" value="<?php
                                     if(isset($loan->id))
                                         echo $loan->terms_month;
-                                    else
+                                    else{
                                         if(isset(old('terms')))
                                             echo old('terms');
                                         else
                                             echo $months;
+                                    }
                                 ?>">
                         </td>
                     </tr>
