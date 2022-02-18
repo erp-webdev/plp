@@ -75,6 +75,21 @@
                     </tr>
                     <tr>
                         <td><label for="">
+                                <input type="hidden" name="type" value="<?php 
+                                        if(isset($loan->type)){
+                                            if($loan->type == 0) echo 0;
+                                            else echo 1;
+                                        }else{
+                                            if(!empty(old('type'))){
+                                                if(old('type') == 0) echo 0;
+                                                else echo 1;
+                                            } else {
+                                                if($records == 0 ) echo 0;
+                                                else echo 1;
+                                            }
+                                        }
+                                            
+                                    ?>">
                                 <input id="type" name="type"  type="radio" 
                                     value="0" 
                                     <?php 
@@ -90,7 +105,7 @@
                                         }
                                             
                                     ?>
-                                    readonly required>  NEW</label> </td>
+                                    disabled required>  NEW</label> </td>
                         <td>
                         <label for="">
                             <input id="type" name="type" type="radio" 
@@ -108,7 +123,7 @@
                                 }
                                     
                             ?> 
-                            readonly="readonly" required> RE-AVAILMENT</label>    
+                            disabled required> RE-AVAILMENT</label>    
                             <br> <span>Previous loan amount: {{ number_format($previous_loan, 2, '.', ',') }}</span>
                             <br> <span>Balance: {{ number_format($balance, 2, '.', ',') }}</span>
                         </td>
