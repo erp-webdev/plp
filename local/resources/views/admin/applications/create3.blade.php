@@ -187,6 +187,12 @@
 
                         </td>
                     </tr>
+                    <tr>
+                        <th>Terms</th>
+                        <td>
+                            <input type="number" name="terms" class="form-control" min="1" max="{{ $months }}" value="{{ isset($loan->id) ? $loan->terms_month : isset(old('terms')) ? old('terms') : $months }}">
+                        </td>
+                    </tr>
 
                     @if(isset($loan->loan_amount))
                     <tr>
