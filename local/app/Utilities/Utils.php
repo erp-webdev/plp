@@ -335,10 +335,22 @@ class Utils
      * @return int
      *
      */
-    public function getTermMonths()
+    public function getTermMonths($application_type = 0, $special = 0)
     {
-    	// $mos = Preference::name('payment_term');
-     //    return $mos->value - date('n');
+    	$mos = Preference::name('payment_term');
+        $mos = $mos->value;
+    	$special_mos = Preference::name('payment_term_special');
+        $special_mos = $special_mos->value;
+
+        if($special == 1){
+            // Special Loan
+            return $special_mos;
+        }
+
+        if($application_type == 0){
+            // New application
+            return $mos;
+        }
 
         $day = date('d');
 
@@ -347,12 +359,12 @@ class Utils
             // End Of Month 
             // Get number of months remaining till December 31st. 
             // Usually ends with 15th of the month. 
-            return 12 - date('n') - 1;
+            return $mos - date('n') - 1;
         }
         else if($day >= 21 || $day <= 5){
             // 15th of the month
             // Get number of months remaining till December 31st.
-            return 12 - date('n');
+            return $mos - date('n');
         }
     }
 

@@ -91,7 +91,7 @@ class LoanController extends Controller
             // Employee Term Limits
             $terms = Terms::getRankLimits($employee);
             // Allowable # of months
-            $months = $this->utils->getTermMonths();
+            $months = $this->utils->getTermMonths($loan->type, $loan->special);
             if($records_this_year == 0)
                 $months = 12;
 

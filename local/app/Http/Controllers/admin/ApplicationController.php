@@ -88,7 +88,7 @@ class ApplicationController extends Controller
         // Allowable # of months
         $months = 12;
         if($records_this_year > 0)
-            $months = $this->utils->getTermMonths();
+            $months = $this->utils->getTermMonths($loan->type, $loan->special);
             
         $allow_max = Preference::name('allow_over_max');
 
@@ -155,7 +155,8 @@ class ApplicationController extends Controller
         // Previous loan application
         $previous_loan = $this->getPreviousLoan();
         // Allowable # of months
-        $months = 12;
+        $months = Preference::name('interest');
+        $months = $months->value;
         if($records_this_year > 0)
             $months = $this->utils->getTermMonths();
             
@@ -481,7 +482,7 @@ class ApplicationController extends Controller
                 array_push($errors, trans('loan.validation.availment'));
 
         // Terms
-        if(!$this->validateTerms($request->term_mos))
+        if(!$this->validateTerms($request->term_mos, $request->special))
             array_push($errors, trans('loan.validation.terms'));
 
         // Regular and Active Employee
@@ -651,12 +652,19 @@ class ApplicationController extends Controller
         }
     }
 
-    public function validateTerms($terms)
+    public function validateTerms($terms, $special = 0)
     {
+        /**
+         * Terms 
+         * For NEW appication can have 12 maximum months regardless of the year.
+         * For REAVAILMENT can have 12 maximum months but until the same year only.
+         */
+
         $employee = Employee::current()->first();
         $records_this_year = Loan::employee($employee)->yearly()->notDenied()->count();
-        $allowedMonths = $this->utils->getTermMonths();
-        if($records_this_year > 0)
+        $allowedMonths = $this->utils->getTermMonths($terms, $special);
+        
+        if($records_this_year > 0 || $special == 1)
             if($terms > $allowedMonths)
                 return false;
 
