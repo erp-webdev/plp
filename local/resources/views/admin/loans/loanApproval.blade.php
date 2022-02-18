@@ -92,7 +92,7 @@
 			      	@if($loan->guarantor_id != NULL)
 			      	<tr>
 			      		<td>
-			      			<td class="l">Guarantor</td>
+			      			<td class="l">Surety/Coborrower</td>
 			      			<td>{{ $loan->guarantor_FullName }}</td>
 			      		</td>
 			      		<td>

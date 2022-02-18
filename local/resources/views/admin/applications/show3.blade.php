@@ -74,7 +74,7 @@
 							<td>{{ $loan->endorser_FullName }}</td>
 						</tr>
 						<tr>
-							<td><label>Guarantor</label></td>
+							<td><label>Surety/Coborrower</label></td>
 							<td>{{ $loan->guarantor_FullName }}</td>
 						</tr>
 					</tbody>
