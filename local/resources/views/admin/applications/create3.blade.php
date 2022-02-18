@@ -188,7 +188,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <th>Terms</th>
+                        <th>Terms (Months)</th>
                         <td>
                             <input type="number" name="terms" class="form-control" min="1" max="{{ $months }}" value="<?php
                                     if(isset($loan->id))
