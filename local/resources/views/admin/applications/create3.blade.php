@@ -54,7 +54,7 @@
         </div>
     </div>
 </div>
-<form class="form form-horizontal" action="{{ route('applications.store2') }}" method="post" >
+<form  id="loanform" class="form form-horizontal" action="{{ route('applications.store2') }}" method="post" >
 <input type="hidden" name="id" value="{{ $loan->id or '' }} ">
 <input type="hidden" name="_token" value="{{ csrf_token() }}">
     <div class="container-fluid">
@@ -291,9 +291,9 @@
                     </tr>
                     <tr>
                         @if(isset($loan->id))
-                        <td colspan="2" class=""><button type="button" name="submit" class="btn btn-primary pull-right btnSave" data-title="Submit Application!" data-content="Are you sure you want to submit application?">Submit</button></td>
+                        <td colspan="2" class=""><button type="button" name="submit" class="btn btn-primary pull-right btnSave" data-title="Submit Application!" data-content="Are you sure you want to submit application?"  data-form="#loanform">Submit</button></td>
                         @else
-                        <td colspan="2" class=""><button type="button" name="verify" class="btn btn-primary pull-right btnSave" data-title="Verify and Continue Application!" data-content="Are you sure you want to verify and continue application?">Continue</button></td>
+                        <td colspan="2" class=""><button type="button" name="verify" class="btn btn-primary pull-right btnSave" data-title="Verify and Continue Application!" data-content="Are you sure you want to verify and continue application?" data-form="#loanform">Continue</button></td>
                         @endif
                     </tr>
                 </tbody>
