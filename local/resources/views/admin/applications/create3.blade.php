@@ -90,10 +90,10 @@
                                         }
                                             
                                     ?>
-                                     required>  NEW</label> </td>
+                                    readonly required>  NEW</label> </td>
                         <td>
                         <label for="">
-                            <input id="type" name="type" readonly type="radio" 
+                            <input id="type" name="type" type="radio" 
                             value="1" 
                             <?php 
                                 if(isset($loan->type)){
@@ -108,7 +108,7 @@
                                 }
                                     
                             ?> 
-                            readonly required> RE-AVAILMENT</label>    
+                            readonly="readonly" required> RE-AVAILMENT</label>    
                             <br> <span>Previous loan amount: {{ number_format($previous_loan, 2, '.', ',') }}</span>
                             <br> <span>Balance: {{ number_format($balance, 2, '.', ',') }}</span>
                         </td>
