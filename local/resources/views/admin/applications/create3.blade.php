@@ -194,7 +194,7 @@
                                     if(isset($loan->id))
                                         echo $loan->terms_month;
                                     else{
-                                        if(isset(old('terms')))
+                                        if(old('terms')==! null)
                                             echo old('terms');
                                         else
                                             echo $months;
