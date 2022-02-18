@@ -191,7 +191,7 @@
                     @if(isset($loan->loan_amount))
                     <tr>
                         <th>TOTAL LOAN AMOUNT</th>
-                        <td><strong style="font-size: 16px">{{ number_format($loan->total, 2, ',', '.')}}</strong>
+                        <td><strong style="font-size: 16px">{{ number_format($loan->total, 2, '.', ',')}}</strong>
                             at <strong>{{ $loan->interest }}% </strong> interest in <strong>{{ $loan->terms_month }}</strong> months <br>
                             
                         </td>
@@ -199,7 +199,7 @@
                     <tr>
                         <th>PAYROLL DEDUCTION*</th>
                         <td>
-                            <strong>{{ $loan->terms_month * 2 }}</strong> terms x <strong>{{ number_format($loan->deductions, 2, ',', '.') }} </strong> per cutoff <br>
+                            <strong>{{ $loan->terms_month * 2 }}</strong> terms x <strong>{{ number_format($loan->deductions, 2, '.', ',') }} </strong> per cutoff <br>
                             <i>*Terms applied are subject to changes by the eFund Custodian, thus the *no. of payments and *payroll deductions may change as well.</i>
                         </td>
                     </tr>
