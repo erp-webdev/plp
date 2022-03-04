@@ -34,13 +34,15 @@ class EmailController extends Controller
             $from = config('preferences.email_from');
             $utils = new Utils();
 
-            Mail::send($body, ['employee' => $emp, 'args' => $args, 'utils' => $utils], function($message) use ($to, $subject, $from, $cc){
+            $mail = Mail::send($body, ['employee' => $emp, 'args' => $args, 'utils' => $utils], function($message) use ($to, $subject, $from, $cc){
                 $message->to('kayag.global@megaworldcorp.com');
                 // $message->to($to);
                 $message->from($from);
                 $message->subject($subject);
                 // $message->cc($cc);
             });
+
+            dd($mail);
 
             $log = new Log();
             $log->writeOnly('Info', 'email', ['email' => $to, 'subject' => $subject]);
