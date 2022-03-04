@@ -201,3 +201,137 @@ $('.btnConfirm').on('click', function(event){
 	    }
 	});
 });
+
+function validate_required(form) {
+	var valid = true;
+	var tab = '';
+
+	//reset form-group
+	$(form).find('.has-error').removeClass('has-error');
+	// check all required inputs
+	$(form).find('.required').each(function(index, el){
+		var label = $(el).attr('for');
+		var input = $(el).parent('.form-group').find('.form-control');
+
+
+		// inputs must have value
+		$(input).each(function(i, inp){
+			if($.trim($(inp).val()) == ''){
+				valid = false;
+				console.log(label);
+				tab = $(el).closest('.tab-pane').attr('id');
+				// highlight element
+				$(inp).closest('.form-group').addClass('has-error');
+			}
+		});
+	});
+
+	//
+	// $(form).find('input[required=""]').each(function(i, el){
+	// 	var tab_ = $(el).closest('.tab-pane').attr('id');
+	// 	if(tab_ != '' && tab_ != undefined){
+
+	// 		if($.trim(el.value) == ''){
+	// 			valid = false;
+	// 				console.log($(el).attr('name'));
+	// 			tab = $(el).closest('.tab-pane').attr('id');
+	// 			$(el).addClass('has-error');
+	// 		}
+	// 	}
+	// });
+
+
+	if(!valid){
+		$.alert({
+		    title: 'Invalid Data',
+		    content: 'Check your inputs.',
+		});
+
+		// open tab with invalid data
+		$('.nav-tabs li[href="#' + tab + '"]').tab('show');
+		clickTab();
+	}
+
+	return valid;
+}
+
+// Validation of standard form with required inputs
+function validate_standard(form) {
+	var valid = true;
+	var tab = '';
+
+	//reset form-group
+	$(form).find('.has-error').parent('div').find('.select2-selection').removeAttr('Style');
+	$(form).find('.has-error').removeClass('has-error');
+	// check all required inputs
+	$(form).find('.required').each(function(index, el){
+		var label = $(el).attr('for');
+		var input = $(el).parent('.form-group').find('.form-control');
+
+
+		// inputs must have value
+		$(input).each(function(i, inp){
+			if($.trim($(inp).val()) == ''){
+				valid = false;
+				// highlight element
+				console.log(input.name);
+				$(inp).closest('.form-group').addClass('has-error');
+			}
+		});
+		
+	});
+
+	$(form).find('input[required=""]').each(function(i, el){
+
+		if($.trim(el.value) == ''){
+			valid = false;
+			console.log(el.name);
+			$(el).addClass('has-error');
+		}
+	});
+
+	$(form).find('select[required=""]').each(function(i, el){
+		$(el).removeClass('has-error');
+
+		if($.trim(el.value) == ''){
+
+			if(el.name != ''){
+				valid = false;
+				console.log(el.name);
+				$(el).addClass('has-error');
+
+				$(el).parent('div').find('.select2-selection').attr({
+					style: 'border-color: rgb(185, 74, 72) !important;',
+				});
+
+			}
+		}
+
+		
+	});
+
+
+	// VALIDATE BANK ACCOUNT NUMBER LENGTH IF UBP
+	var bank = $('select[name="BankClass"]').val();
+
+	if(bank == 'UBP'){
+		var acctno = $.trim( $('input[name="BankAccountNo"]').val() );
+		if( acctno.length != 12 && acctno.length > 0){
+			valid = false;
+			console.log('BankAccountNo');
+			$('input[name="BankAccountNo"]').addClass('has-error');
+		}
+
+	}
+
+
+
+	if(!valid){
+		$.alert({
+		    title: 'Invalid Data',
+		    content: 'Check your inputs.',
+		});
+	}
+
+	return valid;
+}

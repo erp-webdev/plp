@@ -752,7 +752,7 @@ class ApplicationController extends Controller
         $endorser_rank = $this->utils->getRank($endorser->RankDesc);
         $applicant_rank = $this->utils->getRank($endorser->RankDesc);
 
-        if($endorser_rank == $applicant_rank)
+        if($endorser_rank <= $applicant_rank)
             $valid = false;
 
         return $valid;
@@ -777,7 +777,7 @@ class ApplicationController extends Controller
         $guarantor_rank = $this->utils->getRank($guarantor->RankDesc);
         $applicant_rank = $this->utils->getRank($guarantor->RankDesc);
 
-        if($guarantor_rank == $applicant_rank)
+        if($guarantor_rank <= $applicant_rank)
             $valid = false;
 
         return $valid;

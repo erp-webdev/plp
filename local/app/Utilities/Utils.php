@@ -44,6 +44,75 @@ class Utils
                                 "Verified",
                                 "For Verification"
                             ];
+                            
+    private $ranks = [
+                        'RF' => [
+                            'Rank and File',
+                            'RANK AND FILE - ADVI',
+                            'Rank and File 1',
+                            'Rank and File 2',
+                            'Rank and File II'
+                        ], 
+                        'SRF' => [
+                            'Senior Rank and File',
+                            'Senior Rank and File 1',
+                            'Senior Rank and File 2',
+                            'Senior Rank and File II'
+
+                        ],
+                        'SC' => [
+                            'Assistant Supervisor',
+                            'Assistant Supervisor II',
+                            'Assistant Supervisor III',
+                            'Junior Supervisor/Professional 1',
+                            'JUNIOR SUPERVISOR/PROFESSIONAL 2',
+                            'Supervisor',
+                            'SUPERVISOR - ADVI',
+                            'SUPERVISOR - TTTI',
+                            'Supervisor II',
+                            'Supervisor III',
+                            'Senior Supervisor',
+                            'Senior Supervisor II',
+                            'Senior Supervisor III',
+                            'Senior Supervisor/Professional 1',
+                            'SENIOR SUPERVISOR/PROFESSIONAL 2'
+                        ],
+                        'MA' => [
+                            'Assistant Manager',
+                            'Assistant Manager II',
+                            'Assistant Manager III',
+                            'Junior Manager 1',
+                            'Junior Manager 2',
+                            'Manager',
+                            'MANAGER - TTTI',
+                            'Manager 1',
+                            'Manager 2',
+                            'Manager II',
+                            'MANAGER III',
+                            'Senior Manager',
+                            'SENIOR MANAGER - ADVI',
+                            'SENIOR MANAGER - TTTI',
+                            'Senior Manager 1',
+                            'Senior Manager 2',
+                            'Senior Manager II'
+                        ],
+                        'AVP' => [
+                            'Assistant Vice President',
+                            'ASSISTANT VICE PRESIDENT - TTTI',
+                            'Senior Assistant Vice President'
+                        ],
+                        'VP' => [
+                            'SENIOR EXECUTIVE VICE PRESIDENT',
+                            'VICE PRESIDENT',
+                            'EXECUTIVE  VICE PRESIDENT',
+                            'FIRST VICE PRESIDENT',
+                            'SENIOR VICE PRESIDENT'
+                        ],
+                        'DIR' => [
+                            'Director 1',
+                            'Director 2'
+                        ]
+                    ];
 
 	/**
 	 *
@@ -564,17 +633,37 @@ class Utils
      */
     public function getRank($rank_desc)
     {
-        if(str_contains(strtolower($rank_desc), 'rank'))
-            return 'RF';
-        else if(str_contains(strtolower($rank_desc), 'supervisor'))
-            return 'SC';
-        else if(str_contains(strtolower($rank_desc), 'manager'))
-            return 'MA';
-        else if(str_contains(strtolower($rank_desc), 'Assistant Vice President') ||
-        		str_contains(strtolower($rank_desc), 'Senior Assistant Vice President'))
-            return 'AVP';
-        else
-            return 'VP';
+        $ranks = $this->ranks;
+
+        if(in_array($ranks['RF'], $rank_desc)){
+            return 1;
+        }elseif(in_array($ranks['SRF'], $rank_desc)){
+            return 1;
+        }elseif(in_array($ranks['SC'], $rank_desc)){
+            return 2;
+        }elseif(in_array($ranks['MA'], $rank_desc)){
+            return 3;
+        }elseif(in_array($ranks['AVP'], $rank_desc)){
+            return 4;
+        }elseif(in_array($ranks['VP'], $rank_desc)){
+            return 5;
+        }elseif(in_array($ranks['DIR'], $rank_desc)){
+            return 5;
+        }
+
+        // if(str_contains(strtolower($rank_desc), 'rank'))
+        //     return 'RF';
+        // else if(str_contains(strtolower($rank_desc), 'supervisor'))
+        //     return 'SC';
+        // else if(str_contains(strtolower($rank_desc), 'manager'))
+        //     return 'MA';
+        // else if(str_contains(strtolower($rank_desc), 'Assistant Vice President') ||
+        // 		str_contains(strtolower($rank_desc), 'Senior Assistant Vice President'))
+        //     return 'AVP';
+        // else
+        //     return 'VP';
+
+        
     }
 
 }
