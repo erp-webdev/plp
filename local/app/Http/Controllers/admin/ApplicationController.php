@@ -654,7 +654,7 @@ class ApplicationController extends Controller
         }
     }
 
-    public function validateTerms($terms, $special = 0)
+    public function validateTerms($type = 0, $special = 0, $terms = null)
     {
         /**
          * Terms 
@@ -666,11 +666,11 @@ class ApplicationController extends Controller
         $records = Loan::employee($employee)->notDenied()->count();
         $allowedMonths = $this->utils->getTermMonths($records, $special, $terms);
         
-        if($records == 0)
+        if($type == 0)
             if($terms > $allowedMonths)
                 return false;
 
-        if($records > 0 || $special == 1)
+        if($type > 0 || $special == 1)
             if($terms > $allowedMonths)
                 return false;
 
