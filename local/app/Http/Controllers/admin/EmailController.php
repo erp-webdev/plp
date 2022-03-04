@@ -42,12 +42,10 @@ class EmailController extends Controller
                 // $message->cc($cc);
             });
 
-            dd($mail);
-
             $log = new Log();
             $log->writeOnly('Info', 'email', ['email' => $to, 'subject' => $subject]);
         } catch (Exception $e) {
-            
+            dd($e->message());
         }
     }
 }
