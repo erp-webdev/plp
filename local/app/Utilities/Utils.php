@@ -415,7 +415,7 @@ class Utils
             // Special Loan
             if($terms != null)
                 if($terms > $special_mos);
-                    return $special_mos
+                    return $special_mos;
                 else   
                     return $terms;
 
