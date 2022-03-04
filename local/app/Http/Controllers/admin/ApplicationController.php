@@ -484,8 +484,10 @@ class ApplicationController extends Controller
                 array_push($errors, trans('loan.validation.availment'));
 
         // Terms
-        if(!$this->validateTerms($request->type, $request->special, $request->terms))
+        if(!$this->validateTerms($request->type, $request->special, $request->terms)){
+            dd($request->terms);
             array_push($errors, trans('loan.validation.terms'));
+        }
 
         // Regular and Active Employee
         if(!$this->validateEmployeeStatus(Auth::user()->employee_id, Auth::user()->DBNAME))
