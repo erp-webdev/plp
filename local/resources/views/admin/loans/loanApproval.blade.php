@@ -196,7 +196,7 @@
 			      	</tr>	
 			      	<tr>
 			      		<td>
-			      			<td class="l">Deduction/payroll</td>
+			      			<td class="l">Deduction per payroll</td>
 			      			<td >
 			      				Php {{ number_format($loan->deductions, 2, '.', ',') }}
 			      			</td>
@@ -209,7 +209,7 @@
 			      	<tr>
 			      		<td>
 			      			<td class="l">Start of Deduction</td>
-			      			<td> {{ date('M d, Y', strtotime($loan->start_of_deductions)) }}		</td>
+			      			<td> {{ empty($loan->start_of_deduction) ? '--' : date('M d, Y', strtotime($loan->start_of_deductions)) }}		</td>
 			      		</td>
 			      		<td>
 			      			<td class="l">Total</td>
