@@ -157,7 +157,7 @@ class ApplicationController extends Controller
         $previous_loan = $this->getPreviousLoan();
         // Allowable # of months
         $months = Preference::name('payment_term');
-        $months = $months->value;
+        $months = $this->utils->getTermMonths();
         if($records_this_year > 0)
             $months = $this->utils->getTermMonths();
         
