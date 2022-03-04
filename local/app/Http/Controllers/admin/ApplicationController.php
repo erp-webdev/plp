@@ -159,7 +159,7 @@ class ApplicationController extends Controller
         $months = $months->value;
         if($records_this_year > 0)
             $months = $this->utils->getTermMonths();
-            
+        dd($months);
         $allow_max = Preference::name('allow_over_max');
 
         $endorser = $this->getEndorser();
