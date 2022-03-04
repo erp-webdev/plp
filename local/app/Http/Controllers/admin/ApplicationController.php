@@ -751,7 +751,8 @@ class ApplicationController extends Controller
         // Endorser must not be the same rank of the applicant
         $endorser_rank = $this->utils->getRank($endorser->RankDesc);
         $applicant_rank = $this->utils->getRank($endorser->RankDesc);
-
+        echo $endorser_rank . ' - ' . $applicant_rank;
+        exit;
         if($endorser_rank <= $applicant_rank)
             $valid = false;
 
