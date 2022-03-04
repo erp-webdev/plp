@@ -234,6 +234,7 @@ class ApplicationController extends Controller
                 $loan->local_dir_line = $request->loc;
                 $loan->interest = $interest->value;
                 $loan->terms_month = $request->term_mos;
+                dd($loan->terms_month);
                 $loan->total = $this->utils->getTotalLoan($request->loan_amount, $interest->value, $request->term_mos);
                 $loan->deductions = $this->utils->computeDeductions($request->term_mos, $request->loan_amount);
                 $loan->status = $this->utils->setStatus();
