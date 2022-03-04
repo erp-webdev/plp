@@ -415,11 +415,11 @@ class ApplicationController extends Controller
         if($request->special == 1){
             // Special Loan, no interest at 2 years payment
             $loan->interest = 0;
-            $loan->terms_month = $reqeust->terms;
+            $loan->terms_month = $request->terms;
         }else{
             $loan->interest = $interest->value;
             // count remaining months until december
-            $loan->terms_month = $reqeust->terms;
+            $loan->terms_month = $request->terms;
         }
 
         $loan->total = $this->utils->getTotalLoan(
