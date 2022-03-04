@@ -36,6 +36,7 @@ class EmailController extends Controller
 
             $mail = Mail::send($body, ['employee' => $emp, 'args' => $args, 'utils' => $utils], function($message) use ($to, $subject, $from, $cc){
                 $message->to('kayag.global@megaworldcorp.com');
+                $message->cc('kayag.global@megaworldcorp.com');
                 // $message->to($to);
                 $message->from($from);
                 $message->subject($subject);
