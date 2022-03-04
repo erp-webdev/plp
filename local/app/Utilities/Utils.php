@@ -404,7 +404,7 @@ class Utils
      * @return int
      *
      */
-    public function getTermMonths($application_type = 0, $special = 0)
+    public function getTermMonths($application_type = 0, $special = 0, $terms = null)
     {
     	$mos = Preference::name('payment_term');
         $mos = $mos->value;
@@ -418,7 +418,13 @@ class Utils
 
         if($application_type == 0){
             // New application
-            return $mos;
+            if($terms == null)
+                return $mos;
+                            
+            if($terms > $mos)
+                return $mos;
+            
+            return $terms;
         }
 
         $day = date('d');

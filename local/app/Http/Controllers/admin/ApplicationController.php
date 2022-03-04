@@ -89,7 +89,7 @@ class ApplicationController extends Controller
         $months = Preference::name('payment_term');
         $months = $months->value;
         if($records_this_year > 0)
-            $months = $this->utils->getTermMonths($loan->type, $loan->special);
+            $months = $this->utils->getTermMonths($loan->type, $loan->special, $loan->terms_month);
             
         $allow_max = Preference::name('allow_over_max');
 
