@@ -637,17 +637,17 @@ class Utils
 
         if(in_array($rank_desc, $ranks['RF'])){
             return 1;
-        }elseif(in_array($$rank_desc, ranks['SRF'])){
+        }elseif(in_array($rank_desc, $ranks['SRF'])){
             return 1;
         }elseif(in_array($rank_desc, $ranks['SC'])){
             return 2;
         }elseif(in_array($rank_desc, $ranks['MA'])){
             return 3;
-        }elseif(in_array($$rank_desc, ranks['AVP'])){
+        }elseif(in_array($rank_desc, $ranks['AVP'])){
             return 4;
         }elseif(in_array($rank_desc, $ranks['VP'])){
             return 5;
-        }elseif(in_array($$rank_desc, ranks['DIR'])){
+        }elseif(in_array($rank_desc, $ranks['DIR'])){
             return 5;
         }
 
