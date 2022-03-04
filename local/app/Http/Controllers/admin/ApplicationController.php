@@ -662,7 +662,7 @@ class ApplicationController extends Controller
          */
 
         $employee = Employee::current()->first();
-        $records_this_year = Loan::employee($employee)->yearly()->notDenied()->count();
+        $records_this_year = Loan::employee($employee)->notDenied()->count();
         $allowedMonths = $this->utils->getTermMonths($terms, $special);
         
         if($records_this_year > 0 || $special == 1)
