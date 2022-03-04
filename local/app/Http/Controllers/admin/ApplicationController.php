@@ -484,10 +484,8 @@ class ApplicationController extends Controller
                 array_push($errors, trans('loan.validation.availment'));
 
         // Terms
-        if(!$this->validateTerms($request->type, $request->special, $request->terms)){
-            dd($request->terms);
+        if(!$this->validateTerms($request->type, $request->special, $request->terms))
             array_push($errors, trans('loan.validation.terms'));
-        }
 
         // Regular and Active Employee
         if(!$this->validateEmployeeStatus(Auth::user()->employee_id, Auth::user()->DBNAME))
@@ -667,7 +665,7 @@ class ApplicationController extends Controller
         $employee = Employee::current()->first();
         $records = Loan::employee($employee)->notDenied()->count();
         $allowedMonths = $this->utils->getTermMonths($records, $special, $terms);
-        
+        dd($type);
         if($type == 0)
             if($terms > $allowedMonths)
                 return false;
