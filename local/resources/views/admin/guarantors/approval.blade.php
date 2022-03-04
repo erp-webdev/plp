@@ -94,7 +94,7 @@
     <p style="text-align: justify;">I hereby consent to act as surety of the applicant and agree to pay the abovenamed applicant's loan up to the amount of 
     @if($loan->guarantor_status == null && $loan->status == $utils->getStatusIndex('guarantor'))
       <?php 
-        $gAmount = $loan->loan_amount - $terms->min_amount;
+        $gAmount = $loan->total - $terms->min_amount;
         $max = 0;
 
         if($gAmount > $limits)
