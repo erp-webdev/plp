@@ -420,7 +420,6 @@ class Utils
             // New application
             return $mos;
         }
-        dd($mos - date('n'));
 
         $day = date('d');
 
@@ -429,13 +428,11 @@ class Utils
             // End Of Month 
             // Get number of months remaining till December 31st. 
             // Usually ends with 15th of the month. 
-            dd($mos - date('n') - 1);
             return $mos - date('n') - 1;
         }
         else if($day >= 21 || $day <= 5){
             // 15th of the month
             // Get number of months remaining till December 31st.
-            dd($mos - date('n'));
             return $mos - date('n');
         }
 
