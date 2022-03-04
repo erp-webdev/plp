@@ -234,7 +234,6 @@ class ApplicationController extends Controller
                 $loan->local_dir_line = $request->loc;
                 $loan->interest = $interest->value;
                 $loan->terms_month = $request->term_mos;
-                dd($loan->terms_month);
                 $loan->total = $this->utils->getTotalLoan($request->loan_amount, $interest->value, $request->term_mos);
                 $loan->deductions = $this->utils->computeDeductions($request->term_mos, $request->loan_amount);
                 $loan->status = $this->utils->setStatus();
@@ -416,11 +415,11 @@ class ApplicationController extends Controller
         if($request->special == 1){
             // Special Loan, no interest at 2 years payment
             $loan->interest = 0;
-            $loan->terms_month = 24;
+            $loan->terms_month = $reqeust->terms;
         }else{
             $loan->interest = $interest->value;
             // count remaining months until december
-            $loan->terms_month = 12 - date('n');
+            $loan->terms_month = $reqeust->terms;
         }
 
         $loan->total = $this->utils->getTotalLoan(
