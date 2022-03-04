@@ -635,19 +635,19 @@ class Utils
     {
         $ranks = $this->ranks;
 
-        if(in_array($ranks['RF'], $rank_desc)){
+        if(in_array($rank_desc, $ranks['RF'])){
             return 1;
-        }elseif(in_array($ranks['SRF'], $rank_desc)){
+        }elseif(in_array($$rank_desc, ranks['SRF'])){
             return 1;
-        }elseif(in_array($ranks['SC'], $rank_desc)){
+        }elseif(in_array($rank_desc, $ranks['SC'])){
             return 2;
-        }elseif(in_array($ranks['MA'], $rank_desc)){
+        }elseif(in_array($rank_desc, $ranks['MA'])){
             return 3;
-        }elseif(in_array($ranks['AVP'], $rank_desc)){
+        }elseif(in_array($$rank_desc, ranks['AVP'])){
             return 4;
-        }elseif(in_array($ranks['VP'], $rank_desc)){
+        }elseif(in_array($rank_desc, $ranks['VP'])){
             return 5;
-        }elseif(in_array($ranks['DIR'], $rank_desc)){
+        }elseif(in_array($$rank_desc, ranks['DIR'])){
             return 5;
         }
 
