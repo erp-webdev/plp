@@ -665,7 +665,7 @@ class ApplicationController extends Controller
         $employee = Employee::current()->first();
         $records = Loan::employee($employee)->notDenied()->count();
         $allowedMonths = $this->utils->getTermMonths($records, $special, $terms);
-        dd($type);
+        dd($allowedMonths);
         if($type == 0)
             if($terms > $allowedMonths)
                 return false;
