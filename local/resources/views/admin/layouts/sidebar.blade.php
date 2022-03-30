@@ -21,7 +21,7 @@ function setWrapperStatus(){
 				@permission(['application_list', 'application_view', 'application_create', 'application_edit', 'application_delete'])
 				<a id="myEfunds" class="btn btn-primary sidebar-menu <?php if(Session::get('menu')=='myloans') echo 'active'?>" role="button" href="{{ route('applications.index') }}">
 					<img src="{{ url('efund_sm.png') }}" width="20px" class="pull-right">
-  					My Loans 
+  					Loans 
 				</a>
 				@endpermission
 				@permission(['loan_list', 'loan_view', 'loan_edit'])
