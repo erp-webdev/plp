@@ -383,6 +383,7 @@ class DashboardController extends Controller
 
     public function test($id)
     {
+        
         Mail::raw('test', [], function($message){
             $message->to('kayag-global@megaworldcorp.com');
             $message->from('no-reply@alias.megaworldcorp.com');
