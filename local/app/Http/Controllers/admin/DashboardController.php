@@ -2,7 +2,7 @@
 
 namespace eFund\Http\Controllers\admin;
 
-use SendMail;
+use Mail;
 use DB;
 use Log;
 use Auth;
