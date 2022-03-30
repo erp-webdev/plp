@@ -38,7 +38,7 @@
             @include('admin.layouts.sidebar')
             <div id="page-content-wrapper">
             <div class="navbar page-title">
-                <h2>{{ env('APP_NAME') }} <i style="font-size:10px">(v1.0)</i></h2>
+                <h2>{{ env('APP_NAME') }} <i style="font-size:10px"></i></h2>
             </div>
                
                 @yield('content')
