@@ -2,6 +2,7 @@
 
 namespace eFund\Http\Controllers\admin;
 
+use Mail;
 use DB;
 use Log;
 use Auth;
@@ -382,9 +383,13 @@ class DashboardController extends Controller
 
     public function test($id)
     {
-        Log::info('firing event');
-        Event::fire(new SendMail($id, 'kayag.global@megaworldcorp.com',$args = ['approver', 'refno', 'reflink']));
-        Log::info('event fired');
+        Mail::raw('test', [], function($message){
+            $message->to('kayag-global@megaworldcorp.com');
+            $message->from('no-reply@alias.megaworldcorp.com');
+            $message->subject('plp testing');
+            // $message->cc($cc);
+        });
+
         return redirect()->route('admin.dashboard');
     }
 
