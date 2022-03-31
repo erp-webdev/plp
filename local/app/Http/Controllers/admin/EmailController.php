@@ -12,6 +12,7 @@ use eFund\Http\Requests;
 use eFund\Utilities\Utils;
 use eFund\Http\Controllers\Controller;
 use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Contracts\Queue\ShouldQueue;
 
 class EmailController extends Controller implements ShouldQueue
 {
