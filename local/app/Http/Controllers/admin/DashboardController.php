@@ -17,6 +17,7 @@ use eFund\Notification;
 use eFund\Http\Requests;
 use Illuminate\Http\Request;
 use eFund\Http\Controllers\Controller;
+use eFund\Http\Controllers\admin\EmailController;
 
 class DashboardController extends Controller
 {
@@ -382,15 +383,17 @@ class DashboardController extends Controller
 
     public function test($id)
     {
-        dd('test');
-        Mail::raw('test',  function($message){
-            $message->to('kayag-global@megaworldcorp.com');
-            $message->from('no-reply@alias.megaworldcorp.com');
-            $message->subject('plp testing');
-            // $message->cc($cc);
-        });
+        $mail = new EmailController();
+        $mail->send('2016-06-0457', 'test', 'emails.template', []);
 
-        return redirect()->route('admin.dashboard');
+        // Mail::raw('test',  function($message){
+        //     $message->to('kayag-global@megaworldcorp.com');
+        //     $message->from('no-reply@alias.megaworldcorp.com');
+        //     $message->subject('plp testing');
+        //     // $message->cc($cc);
+        // });
+
+        // return redirect()->route('admin.dashboard');
     }
 
     public function fetchJobs()
