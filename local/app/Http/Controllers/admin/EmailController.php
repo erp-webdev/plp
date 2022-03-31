@@ -46,7 +46,7 @@ class EmailController extends Controller implements ShouldQueue
             });
 
             $log = new Log();
-            $log->writeOnly('Info', 'email', ['email' => $to, 'subject' => $subject]);
+            $log->writeOnly('Info', 'email', ['email' => $to, 'subject' => $subject, 'response' => $mail]);
         } catch (Exception $e) {
             dd($e->message());
         }
