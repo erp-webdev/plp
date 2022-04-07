@@ -46,7 +46,7 @@ class EmailController extends Controller
                 $message->to($to);
                 $message->from($from);
                 $message->subject($subject);
-                $message->cc($cc);
+                // $message->cc($cc);
             });
 
             $log = new Log();
