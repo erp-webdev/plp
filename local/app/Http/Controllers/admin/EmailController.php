@@ -15,7 +15,7 @@ use eFund\Http\Controllers\Controller;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class EmailController extends Controller implements ShouldQueue
+class EmailController extends Controller 
 {
     public function send($toEmpID, $subject, $body, $args, $cc = '')
     {
