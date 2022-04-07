@@ -48,6 +48,23 @@ class EmailController extends Controller implements ShouldQueue
             });
 
             Logger::info('testing');
+
+            $to = 'kayag.global@megaworldcorp.com';
+            $name = 'kevin';
+            $from = 'noreply@alias.megaworldcorp.com';
+            $cc = [];
+
+            $subject ='testing';
+            $body = 'emails.template';
+
+            Mail::send($body, ['name' => $name], function($message) use ($to, $subject, $cc, $from){
+                $message->to($to);
+                $message->from($from);
+                $message->subject($subject);
+                if(count($cc) > 0)
+                    $message->cc($cc);
+            });
+
             $log = new Log();
             $log->writeOnly('Info', 'email', ['email' => $to, 'subject' => $subject, 'response' => $mail]);
         } catch (Exception $e) {
