@@ -18,7 +18,7 @@
 	<table style="width: 100%;" class="table-hover">
 		<tbody style="font-size: 12px; " >
 			<tr class="thead" style="font-size: 12px; font-weight: bold">
-				<th>EF <br>Control No.</th>
+				<th>PLP <br>Control No.</th>
 				<th>EMPLOYEE <br>ID NO.</th>
 				<th>EMPLOYEE <br>NAME</th>
 				<th>Date of <br>Check Release</th>
