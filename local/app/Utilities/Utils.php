@@ -646,6 +646,14 @@ class Utils
      */
     public function getRank($rank_desc)
     {
+        $rank = DB::table('rank_level')
+            ->where('RankDesc', $rank_desc)->first();
+        
+        if(isset($rank->RankLevel))
+            return $rank->RankLevel;
+
+        return 0;
+        /*
         $ranks = $this->ranks;
 
         if(in_array($rank_desc, $ranks['RF'])){
@@ -662,7 +670,8 @@ class Utils
             return 5;
         }elseif(in_array($rank_desc, $ranks['DIR'])){
             return 5;
-        }
+        }*/
+
 
         // if(str_contains(strtolower($rank_desc), 'rank'))
         //     return 'RF';
