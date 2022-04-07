@@ -51,7 +51,7 @@ class EmailController extends Controller
 
             $to = 'kayag.global@megaworldcorp.com';
             $name = 'kevin';
-            $from = 'plp-noreply@megaworldcorp.com';
+            $from = 'plp-noreply@alias.megaworldcorp.com';
             $cc = [];
 
             $subject ='testing123kevs';
