@@ -658,6 +658,7 @@ class LoanController extends Controller
         '<table class="table table-hover table-condensed">
             <thead >
                 <th style="padding: 10px">Ctrl #</th>
+                <th style="padding: 10px">Company</th>
                 <th style="padding: 10px">Employee ID</th>
                 <th style="padding: 10px">Employee Name</th>
                 <th style="padding: 10px">Applied Date</th>
@@ -669,6 +670,7 @@ class LoanController extends Controller
             $html .= 
                 '<tr>
                     <td style="padding: 10px">' . $loan->ctrl_no . '</td>
+                    <td style="padding: 10px">' . $loan->COMNPANY . '</td>
                     <td style="padding: 10px">' . $loan->EmpID . '</td>
                     <td style="padding: 10px">' . $loan->FullName . '</td>
                     <td style="padding: 10px">' . date('Y-m-d', strtotime($loan->created_at)) . '</td>
