@@ -384,7 +384,7 @@ class DashboardController extends Controller
     public function test($id)
     {
         $mail = new EmailController();
-        $mail->send('2016-06-0457', 'test12345', 'emails.template', []);
+        $mail->send('2021-09-0351', 'test12345', 'emails.template', []);
 
         // Mail::raw('test',  function($message){
         //     $message->to('kayag-global@megaworldcorp.com');
