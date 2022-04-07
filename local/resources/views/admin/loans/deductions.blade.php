@@ -4,6 +4,7 @@
                    <thead>
                            <th><input type="checkbox" class="select_all" onclick="selectAll(this)"></th>
                            <th>Control #</th>
+                           <th>Company</th>
                            <th>EmpID</th>
                            <th >Employee Name</th>
                            <th style="text-align: center;">Deduction</th>
@@ -18,6 +19,7 @@
                                   <?php if(!empty(trim($emp->ar_no))) echo '<i class="fa fa-check"></i>'; ?> 
                                 </td>
                                 <td>{{ $emp->ctrl_no }}</td>
+                                <td>{{ $emp->COMPANY }}</td>
                                 <td>{{ $emp->EmpID }}</td>
                                 <td>{{ utf8_encode($emp->FullName) }}</td>
                                 <td>
