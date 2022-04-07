@@ -28,6 +28,7 @@
 		    </div>
 			<table class="table table-condensed table-hover table-striped">
 				<tr style="text-align: center">
+					<th>COMPANY</th>
 					<th>Employee ID</th>
 					<th>Employee Name</th>
 					<th>Date Hired</th>
@@ -38,6 +39,7 @@
 			<tbody>
 					@foreach($employees as $employee)
 					<tr>
+						<td>{{ $employee->COMPANY }}</td>
 						<td>{{ $employee->EmpID }}</td>
 						<td>{{ $employee->FullName }}</td>
 						<td>{{ $employee->HireDate }}</td>
