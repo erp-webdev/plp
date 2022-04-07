@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>EFund {{ $loan->ctrl_no }}</title>
+	<title>PLP {{ $loan->ctrl_no }}</title>
 	<style type="text/css">
 		body{
 			font-family: 'Arial';
@@ -29,10 +29,10 @@
 	<tr class="box" >
 		<tr>
 			<td style="" colspan="3"><strong>MEGAWORLD CORPORATION</strong></td>
-			<td style=" text-align: center; border-left: 1px solid #000" ><u>EF CONTROL NUMBER</u></td>
+			<td style=" text-align: center; border-left: 1px solid #000" ><u>PLP CONTROL NUMBER</u></td>
 		</tr>
 		<tr>
-			<td colspan="3"><strong>EMPLOYEES FUND LOAN</strong></td>
+			<td colspan="3"><strong>PERSONAL LOAN PROGRAM</strong></td>
 			<td colspan="1" style="text-align: center; border-bottom: 1px solid #000; border-left: 1px solid #000; "><strong>{{ $loan->ctrl_no }}</strong></td>
 		</tr>
 		<tr style="height: 50px; vertical-align: bottom">
