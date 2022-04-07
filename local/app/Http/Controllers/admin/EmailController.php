@@ -4,6 +4,7 @@ namespace eFund\Http\Controllers\admin;
 
 use Illuminate\Http\Request;
 
+use Log as Logger;
 use Mail;
 use eFund\Log;
 use eFund\Employee;
@@ -25,6 +26,7 @@ class EmailController extends Controller implements ShouldQueue
                 return;
 
             $emp = Employee::where('EmpID', $toEmpID)->first();
+            Logger::info('testing--' . json_encode($emp));
             if(!empty($emp)){
                 if(empty($emp->EmailAdd))
                     return;
@@ -45,6 +47,7 @@ class EmailController extends Controller implements ShouldQueue
                 // $message->cc($cc);
             });
 
+            Logger::info('testing');
             $log = new Log();
             $log->writeOnly('Info', 'email', ['email' => $to, 'subject' => $subject, 'response' => $mail]);
         } catch (Exception $e) {
