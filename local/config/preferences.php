@@ -25,7 +25,7 @@ return [
 	],
 
 	// eFund System
-	'app' => 'Megaworld EFund System',
+	'app' => 'Personal Loan Program',
 	'version' => '1.0',
 ];
 
