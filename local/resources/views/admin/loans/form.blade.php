@@ -147,7 +147,7 @@
 	</tr>
 	<tr class="box">
 		<td colspan="2">
-			<strong><u>FOR EMPLOYEES FUND CUSTODIAN USE</u></strong><br><br>
+			<strong><u>FOR PLP CUSTODIAN USE</u></strong><br><br>
 		Previous Balance: <strong><u>{{ $utils->formatNumber($balance) }}</u></strong><br><br>
 		Approved Loan: <strong><u>Php {{ $utils->formatNumber($loan->loan_amount) }}</u></strong><br><br>
 		Interest: <strong><u>{{ $loan->interest }}% </u></strong> x <strong><u>{{ $loan->terms_month }}</u> </strong> months <br><br>
