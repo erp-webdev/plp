@@ -41,7 +41,12 @@ class NotifyTreasury extends EmailController
             
             $args = ['loan' => $event->loan, 'employee' => $employee];
 
-            $this->send($employee->employee_id, config('preferences.notif_subjects.approved', 'Loan Application Notification'), 'emails.treasury', $args, $cc = '');
+            $emp = Employee::where('EmpID', $employee->employee_id)
+                ->where('DBNAME', $employee->DBNAME)
+                ->first();
+
+            if(isset($emp->EmailAdd))
+                $this->send($emp, config('preferences.notif_subjects.approved', 'Loan Application Notification'), 'emails.treasury', $args, $cc = '');
 
             $notif->notifyTreasury($event->loan, $employee->employee_id);
         }

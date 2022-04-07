@@ -37,7 +37,12 @@ class NotifyPaidEmployee  extends EmailController
         $notif = new NotificationController();
         $notif->notifyPaid($event->loan);
 
-        $this->send($event->loan->EmpID, config('preferences.notif_subjects.paid', 'Loan Application Notification'), 'emails.paid', $args, $cc = '');
+        $employee = Employee::where('EmpID', $event->loan->EmpID)
+            ->where('DBNAME', $event->loan->DBNAME)
+            ->first();
+
+        if(isset($employee->EmailAdd))
+            $this->send($employee, config('preferences.notif_subjects.paid', 'Loan Application Notification'), 'emails.paid', $args, $cc = '');
 
         // Notify payroll of the fully paid loan app of employee
         $EnableEmail = Preference::name('payroll_notif');
@@ -52,7 +57,13 @@ class NotifyPaidEmployee  extends EmailController
 
 
             if($EnableEmail->value == 1){
-                $this->send($employee->employee_id, config('preferences.notif_subjects.paid_payroll', 'Fully Paid EFund Notification'), 'emails.paid_payroll', $args, $cc = '');
+                
+                $emp = Employee::where('EmpID', $employee->employee_id)
+                    ->where('DBNAME', $employee->DBNAME)
+                    ->first();
+
+                if(isset($emp->EmailAdd))
+                    $this->send($emp, config('preferences.notif_subjects.paid_payroll', 'Fully Paid EFund Notification'), 'emails.paid_payroll', $args, $cc = '');
             }
         }
 

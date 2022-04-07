@@ -612,7 +612,12 @@ class LoanController extends Controller
             
             $args = ['employee' => $employee, 'loansHtml' => $loans];
 
-            $email->send($employee->employee_id, config('preferences.notif_subjects.created', 'Loan Application Notification'), 'emails.payroll_verify_list', $args, $cc = '');
+            $emp = Employee::where('EmpID', $employee->employee_id)
+                ->where('DBNAME', $employee->DBNAME)
+                ->first();
+
+            if(isset($emp->EmailAdd))
+                $email->send($emp, config('preferences.notif_subjects.created', 'Loan Application Notification'), 'emails.payroll_verify_list', $args, $cc = '');
         }
 
         return redirect()->route('admin.loan')->withSuccess('Email sent!');
@@ -695,7 +700,13 @@ class LoanController extends Controller
                 continue;
             
             $args = ['loan' => $loan, 'employee' => $employee, 'utils' => $utils];
-            (new EmailController())->send($employee->employee_id, config('preferences.notif_subjects.payroll', 'Loan Application Notification'), 'emails.payroll', $args, $cc = '');
+
+            $emp = Employee::where('EmpID', $employee->employee_id)
+                ->where('DBNAME', $employee->DBNAME)
+                ->first();
+
+            if(isset($emp->EmailAdd))
+                (new EmailController())->send($emp, config('preferences.notif_subjects.payroll', 'Loan Application Notification'), 'emails.payroll', $args, $cc = '');
             
         }
 

@@ -11,6 +11,7 @@ use Entrust;
 use Session;
 use Redirect;
 use eFund\job;
+use eFund\Employee;
 use eFund\Loan;
 use eFund\Endorser;
 use eFund\Notification;
@@ -383,8 +384,12 @@ class DashboardController extends Controller
 
     public function test($id)
     {
+        $employee = Employee::where('EmpID', '2016-06-0457')
+            ->where('DBNAME', 'GL')
+            ->first();
+
         $mail = new EmailController();
-        $mail->send('2021-09-0351', 'test12345', 'emails.template', []);
+        $mail->send($employee, 'test12345', 'emails.template', []);
 
         // Mail::raw('test',  function($message){
         //     $message->to('kayag-global@megaworldcorp.com');

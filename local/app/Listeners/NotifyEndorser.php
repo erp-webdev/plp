@@ -3,6 +3,7 @@
 namespace eFund\Listeners;
 
 use eFund\Http\Controllers\admin\EmailController;
+use eFund\Employee;
 
 use eFund\Events\LoanCreated;
 use Illuminate\Queue\InteractsWithQueue;
@@ -40,7 +41,15 @@ class NotifyEndorser extends EmailController
         $notif = new NotificationController();
         $notif->notifyEndorser($event->loan);
 
-        $this->send($event->loan->endorser_EmpID, config('preferences.notif_subjects.created', 'Loan Application Notification'), 'emails.endorsement', $args, $cc = '');
+        $employee = Employee::where('EmpID', $event->loan->endorser_EmpID)
+        ->where('DBNAME', $event->loan->endorser_dbname)
+        ->first();
+
+        if(isset($employee->EmailAdd)){
+            $this->send($employee, config('preferences.notif_subjects.created', 'Loan Application Notification'), 'emails.endorsement', $args, $cc = '');
+
+        }
+
 
     }
 }

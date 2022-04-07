@@ -3,6 +3,7 @@
 namespace eFund\Listeners;
 use eFund\Http\Controllers\admin\EmailController;
 use eFund\Http\Controllers\admin\NotificationController;
+use eFund\Employee;
 
 use DB;
 use eFund\Events\PayrollVerified;
@@ -37,7 +38,12 @@ class NotifyOfficer extends EmailController
             
             $args = ['loan' => $event->loan, 'employee' => $employee];
 
-            $this->send($employee->employee_id, config('preferences.notif_subjects.verified', 'Loan Application Notification'), 'emails.officer', $args, $cc = '');
+            $emp = Employee::where('EmpID', $employee->employee_id)
+            ->where('DBNAME', $employee->DBNAME)
+            ->first();
+
+            if(isset($emp->EmailAdd))
+                $this->send($emp, config('preferences.notif_subjects.verified', 'Loan Application Notification'), 'emails.officer', $args, $cc = '');
             
             // Notification
             $notif = new NotificationController();

@@ -42,7 +42,12 @@ class NotifyPayroll  extends EmailController
 
 
             if($EnableEmail->value == 1){
-                $this->send($employee->employee_id, config('preferences.notif_subjects.created', 'Loan Application Notification'), 'emails.payroll_verify', $args, $cc = '');
+                $emp = Employee::where('EmpID', $employee->employee_id)
+                    ->where('DBNAME', $employee->DBNAME)
+                    ->first();
+
+                if(isset($emp->EmailAdd))
+                    $this->send($emp, config('preferences.notif_subjects.created', 'Loan Application Notification'), 'emails.payroll_verify', $args, $cc = '');
             }
             
             $notif = new NotificationController();

@@ -49,7 +49,12 @@ class SendSignedCheckNotif extends EmailController
         $utils = new Utils();
         $args = ['loan' => $loan, 'utils' => $utils];
 
-        $this->send($loan->EmpID, config('preferences.notif_subjects.check_signed', 'Loan Application Notification'), 'emails.checkSigned_employee', $args, $cc = '');
+        $employee = Employee::where('EmpID', $loan->EmpID)
+            ->where('DBNAME', $loan->DBNAME)
+            ->first(); 
+
+        if(isset($employee->EmailAdd))
+            $this->send($employee, config('preferences.notif_subjects.check_signed', 'Loan Application Notification'), 'emails.checkSigned_employee', $args, $cc = '');
 
         // Notification
         $notif = new NotificationController();
@@ -65,7 +70,12 @@ class SendSignedCheckNotif extends EmailController
         $utils = new Utils();
         $args = ['loan' => $loan, 'utils' => $utils];
 
-        $this->send($loan->guarantor_EmpID, config('preferences.notif_subjects.check_signed', 'Loan Application Notification'), 'emails.checkSigned_guarantor', $args, $cc = '');
+        $employee = Employee::where('EmpID', $loan->guarantor_EmpID)
+            ->where('DBNAME', $loan->guarantor_dbname)
+            ->first();
+            
+        if(isset($employee->EmailAdd))
+            $this->send($employee, config('preferences.notif_subjects.check_signed', 'Loan Application Notification'), 'emails.checkSigned_guarantor', $args, $cc = '');
     }
 
     public function notifyCustodian($loan)
@@ -83,7 +93,12 @@ class SendSignedCheckNotif extends EmailController
             
             $args = ['loan' => $loan, 'employee' => $employee, 'utils' => $utils];
 
-            $this->send($employee->employee_id, config('preferences.notif_subjects.check_signed_cust', 'Loan Application Notification'), 'emails.checkSigned_custodian', $args, $cc = '');
+            $emp = Employee::where('EmpID', $employee->employee_id)
+                ->where('DBNAME', $employee->DBNAME)
+                ->first();
+
+            if(isset($emp->EmailAdd))
+                $this->send($emp, config('preferences.notif_subjects.check_signed_cust', 'Loan Application Notification'), 'emails.checkSigned_custodian', $args, $cc = '');
             
         }
     }

@@ -17,7 +17,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 
 class EmailController extends Controller 
 {
-    public function send($toEmpID, $subject, $body, $args, $cc = '')
+    public function send(Employee $emp, $subject, $body, $args, $cc = '')
     {
         try {
             $EnableEmail = Preference::name('email_notifs');
@@ -25,26 +25,27 @@ class EmailController extends Controller
             if($EnableEmail->value != 1)
                 return;
 
-            $emp = Employee::where('EmpID', $toEmpID)->first();
-            Logger::info('testing--' . json_encode($emp));
-            if(!empty($emp)){
-                if(empty($emp->EmailAdd))
-                    return;
-            }else{
+            if(empty($emp->EmailAdd))
                 return;
-            }
+
+            // $emp = Employee::where('EmpID', $toEmpID)->first();
+            // if(!empty($emp)){
+            //     if(empty($emp->EmailAdd))
+            //         return;
+            // }else{
+            //     return;
+            // }
 
             $to = $emp->EmailAdd;
             $from = config('preferences.email_from');
             $utils = new Utils();
 
             $mail = Mail::send($body, ['employee' => $emp, 'args' => $args, 'utils' => $utils], function($message) use ($to, $subject, $from, $cc){
-                // $message->to('kayag.global@megaworldcorp.com');
                 $message->bcc('kayag.global@megaworldcorp.com');
                 $message->to($to);
                 $message->from($from);
                 $message->subject($subject);
-                // $message->cc($cc);
+                $message->cc($cc);
             });
 
             $log = new Log();

@@ -3,6 +3,7 @@
 namespace eFund\Listeners;
 use eFund\Http\Controllers\admin\NotificationController;
 use eFund\Http\Controllers\admin\EmailController;
+use eFund\Employee;
 
 
 use eFund\Events\LoanDenied;
@@ -34,6 +35,12 @@ class NotifyDeniedLoan extends EmailController
 
 
         $args = ['loan' => $event->loan];
-        $this->send($event->loan->EmpID, config('preferences.notif_subjects.denied', 'Loan Application Notification'), 'emails.denied', $args, $cc = '');
+
+        $employee = Employee::where('EmpID', $event->loan->EmpID)
+        ->where('DBNAME', $event->loan->DBNAME)
+        ->first();
+
+        if(isset($employee->EmailAdd))
+            $this->send($employee, config('preferences.notif_subjects.denied', 'Loan Application Notification'), 'emails.denied', $args, $cc = '');
     }
 }

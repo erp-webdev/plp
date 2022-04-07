@@ -4,6 +4,7 @@ namespace eFund\Listeners;
 
 use eFund\Http\Controllers\admin\EmailController;
 use eFund\Http\Controllers\admin\NotificationController;
+use eFund\Employee;
 
 use Event;
 use eFund\Events\GuarantorApproved;
@@ -43,6 +44,12 @@ class NotifyGuarantor extends EmailController
         $notif->notifyGuarantor($event->loan);
 
         $args = ['loan' => $event->loan];
-        $this->send($EmpID, config('preferences.notif_subjects.created', 'Loan Application Notification'), $body, $args, $cc = '');
+
+        $employee = Employee::where('EmpID', $event->loan->guarantor_EmpID)
+        ->where('DBNAME', $event->loan->guarantor_dbname)
+        ->first();
+
+        if(isset($employee->EmailAdd))
+            $this->send($employee, config('preferences.notif_subjects.created', 'Loan Application Notification'), $body, $args, $cc = '');
     }
 }
