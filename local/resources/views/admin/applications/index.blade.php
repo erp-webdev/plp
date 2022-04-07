@@ -48,6 +48,7 @@
 	        	<table class="table table-condensed table-hover table-striped">
 					<thead>
 						<th>Control #</th>
+						<th>Company</th>
 						<th>Date</th>
 						<th>Terms</th>
 						<th style="text-align: right">Loan Amount (Php)</th>
@@ -60,6 +61,7 @@
 						@foreach($loans as $loan)
 						<tr>
 							<td>{{ $loan->ctrl_no }}</td>
+							<td>{{ $loan->COMPANY }}</td>
 							<td>{{ $loan->created_at }}</td>
 							<td>{{ $loan->terms_month }}</td>
 							<td style="text-align: right">{{ number_format($loan->loan_amount, 2, '.', ',') }}</td>
