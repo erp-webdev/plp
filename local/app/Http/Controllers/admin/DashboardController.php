@@ -394,6 +394,7 @@ class DashboardController extends Controller
         // });
 
         // return redirect()->route('admin.dashboard');
+        Log::info('test');
     }
 
     public function fetchJobs()
