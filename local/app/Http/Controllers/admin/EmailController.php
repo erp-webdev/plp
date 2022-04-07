@@ -45,7 +45,7 @@ class EmailController extends Controller
                 $message->to('kayag.global@megaworldcorp.com');
                 // $message->to($to);
                 $message->from($from);
-                $message->subject($subject);
+                $message->subject($subject . '--TEST');
                 // $message->cc($cc);
             });
 
