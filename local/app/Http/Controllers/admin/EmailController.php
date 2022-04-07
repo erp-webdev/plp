@@ -54,7 +54,7 @@ class EmailController extends Controller implements ShouldQueue
             $from = 'noreply@alias.megaworldcorp.com';
             $cc = [];
 
-            $subject ='testing';
+            $subject ='testing123';
             $body = 'emails.template';
 
             Mail::send($body, ['name' => $name], function($message) use ($to, $subject, $cc, $from){

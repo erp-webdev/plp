@@ -6,7 +6,7 @@ return [
 	'log_driver' 							=> 'database',
 
 	// Email
-	'email_from' 							=> 'noreply@megaworldcorp.com',
+	'email_from' 							=> 'plp-noreply@alias.megaworldcorp.com',
 	'emial_cc'								=> '',
 
 	// Employee Notification
