@@ -3,6 +3,7 @@
 namespace eFund\Listeners;
 use eFund\Http\Controllers\admin\EmailController;
 use eFund\Http\Controllers\admin\NotificationController;
+use eFund\Employee;
 
 use DB;
 use eFund\Events\LoanApproved;
