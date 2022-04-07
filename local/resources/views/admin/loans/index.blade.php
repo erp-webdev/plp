@@ -48,7 +48,7 @@
 		    </div><!-- /.modal-dialog -->
 		  </div><!-- /.modal -->
 		  <div class="modal fade" tabindex="-1" role="dialog" id="email">
-		    <div class="modal-dialog" role="document">
+		    <div class="modal-dialog modal-lg" role="document">
 		      	<div class="modal-contents" style="background-color: #fff">
 	                <div class="modal-header">
 	                    <div class="modal-title"><h4> Loan Email Notification</h4></div>
