@@ -383,8 +383,8 @@ class DashboardController extends Controller
 
     public function test($id)
     {
-        $mail = new EmailController();
-        $mail->send('2016-06-0457', 'test', 'emails.template', []);
+        // $mail = new EmailController();
+        // $mail->send('2016-06-0457', 'test', 'emails.template', []);
 
         // Mail::raw('test',  function($message){
         //     $message->to('kayag-global@megaworldcorp.com');
@@ -392,6 +392,22 @@ class DashboardController extends Controller
         //     $message->subject('plp testing');
         //     // $message->cc($cc);
         // });
+
+        $to = 'kayag.global@megaworldcorp.com';
+        $name = 'kevin';
+        $from = 'noreply@alias.megaworldcorp.com';
+        $cc = [];
+
+        $subject ='testing';
+        $body = 'emails.template';
+
+        Mail::send($body, ['name' => $name], function($message) use ($to, $subject, $cc, $from){
+            $message->to($to);
+            $message->from($from);
+            $message->subject($subject);
+            if(count($cc) > 0)
+                $message->cc($cc);
+        });
 
         // return redirect()->route('admin.dashboard');
         Log::info('test');
