@@ -49,7 +49,7 @@
 							<tbody>
 								@foreach($deductions as $deduction)
 									<tr>
-										<td style="padding: 5px">{{ date('j F Y', strtotime($deduction->date)) }}</td>
+										<td style="padding: 5px">{{ $deduction->date }}</td>
 										<td style="padding: 5px">{{ number_format($loan->deductions, 2, '.', ',') }}</td>
 									</tr>
 								@endforeach
