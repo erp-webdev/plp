@@ -140,6 +140,7 @@
 				<table id="dataTable"  class="table table-striped table-hover table-condensed">
 					<thead>
 						<th value="ctrl_no">Control No</th>
+						<th value="company">Company</th>
 						<th value="FullName">Employee</th>
 						<th value="created_at">Date Applied</th>
 						<th value="loan_amount" style="text-align: right">Loan Amount (Php)</th>
@@ -156,6 +157,7 @@
 						@foreach($loans as $loan)
 							<tr>
 								<td>{{ $loan->ctrl_no }}</td>
+								<td>{{ $loan->COMPANY }}</td>
 								<td>{{ utf8_encode($loan->FullName) }}</td>
 								<td>{{ $loan->created_at }}</td>
 								<td style="text-align: right">{{ number_format($loan->loan_amount, 2, '.', ',') }}</td>
