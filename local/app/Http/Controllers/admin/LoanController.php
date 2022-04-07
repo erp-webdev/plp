@@ -670,7 +670,7 @@ class LoanController extends Controller
             $html .= 
                 '<tr>
                     <td style="padding: 10px">' . $loan->ctrl_no . '</td>
-                    <td style="padding: 10px">' . $loan->COMNPANY . '</td>
+                    <td style="padding: 10px">' . $loan->COMPANY . '</td>
                     <td style="padding: 10px">' . $loan->EmpID . '</td>
                     <td style="padding: 10px">' . $loan->FullName . '</td>
                     <td style="padding: 10px">' . date('Y-m-d', strtotime($loan->created_at)) . '</td>
