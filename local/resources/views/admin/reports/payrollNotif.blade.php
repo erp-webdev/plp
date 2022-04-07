@@ -19,6 +19,7 @@
 		<tbody style="font-size: 12px; " >
 			<tr class="thead" style="font-size: 12px; font-weight: bold">
 				<th>PLP <br>Control No.</th>
+				<th>COMPANY</th>
 				<th>EMPLOYEE <br>ID NO.</th>
 				<th>EMPLOYEE <br>NAME</th>
 				<th>Date of <br>Check Release</th>
@@ -30,6 +31,7 @@
 			@foreach($loans as $loan)
 			<tr>
 				<td style="text-align: left; ">{{ $loan->ctrl_no }}</td>
+				<td style="text-align: left; ">{{ $loan->COMPANY }}</td>
 				<td style="text-align: left">{{ $loan->EmpID }}</td>
 				<td style="text-align: left">{{ ucwords(strtolower($loan->FullName)) }}</td>
 				<td style="text-align: center">{{ empty($loan->released) ? '' : date('m/d/Y', strtotime($loan->released)) }}</td>
