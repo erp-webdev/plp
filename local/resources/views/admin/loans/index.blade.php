@@ -75,9 +75,9 @@
 	                    <div class="modal-title"><h4> For Officer's Approval</h4></div>
 	                    <p>Send list of loan applications for Officer's Approval</p>
 	                </div>
-	                <form action="{{ route('loan.email.notif') }}" method="post">
+	                <form action="{{ route('loan.email.officer') }}" method="post">
 	                	<input type="hidden" name="_token" value="{{ csrf_token() }}">
-	                	<div class="modal-body" id="emailModalBody">
+	                	<div class="modal-body" id="emailOfficerModalBody">
 		                	
 		                </div>
 		                <div class="clearfix"></div>
@@ -97,7 +97,7 @@
 			<a class="btn btn-sm btn-info" data-toggle="modal" data-target="#deductions" ng-click="loadBatchDeduction('{{ route('loan.deduction.list') }}')"> Batch Deductions</a>
 			<a class="btn btn-sm btn-info" data-toggle="modal" data-target="#email" ng-click="loadPayrollList('{{ route('loan.email.list') }}')"><i class="fa fa-envelope"></i> Payroll Verifications</a>
 			@if(auth()->user()->name == 'KEVEN')
-			<a class="btn btn-sm btn-primary" data-toggle="modal" data-target="#officer" ng-click="loadOfficerList('{{ route('loan.email.list') }}')"><i class="fa fa-envelope"></i> For Officer's Approval</a>
+			<a class="btn btn-sm btn-primary" data-toggle="modal" data-target="#officer" ng-click="loadOfficerList('{{ route('loan.officer.list') }}')"><i class="fa fa-envelope"></i> For Officer's Approval</a>
 			@endif
 			<a class="btn btn-sm btn-primary pull-right" style="margin-right: 10px" href="{{ route('upload.show') }}"><i class="fa fa-upload"></i> Import</a>
 			@endpermission
