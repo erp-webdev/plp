@@ -347,7 +347,7 @@ class ReportController extends Controller
                             $query->where('status', $this->utils->getStatusIndex('denied'));
                     }
 
-                })->orderBy($args['sort'], 'asc')->get();
+                })->orderBy($args['sort'], 'asc')->get()->toSql();
     }
 
     public function summaryReport($args)
