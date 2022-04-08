@@ -430,20 +430,24 @@ class ReportController extends Controller
 
     public function formatExcel($loans, $type, $format = 'xlsx', $title = 'Megaworld EFund System', $html = [])
     {
+        $utils = new Utils();
         if($type == 'payroll'){
 
             $data = [];
 
             foreach($loans as $row){
                 $newRow = [
-                    'EF Ctrl No.' => $row->ctrl_no,
+                    'PLP Ctrl No.' => $row->ctrl_no,
+                    'Company' => $row->COMPANY,
                     'Employee ID NO.' => $row->EmpID,
                     'Employee Name' => $row->FullName,
+                    'Surety' => $row->guarantor_FullName,
                     'Date of Check Release' => date('Y-m-d', strtotime($row->released)),
                     'TOTAL AMOUNT' => number_format($row->total, 2),
                     'TOTAL NO. OF DEDUCTIONS' => $row->terms_month * 2,
                     'Deduction per payday' => number_format($row->deductions, 2),
                     'START OF DEDUCTIONS' => $row->start_of_deductions
+                    'Status' => $utils->getStatus($row->status)
                 ];
                 array_push($data, $newRow);
             }
