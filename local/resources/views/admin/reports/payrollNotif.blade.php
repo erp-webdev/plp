@@ -48,7 +48,7 @@
 					{{ $loan->start_of_deductions }}
 				@endif
 				</td>
-				<td style="text-align: left; ">{!! $utils->formatStatus($loan->status) !!}</td>
+				<td style="text-align: left; ">{!! $utils->getStatus($loan->status) !!}</td>
 			</tr>
 			@endforeach
 		</tbody>
