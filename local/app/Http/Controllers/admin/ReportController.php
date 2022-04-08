@@ -323,7 +323,6 @@ class ReportController extends Controller
                     }
 
                     $dateRange = explode("-", $args['created_at']);
-                    dd($dateRange);
                     if(!empty(trim($dateRange[0])) && !empty(trim($dateRange[1]))){
                         $query->whereBetween('created_at', [trim($dateRange[0]), trim($dateRange[1])]);
                     }
