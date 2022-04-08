@@ -133,7 +133,7 @@
 					</div>
 					<div class="input-group col-xs-12 col-sm-3 col-md-3">
 						<select name="status" id="status" class="form-control">
-							<option value="all">Select all</option>
+							<option value="all" {{ isset($_GET['status']) ? $_GET['status'] == 'all' ? 'selected' : '' : '' }}>Select all</option>
 							@foreach($utils->stats as $index => $stat)
 							<option value="{{ $index }}" {{ isset($_GET['status']) ? $_GET['status'] == $index ? 'selected' : '' : '' }}>{{ $stat }}</option>
 							@endforeach
