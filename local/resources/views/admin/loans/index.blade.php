@@ -208,6 +208,7 @@
 	function find() {
 		var $show = $('#show').val();
 		var $search = $('#search').val();
+		var $status = $('#status').val();
 		var $searchUrl = "{{ route('admin.loan') }}" + "?show=" + $show + "&search=" + $search + "&sort=" + $sort + "&by=" + $by + '&status=' + $status;
 		window.location.href = $searchUrl;
 		updateARAmount();
