@@ -317,15 +317,15 @@ class ReportController extends Controller
                         $query->where('check_released', '>=', trim($dateRange[0]))->where('check_released', '<=', trim($dateRange[1]));
                     }
 
-                    $dateRange = explode("-", $args['checkRelease']);
+                    $dateRange = explode("-", $args['start_of_deductions']);
                     if(!empty(trim($dateRange[0])) && !empty(trim($dateRange[1]))){
                         $query->where('start_of_deductions', '>=', trim($dateRange[0]))->where('start_of_deductions', '<=', trim($dateRange[1]));
                     }
 
-                    // $dateRange = explode("-", $args['created_at']);
-                    // if(!empty(trim($dateRange[0])) && !empty(trim($dateRange[1]))){
-                    //     $query->where('created_at', '>=', trim($dateRange[0]))->where('created_at', '<=', trim($dateRange[1]));
-                    // }
+                    $dateRange = explode("-", $args['created_at']);
+                    if(!empty(trim($dateRange[0])) && !empty(trim($dateRange[1]))){
+                        $query->whereBetween('created_at', [trim($dateRange[0]), trim($dateRange[1])]);
+                    }
 
                     $names = explode(' ', $args['empName']);
                     foreach ($names as $name) {
