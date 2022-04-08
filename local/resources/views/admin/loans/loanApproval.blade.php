@@ -11,13 +11,15 @@
 		  		@endif
 		  	@endif
 	  		</h4>
-			@if(!empty(trim($loan->payroll_remarks)))
-			<span><strong>Remarks by Payroll: </strong> {{ $loan->payroll_remarks }}</span>
-			@endif
+			
 	  </div>
+	 
 	  <div class="col-xs-12 col-sm-6 col-md-6">
 	  	<p class="pull-right"><small>Ctrl No: </small><strong >{{ $loan->ctrl_no }}</strong></p>
 	  </div>
+	  @if(!empty(trim($loan->payroll_remarks)))
+	  <span><strong>Remarks by Payroll: </strong> {{ $loan->payroll_remarks }}</span>
+	  @endif
 	</div>
 	<div class="modal-body">
 	  <style type="text/css">
