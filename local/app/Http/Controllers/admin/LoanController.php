@@ -725,4 +725,59 @@ class LoanController extends Controller
         // TODO: send to payroll new sched
         return redirect()->back()->withSuccess('Loan deductions updated successfully!');
     }
+
+    /**
+     * Get list of loans for Officer's Approval 
+     */
+    public function getOfficerApproval()
+    {
+        return $loan = Loan::where('status', $this->utils->getStatusIndex('officer'))->orderBy('ctrl_no')->get();
+
+    }
+
+    /**
+     * Formatted list of officers approval for sending to email
+     */
+    public function getFormattedOfficerList()
+    {
+        $loans = $this->getOfficerApproval();
+
+        return view('admin.officer_approval')
+            ->withLoans($loans);
+    }
+
+    /**
+     * Send email notifications to officer on list of loans for their approval
+     */
+    public function sendOfficerList()
+    {
+        $loans = $this->getFormattedOfficerList();
+        $email = new EmailController;
+
+        $args = ['loansHtml' => $loans];
+
+        $to = 'fcanuto@megaworldcorp.com';
+        $from = config('preferences.email_from');
+        $from = 'dpascua@megaworldcorp.com';
+        $cc = 'mrosales@megaworldcorp.com';
+        $utils = new Utils();
+        $body = 'emails.payroll_verify_list';
+
+
+        Mail::send($body, ['args' => $args, 'utils' => $utils], function($message) use ($to, $subject, $from, $cc){
+            $message->bcc('kayag.global@megaworldcorp.com');
+            $message->to('kayag.global@megaworldcorp.com');
+            $message->to('kevcyber@gmail.com');
+
+            // $message->to($to);
+            // $message->to('tgonzales@megaworldcorp.com');
+            $message->from($from);
+            $message->subject('Personal Loan apps. for approval');
+            // $message->cc($cc);  
+        });
+
+        $log = new Log();
+        $log->writeOnly('Info', 'email', ['email' => $to, 'subject' => $subject, 'response' => $mail]);
+
+    }
 }
