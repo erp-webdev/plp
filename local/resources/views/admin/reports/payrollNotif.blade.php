@@ -28,6 +28,7 @@
 				<th>TOTAL NO. <br>OF DEDUCTIONS</th>
 				<th>Deduction <br>per payday</th>
 				<th>START <br>OF DEDUCTION</th>
+				<th>STATUS </th>
 			</tr>
 			@foreach($loans as $loan)
 			<tr>
@@ -47,6 +48,7 @@
 					{{ $loan->start_of_deductions }}
 				@endif
 				</td>
+				<td style="text-align: left; ">{!! $utils->formatStatus($loan->status) !!}</td>
 			</tr>
 			@endforeach
 		</tbody>
