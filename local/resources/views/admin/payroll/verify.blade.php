@@ -1,4 +1,4 @@
-
+<form class="form-horizontal table-responsive" style="font-size: 12px" action="{{ route('payroll.verify') }}" method="post">
 	<div class="modal-header">
 	  <div class="col-xs-12 col-sm-6 col-md-6">
 	  	<h4>Loan Amount Verification 
@@ -14,7 +14,6 @@
 	  		font-weight: bold;
 	  	}
 	  </style>
-	  <form class="form-horizontal table-responsive" style="font-size: 12px" action="{{ route('payroll.verify') }}" method="post">
 			  	<input type="hidden" name="_token" value="{{ csrf_token() }}">
 			  	<input type="number" name="id" value="{{ $loan->id }}" style="display: none">
 	    		<table class="table-condensed">
@@ -167,15 +166,15 @@
 			      		</td>
 			      	</tr>	
 		      	</table>
-		     	@if($loan->status == $utils->getStatusIndex('payroll'))
-		     	<div class="clearfix"></div>
-				<button type="submit" name="verify" class="btn btn-success btn-sm pull-right" onsubmit="startLoading()"><i class="fa fa-check-square-o"></i> Verify</button>
-				<button type="submit" name="deny" class="btn btn-danger btn-sm pull-right" onsubmit="startLoading()"><i class="fa fa-thumbs-down"></i> Deny</button>
-			    @endif
-			</form>
+		     	
 	</div>
 	<div class="modal-footer">
-		
+		@if($loan->status == $utils->getStatusIndex('payroll'))
+		<textarea name="payroll_remarks" class="form-control" id="" cols="30" rows="10"></textarea>
+		<div class="clearfix"></div>
+		<button type="submit" name="verify" class="btn btn-success btn-sm pull-right" onsubmit="startLoading()"><i class="fa fa-check-square-o"></i> Verify</button>
+		<button type="submit" name="deny" class="btn btn-danger btn-sm pull-right" onsubmit="startLoading()"><i class="fa fa-thumbs-down"></i> Deny</button>
+		@endif
 	   <button type="button" class="btn btn-default btn-sm" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
 	</div>
-
+</form>
