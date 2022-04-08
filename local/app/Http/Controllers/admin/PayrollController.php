@@ -59,6 +59,7 @@ class PayrollController extends Controller
     	if(isset($request->verify)){
             $loan = Loan::findOrFail($request->id);
 
+            $loan->payroll_remarks = $request->payroll_remarks;
             $loan->payroll_verified = 1;
             $loan->status = $this->utils->getStatusIndex('officer');
             $loan->save();
@@ -69,7 +70,7 @@ class PayrollController extends Controller
        
     	}else{
     		$loan = Loan::findOrFail($request->id);
-
+            $loan->payroll_remarks = $request->payroll_remarks;
             $loan->payroll_verified = 0;
             $loan->status = $this->utils->getStatusIndex('officer');
             $loan->save();
