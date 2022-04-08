@@ -135,7 +135,10 @@
 						<select name="status" id="status" class="form-control">
 							<option value="all" {{ isset($_GET['status']) ? $_GET['status'] === 'all' ? 'selected' : '' : '' }}>Select all</option>
 							@foreach($utils->stats as $index => $stat)
-							<option value="{{ $index }}" {{ isset($_GET['status']) ? (int)$_GET['status'] === $index ? 'selected' : '' : '' }}>{{ $stat }}</option>
+								@if(in_array($index, [0, 1, 2]))
+									@continue;
+								@endif
+							<option value="{{ $index }}" {{ isset($_GET['status']) ? $_GET['status'] == $index ? 'selected' : '' : '' }}>{{ $stat }}</option>
 							@endforeach
 						</select>
 						<a class="input-group-addon btn btn-success btn-sm" onclick="find()"><i class="fa fa-search"></i></a>
