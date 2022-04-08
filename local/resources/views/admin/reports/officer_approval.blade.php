@@ -12,23 +12,23 @@
     </p>
     <table style="border-collapse: collapse" class="table table-sm table-bordered">
         <tr>
-            <th style="border: 1px solid black;">Company</th>
-            <th style="border: 1px solid black;">Employee No.</th>
-            <th style="border: 1px solid black;">Employee Name</th>
-            <th style="border: 1px solid black;">Surey / Co-borrower</th>
-            <th style="border: 1px solid black;">Total Amount</th>
-            <th style="border: 1px solid black;">Payment Terms <br> (no. of mos.)</th>
-            <th style="border: 1px solid black;">Deduction per Payday</th>
+            <th style="border: 1px solid black; padding: 2px">Company</th>
+            <th style="border: 1px solid black; padding: 2px">Employee No.</th>
+            <th style="border: 1px solid black; padding: 2px">Employee Name</th>
+            <th style="border: 1px solid black; padding: 2px">Surey / Co-borrower</th>
+            <th style="border: 1px solid black; padding: 2px">Total Amount</th>
+            <th style="border: 1px solid black; padding: 2px">Payment Terms <br> (no. of mos.)</th>
+            <th style="border: 1px solid black; padding: 2px">Deduction per Payday</th>
         </tr>
         @foreach($loans as $loan)
         <tr>
-            <td style="border: 1px solid black;">{{ $loan->COMPANY }}</td>
-            <td style="border: 1px solid black;">{{ $loan->EmpID }}</td>
-            <td style="border: 1px solid black;">{{ $loan->FullName }}</td>
-            <td style="border: 1px solid black;">{{ $loan->guarantor_FullName }}</td>
-            <td style="border: 1px solid black;">{{ number_format($loan->total, 2, '.', ',') }}</td>
-            <td style="border: 1px solid black;">{{ $loan->terms_month }}</td>
-            <td style="border: 1px solid black;">{{ number_format($loan->deductions, 2, '.', ',') }}</td>
+            <td style="border: 1px solid black; padding: 2px">{{ $loan->COMPANY }}</td>
+            <td style="border: 1px solid black; padding: 2px">{{ $loan->EmpID }}</td>
+            <td style="border: 1px solid black; padding: 2px">{{ $loan->FullName }}</td>
+            <td style="border: 1px solid black; padding: 2px">{{ $loan->guarantor_FullName }}</td>
+            <td style="border: 1px solid black; padding: 2px">{{ number_format($loan->total, 2, '.', ',') }}</td>
+            <td style="border: 1px solid black; padding: 2px">{{ $loan->terms_month }}</td>
+            <td style="border: 1px solid black; padding: 2px">{{ number_format($loan->deductions, 2, '.', ',') }}</td>
         </tr>
         @endforeach
     </table>
