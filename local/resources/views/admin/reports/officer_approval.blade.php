@@ -3,7 +3,7 @@
         
     }
 </style>
-<div>
+<div style="color: black">
     <p>
         Dear FCC / TDG,
     </p>
