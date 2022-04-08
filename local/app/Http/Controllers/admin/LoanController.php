@@ -778,6 +778,8 @@ class LoanController extends Controller
 
         $log = new Log();
         $log->writeOnly('Info', 'email', ['email' => $to, 'subject' => $subject, 'response' => $mail]);
+        
+        return redirect()->route('admin.loan')->withSuccess('Email sent!');
 
     }
 }
