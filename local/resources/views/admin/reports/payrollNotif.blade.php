@@ -22,6 +22,7 @@
 				<th>COMPANY</th>
 				<th>EMPLOYEE <br>ID NO.</th>
 				<th>EMPLOYEE <br>NAME</th>
+				<th>SURETY <br>NAME</th>
 				<th>Date of <br>Check Release</th>
 				<th>TOTAL <br>AMOUNT</th>
 				<th>TOTAL NO. <br>OF DEDUCTIONS</th>
@@ -34,6 +35,7 @@
 				<td style="text-align: left; ">{{ $loan->COMPANY }}</td>
 				<td style="text-align: left">{{ $loan->EmpID }}</td>
 				<td style="text-align: left">{{ ucwords(strtolower($loan->FullName)) }}</td>
+				<td style="text-align: left">{{ ucwords(strtolower($loan->guarantor_FullName)) }}</td>
 				<td style="text-align: center">{{ empty($loan->released) ? '' : date('m/d/Y', strtotime($loan->released)) }}</td>
 				<td style="text-align: right">{{ $utils->formatNumber($loan->total) }}</td>
 				<td style="text-align: center">{{ $loan->terms_month * 2 }}</td>
