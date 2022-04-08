@@ -170,7 +170,7 @@
 	</div>
 	<div class="modal-footer">
 		@if($loan->status == $utils->getStatusIndex('payroll'))
-		<textarea name="payroll_remarks" class="form-control" id="" cols="30" rows="10"></textarea>
+		<textarea name="payroll_remarks" class="form-control" id="" cols="30" rows="3"></textarea>
 		<div class="clearfix"></div>
 		<button type="submit" name="verify" class="btn btn-success btn-sm pull-right" onsubmit="startLoading()"><i class="fa fa-check-square-o"></i> Verify</button>
 		<button type="submit" name="deny" class="btn btn-danger btn-sm pull-right" onsubmit="startLoading()"><i class="fa fa-thumbs-down"></i> Deny</button>
