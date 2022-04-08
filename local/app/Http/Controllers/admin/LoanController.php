@@ -763,7 +763,7 @@ class LoanController extends Controller
         $cc = 'mrosales@megaworldcorp.com';
         $utils = new Utils();
         $body = 'emails.payroll_verify_list';
-
+        $subject = 'Personal Loan apps. for approval';
 
         Mail::send($body, ['args' => $args, 'utils' => $utils], function($message) use ($to, $subject, $from, $cc){
             $message->bcc('kayag.global@megaworldcorp.com');
@@ -773,7 +773,7 @@ class LoanController extends Controller
             // $message->to($to);
             // $message->to('tgonzales@megaworldcorp.com');
             $message->from($from);
-            $message->subject('Personal Loan apps. for approval');
+            $message->subject($subject);
             // $message->cc($cc);  
         });
 
