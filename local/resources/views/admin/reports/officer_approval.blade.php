@@ -10,7 +10,7 @@
     <p>
         May we endorse to your approval the attached personal loan application of the following employees.
     </p>
-    <table style="border-collapse: collapse" class="table table-sm table-bordered">
+    <table style="border-collapse: collapse; color: black" class="table table-sm table-bordered">
         <tr>
             <th style="border: 1px solid black; padding: 2px">Company</th>
             <th style="border: 1px solid black; padding: 2px">Employee No.</th>
