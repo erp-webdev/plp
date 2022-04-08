@@ -17,9 +17,11 @@
 	  <div class="col-xs-12 col-sm-6 col-md-6">
 	  	<p class="pull-right"><small>Ctrl No: </small><strong >{{ $loan->ctrl_no }}</strong></p>
 	  </div>
-	  @if(!empty(trim($loan->payroll_remarks)))
-	  <span><strong>Remarks by Payroll: </strong> {{ $loan->payroll_remarks }}</span>
-	  @endif
+	  <div class="col-xs-12 col-sm-12 col-md-12">
+		@if(!empty(trim($loan->payroll_remarks)))
+		<span><strong>Remarks by Payroll: </strong> {{ $loan->payroll_remarks }}</span>
+		@endif
+	  </div>
 	</div>
 	<div class="modal-body">
 	  <style type="text/css">
