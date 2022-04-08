@@ -317,7 +317,7 @@ class ReportController extends Controller
                         $query->where('check_released', '>=', trim($dateRange[0]))->where('check_released', '<=', trim($dateRange[1]));
                     }
 
-                    $dateRange = explode("-", $args['start_of_deductions']);
+                    $dateRange = explode("-", $args['startDeduction']);
                     if(!empty(trim($dateRange[0])) && !empty(trim($dateRange[1]))){
                         $query->where('start_of_deductions', '>=', trim($dateRange[0]))->where('start_of_deductions', '<=', trim($dateRange[1]));
                     }
