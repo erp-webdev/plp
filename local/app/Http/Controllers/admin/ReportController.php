@@ -446,7 +446,7 @@ class ReportController extends Controller
                     'TOTAL AMOUNT' => number_format($row->total, 2),
                     'TOTAL NO. OF DEDUCTIONS' => $row->terms_month * 2,
                     'Deduction per payday' => number_format($row->deductions, 2),
-                    'START OF DEDUCTIONS' => $row->start_of_deductions
+                    'START OF DEDUCTIONS' => $row->start_of_deductions,
                     'Status' => $utils->getStatus($row->status)
                 ];
                 array_push($data, $newRow);
