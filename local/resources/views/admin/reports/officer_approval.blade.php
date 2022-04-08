@@ -1,6 +1,6 @@
 <style>
     table, tr, td {
-        border: 1px solid black;
+        
     }
 </style>
 <div>
@@ -12,13 +12,13 @@
     </p>
     <table class="table table-sm table-bordered">
         <tr>
-            <th>Company</th>
-            <th>Employee No.</th>
-            <th>Employee Name</th>
-            <th>Surey / Co-borrower</th>
-            <th>Total Amount</th>
-            <th>Payment Terms <br> (no. of mos.)</th>
-            <th>Deduction per Payday</th>
+            <th style="border: 1px solid black;">Company</th>
+            <th style="border: 1px solid black;">Employee No.</th>
+            <th style="border: 1px solid black;">Employee Name</th>
+            <th style="border: 1px solid black;">Surey / Co-borrower</th>
+            <th style="border: 1px solid black;">Total Amount</th>
+            <th style="border: 1px solid black;">Payment Terms <br> (no. of mos.)</th>
+            <th style="border: 1px solid black;">Deduction per Payday</th>
         </tr>
         @foreach($loans as $loan)
         <tr>
