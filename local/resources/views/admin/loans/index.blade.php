@@ -140,6 +140,7 @@
 				<table id="dataTable"  class="table table-striped table-hover table-condensed">
 					<thead>
 						<th value="ctrl_no">Control No</th>
+						<th value="company">Type</th>
 						<th value="company">Company</th>
 						<th value="FullName">Employee</th>
 						<th value="created_at">Date Applied</th>
@@ -157,6 +158,7 @@
 						@foreach($loans as $loan)
 							<tr>
 								<td>{{ $loan->ctrl_no }}</td>
+								<td>{{ $loan->special ? 'SPECIAL' : 'REGULAR' }}</td>
 								<td>{{ $loan->COMPANY }}</td>
 								<td>{{ utf8_encode($loan->FullName) }}</td>
 								<td>{{ $loan->created_at }}</td>
