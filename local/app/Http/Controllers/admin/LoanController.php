@@ -60,11 +60,12 @@ class LoanController extends Controller
         if(isset($_GET['status']))
             $status = $_GET['status'];
 
-     	$loans = Loan::where('status', '>', $this->utils->getStatusIndex('guarantor'))
-                    ->where('status', '<', $this->utils->getStatusIndex('denied'))
+     	$loans = Loan::where('status', '<', $this->utils->getStatusIndex('denied'))
                     ->where(function($query) use ($status){
                         if($status != 'all')
                             return $query->where('status', $status);
+                        if($status == 'all')
+                            return $query->where('status', '>', $this->utils->getStatusIndex('guarantor'));
                     })
                     ->orderBy($sort, $sortBy)
                     ->search($search)
