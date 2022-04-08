@@ -29,7 +29,7 @@
                   <!--[if mso]></td></tr></table><![endif]-->
 
                    <!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 10px; padding-left: 10px; padding-top: 5px; padding-bottom: 5px;"><![endif]-->
-                  <div style="padding-right: 10px; padding-left: 10px; padding-top: 5px; padding-bottom: 5px;">
+                  <div style="padding-right: 10px; padding-left: 10px; padding-top: 5px; padding-bottom: 5px; width: 100% !important">
                   	<div style="font-size:12px;line-height:14px;color:#555555;font-family:Arial, 'Helvetica Neue', Helvetica, sans-serif;text-align:left; overflow: scroll;">
                   		{!! $loansHtml !!}
                   	</div>
