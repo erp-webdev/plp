@@ -742,7 +742,7 @@ class LoanController extends Controller
     {
         $loans = $this->getOfficerApproval();
 
-        return view('admin.officer_approval')
+        return view('admin.reports.officer_approval')
             ->withLoans($loans);
     }
 
