@@ -4,6 +4,7 @@ namespace eFund\Http\Controllers\admin;
 
 use Illuminate\Http\Request;
 
+use Mail;
 use DB;
 use Auth;
 use Event;
