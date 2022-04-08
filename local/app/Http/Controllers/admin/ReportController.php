@@ -327,6 +327,8 @@ class ReportController extends Controller
                         $query->whereBetween('created_at', [ date('Y-m-d', strtotime(trim($dateRange[0]))), date('Y-m-d', strtotime(trim($dateRange[1])))]);
                     }
 
+                    dd(date('Y-m-d', strtotime(trim($dateRange[0]))));
+
                     $names = explode(' ', $args['empName']);
                     foreach ($names as $name) {
                         $query->orWhere('FullName', 'LIKE', '%' . $name . '%');
