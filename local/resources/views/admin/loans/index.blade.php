@@ -75,7 +75,7 @@
 	                    <div class="modal-title"><h4> For Officer's Approval</h4></div>
 	                    <p>Send list of loan applications for Officer's Approval</p>
 	                </div>
-	                <form action="{{ route('loan.email.officer') }}" method="post">
+	                <form action="{{ route('loan.officer.notif') }}" method="post">
 	                	<input type="hidden" name="_token" value="{{ csrf_token() }}">
 	                	<div class="modal-body" id="emailOfficerModalBody">
 		                	
