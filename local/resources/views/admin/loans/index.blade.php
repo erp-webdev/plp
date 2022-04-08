@@ -131,6 +131,14 @@
 							</select>
 						</div>
 					</div>
+					<div class="input-group col-xs-12 col-sm-3 col-md-3">
+						<select name="status" id="status" class="form-control">
+							@foreach($utils->stats as $index => $stat)
+							<option value="{{ $index }}">{{ $stat }}</option>
+							@endforeach
+						</select>
+						<a class="input-group-addon btn btn-success btn-sm" onclick="find()"><i class="fa fa-search"></i></a>
+				 	</div>
 				 	<div class="input-group col-xs-12 col-sm-3 col-md-3 pull-right">
 						<input type="search" id="search" class="form-control input-sm"  placeholder="Ctrl No, Employee, or Date Applied" value="<?php if(isset($_GET['search'])) echo $_GET['search']; ?>">
 						<a class="input-group-addon btn btn-success btn-sm" onclick="find()"><i class="fa fa-search"></i></a>
