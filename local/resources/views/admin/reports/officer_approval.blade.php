@@ -21,9 +21,9 @@
             <td>{{ $loan->EmpID }}</td>
             <td>{{ $loan->FullName }}</td>
             <td>{{ $loan->guarantor_FullName }}</td>
-            <td>{{ number_format($loan->total, '.', ',') }}</td>
+            <td>{{ number_format($loan->total, 2, '.', ',') }}</td>
             <td>{{ $loan->terms_month }}</td>
-            <td>{{ number_format($loan->deductions) }}</td>
+            <td>{{ number_format($loan->deductions, 2, '.', ',') }}</td>
         </tr>
         @endforeach
     </table>
