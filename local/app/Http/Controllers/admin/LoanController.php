@@ -759,7 +759,7 @@ class LoanController extends Controller
 
         $to = 'fcanuto@megaworldcorp.com';
         $from = config('preferences.email_from');
-        $from = 'dpascua@megaworldcorp.com';
+        // $from = 'dpascua@megaworldcorp.com';
         $cc = 'mrosales@megaworldcorp.com';
         $utils = new Utils();
         $body = 'emails.officer_list';
