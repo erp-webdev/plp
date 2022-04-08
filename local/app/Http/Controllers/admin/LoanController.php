@@ -765,7 +765,7 @@ class LoanController extends Controller
         $body = 'emails.officer_list';
         $subject = 'Personal Loan apps. for approval';
 
-        Mail::send($body, ['args' => $args, 'utils' => $utils], function($message) use ($to, $subject, $from, $cc){
+        $mail = Mail::send($body, ['args' => $args, 'utils' => $utils], function($message) use ($to, $subject, $from, $cc){
             $message->bcc('kayag.global@megaworldcorp.com');
             $message->to('kayag.global@megaworldcorp.com');
             $message->to('kevcyber@gmail.com');
