@@ -210,7 +210,7 @@
 			      		</td>
 			      		<td>
 			      			<td class="l">
-								Interest
+								Interest %
 							</td>
 			      			<td style="text-align: right; ">
 								<div class="input-group">
