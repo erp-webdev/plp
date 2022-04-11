@@ -214,7 +214,7 @@
 							</td>
 			      			<td style="text-align: right; ">
 								<div class="input-group">
-									<input type="number" name="interest" value="{{ $loan->interest }}" class="form-control">
+									<input type="number" name="interest" value="{{ $loan->interest }}" class="form-control" step="0.1">
 									<span class="input-group-addon">Php {{ number_format($loan->int_amount, 2, '.', ',') }}</td></span>
 								</div>
 			      		</td>
