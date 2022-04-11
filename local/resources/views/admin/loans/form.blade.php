@@ -25,7 +25,7 @@
 </head>
 <body>
 <table>
-	<tr class="box" >
+	<tr class="box">
 		<tr>
 			<td style="" colspan="3"><strong>MEGAWORLD CORPORATION</strong></td>
 			<td style=" text-align: center; border-left: 1px solid #000" ><u>PLP CONTROL NUMBER</u></td>

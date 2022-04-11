@@ -391,6 +391,7 @@ class DashboardController extends Controller
         $file = new LoanController();
         $filename = $file->printPDFForm($id);
 
+
         $content = Storage::disk('forms')->get($filename);
         
         return (new Response($content, 200))
