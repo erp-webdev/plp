@@ -327,7 +327,22 @@ class LoanController extends Controller
 
             // modify stuff
             $excel->sheet('Sheet3', function($sheet) use ($loan, $balance, $utils) {
-                $sheet->cell('S3', 'kevs');
+                $sheet->cell('S3', $loan->ctrl_no);
+                if($loan->type == 0)
+                    $sheet->cell('B7', '/');
+                else
+                    $sheet->cell('F7', '/');
+                
+                if($loan->special == 0)
+                    $sheet->cell('B9', '/');
+                else
+                    $sheet->cell('F9', '/');
+
+                $sheet->cell('H11', $loan->FullName);
+                $sheet->cell('H12', $loan->PositionDesc);
+                $sheet->cell('H13', $loan->HireDate);
+                $sheet->cell('H14', $loan->PermanencyDate);
+                $sheet->cell('H15', $loan->loan_amount);
             });
         
         })->store('xls', storage_path('app/forms'));
