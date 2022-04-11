@@ -343,6 +343,11 @@ class LoanController extends Controller
                 $sheet->cell('H13', $loan->HireDate);
                 $sheet->cell('H14', $loan->PermanencyDate);
                 $sheet->cell('H15', $loan->loan_amount);
+                $sheet->getStyle('H15')->applyFromArray(array(
+                    'fill' => array(
+                        'type' => PHPExcel_Style_NumberFormat::FORMAT_NUMBER_00,
+                    )
+                ))
             });
         
         })->store('xls', storage_path('app/forms'));
