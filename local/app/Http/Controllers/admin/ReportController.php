@@ -65,7 +65,8 @@ class ReportController extends Controller
             'principal',
             'status',
             'interest',
-            'payroll'
+            'payroll',
+            'surety'
         ];
 
         $args = [];
