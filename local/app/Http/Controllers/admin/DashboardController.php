@@ -18,7 +18,7 @@ use eFund\Endorser;
 use eFund\Notification;
 use eFund\Http\Requests;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Response;
+use Illuminate\Http\|Response;
 use eFund\Http\Controllers\Controller;
 use eFund\Http\Controllers\admin\EmailController;
 use eFund\Http\Controllers\admin\LoanController;
