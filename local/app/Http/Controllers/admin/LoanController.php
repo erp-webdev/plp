@@ -354,7 +354,7 @@ class LoanController extends Controller
                 $sheet->cell('U14', $loan->purpose);
 
                 $sheet->cell('F18', $loan->FullName);
-                $sheet->cell('S18', $loan->endorser_FullName);remarks
+                $sheet->cell('S18', $loan->endorser_FullName);
 
                 $sheet->cell('F25', $loan->guaranteed_amount);
                 $sheet->cell('D31', $loan->guarantor_FullName);
