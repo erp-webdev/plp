@@ -391,7 +391,7 @@ class DashboardController extends Controller
 
         $content = Storage::disk('forms')->get($file);
         
-        return (new Response($file, 200))
+        return (new Response($content, 200))
         ->header('Content-Type', 'application/pdf');
         return;
 
