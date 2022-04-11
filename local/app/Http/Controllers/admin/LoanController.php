@@ -290,8 +290,8 @@ class LoanController extends Controller
     public function printPDFForm($id)
     {
         $loan = Loan::findOrFail($id);
-        $balance = Loan::where('EmpID', Auth::user()->employee_id)
-                        ->where('DBNAME', Auth::user()->DBNAME)
+        $balance = Loan::where('EmpID', $loan->EmpID)
+                        ->where('DBNAME',$loan->DBNAME)
                         ->whereNotIn('status', [0,8])
                         ->where('id', '<>', $id)
                         ->sum('balance');
@@ -328,25 +328,65 @@ class LoanController extends Controller
             // modify stuff
             $excel->sheet('Sheet3', function($sheet) use ($loan, $balance, $utils) {
                 $sheet->setColumnFormat(array(
-                    'H15' => '0.00',
+                    'H15' => '#,##0.00',
                 ));
 
                 $sheet->cell('S3', $loan->ctrl_no);
                 if($loan->type == 0)
-                    $sheet->cell('B7', '/');
+                    $sheet->cell('B7', '✓');
                 else
-                    $sheet->cell('F7', '/');
+                    $sheet->cell('F7', '✓');
                 
                 if($loan->special == 0)
-                    $sheet->cell('B9', '/');
+                    $sheet->cell('B9', '✓');
                 else
-                    $sheet->cell('F9', '/');
+                    $sheet->cell('F9', '✓');
 
                 $sheet->cell('H11', $loan->FullName);
                 $sheet->cell('H12', $loan->PositionDesc);
                 $sheet->cell('H13', $loan->HireDate);
                 $sheet->cell('H14', $loan->PermanencyDate);
                 $sheet->cell('H15', $loan->loan_amount);
+                
+                $sheet->cell('V11', $loan->EmpID);
+                $sheet->cell('V12', $loan->DeptDesc);
+                $sheet->cell('V13', 0);
+                $sheet->cell('U14', $loan->purpose);
+
+                $sheet->cell('F18', $loan->FullName);
+                $sheet->cell('S18', $loan->endorser_FullName);remarks
+
+                $sheet->cell('F25', $loan->guaranteed_amount);
+                $sheet->cell('D31', $loan->guarantor_FullName);
+                $sheet->cell('D32', $loan->guarantor_refno);
+
+                $sheet->cell('G39', $balance);
+                $sheet->cell('G40', $loan->loan_amount);
+                $sheet->cell('G41', $loan->interest . '% x ' . $loan->terms_month . ' months');
+                $sheet->cell('G43', $loan->total);
+                
+                $sheet->cell('R37', $loan->remarks);
+
+                $sheet->cell('G45', empty($loan->start_of_deductions) ? '' : $loan->start_of_deductions);
+                $sheet->cell('G46', $loan->terms_month * 2 );
+
+                $sheet->cell('U45', $loan->deductions);
+                $sheet->cell('U46', $loan->cv_no);
+                $sheet->cell('U47', empty($loan->check_released) ? '' : $loan->check_released);
+
+                if($loan->approved == 1)
+                    $sheet->cell('I52', '✓');
+                else
+                    $sheet->cell('I53', '✓');
+
+                $sheet->cell('J52', $loan->approved_FullName);
+
+                $sheet->cell('G56', $loan->FullName);
+                $sheet->cell('U56', $loan->loan_amount);
+                $sheet->cell('C64', $loan->FullName);
+                
+                $sheet->cell('E66', getdate('Y-m-d H:i:s'));
+                $sheet->cell('W66', '(' . Auth::user()->id . ') ' . strtolower(Auth::user()->name));
                 
             });
         
