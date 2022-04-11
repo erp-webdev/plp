@@ -460,6 +460,7 @@ class ReportController extends Controller
             foreach($loans as $row){
                 $newRow = [
                     'Control #' => $row->ctrl_no,
+                    'Company' => $row->COMPANY,
                     'Employee ID' => $row->EmpID,
                     'Employee Name' => $row->FullName,
                     'Guarantor' => $row->guarantor_FullName,
