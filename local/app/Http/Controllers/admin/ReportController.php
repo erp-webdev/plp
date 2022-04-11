@@ -382,6 +382,10 @@ class ReportController extends Controller
                     $query->where('EmpID', 'LIKE', '%' . $args['EmpID'] . '%');
                 }
 
+                if(!empty($args['surety'])){
+                    $query->where('guarantor_FullName', 'LIKE', '%' . $args['surety'] . '%');
+                }
+
                 if(!empty($args['status'])){
                     if($args['status'] == 1) // Paid
                         $query->where('status', $this->utils->getStatusIndex('paid'));

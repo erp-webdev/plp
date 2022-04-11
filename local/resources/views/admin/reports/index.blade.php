@@ -53,6 +53,10 @@
 					<input type="text" name="empName" class="form-control  input-sm" placeholder="Juan or Dela Cruz">
 				</div>
 				<div class="form-group  col-xs-12 col-sm-4 col-md-4 col-lg-4">
+					Surety / Guarantor
+					<input type="text" name="surety" class="form-control  input-sm" placeholder="Juan or Dela Cruz">
+				</div>
+				<div class="form-group  col-xs-12 col-sm-4 col-md-4 col-lg-4">
 					Check Release
 					<input name="checkRelease" class="form-control  input-sm datepicker-range" placeholder="mm/dd/yyyy">
 				</div>
