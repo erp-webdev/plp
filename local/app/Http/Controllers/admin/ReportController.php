@@ -309,7 +309,7 @@ class ReportController extends Controller
     public function payrollReport($args)
     {
 
-          return Loan:: where(function($query) use ($args){
+          $sql =  Loan:: where(function($query) use ($args){
 
                     // Check of Release
                     $dateRange = explode("-", $args['checkRelease']);
@@ -347,7 +347,9 @@ class ReportController extends Controller
                             $query->where('status', $this->utils->getStatusIndex('denied'));
                     }
 
-                })->orderBy($args['sort'], 'asc')->get();
+                })->orderBy($args['sort'], 'asc')->toSql();
+
+                dd($sql);
     }
 
     public function summaryReport($args)
