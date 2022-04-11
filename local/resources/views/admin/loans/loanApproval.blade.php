@@ -1,7 +1,7 @@
 
 	<div class="modal-header">
 	  <div class="col-xs-12 col-sm-6 col-md-6">
-	  	<h4>Employees Fund Loan 
+	  	<h4>Personal Loan Program 
 	  		<span style="font-size: 14px; font-weight: normal">{!! $utils->formatStatus($loan->status) !!}</span>
 	  		@if($loan->status == $utils->getStatusIndex('officer'))
 		  		@if($loan->payroll_verified == 1)
