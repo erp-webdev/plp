@@ -329,6 +329,12 @@ class LoanController extends Controller
             $excel->sheet('Sheet3', function($sheet) use ($loan, $balance, $utils) {
                 $sheet->setColumnFormat(array(
                     'H15' => '#,##0.00',
+                    'F25' => '#,##0.00',
+                    'G39' => '#,##0.00',
+                    'G40' => '#,##0.00',
+                    'G43' => '#,##0.00',
+                    'U45' => '#,##0.00',
+                    'U56' => '#,##0.00',
                 ));
 
                 $sheet->cell('S3', $loan->ctrl_no);
@@ -348,6 +354,9 @@ class LoanController extends Controller
                 $sheet->cell('H14', $loan->PermanencyDate);
                 $sheet->cell('H15', $loan->loan_amount);
                 
+                $sheet->cell('V6', $loan->created_at);
+                $sheet->cell('V7', $loan->loc_direct_line);
+
                 $sheet->cell('V11', $loan->EmpID);
                 $sheet->cell('V12', $loan->DeptDesc);
                 $sheet->cell('V13', 0);
