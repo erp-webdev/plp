@@ -209,7 +209,12 @@
 			      			</td>
 			      		</td>
 			      		<td>
-			      			<td class="l">Interest <input type="number" name="interest" value="{{ $loan->interest }}" class="form-control"></td>
+			      			<td class="l">
+								<div class="input-control">
+									<span class="input-addon">Interest </span>
+									<input type="number" name="interest" value="{{ $loan->interest }}" class="form-control">
+								</div>
+							</td>
 			      			<td style="text-align: right; ">Php {{ number_format($loan->int_amount, 2, '.', ',') }}</td>
 			      		</td>
 			      	</tr>	
