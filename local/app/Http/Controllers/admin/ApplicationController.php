@@ -91,6 +91,8 @@ class ApplicationController extends Controller
         if($records_this_year > 0)
             $months = $this->utils->getTermMonths($loan->type, $loan->special, $loan->terms_month);
             
+        $months_special = Preference::name('payment_term_special');
+        
         $allow_max = Preference::name('allow_over_max');
 
         $endorser = $this->getEndorser();
@@ -122,6 +124,7 @@ class ApplicationController extends Controller
                     ->withPreviousLoan($previous_loan)
                     ->withGuarantor($guarantor)
                     ->withSpecial($special_loan)
+                    ->withMonthsSpecial($months_special->value)
                     ->withUtils(new Utils());
         }else{
             return view('admin.applications.show3')
