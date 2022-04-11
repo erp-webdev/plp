@@ -113,11 +113,7 @@
 		<tr style="height: 10px"></tr>
 	</tr>
 </table>
-<table style="height: 15px">
-	<tr>
-		<td>&nbsp;</td>
-	</tr>
-</table>
+
 <table>
 	<tr class="box">
 		<td colspan="4">
