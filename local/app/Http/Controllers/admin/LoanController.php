@@ -327,6 +327,10 @@ class LoanController extends Controller
 
             // modify stuff
             $excel->sheet('Sheet3', function($sheet) use ($loan, $balance, $utils) {
+                $sheet->setColumnFormat(array(
+                    'H15' => '0.00',
+                ));
+
                 $sheet->cell('S3', $loan->ctrl_no);
                 if($loan->type == 0)
                     $sheet->cell('B7', '/');
@@ -343,11 +347,7 @@ class LoanController extends Controller
                 $sheet->cell('H13', $loan->HireDate);
                 $sheet->cell('H14', $loan->PermanencyDate);
                 $sheet->cell('H15', $loan->loan_amount);
-                $sheet->getStyle('H15')->applyFromArray(array(
-                    'fill' => array(
-                        'type' => '0.00'
-                    )
-                    ));
+                
             });
         
         })->store('xls', storage_path('app/forms'));
