@@ -210,12 +210,13 @@
 			      		</td>
 			      		<td>
 			      			<td class="l">
-								<div class="input-group">
-									<span class="input-addon">Interest </span>
-									<input type="number" name="interest" value="{{ $loan->interest }}" class="form-control">
-								</div>
+								Interest
 							</td>
-			      			<td style="text-align: right; ">Php {{ number_format($loan->int_amount, 2, '.', ',') }}</td>
+			      			<td style="text-align: right; ">
+								<div class="input-group">
+									<input type="number" name="interest" value="{{ $loan->interest }}" class="form-control">
+									<span class="input-group-addon">Php {{ number_format($loan->int_amount, 2, '.', ',') }}</td></span>
+								</div>
 			      		</td>
 			      	</tr>	
 			      	<tr>
