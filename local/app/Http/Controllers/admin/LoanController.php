@@ -330,7 +330,7 @@ class LoanController extends Controller
                 $sheet->cell('S3', 'kevs');
             });
         
-        })->export('xls');
+        })->store('xls', storage_path('app/forms'));
         //end of maat
         
         //return $filename;
