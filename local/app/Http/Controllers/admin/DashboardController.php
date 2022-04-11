@@ -10,6 +10,7 @@ use Event;
 use Entrust;
 use Session;
 use Redirect;
+use Storage;
 use eFund\job;
 use eFund\Employee;
 use eFund\Loan;
@@ -386,7 +387,9 @@ class DashboardController extends Controller
     public function test($id)
     {
         $file = new LoanController();
-        $file->printPDFForm($id);
+        $file = $file->printPDFForm($id);
+
+        return Storage::disk('forms')->get($file);
 
         return;
 

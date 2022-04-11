@@ -306,9 +306,11 @@ class LoanController extends Controller
             ->setWarnings(false);
             // ->save($loan->FullName . '_' . $loan->ctrl_no . '.pdf');
 
+        $filename = $loan->FullName . '_' . $loan->ctrl_no . '.pdf';
         Storage::disk('forms')
-            ->put($loan->ctrl_no . '_' . $loan->FullName . '.pdf', $pdf->output());
+            ->put($filename, $pdf->output());
         
+        return $filename;
     }
 
     public function showUpload()
