@@ -41,7 +41,7 @@ class ReportController extends Controller
     {
         $sort = 'FullName';
         $format = 'view';
-        $title = "Megaworld Employeess fund Report";
+        $title = "Personal Loan Program Report";
 
         if(isset($_GET['format'])){
             $format = $_GET['format'];

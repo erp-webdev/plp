@@ -75,7 +75,8 @@ function showReport(event, format) {
 				'checkno',
 				'principal',
 				'status',
-				'interest'
+				'interest',
+				'surety'
 			],
 
 			monthly: [
