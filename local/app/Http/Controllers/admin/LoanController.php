@@ -328,7 +328,7 @@ class LoanController extends Controller
             // modify stuff
             $excel->sheet('Sheet3', function($sheet) use ($loan, $balance, $utils) {
                 $sheet->cell('S3', 'kevs');
-            }
+            });
         
         })->export('xls');
         //end of maat
