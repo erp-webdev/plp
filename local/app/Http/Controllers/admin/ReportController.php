@@ -329,7 +329,8 @@ class ReportController extends Controller
 
                     $names = explode(' ', $args['empName']);
                     foreach ($names as $name) {
-                        $query->orWhere('FullName', 'LIKE', '%' . $name . '%');
+                        if(!empty(trim($name)))
+                            $query->orWhere('FullName', 'LIKE', '%' . $name . '%');
                     }
 
                     if(!empty($args['EmpID'])){
