@@ -190,7 +190,7 @@
                     <tr>
                         <th>Terms (Months)</th>
                         <td>
-                            <input type="number" name="terms" class="form-control" min="1" max="{{ $loan->special == 1 ? $months_special : $months }}" value="<?php
+                            <input type="number" name="terms" class="form-control" min="1" max="{{ isset($loan->id) ? $loan->special == 1 ? $months_special : $months : $months}}" value="<?php
                                     if(isset($loan->id))
                                         echo $loan->terms_month;
                                     else{
