@@ -394,9 +394,7 @@ class ReportController extends Controller
                     $query->where('guarantor_FullName', 'LIKE', '%' . $args['surety'] . '%');
                 }
 
-                if(!empty($args['special'])){
-                    $query->where('special', $args['special']);
-                }
+                $query->where('special', $args['special']);
 
                 if(!empty($args['status'])){
                     if($args['status'] == 1) // Paid
