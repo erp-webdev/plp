@@ -243,11 +243,11 @@ class TreasuryController extends Controller
     		return redirect()->back()->withSuccess(trans('loan.application.released'));
 
     	}else if(isset($request->cancel)){
-            DB::beginTransaction();
-            $loan = Loan::find($request->id);
-            $loan->status = $this->utils->getStatusIndex('denied');
-            $loan->save();
-            DB::commit();
+            // DB::beginTransaction();
+            // $loan = Loan::find($request->id);
+            // $loan->status = $this->utils->getStatusIndex('denied');
+            // $loan->save();
+            // DB::commit();
 
             return redirect()->back()->withSuccess(trans('loan.application.cheque'));
         }
