@@ -77,6 +77,7 @@
 				<table class="table table-striped table-hover table-condensed">
 					<thead>
 						<th>Control No</th>
+						<th>Company</th>
 						<th>Employee</th>
 						<th>Date Applied</th>
 						<th>CV #</th>
@@ -91,6 +92,7 @@
 						@foreach($loans  as $loan)
 						<tr>
 							<td>{{ $loan->ctrl_no }}</td>
+							<td>{{ $loan->COMPANY }}</td>
 							<td>{{ $loan->FullName }}</td>
 							<td>{{ date('j F y', strtotime($loan->created_at)) }}</td>
 							<td>{{ $loan->cv_no }}</td>
