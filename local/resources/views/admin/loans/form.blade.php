@@ -93,9 +93,7 @@
 			</td>
 		</tr>
 	</tr>
-	<tr style="height: 10px">
-		<td>&nbsp;</td>
-	</tr>
+
 </table>
 <table>
 	<tr class="box">
@@ -111,9 +109,7 @@
 			<td>&nbsp;</td>
 			<td style="text-align: center; vertical-align: text-top;"><small>DEPARTMENT HEAD / IMMEDIATE HEAD <br>SIGNATURE OVER PRINTED NAME</small></td>
 		</tr>
-		<tr style="height: 10px">
-			<td>&nbsp;</td>
-		</tr>
+
 	</tr>
 </table>
 <table>
