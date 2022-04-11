@@ -296,21 +296,33 @@ class LoanController extends Controller
                         ->where('id', '<>', $id)
                         ->sum('balance');
 
-        $view = view('admin.loans.form')
-                ->withLoan($loan)
-                ->withBalance($balance)
-                ->withUtils(new Utils());
+        // $view = view('admin.loans.form')
+        //         ->withLoan($loan)
+        //         ->withBalance($balance)
+        //         ->withUtils(new Utils());
 
-        $pdf = PDF::loadHTML($view)
-            ->setPaper('legal', 'portrait')
-            ->setWarnings(false);
-            // ->save($loan->FullName . '_' . $loan->ctrl_no . '.pdf');
+        // $pdf = PDF::loadHTML($view)
+        //     ->setPaper('legal', 'portrait')
+        //     ->setWarnings(false);
+        //     // ->save($loan->FullName . '_' . $loan->ctrl_no . '.pdf');
 
-        return $pdf->stream('test.pdf');
+        // $filename = $loan->ctrl_no . '_' . $loan->FullName . '.pdf';
+        // Storage::disk('forms')
+        //     ->put($filename, $pdf->output());
 
-        $filename = $loan->ctrl_no . '_' . $loan->FullName . '.pdf';
-        Storage::disk('forms')
-            ->put($filename, $pdf->output());
+        // maatwebsite
+        $utils = new Utils();
+        $excel = Excel::create('sample', function($excel) use ($loan, $balance, $utils) {
+
+            $excel->sheet('FORM', function($sheet) {
+        
+                $sheet->loadView('admin.loans.form')
+                    ->with('loan', $loan)
+                    ->with('balance', $balance)
+                    ->with('utils', $utils);
+            });
+        })->store('xls');
+        //end of maat
         
         return $filename;
     }
