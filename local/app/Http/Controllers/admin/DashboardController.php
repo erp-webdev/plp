@@ -389,7 +389,7 @@ class DashboardController extends Controller
         $file = new LoanController();
         $filename = $file->printPDFForm($id);
 
-        $content = Storage::disk('forms')->download($file);
+        $content = Storage::disk('forms')->get($file);
         
         return (new Response($file, 200))
         ->header('Content-Type', 'application/pdf');
