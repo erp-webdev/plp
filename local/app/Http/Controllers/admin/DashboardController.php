@@ -19,6 +19,7 @@ use eFund\Http\Requests;
 use Illuminate\Http\Request;
 use eFund\Http\Controllers\Controller;
 use eFund\Http\Controllers\admin\EmailController;
+use eFund\Http\Controllers\admin\LoanController;
 
 class DashboardController extends Controller
 {
@@ -384,6 +385,11 @@ class DashboardController extends Controller
 
     public function test($id)
     {
+        $file = new LoanController();
+        $file->printPDFForm($id);
+
+        return;
+
         $employee = Employee::where('EmpID', '2016-06-0457')
             ->where('DBNAME', 'GL')
             ->first();
