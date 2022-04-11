@@ -385,7 +385,7 @@ class LoanController extends Controller
                 $sheet->cell('U56', $loan->loan_amount);
                 $sheet->cell('C64', $loan->FullName);
                 
-                $sheet->cell('E66', getdate('Y-m-d H:i:s'));
+                $sheet->cell('E66', date('Y-m-d H:i:s'));
                 $sheet->cell('W66', '(' . Auth::user()->id . ') ' . strtolower(Auth::user()->name));
                 
             });
