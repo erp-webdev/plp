@@ -399,7 +399,7 @@ class LoanController extends Controller
                 
             });
         
-        })->store('xls', storage_path('app/forms'));
+        })->store('xls', storage_path('app/forms'))->export('pdf');
         //end of maat
         
         //return $filename;
