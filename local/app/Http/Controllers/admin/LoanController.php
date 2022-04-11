@@ -314,7 +314,7 @@ class LoanController extends Controller
         $utils = new Utils();
         $excel = Excel::create('sample', function($excel) use ($loan, $balance, $utils) {
 
-            $excel->sheet('FORM', function($sheet) {
+            $excel->sheet('FORM', function($sheet) use ($loan, $balance, $utils) {
         
                 $sheet->loadView('admin.loans.form')
                     ->with('loan', $loan)
