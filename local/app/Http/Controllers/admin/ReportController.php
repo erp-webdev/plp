@@ -395,7 +395,9 @@ class ReportController extends Controller
         // $total = DB::select('EXEC spGetTotalOutstandingBalance');
 
         // $records = DB::table('viewMonthlyReport')->get();
-        $records = DB::select('EXEC spMonthlyReport ?, ?', ['1900-01-01', $args['created_at']]);
+        $dateRange = explode("-", $args['created_at']);
+        
+        $records = DB::select('EXEC spMonthlyReport ?, ?', ['1900-01-01', $dateRange[0]]);
         return $records;
 
         return (object)[
