@@ -114,6 +114,9 @@
 	</tr>
 </table>
 <table style="height: 15px">
+	<tr>
+		<td colspan="4"></td>
+	</tr>
 </table>
 <table>
 	<tr class="box">
