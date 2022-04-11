@@ -158,6 +158,7 @@ class ApplicationController extends Controller
         // Allowable # of months
         $months = Preference::name('payment_term');
         $months = $this->utils->getTermMonths($records, 0, $months->value);
+        $months_special = Preference::name('payment_term_special');
         
         $allow_max = Preference::name('allow_over_max');
 
@@ -186,7 +187,8 @@ class ApplicationController extends Controller
         ->withGuarantor($guarantor)
         ->withUtils(new Utils())
         ->withPreviousLoan($previous_loan)
-        ->withSpecial($special_loan);
+        ->withSpecial($special_loan)
+        ->withMonthsSpecial($months_special);
     }
 
 

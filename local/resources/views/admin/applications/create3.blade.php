@@ -389,6 +389,12 @@
             $('input[name="loan_amount"]').parent('td').find('.help-block')
                 .html('You are qualified up to ' +  '{{ number_format($terms->max_loan_amount, 2, '.', ',') }}')
 
+            $('input[name="terms"]')
+            .attr({
+                'max' : {{ $months }},
+                'value' : {{ $months }}
+            });
+
         }else{
             // special
             $('input[name="loan_amount"]')
@@ -399,6 +405,12 @@
 
             $('input[name="loan_amount"]').parent('td').find('.help-block')
                 .html('You are qualified up to ' +  '{{ number_format($special->max_loan_amount, 2, '.', ',') }}')
+            
+            $('input[name="terms"]')
+            .attr({
+                'max' : {{ $months_special }},
+                'value' : {{ $months_special }}
+            });
         }
     });
 </script>
