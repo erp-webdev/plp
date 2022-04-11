@@ -66,7 +66,8 @@ class ReportController extends Controller
             'status',
             'interest',
             'payroll',
-            'surety'
+            'surety',
+            'special',
         ];
 
         $args = [];
@@ -193,6 +194,7 @@ class ReportController extends Controller
             'status',
             'interest',
             'payroll', 
+            'special',
             'surety'
         ];
 
@@ -339,6 +341,10 @@ class ReportController extends Controller
                         $query->where('EmpID', $args['EmpID']);
                     }
 
+                    if(!empty($args['surety'])){
+                        $query->where('guarantor_FullName', $args['surety']);
+                    }
+
                     if(!empty($args['status'])){
                         if($args['status'] == 1) // Paid
                             $query->where('status', $this->utils->getStatusIndex('paid'));
@@ -386,6 +392,10 @@ class ReportController extends Controller
 
                 if(!empty($args['surety'])){
                     $query->where('guarantor_FullName', 'LIKE', '%' . $args['surety'] . '%');
+                }
+
+                if(!empty($args['special'])){
+                    $query->where('special', $args['special']);
                 }
 
                 if(!empty($args['status'])){

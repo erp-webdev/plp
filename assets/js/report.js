@@ -76,6 +76,7 @@ function showReport(event, format) {
 				'principal',
 				'status',
 				'interest',
+				'special',
 				'surety'
 			],
 

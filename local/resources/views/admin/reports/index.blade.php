@@ -41,6 +41,14 @@
 
 			<form class="filterElements">
 				<div class="form-group col-xs-12 col-sm-4 col-md-4 col-lg-4">
+					Type
+					<select name="special" id="special" class="form-control">
+						<option value="0">Regular</option>
+						<option value="1">Special</option>
+					</select>
+					<input type="text" name="control" class="form-control  input-sm" placeholder="YYYY-MM-XXXX">
+				</div>
+				<div class="form-group col-xs-12 col-sm-4 col-md-4 col-lg-4">
 					Control #
 					<input type="text" name="control" class="form-control  input-sm" placeholder="YYYY-MM-XXXX">
 				</div>
