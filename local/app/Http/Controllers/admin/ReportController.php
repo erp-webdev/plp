@@ -330,7 +330,7 @@ class ReportController extends Controller
                     $names = explode(' ', $args['empName']);
                     foreach ($names as $name) {
                         if(!empty(trim($name)))
-                            $query->andWhere('FullName', 'LIKE', '%' . $name . '%');
+                            $query->Where('FullName', 'LIKE', '%' . $name . '%');
                     }
 
                     if(!empty($args['EmpID'])){
