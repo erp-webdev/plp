@@ -3,7 +3,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Megaworld eFund</title>
+    <title>PLP</title>
     <link rel="shortcut icon" type="image-png" href="{{ url('/') }}/favicon.ico">
 
     <link rel="stylesheet" href="{{ url('/') }}/assets/fa/css/font-awesome.min.css">
