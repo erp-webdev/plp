@@ -11,7 +11,6 @@ use Entrust;
 use Session;
 use Redirect;
 use Storage;
-use Response;
 use eFund\job;
 use eFund\Employee;
 use eFund\Loan;
@@ -19,9 +18,11 @@ use eFund\Endorser;
 use eFund\Notification;
 use eFund\Http\Requests;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Response;
 use eFund\Http\Controllers\Controller;
 use eFund\Http\Controllers\admin\EmailController;
 use eFund\Http\Controllers\admin\LoanController;
+
 
 class DashboardController extends Controller
 {
@@ -390,12 +391,10 @@ class DashboardController extends Controller
         $file = new LoanController();
         $filename = $file->printPDFForm($id);
 
-        $content = Storage::disk('forms')->get($filename);
+        $content = Storage::disk('forms')->get($file);
         
         return (new Response($content, 200))
             ->header('Content-Type', 'application/pdf');
-        
-        return;
 
         $employee = Employee::where('EmpID', '2016-06-0457')
             ->where('DBNAME', 'GL')
