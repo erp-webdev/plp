@@ -16,6 +16,7 @@
 	<table style="width: 100%; font-size: 10px" class="table-hover">
 		<tr style="border-top: 2px solid #000; border-bottom: 2px solid #000; ">
 			<th>Control #</th>
+			<th>Company</th>
 			<th>Employee No.</th>
 			<th>Employee Name</th>
 			<th>Guarantor</th>
@@ -38,6 +39,7 @@
 			@foreach($loans as $loan)
 			<tr>
 				<td>{{ $loan->ctrl_no }}</td>
+				<td>{{ $loan->COMPANY }}</td>
 				<td>{{ $loan->EmpID }}</td>
 				<td>{{ ucwords(strtolower($loan->FullName)) }}</td>
 				<td>{{ ucwords(strtolower($loan->guarantor_FullName)) }}</td>
