@@ -128,6 +128,7 @@ class LoanController extends Controller
         $loan->terms_month = $request->terms;
         $loan->loan_amount = $request->loan_amount;
         $loan->interest = $request->interest;
+        
         $loan->deductions = $this->utils->computeDeductions($request->terms, $request->loan_amount, $loan->interest);
         $loan->total = $this->utils->getTotalLoan($request->loan_amount, $loan->interest, $request->terms);
 
