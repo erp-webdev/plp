@@ -11,6 +11,7 @@ use Entrust;
 use Session;
 use Redirect;
 use Storage;
+use Response;
 use eFund\job;
 use eFund\Employee;
 use eFund\Loan;
