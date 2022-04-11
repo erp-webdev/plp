@@ -130,7 +130,7 @@
     @if(!empty($loan->cv_no))
       <a href="{{ route('treasury.voucher.print', $loan->id) }}" class="btn btn-default btn-sm" target="_blank"><i class="fa fa-print"></i> Print Check Voucher</a>
     @endif
-    <button type="submit" name="cancel" class="btn btn-danger btn-sm" onsubmit="startLoading(); validate('cancel')"><i class="fa fa-ban"></i> Cancel</button>
+    {{-- <button type="submit" name="cancel" class="btn btn-danger btn-sm" onsubmit="startLoading(); validate('cancel')"><i class="fa fa-ban"></i> Cancel</button> --}}
     @if(!empty($loan->cv_no) && $loan->status == $utils->getStatusIndex('treasury'))
     <button type="submit" name="approve" class="btn btn-success btn-sm" onsubmit="startLoading(); validate('submit')"><i class="fa fa-send"></i> Submit</button>
     @elseif($loan->released == null && $loan->status == $utils->getStatusIndex('release'))
