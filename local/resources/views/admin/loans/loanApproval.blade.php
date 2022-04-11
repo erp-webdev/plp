@@ -210,7 +210,7 @@
 			      		</td>
 			      		<td>
 			      			<td class="l">
-								<div class="input-control">
+								<div class="input-group">
 									<span class="input-addon">Interest </span>
 									<input type="number" name="interest" value="{{ $loan->interest }}" class="form-control">
 								</div>
