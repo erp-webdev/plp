@@ -387,10 +387,12 @@ class DashboardController extends Controller
     public function test($id)
     {
         $file = new LoanController();
-        $file = $file->printPDFForm($id);
+        $filename = $file->printPDFForm($id);
 
-        return Storage::disk('forms')->download($file);
-
+        $content = Storage::disk('forms')->download($file);
+        
+        return (new Response($file, 200))
+        ->header('Content-Type', 'application/pdf');
         return;
 
         $employee = Employee::where('EmpID', '2016-06-0457')
