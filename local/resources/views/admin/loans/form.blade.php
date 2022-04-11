@@ -115,7 +115,7 @@
 </table>
 <table style="height: 15px">
 	<tr>
-		<td colspan="4"></td>
+		<td>&nbsp;</td>
 	</tr>
 </table>
 <table>
