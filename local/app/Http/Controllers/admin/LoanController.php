@@ -312,16 +312,25 @@ class LoanController extends Controller
 
         // maatwebsite
         $utils = new Utils();
-        $excel = Excel::create('sample', function($excel) use ($loan, $balance, $utils) {
+        // $excel = Excel::create('sample', function($excel) use ($loan, $balance, $utils) {
 
-            $excel->sheet('FORM', function($sheet) use ($loan, $balance, $utils) {
+        //     $excel->sheet('FORM', function($sheet) use ($loan, $balance, $utils) {
         
-                $sheet->loadView('admin.loans.form')
-                    ->with('loan', $loan)
-                    ->with('balance', $balance)
-                    ->with('utils', $utils);
-            });
-        })->store('xls');
+        //         $sheet->loadView('admin.loans.form')
+        //             ->with('loan', $loan)
+        //             ->with('balance', $balance)
+        //             ->with('utils', $utils);
+        //     });
+        // })->store('xls');
+
+        Excel::load('plp_form_template.xls', function($excel) use ($loan, $balance, $utils) {
+
+            // modify stuff
+            $excel->sheet('Sheet3', function($sheet) use ($loan, $balance, $utils) {
+                $sheet->cell('S3', 'kevs');
+            }
+        
+        })->export('xls');
         //end of maat
         
         //return $filename;
