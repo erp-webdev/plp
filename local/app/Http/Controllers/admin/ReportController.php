@@ -349,7 +349,7 @@ class ReportController extends Controller
 
                 })->orderBy($args['sort'], 'asc')->toSql();
 
-                dd($sql);
+                dd($dateRange);
     }
 
     public function summaryReport($args)
