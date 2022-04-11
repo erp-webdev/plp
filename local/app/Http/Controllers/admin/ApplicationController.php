@@ -188,7 +188,7 @@ class ApplicationController extends Controller
         ->withUtils(new Utils())
         ->withPreviousLoan($previous_loan)
         ->withSpecial($special_loan)
-        ->withMonthsSpecial($months_special);
+        ->withMonthsSpecial($months_special->value);
     }
 
 
