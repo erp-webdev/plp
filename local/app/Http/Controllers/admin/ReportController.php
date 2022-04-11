@@ -346,10 +346,10 @@ class ReportController extends Controller
                         elseif($args['status'] == 4)
                             $query->where('status', $this->utils->getStatusIndex('denied'));
                     }
+                    dd($dateRange);
 
                 })->orderBy($args['sort'], 'asc')->toSql();
 
-                dd($dateRange);
     }
 
     public function summaryReport($args)
