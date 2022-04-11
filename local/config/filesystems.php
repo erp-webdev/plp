@@ -61,7 +61,12 @@ return [
             'region' => 'your-region',
             'bucket' => 'your-bucket',
         ],
-
+        
+        'forms' => [
+            'driver' => 'local',
+            'root' => storage_path('app/forms'),
+            'visibility' => 'private',
+        ],
     ],
 
 ];

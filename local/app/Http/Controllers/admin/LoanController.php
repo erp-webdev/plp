@@ -4,6 +4,7 @@ namespace eFund\Http\Controllers\admin;
 
 use Illuminate\Http\Request;
 
+use PDF;
 use Mail;
 use DB;
 use Auth;
@@ -11,6 +12,7 @@ use Event;
 use Input;
 use Excel;
 use Session;
+use Storage;
 use eFund\Log;
 use eFund\Loan;
 use eFund\Terms;
@@ -278,12 +280,34 @@ class LoanController extends Controller
                         ->where('id', '<>', $id)
                         ->sum('balance');
 
-
-
         return view('admin.loans.form')
                 ->withLoan($loan)
                 ->withBalance($balance)
                 ->withUtils(new Utils());
+        
+    }
+
+    public function printPDFForm($id)
+    {
+        $loan = Loan::findOrFail($id);
+        $balance = Loan::where('EmpID', Auth::user()->employee_id)
+                        ->where('DBNAME', Auth::user()->DBNAME)
+                        ->whereNotIn('status', [0,8])
+                        ->where('id', '<>', $id)
+                        ->sum('balance');
+
+        $view = view('admin.loans.form')
+                ->withLoan($loan)
+                ->withBalance($balance)
+                ->withUtils(new Utils());
+
+        $pdf = PDF::loadHTML($view)
+            ->setPaper('legal', 'portrait')
+            ->setWarnings(false);
+            // ->save($loan->FullName . '_' . $loan->ctrl_no . '.pdf');
+
+        Storage::disk('forms')
+            ->put($loan->ctrl_no . '_' . $loan->FullName . '.pdf', $pdf->output());
         
     }
 

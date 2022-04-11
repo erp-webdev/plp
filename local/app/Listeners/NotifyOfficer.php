@@ -30,6 +30,11 @@ class NotifyOfficer extends EmailController
      */
     public function handle(PayrollVerified $event)
     {
+        // Create PDF FILE of the loan application
+        $pdf = '';
+
+        // send notif
+
         $employees = DB::table('viewUserPermissions')->where('permission', 'officer')->get();
 
         foreach ($employees as $employee) {
