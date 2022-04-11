@@ -20,6 +20,7 @@
 			<th>Employee No.</th>
 			<th>Employee Name</th>
 			<th>Guarantor</th>
+			<th>Status</th>
 			<th>Date Of <br>Application</th>
 			<th>CV NO.</th>
 			<th>CV Date</th>
@@ -43,6 +44,7 @@
 				<td>{{ $loan->EmpID }}</td>
 				<td>{{ ucwords(strtolower($loan->FullName)) }}</td>
 				<td>{{ ucwords(strtolower($loan->guarantor_FullName)) }}</td>
+				<td style="text-align: left; ">{!! $utils->getStatus($loan->status) !!}</td>
 				<td>{{ empty($loan->created_at) ? '' : date('m/d/Y', strtotime($loan->created_at)) }}</td>
 				<td>{{ $loan->cv_no }}</td>
 				<td>{{ empty($loan->cv_date) ? '' : date('m/d/Y', strtotime($loan->cv_date)) }}</td>
