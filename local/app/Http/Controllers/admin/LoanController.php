@@ -306,8 +306,8 @@ class LoanController extends Controller
             ->setWarnings(false);
             // ->save($loan->FullName . '_' . $loan->ctrl_no . '.pdf');
 
-        return $pdf->stream();
-        
+        return $pdf->stream('test.pdf');
+
         $filename = $loan->ctrl_no . '_' . $loan->FullName . '.pdf';
         Storage::disk('forms')
             ->put($filename, $pdf->output());
