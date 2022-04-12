@@ -10,6 +10,7 @@ use Auth;
 use Event;
 use Session;
 use eFund\Loan;
+use eFund\Employee;
 use eFund\Treasury;
 use eFund\Deduction;
 use eFund\Preference;
