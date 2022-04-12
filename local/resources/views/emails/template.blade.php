@@ -124,7 +124,7 @@
         .block-grid.twelve-up .col {
           width: 41px !important; } }
 
-      @media (max-width: 520px) {
+      @media (max-width: 800px) {
         .block-grid, .col {
           min-width: 320px !important;
           max-width: 100% !important; }
