@@ -7,14 +7,38 @@
       </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
   </div><!-- /.modal -->
-  
+
 	<div class="row" ng-app="ApprovalApp" ng-controller="ApprovalCtrl">
-		
+
+		<div class="modal fade" tabindex="-1" role="dialog" id="transmittal">
+		    <div class="modal-dialog modal-lg" role="document">
+		      	<div class="modal-contents" style="background-color: #fff">
+	                <div class="modal-header">
+	                    <div class="modal-title"><h4> For Check Voucher Transmittal</h4></div>
+	                    <p>Send list of loan applications with released checks</p>
+	                </div>
+	                <form action="{{ route('tresury.email.notif') }}" method="post">
+	                	<input type="hidden" name="_token" value="{{ csrf_token() }}">
+	                	<div class="modal-body" id="emailTreasuryModalBody">
+		                	
+		                </div>
+		                <div class="clearfix"></div>
+	                    <div class="modal-footer">
+	                        <button type="submit" name="send" class="btn btn-sm btn-success" onsubmit="startLoading()"><i class="fa fa-send"></i> Send Email</button>
+	                    </div>
+	                </form>
+	               
+      			</div><!-- /.modal-content -->
+		    </div><!-- /.modal-dialog -->
+		  </div><!-- /.modal -->
 
 		<div class="col-xs-12 col-sm-12 col-md-12">
 			<h1>Treasury</h1>
 			<a class="btn btn-sm btn-default" href="{{ route('treasury.index') }}"><i class="fa fa-refresh"></i> Refresh</a>
 			<a class="btn btn-sm btn-default" href="{{ route('treasury.print') }}?key=<?php if(isset($_GET['key'])) echo $_GET['key']; if(isset($_GET['search'])) echo "&search=" . $_GET['search']; ?>" target="_blank"><i class="fa fa-print"></i> Print</a>
+
+			<a class="btn btn-sm btn-primary" data-toggle="modal" data-target="#transmittal" ng-click="loadTransmittalList('{{ route('treasury.email.list') }}')"><i class="fa fa-envelope"></i> Transmittals</a>
+			
 			<hr>
 			<div class="table-responsive" style="height: 100%">
 				<div class="form-horizontal ">

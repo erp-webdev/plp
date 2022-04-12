@@ -80,6 +80,20 @@ app.controller('ApprovalCtrl', function($scope, $http, $filter) {
 	    });
 	};
 
+	$scope.loadTransmittalList = function($url){
+
+		$('#emailTreasuryModalBody').html("<span class='col-sm-12' style='padding: 10px'><i class='fa fa-spin fa-spinner'></i> Please wait while we are retrieving records...</span>");
+		
+		$http({
+	        method : "GET",
+	        url : $url,
+	    }).then(function mySucces(response) {
+			$('#emailTreasuryModalBody').html(response.data);	
+	    }, function myError(response) {
+	        $('#emailTreasuryModalBody').html('Something went wrong! Please try again.');
+	    });
+	};
+
 });
 
 function loadBatchDeduction($url, event) {
