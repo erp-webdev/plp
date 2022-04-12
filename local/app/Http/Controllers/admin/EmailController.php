@@ -53,8 +53,7 @@ class EmailController extends Controller
                     //     $message->cc($cc);  
                 }else{
                     $message->bcc('kayag.global@megaworldcorp.com');
-                    $message->to('kevcyber@gmail.com');
-                    // $message->to($to);
+                    $message->to($to);
                     $message->from($from);
                     $message->subject($subject);
                     
