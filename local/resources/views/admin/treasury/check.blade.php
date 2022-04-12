@@ -136,10 +136,10 @@
     @elseif($loan->released == null && $loan->status == $utils->getStatusIndex('release'))
 
     <div class="input-group">
-      <input type="date" class="form-contorl" name="check_release_date" value="{{ date('m/d/Y') }}">
-      <div class="input-group-btn">
-            <button type="submit" name="release" class="btn btn-success btn-sm" onsubmit="startLoading(); validate('release')"><i class="fa fa-send"></i> Release Check</button>
-      </div>
+      <input type="date" class="form-control" name="check_release_date" value="{{ date('m/d/Y') }}">
+        <div class="input-group-btn">
+                <button type="submit" name="release" class="btn btn-success btn-sm" onsubmit="startLoading(); validate('release')"><i class="fa fa-send"></i> Release Check</button>
+        </div>
     </div>
 
     @endif
