@@ -55,6 +55,8 @@
 				<u> {{ $loan->special == 0 ? '_✓_': '___' }} </u><i><strong> REGULAR</strong></i></u> 
 				@else
 				<u>{{ $loan->special == 1 ? '_✓_': '___' }} </u><i><strong> SPECIAL</strong></i></u> <br>
+				<span>Validated by: {{ $loan->company_nurse }} - {{ $loan->company_nurse_date }}</span><br>
+				<span><strong>Company Nurse</strong></span>
 				@endif
 			</td>
 			<td class="u">{{ $loan->loc_direct_line }}</td>
