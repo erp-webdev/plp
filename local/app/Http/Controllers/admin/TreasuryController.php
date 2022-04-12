@@ -200,7 +200,11 @@ class TreasuryController extends Controller
     	}else if(isset($request->release)){
             // Released
             DB::beginTransaction();
-            $released = date('m-d-y H:i:s');
+            if(empty($request->check_release_date))
+                $released = date('m-d-y H:i:s');
+            else
+                $released = $request->check_release_date;
+
     		$treasury = Treasury::where('eFundData_id', $request->id)->first();
     		$treasury->released = $released;
     		$treasury->save();
