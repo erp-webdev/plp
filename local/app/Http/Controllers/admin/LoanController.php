@@ -296,110 +296,99 @@ class LoanController extends Controller
                         ->where('id', '<>', $id)
                         ->sum('balance');
 
-        // $view = view('admin.loans.form')
-        //         ->withLoan($loan)
-        //         ->withBalance($balance)
-        //         ->withUtils(new Utils());
+        $view = view('admin.loans.form')
+                ->withLoan($loan)
+                ->withBalance($balance)
+                ->withUtils(new Utils());
 
-        // $pdf = PDF::loadHTML($view)
-        //     ->setPaper('legal', 'portrait')
-        //     ->setWarnings(false);
-        //     // ->save($loan->FullName . '_' . $loan->ctrl_no . '.pdf');
+        $pdf = PDF::loadHTML($view)
+            ->setPaper('legal', 'portrait')
+            ->setWarnings(false);
+            // ->save($loan->FullName . '_' . $loan->ctrl_no . '.pdf');
 
-        // $filename = $loan->ctrl_no . '_' . $loan->FullName . '.pdf';
-        // Storage::disk('forms')
-        //     ->put($filename, $pdf->output());
+        $filename = $loan->ctrl_no . '_' . $loan->FullName . '.pdf';
+        Storage::disk('forms')
+            ->put($filename, $pdf->output());
 
         // maatwebsite
-        $utils = new Utils();
-        // $excel = Excel::create('sample', function($excel) use ($loan, $balance, $utils) {
+        // $utils = new Utils();
+        // Excel::load('plp_form_template.xls', function($excel) use ($loan, $balance, $utils) {
 
-        //     $excel->sheet('FORM', function($sheet) use ($loan, $balance, $utils) {
-        
-        //         $sheet->loadView('admin.loans.form')
-        //             ->with('loan', $loan)
-        //             ->with('balance', $balance)
-        //             ->with('utils', $utils);
+        //     // modify stuff
+        //     $excel->sheet('Sheet3', function($sheet) use ($loan, $balance, $utils) {
+        //         $sheet->setColumnFormat(array(
+        //             'H15' => '#,##0.00',
+        //             'F25' => '#,##0.00',
+        //             'G39' => '#,##0.00',
+        //             'G40' => '#,##0.00',
+        //             'G43' => '#,##0.00',
+        //             'U45' => '#,##0.00',
+        //             'U56' => '#,##0.00',
+        //         ));
+
+        //         $sheet->cell('S3', $loan->ctrl_no);
+        //         if($loan->type == 0)
+        //             $sheet->cell('B7', '✓');
+        //         else
+        //             $sheet->cell('F7', '✓');
+                
+        //         if($loan->special == 0)
+        //             $sheet->cell('B9', '✓');
+        //         else
+        //             $sheet->cell('F9', '✓');
+
+        //         $sheet->cell('H11', $loan->FullName);
+        //         $sheet->cell('H12', $loan->PositionDesc);
+        //         $sheet->cell('H13', $loan->HireDate);
+        //         $sheet->cell('H14', $loan->PermanencyDate);
+        //         $sheet->cell('H15', $loan->loan_amount);
+                
+        //         $sheet->cell('V6', $loan->created_at);
+        //         $sheet->cell('V7', $loan->loc_direct_line);
+
+        //         $sheet->cell('V11', $loan->EmpID);
+        //         $sheet->cell('V12', $loan->DeptDesc);
+        //         $sheet->cell('V13', 0);
+        //         $sheet->cell('U14', $loan->purpose);
+
+        //         $sheet->cell('F18', $loan->FullName);
+        //         $sheet->cell('S18', $loan->endorser_FullName);
+
+        //         $sheet->cell('F25', $loan->guaranteed_amount);
+        //         $sheet->cell('D31', $loan->guarantor_FullName);
+        //         $sheet->cell('D32', $loan->guarantor_refno);
+
+        //         $sheet->cell('G39', $balance);
+        //         $sheet->cell('G40', $loan->loan_amount);
+        //         $sheet->cell('G41', $loan->interest . '% x ' . $loan->terms_month . ' months');
+        //         $sheet->cell('G43', $loan->total);
+                
+        //         $sheet->cell('R37', $loan->remarks);
+
+        //         $sheet->cell('G45', empty($loan->start_of_deductions) ? '' : $loan->start_of_deductions);
+        //         $sheet->cell('G46', $loan->terms_month * 2 );
+
+        //         $sheet->cell('U45', $loan->deductions);
+        //         $sheet->cell('U46', $loan->cv_no);
+        //         $sheet->cell('U47', empty($loan->check_released) ? '' : $loan->check_released);
+
+        //         if($loan->approved == 1)
+        //             $sheet->cell('I52', '✓');
+        //         else
+        //             $sheet->cell('I53', '✓');
+
+        //         $sheet->cell('J52', $loan->approved_FullName);
+
+        //         $sheet->cell('G56', $loan->FullName);
+        //         $sheet->cell('U56', $loan->loan_amount);
+        //         $sheet->cell('C64', $loan->FullName);
+                
+        //         $sheet->cell('E66', date('Y-m-d H:i:s'));
+        //         $sheet->cell('W66', '(' . Auth::user()->id . ') ' . strtolower(Auth::user()->name));
+                
         //     });
-        // })->store('xls');
-
-        Excel::load('plp_form_template.xls', function($excel) use ($loan, $balance, $utils) {
-
-            // modify stuff
-            $excel->sheet('Sheet3', function($sheet) use ($loan, $balance, $utils) {
-                $sheet->setColumnFormat(array(
-                    'H15' => '#,##0.00',
-                    'F25' => '#,##0.00',
-                    'G39' => '#,##0.00',
-                    'G40' => '#,##0.00',
-                    'G43' => '#,##0.00',
-                    'U45' => '#,##0.00',
-                    'U56' => '#,##0.00',
-                ));
-
-                $sheet->cell('S3', $loan->ctrl_no);
-                if($loan->type == 0)
-                    $sheet->cell('B7', '✓');
-                else
-                    $sheet->cell('F7', '✓');
-                
-                if($loan->special == 0)
-                    $sheet->cell('B9', '✓');
-                else
-                    $sheet->cell('F9', '✓');
-
-                $sheet->cell('H11', $loan->FullName);
-                $sheet->cell('H12', $loan->PositionDesc);
-                $sheet->cell('H13', $loan->HireDate);
-                $sheet->cell('H14', $loan->PermanencyDate);
-                $sheet->cell('H15', $loan->loan_amount);
-                
-                $sheet->cell('V6', $loan->created_at);
-                $sheet->cell('V7', $loan->loc_direct_line);
-
-                $sheet->cell('V11', $loan->EmpID);
-                $sheet->cell('V12', $loan->DeptDesc);
-                $sheet->cell('V13', 0);
-                $sheet->cell('U14', $loan->purpose);
-
-                $sheet->cell('F18', $loan->FullName);
-                $sheet->cell('S18', $loan->endorser_FullName);
-
-                $sheet->cell('F25', $loan->guaranteed_amount);
-                $sheet->cell('D31', $loan->guarantor_FullName);
-                $sheet->cell('D32', $loan->guarantor_refno);
-
-                $sheet->cell('G39', $balance);
-                $sheet->cell('G40', $loan->loan_amount);
-                $sheet->cell('G41', $loan->interest . '% x ' . $loan->terms_month . ' months');
-                $sheet->cell('G43', $loan->total);
-                
-                $sheet->cell('R37', $loan->remarks);
-
-                $sheet->cell('G45', empty($loan->start_of_deductions) ? '' : $loan->start_of_deductions);
-                $sheet->cell('G46', $loan->terms_month * 2 );
-
-                $sheet->cell('U45', $loan->deductions);
-                $sheet->cell('U46', $loan->cv_no);
-                $sheet->cell('U47', empty($loan->check_released) ? '' : $loan->check_released);
-
-                if($loan->approved == 1)
-                    $sheet->cell('I52', '✓');
-                else
-                    $sheet->cell('I53', '✓');
-
-                $sheet->cell('J52', $loan->approved_FullName);
-
-                $sheet->cell('G56', $loan->FullName);
-                $sheet->cell('U56', $loan->loan_amount);
-                $sheet->cell('C64', $loan->FullName);
-                
-                $sheet->cell('E66', date('Y-m-d H:i:s'));
-                $sheet->cell('W66', '(' . Auth::user()->id . ') ' . strtolower(Auth::user()->name));
-                
-            });
         
-        })->store('xls', storage_path('app/forms'));//->export('pdf');
+        // })->store('xls', storage_path('app/forms'));//->export('pdf');
         //end of maat
         
         //return $filename;
