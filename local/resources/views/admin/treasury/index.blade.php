@@ -139,6 +139,9 @@
 							<td>{!! $utils->formatTreasuryStatus($loan->status) !!}</td>
 							<td>
 								<a data-toggle="modal" data-target="#loan" ng-click="loadLoan({{ $loan->id }})" class="btn btn-sm btn-info"><i class="fa fa-eye"></i></a>
+								@if(!empty($loan->transmittal_date))
+								<i class="fa fa-exchange" title="Transmitted"></i>
+								@endif
 							</td>
 						</tr>
 						@endforeach
