@@ -96,7 +96,7 @@
 </table>
 <table>
 	<tr class="box">
-		<tr style="height: 35px; vertical-align: bottom;">
+		<tr style="height: 35px; ">
 			<td><strong>Requested By</strong></td>
 			<td class="u" style="text-align: center">{{ $loan->FullName }}</td>
 			<td><strong>Endorsed By</strong></td>
