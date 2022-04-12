@@ -286,6 +286,7 @@ class TreasuryController extends Controller
         }   
 
         $loans = $this->getTransmittalList();
+        $loans_list = $loans;
         if(count($loans) == 0)
             return redirect()->route('treasury.index')->withError('Email was not sent! There are no loan applications for transmittal');
 
@@ -306,7 +307,7 @@ class TreasuryController extends Controller
                 $email->send($emp, config('preferences.notif_subjects.treasury_transmittal', 'Released Check Transmittal'), 'emails.treasury_transmittal', $args, $cc = '');
         }
 
-        Treasury::whereIn('eFundData_id', $loans->pluck('ctrl_no'))
+        Treasury::whereIn('eFundData_id', $loans_list->pluck('ctrl_no'))
             ->update(['transmittal_date', date('Y-m-d H:i:s')]);
 
         return redirect()->route('treasury.index')->withSuccess('Email sent!');
