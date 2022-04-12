@@ -18,5 +18,10 @@
             <td style="border: 1px solid black; padding: 2px">{{ date('Y-m-d', strtotime($loan->released)) }}</td>
         </tr>
         @endforeach
+        @if(!$loans)
+        <tr>
+            <td colspan="6" style="border: 1px solid black; padding: 2px">no record for transmittal</td>
+        </tr>
+        @endif
     </tbody>
 </table>
