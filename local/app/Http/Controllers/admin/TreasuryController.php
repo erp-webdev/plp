@@ -307,7 +307,7 @@ class TreasuryController extends Controller
                 $email->send($emp, config('preferences.notif_subjects.treasury_transmittal', 'Released Check Transmittal'), 'emails.treasury_transmittal', $args, $cc = '');
         }
 
-        Treasury::whereIn('eFundData_id', $loans_list->pluck('ctrl_no'))
+        Treasury::whereIn('eFundData_id', $loans_list->pluck('id'))
             ->update(['transmittal_date' => date('Y-m-d H:i:s')]);
 
         return redirect()->route('treasury.index')->withSuccess('Email sent!');
