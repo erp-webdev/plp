@@ -135,7 +135,7 @@
 
     <div class="input-group">
         <input type="date" class="form-control" name="check_release_date" required>
-        <div class="input-group-btn">
+        <div class="input-group-button">
                 <button type="submit" name="release" class="btn btn-success btn-sm" onsubmit="startLoading(); validate('release')"><i class="fa fa-send"></i> Release Check</button>
         </div>
     </div>
