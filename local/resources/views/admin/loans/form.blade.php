@@ -43,16 +43,16 @@
 		<tr>
 			<td>
 				@if($loan->type == 0)
-					<u>__✓__ </u><i><strong> NEW</strong></i></u>
+					<u>_✓_ </u><i><strong> NEW</strong></i></u>
 				@else
-					<u>__✓__ </u><i><strong> REAVAILMENT</strong></i>
+					<u>_✓_ </u><i><strong> REAVAILMENT</strong></i>
 					<br> <span>Previous loan amount: </span>
 					<br> <span>Balance: </span>
 				@endif
 			</td>
 			<td>
-				<u> {{ $loan->special == 0 ? '__✓__': '_____' }} </u><i><strong> REGULAR</strong></i></u> 
-				<u>{{ $loan->special == 1 ? '__✓__': '_____' }} </u><i><strong> SPECIAL</strong></i></u> <br>
+				<u> {{ $loan->special == 0 ? '_✓_': '___' }} </u><i><strong> REGULAR</strong></i></u> 
+				<u>{{ $loan->special == 1 ? '_✓_': '___' }} </u><i><strong> SPECIAL</strong></i></u> <br>
 			</td>
 			<td class="u">{{ $loan->loc_direct_line }}</td>
 		</tr>
