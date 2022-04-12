@@ -268,8 +268,10 @@ class TreasuryController extends Controller
         return $loans;
     }
 
-    public function formatTransmittal($loans)
+    public function formatTransmittal()
     {
+        $loans = $this->getTransmittalList();
+        
         return view('admin.treasury.transmittal')
             ->withLoans($loans);
     }
