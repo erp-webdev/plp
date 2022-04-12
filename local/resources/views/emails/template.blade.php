@@ -90,13 +90,13 @@
 
       @media only screen and (min-width: 520px) {
         .block-grid {
-          width: 500px !important; }
+          width: 800x !important; }
         .block-grid .col {
           display: table-cell;
           Float: none !important;
           vertical-align: top; }
           .block-grid .col.num12 {
-            width: 500px !important; }
+            width: 800x !important; }
         .block-grid.mixed-two-up .col.num4 {
           width: 164px !important; }
         .block-grid.mixed-two-up .col.num8 {
