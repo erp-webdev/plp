@@ -1,4 +1,4 @@
-<table style="color: black; border: collapsed">
+<table style="color: black; border: collapsed; width: 100%">
     <thead>
         <th style="border: 1px solid black; padding: 2px">Company</th>
         <th style="border: 1px solid black; padding: 2px">Name</th>
