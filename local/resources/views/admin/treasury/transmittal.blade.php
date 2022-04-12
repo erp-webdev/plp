@@ -15,7 +15,7 @@
             <td style="border: 1px solid black; padding: 2px">{{ $loan->cv_no }}</td>
             <td style="border: 1px solid black; padding: 2px">{{ $loan->check_no }}</td>
             <td style="border: 1px solid black; padding: 2px">{{ number_format($loan->loan_amount, 2, '.', ',') }}</td>
-            <td style="border: 1px solid black; padding: 2px">{{ $loan->released }}</td>
+            <td style="border: 1px solid black; padding: 2px">{{ date('Y-m-d', strtotime($loan->released)) }}</td>
         </tr>
         @endforeach
     </tbody>
