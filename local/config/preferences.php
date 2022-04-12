@@ -21,7 +21,8 @@ return [
 		'verified'				=> 'PLP Application Verified!',
 		'paid'					=> 'PLP Paid!',
 		'paid_payroll'			=> 'PLP Fully Paid Notification',
-		'denied'				=> 'PLP Application Denied!'
+		'denied'				=> 'PLP Application Denied!',
+		'treasury_transmittal'	=> 'PLP Treasury Check Voucher Transmittal'
 	],
 
 	// eFund System

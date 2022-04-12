@@ -257,4 +257,52 @@ class TreasuryController extends Controller
         }
 
     }
+
+    public function getTransmittalList()
+    {
+        $loans = Loan::whereNull('transmittal_date')
+                    ->where('status', $this->utils->getStatusIndex('active'))
+                    ->orderBy('FullName', 'asc')
+                    ->get();
+
+        return $loans;
+    }
+
+    public function formatTransmittal($loans)
+    {
+        return view('admin.treasury.transmittal')
+            ->withLoans($loans);
+    }
+
+    public function sendTransmittal(Request $request)
+    {
+        $employees = DB::table('viewUserPermissions')->where('permission', 'officer')->get();
+
+        if(empty($employees)){
+            return redirect()->route('treasury.index')->withError('Email was not sent! No user tagged with officer roles was found!');
+        }   
+
+        $loans = $this->getTransmittalList();
+        if(count($loans) == 0)
+            return redirect()->route('treasury.index')->withError('Email was not sent! There are no loan applications for transmittal');
+
+        $loans = $this->formatTransmittal();
+        $email = new EmailController;
+
+        foreach ($employees as $employee) {
+            if(empty($employee->EmailAdd))
+                continue;
+            
+            $args = ['employee' => $employee, 'loansHtml' => $loans];
+
+            $emp = Employee::where('EmpID', $employee->employee_id)
+                ->where('DBNAME', $employee->DBNAME)
+                ->first();
+
+            if(isset($emp->EmailAdd))
+                $email->send($emp, config('preferences.notif_subjects.treasury_transmittal', 'Released Check Transmittal'), 'emails.treasury_transmittal', $args, $cc = '');
+        }
+
+        return redirect()->route('treasury.index')->withSuccess('Email sent!');
+    }
 }
