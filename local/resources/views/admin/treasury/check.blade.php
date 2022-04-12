@@ -116,7 +116,7 @@
                     Check No.: <input type="text" name="check_no" class="form-control input-sm"> 
                   </div> -->
                   <div class="col-xs-12 col-sm-6 col-md-6">
-                    Check Date: <input name="check_released" type="date" id="datep" class="datepicker-range form-control input-sm " type="text" placeholder="mm/dd/yyyy">
+                    Check Date: <input name="check_released" type="date" id="datep" class="datepicker-range form-control input-sm " type="text" placeholder="mm/dd/yyyy" required>
                   </div>
                 @else
                   Check Date: <strong>{{ $loan->check_released }}</strong>
