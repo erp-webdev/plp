@@ -95,7 +95,7 @@
 	</tr>
 
 </table>
-<table>
+{{-- <table>
 	<tr class="box">
 		<tr style="height: 35px; vertical-align: bottom;">
 			<td><strong>Requested By</strong></td>
@@ -111,7 +111,7 @@
 		</tr>
 
 	</tr>
-</table>
+</table> --}}
 <table>
 	<tr class="box">
 		<td colspan="4">
