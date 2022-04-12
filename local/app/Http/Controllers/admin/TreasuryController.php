@@ -308,7 +308,7 @@ class TreasuryController extends Controller
         }
 
         Treasury::whereIn('eFundData_id', $loans_list->pluck('ctrl_no'))
-            ->update(['transmittal_date', date('Y-m-d H:i:s')]);
+            ->update(['transmittal_date' => date('Y-m-d H:i:s')]);
 
         return redirect()->route('treasury.index')->withSuccess('Email sent!');
     }
