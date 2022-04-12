@@ -51,8 +51,11 @@
 				@endif
 			</td>
 			<td>
+				@if($loan->special == 0)
 				<u> {{ $loan->special == 0 ? '_✓_': '___' }} </u><i><strong> REGULAR</strong></i></u> 
+				@else
 				<u>{{ $loan->special == 1 ? '_✓_': '___' }} </u><i><strong> SPECIAL</strong></i></u> <br>
+				@endif
 			</td>
 			<td class="u">{{ $loan->loc_direct_line }}</td>
 		</tr>
