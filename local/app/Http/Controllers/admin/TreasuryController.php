@@ -286,7 +286,7 @@ class TreasuryController extends Controller
         if(count($loans) == 0)
             return redirect()->route('treasury.index')->withError('Email was not sent! There are no loan applications for transmittal');
 
-        $loans = $this->formatTransmittal();
+        $loans = $this->formatTransmittal($loans);
         $email = new EmailController;
 
         foreach ($employees as $employee) {
