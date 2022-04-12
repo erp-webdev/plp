@@ -54,7 +54,6 @@
 				<u> {{ $loan->special == 0 ? '__✓__': '_____' }} </u><i><strong> REGULAR</strong></i></u> 
 				<u>{{ $loan->special == 1 ? '__✓__': '_____' }} </u><i><strong> SPECIAL</strong></i></u> <br>
 			</td>
-			<td><strong>LOCAL/DIRECT LINE</strong></td>
 			<td class="u">{{ $loan->loc_direct_line }}</td>
 		</tr>
 		<tr>
@@ -95,7 +94,23 @@
 	</tr>
 
 </table>
+<table>
+	<tr class="box">
+		<tr style="height: 35px; vertical-align: bottom;">
+			<td><strong>Requested By</strong></td>
+			<td class="u" style="text-align: center">{{ $loan->FullName }}</td>
+			<td><strong>Endorsed By</strong></td>
+			<td class="u" style="text-align: center">{{ $loan->endorser_FullName }} <br><small>Ref. #{{ $loan->endorser_refno }}</small></td>
+		</tr>
+		<tr>
+			<td>&nbsp;</td>
+			<td style="text-align: center"><small>SIGNATURE OVER PRINTED NAME <br> &nbsp;</small></td>
+			<td>&nbsp;</td>
+			<td style="text-align: center; vertical-align: text-top;"><small>DEPARTMENT HEAD / IMMEDIATE HEAD <br>SIGNATURE OVER PRINTED NAME</small></td>
+		</tr>
 
+	</tr>
+</table>
 <table>
 	<tr class="box">
 		<td colspan="4">
