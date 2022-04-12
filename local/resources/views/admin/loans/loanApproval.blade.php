@@ -182,7 +182,7 @@
 			      			<td class="l">Terms</td>
 			      			<td>
 			      			@if($loan->status == $utils->getStatusIndex('officer'))
-			      				<input type="number" name="terms" min="1" max="{{ $loan->special == 1 ? 24 : $months }}" value="{{ $loan->terms_month }}" class="form-control input-sm">
+			      				<input type="number" name="terms" min="1" max="" value="{{ $loan->terms_month }}" class="form-control input-sm">
 			      			@else
 			      				{{ $loan->terms_month }} (mos)
 			      			@endif
