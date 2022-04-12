@@ -41,14 +41,27 @@ class EmailController extends Controller
             $utils = new Utils();
 
             $mail = Mail::send($body, ['employee' => $emp, 'args' => $args, 'utils' => $utils], function($message) use ($to, $subject, $from, $cc){
-                $message->bcc('kayag.global@megaworldcorp.com');
-                $message->to('kayag.global@megaworldcorp.com');
-                // $message->to($to);
-                $message->from($from);
-                $message->subject($subject);
                 
-                // if(!empty(trim($cc)))
-                //     $message->cc($cc);  
+                if(env('APP_ENV') == 'local'){
+                    $message->bcc('kayag.global@megaworldcorp.com');
+                    $message->to('kayag.global@megaworldcorp.com');
+                    // $message->to($to);
+                    $message->from($from);
+                    $message->subject($subject);
+                    
+                    // if(!empty(trim($cc)))
+                    //     $message->cc($cc);  
+                }else{
+                    $message->bcc('kayag.global@megaworldcorp.com');
+                    $message->to('kevcyber@gmail.com');
+                    // $message->to($to);
+                    $message->from($from);
+                    $message->subject($subject);
+                    
+                    // if(!empty(trim($cc)))
+                    //     $message->cc($cc);  
+                }
+
             });
 
             $log = new Log();
