@@ -60,6 +60,7 @@
 						<table class="table table-hover table-striped table-condensed">
 							<thead>
 								<th>Control #</th>
+								<th>Date Applied</th>
 								<th>Employee</th>
 								<th>Department</th>
 								{{-- <th style="text-align: right">Loan Amount (Php)</th>
@@ -72,6 +73,7 @@
 								@foreach($loans as $item)
 									<tr>
 										<td>{{ $item->ctrl_no }}</td>
+										<td>{{ $item->created_at }}</td>
 										<td>{{ $item->FullName	 }} <br>
                                         <td>{{ $item->DeptDesc	 }} <br>
 										{{-- </td>
