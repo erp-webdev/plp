@@ -12,6 +12,9 @@
     </p>
     <table style="border-collapse: collapse; color: black" class="table table-sm table-bordered">
         <tr>
+
+            <th style="border: 1px solid black; padding: 2px">Include</th>
+
             <th style="border: 1px solid black; padding: 2px">Company</th>
             <th style="border: 1px solid black; padding: 2px">Employee No.</th>
             <th style="border: 1px solid black; padding: 2px">Employee Name</th>
@@ -22,6 +25,11 @@
         </tr>
         @foreach($loans as $loan)
         <tr>
+            
+            <td style="border: 1px solid black; padding: 2px">
+                <input type="checkbox" class="" name="include[]" value="{{ $loan->id }}" checked>
+            </td>
+
             <td style="border: 1px solid black; padding: 2px">{{ $loan->COMPANY }}</td>
             <td style="border: 1px solid black; padding: 2px">{{ $loan->EmpID }}</td>
             <td style="border: 1px solid black; padding: 2px">{{ $loan->FullName }}</td>

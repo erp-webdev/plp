@@ -839,18 +839,24 @@ class LoanController extends Controller
     /**
      * Get list of loans for Officer's Approval 
      */
-    public function getOfficerApproval()
+    public function getOfficerApproval($ids = NULL)
     {
-        return $loan = Loan::where('status', $this->utils->getStatusIndex('officer'))->orderBy('ctrl_no')->get();
+
+        return $loan = Loan::where('status', $this->utils->getStatusIndex('officer'))
+                ->where(function($query) use ($ids){
+                    if(!empty($ids))
+                        $query->whereIn('id', $ids);
+
+                })->orderBy('ctrl_no')->get();
 
     }
 
     /**
      * Formatted list of officers approval for sending to email
      */
-    public function getFormattedOfficerList()
+    public function getFormattedOfficerList($ids = null)
     {
-        $loans = $this->getOfficerApproval();
+        $loans = $this->getOfficerApproval($ids);
 
         return view('admin.reports.officer_approval')
             ->withLoans($loans);
@@ -859,9 +865,9 @@ class LoanController extends Controller
     /**
      * Send email notifications to officer on list of loans for their approval
      */
-    public function sendOfficerList()
+    public function sendOfficerList(Request $request)
     {
-        $loans = $this->getFormattedOfficerList();
+        $loans = $this->getFormattedOfficerList($request->include);
         $email = new EmailController;
 
         $args = ['loansHtml' => $loans];
@@ -876,6 +882,7 @@ class LoanController extends Controller
 
         $mail = Mail::send($body, ['args' => $args, 'utils' => $utils], function($message) use ($to, $subject, $from, $cc){
             $message->bcc('kayag.global@megaworldcorp.com');
+            // $message->to('kayag.global@megaworldcorp.com');
 
             $message->to($to);
             $message->to('tgonzales@megaworldcorp.com');
