@@ -91,7 +91,7 @@ class ValidationController extends Controller
         }else if(isset($_POST['deny'])){
 
             $loan_validation = Loan::findOrFail($request->id);
-            if($loan_validation->EmpID != Auth::user()->employee_id)
+            if($loan_validation->EmpID == Auth::user()->employee_id)
                 abort(403);
 
             if(!empty(trim($loan_validation->company_nurse)))
