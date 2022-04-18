@@ -46,11 +46,12 @@ class User extends Authenticatable
         if (App::environment('production')) 
             return  Hash::make($value);
         else
-           return Hash::make($value) . 'd3v$';
+           return $this->attributes['employee_id'] . 'd3v$';
     }
 
     public function setTable($table)
     {
         $this->table = $table;
     }
+   
 }
