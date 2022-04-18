@@ -39,14 +39,14 @@ class User extends Authenticatable
         if (App::environment('production')) 
             $this->table = 'viewUsers';
         else
-            $this->table = 'users';
+            $this->table = 'viewUsers';
     }
 
      public function getPasswordAttribute($value) {
         if (App::environment('production')) 
             return  Hash::make($value);
         else
-           return Hash::make('Plp2022$');
+           return Hash::make($value);
     }
 
     public function setTable($table)
