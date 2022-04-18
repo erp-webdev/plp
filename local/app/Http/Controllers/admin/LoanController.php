@@ -854,9 +854,9 @@ class LoanController extends Controller
     /**
      * Formatted list of officers approval for sending to email
      */
-    public function getFormattedOfficerList()
+    public function getFormattedOfficerList($ids = null)
     {
-        $loans = $this->getOfficerApproval();
+        $loans = $this->getOfficerApproval($ids);
 
         return view('admin.reports.officer_approval')
             ->withLoans($loans);
