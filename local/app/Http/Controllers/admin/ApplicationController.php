@@ -774,8 +774,10 @@ class ApplicationController extends Controller
                     ->where('DBNAME', $DB)
                     ->active()->regular()->first();
                     
-        if(empty($guarantor))
+        if(empty($guarantor)){
             $valid = false;
+            return $valid;
+        }
 
         // Guarantor must not be the employee him/herself
         if($EmpID == Auth::user()->employee_id)
