@@ -25,9 +25,9 @@
         </tr>
         @foreach($loans as $loan)
         <tr>
-            
+
             <td style="border: 1px solid black; padding: 2px">
-                <input type="checkbox" class="" name="include" value="{{ $loan->id }}" checked>
+                <input type="checkbox" class="" name="include[]" value="{{ $loan->id }}" checked>
             </td>
 
             <td style="border: 1px solid black; padding: 2px">{{ $loan->COMPANY }}</td>
