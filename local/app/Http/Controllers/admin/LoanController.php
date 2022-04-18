@@ -839,9 +839,15 @@ class LoanController extends Controller
     /**
      * Get list of loans for Officer's Approval 
      */
-    public function getOfficerApproval()
+    public function getOfficerApproval($ids = NULL)
     {
-        return $loan = Loan::where('status', $this->utils->getStatusIndex('officer'))->orderBy('ctrl_no')->get();
+
+        return $loan = Loan::where('status', $this->utils->getStatusIndex('officer'))
+                ->where(function($query) use ($ids){
+                    if(!empty($ids))
+                        $query->whereIn('id', $ids);
+                        
+                })->orderBy('ctrl_no')->get();
 
     }
 
