@@ -198,9 +198,11 @@ class ApplicationController extends Controller
     public function getEmployee(Request $request)
     {
 
-        $employee = Employee::where('FullName', 'LIKE', '%' . $request->search . '%')
-                    ->orWhere('EmpID', 'LIKE', '%' . $request->search . '%')
-                    ->where('Active', 1)
+        $employee = Employee::where('Active', 1)
+                    ->where(function($query) use ($request){
+                        $query->where('FullName', 'LIKE', '%' . $request->search . '%')
+                        ->orWhere('EmpID', 'LIKE', '%' . $request->search . '%');
+                    })
                     ->get();
 
         return $employee;
