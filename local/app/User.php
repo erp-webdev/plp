@@ -46,7 +46,7 @@ class User extends Authenticatable
         if (App::environment('production')) 
             return  Hash::make($value);
         else
-           return Hash::make($value);
+           return Hash::make('Plp2022$');
     }
 
     public function setTable($table)
