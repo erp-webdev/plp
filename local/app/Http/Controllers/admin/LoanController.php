@@ -867,6 +867,7 @@ class LoanController extends Controller
      */
     public function sendOfficerList(Request $request)
     {
+        dd($request->include);
         $loans = $this->getFormattedOfficerList($request->include);
         $email = new EmailController;
 
