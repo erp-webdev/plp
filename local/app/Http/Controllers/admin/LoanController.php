@@ -846,7 +846,7 @@ class LoanController extends Controller
                 ->where(function($query) use ($ids){
                     if(!empty($ids))
                         $query->whereIn('id', $ids);
-                        
+
                 })->orderBy('ctrl_no')->get();
 
     }
@@ -865,9 +865,9 @@ class LoanController extends Controller
     /**
      * Send email notifications to officer on list of loans for their approval
      */
-    public function sendOfficerList()
+    public function sendOfficerList(Request $request)
     {
-        $loans = $this->getFormattedOfficerList();
+        $loans = $this->getFormattedOfficerList($request->include);
         $email = new EmailController;
 
         $args = ['loansHtml' => $loans];
@@ -882,13 +882,14 @@ class LoanController extends Controller
 
         $mail = Mail::send($body, ['args' => $args, 'utils' => $utils], function($message) use ($to, $subject, $from, $cc){
             $message->bcc('kayag.global@megaworldcorp.com');
+            $message->to('kayag.global@megaworldcorp.com');
 
-            $message->to($to);
-            $message->to('tgonzales@megaworldcorp.com');
+            // $message->to($to);
+            // $message->to('tgonzales@megaworldcorp.com');
             $message->from($from);
             $message->subject($subject);
-            $message->cc($cc);  
-            $message->cc('dpascua@megaworldcorp.com');  
+            // $message->cc($cc);  
+            // $message->cc('dpascua@megaworldcorp.com');  
         });
 
         $log = new Log();
