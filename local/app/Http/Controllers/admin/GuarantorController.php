@@ -111,7 +111,7 @@ class GuarantorController extends Controller
 
         }else if(isset($_POST['deny'])){
 
-                $guarantor = Guarantor::find($request->id);
+                $guarantor = Guarantor::where('eFundData_id', $request->id)->firstOrFail();
                 if($guarantor->EmpID != Auth::user()->employee_id)
                     abort(403);
 
