@@ -33,7 +33,7 @@
             </td>
             <td>
               <td class="l">Employee ID</td>
-              <td>{{ $loan->EmpID }}</td>
+              <td>{{ $loan->applicant }}</td>
             </td>
           </tr>
           <tr>
