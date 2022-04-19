@@ -8,7 +8,7 @@
         Dear FCC / TDG,
     </p>
     <p>
-        May we endorse to your approval the attached personal loan application of the following employees.
+        May we endorse for your approval the attached personal loan application of the following employees.
     </p>
     <table style="border-collapse: collapse; color: black" class="table table-sm table-bordered">
         <tr>
