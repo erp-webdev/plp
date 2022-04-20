@@ -76,7 +76,7 @@
 					</div>
 					<div class="form-group col-xs-12 col-sm-2 col-md-2">
 						<span class="col-xs-12 col-md-3 col-sm-3">
-							Show
+							Company
 						</span>
 						<?php $comp = 'all'; if(isset($_GET['company'])) $comp = $_GET['company']; ?>
 						<div class="col-xs-12 col-md-9 col-sm-9">
