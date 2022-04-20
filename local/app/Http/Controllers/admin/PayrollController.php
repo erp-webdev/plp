@@ -28,15 +28,23 @@ class PayrollController extends Controller
     {
         $show = 10;
         $search = '';
+        $comp = '';
         if(isset($_GET['show']))
             $show = $_GET['show'];
 
         if(isset($_GET['search']))
             $search = $_GET['search'];
 
+        if(isset($_GET['company']))
+            if($_GET['company'] != 'all')
+                $comp = $_GET['company'];
 
     	$loans = Loan::notDenied()
                     ->where('status', '=', $this->utils->getStatusIndex('payroll'))
+                    ->where(function($query) use ($comp){
+                        if(!empty(trim($comp)))
+                            $query->where('COMPANY', $comp);
+                    })
                     ->search($search)
                     ->orderBy('id', 'desc')
                     ->paginate($show);
