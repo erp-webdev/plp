@@ -78,7 +78,7 @@
 						<span class="col-xs-12 col-md-3 col-sm-3">
 							Show
 						</span>
-						<?php $comp = 0; if(isset($_GET['company'])) $comp = $_GET['company']; ?>
+						<?php $comp = 'all'; if(isset($_GET['company'])) $comp = $_GET['company']; ?>
 						<div class="col-xs-12 col-md-9 col-sm-9">
 							<select class="form-control input-sm" id="comp" onchange="find()">
 								<option value="all"  <?php if($show==all) echo 'selected'; ?>>All</option>
