@@ -81,7 +81,7 @@
 						<?php $comp = 'all'; if(isset($_GET['company'])) $comp = $_GET['company']; ?>
 						<div class="col-xs-12 col-md-9 col-sm-9">
 							<select class="form-control input-sm" id="comp" onchange="find()">
-								<option value="all"  <?php if($show==all) echo 'selected'; ?>>All</option>
+								<option value="all"  <?php if($comp=='all') echo 'selected'; ?>>All</option>
 								@foreach($companies as $company)
 									<option value="{{ $company->COMPANY }}" {{ $company->COMPANY == $comp ? 'selected' : '' }}>{{ $company->COMPANY }}</option>
 								@endforeach
