@@ -74,6 +74,20 @@
 							</select>
 						</div>
 					</div>
+					<div class="form-group col-xs-12 col-sm-2 col-md-2">
+						<span class="col-xs-12 col-md-3 col-sm-3">
+							Company
+						</span>
+						<?php $show = 0; if(isset($_GET['company'])) $company = $_GET['company']; ?>
+						<div class="col-xs-12 col-md-9 col-sm-9">
+							<select class="form-control input-sm" id="company" onchange="find()">
+								<option value="all"  <?php if($company=='all') echo 'selected'; ?>>All</option>
+								@foreach($companies as $company)
+									<option value="$company->Company" {{ $company->COMPANY == $_GET['company'] ? 'selected' : ''}}>{{ $company->COMPANY}}</option>
+								@endforeach
+							</select>
+						</div>
+					</div>
 				 	<div class="input-group col-xs-12 col-sm-3 col-md-3 pull-right">
 						<input type="search" id="search" class="form-control input-sm"  placeholder="Control #, FullName, EmpID, Deduction date" value="<?php if(isset($_GET['search'])) echo $_GET['search']; ?>">
 						<a class="input-group-addon btn btn-success btn-sm" onclick="find()"><i class="fa fa-search"></i></a>

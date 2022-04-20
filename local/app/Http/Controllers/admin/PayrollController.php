@@ -34,15 +34,19 @@ class PayrollController extends Controller
         if(isset($_GET['search']))
             $search = $_GET['search'];
 
+
     	$loans = Loan::notDenied()
                     ->where('status', '=', $this->utils->getStatusIndex('payroll'))
                     ->search($search)
                     ->orderBy('id', 'desc')
                     ->paginate($show);
 
+        $companies = Loan::select('COMPANY')->distinct()->get();
+
     	return view('admin.payroll.index')
     		->withLoans($loans)
-    		->withUtils($this->utils);
+    		->withUtils($this->utils)
+            ->withCompanies($companies);
     }
 
     public function show($id)
