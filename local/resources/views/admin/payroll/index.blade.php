@@ -78,12 +78,12 @@
 						<span class="col-xs-12 col-md-3 col-sm-3">
 							Company
 						</span>
-						<?php $show = 0; if(isset($_GET['company'])) $company = $_GET['company']; ?>
+						<?php $show = 0;  ?>
 						<div class="col-xs-12 col-md-9 col-sm-9">
 							<select class="form-control input-sm" id="company" onchange="find()">
-								<option value="all"  <?php if($company=='all') echo 'selected'; ?>>All</option>
+								<option value="all"  <?php if($_GET['company']=='all') echo 'selected'; ?>>All</option>
 								@foreach($companies as $company)
-									<option value="$company->Company" {{ $company->COMPANY == $_GET['company'] ? 'selected' : ''}}>{{ $company->COMPANY}}</option>
+									<option value="{{ $company->Company }}" {{ $company->COMPANY == $_GET['company'] ? 'selected' : ''}}>{{ $company->COMPANY}}</option>
 								@endforeach
 							</select>
 						</div>
