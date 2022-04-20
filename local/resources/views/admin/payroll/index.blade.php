@@ -140,7 +140,8 @@
 	function find() {
 		var $show = $('#show').val();
 		var $search = $('#search').val();
-		var $searchUrl = "{{ route('payroll.index') }}" + "?show=" + $show + "&search=" + $search;
+		var $comp = $('#comp').val();
+		var $searchUrl = "{{ route('payroll.index') }}" + "?show=" + $show + "&search=" + $search + "&company=" + $comp;
 		window.location.href = $searchUrl;
 	}
 
