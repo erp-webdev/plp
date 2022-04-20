@@ -82,9 +82,7 @@
 						<div class="col-xs-12 col-md-9 col-sm-9">
 							<select class="form-control input-sm" id="company" onchange="find()">
 								<option value="all"  <?php if($_GET['company']=='all') echo 'selected'; ?>>All</option>
-								@foreach($companies as $company)
-									<option value="{{ $company->Company }}" {{ $company->COMPANY == $_GET['company'] ? 'selected' : ''}}>{{ $company->COMPANY}}</option>
-								@endforeach
+								
 							</select>
 						</div>
 					</div>
