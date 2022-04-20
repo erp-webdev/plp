@@ -81,6 +81,7 @@
 			    </div>
 				<table class="table table-striped table-hover table-condensed">
 					<thead>
+						<th>Company</th>
 						<th>EF Control No</th>
 						<th>Employee ID</th>
 						<th>Employee Name</th>
@@ -94,6 +95,7 @@
 					<tbody>
 						@foreach($loans as $loan)
 							<tr>
+								<td>{{ $loan->COMPANY }}</td>
 								<td>{{ $loan->ctrl_no }}</td>
 								<td>{{ $loan->EmpID }}</td>
 								<td>{{ utf8_encode($loan->FullName) }}</td>
