@@ -65,9 +65,9 @@
 						<div class="col-xs-12 col-md-8 col-sm-8">
 							<select class="form-control input-sm" id="status" onchange="find()">
 								<option value="all"  <?php if($status=='all') echo 'selected'; ?>>All</option>
-								@foreach($utils->treasuryStat as $stat)
-								<option value="{{ $stat }}" {{ $status == $stat ? 'selected' : '' }} >{{$stat}}</option>
-								@endforeach
+								<option value="5"  <?php if($status=='all') echo 'selected'; ?>>For Approval</option>
+								<option value="6"  <?php if($status=='all') echo 'selected'; ?>>Check Releasing</option>
+								<option value="7"  <?php if($status=='all') echo 'selected'; ?>>Released</option>
 
 
 							</select>
