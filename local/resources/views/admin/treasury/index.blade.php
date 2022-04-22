@@ -61,7 +61,7 @@
 						<span class="col-xs-12 col-md-3 col-sm-3">
 							Status
 						</span>
-						<?php $status = 0; if(isset($_GET['status'])) $status = $_GET['status']; ?>
+						<?php $status = 'all'; if(isset($_GET['status'])) $status = $_GET['status']; ?>
 						<div class="col-xs-12 col-md-8 col-sm-8">
 							<select class="form-control input-sm" id="status" onchange="find()">
 								<option value="all"  <?php if($status=='all') echo 'selected'; ?>>All</option>
