@@ -37,6 +37,8 @@ class TreasuryController extends Controller
         $show = 10;
         $search = '';
         $key = '';
+        $status = 'all';
+
         if(isset($_GET['show']))
             $show = $_GET['show'];
 
@@ -46,10 +48,13 @@ class TreasuryController extends Controller
         if(isset($_GET['key']))
             $key = $_GET['key'];
 
+        if(isset($_GET['status']))
+            $status = $_GET['status'];
+
     	$loans = Loan::notDenied()
                     ->where('status', '>=' ,$this->utils->getStatusIndex('treasury'))
                     ->where('status', '<>', 10)
-                    ->where(function($query) use ($key, $search){
+                    ->where(function($query) use ($key, $search, $status){
                         $searchRange = '';
 
                         if(!empty($search))
@@ -70,6 +75,14 @@ class TreasuryController extends Controller
                                     ->orWhere('check_no', 'LIKE', '%' . $search . '%')
                                     ->orWhere('FullName', 'LIKE', '%' . $search . '%');
                             }
+
+                            if(!empty(trim($status))){
+                                if($status == 7)
+                                    $query->whereIn('status', [7, 8]);
+
+                                $query->where('status', $status);
+                            }
+
                     })
                     // ->OrWhere('status', $this->utils->getStatusIndex('release'))
                     // ->search($search)

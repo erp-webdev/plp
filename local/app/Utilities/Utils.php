@@ -32,7 +32,7 @@ class Utils
                                 'For Approval'
                             ];
 
-    private $treasuryStat = [
+    public $treasuryStat = [
                                 "For Approval",
                                 "Check Releasing",
                                 "Released",

@@ -57,6 +57,22 @@
 							</select>
 						</div>
 					</div>
+					<div class="form-group col-xs-12 col-sm-2 col-md-2">
+						<span class="col-xs-12 col-md-3 col-sm-3">
+							Status
+						</span>
+						<?php $status = 0; if(isset($_GET['status'])) $status = $_GET['status']; ?>
+						<div class="col-xs-12 col-md-8 col-sm-8">
+							<select class="form-control input-sm" id="status" onchange="find()">
+								<option value="all"  <?php if($status=='all') echo 'selected'; ?>>All</option>
+								@foreach($utils->treasuryStat as $stat)
+								<option value="{{ $stat }}" {{ $status == $stat ? 'selected' : '' }} >{{$stat}}</option>
+								@endforeach
+
+
+							</select>
+						</div>
+					</div>
 				 	<div class="input-group col-xs-12 col-sm-4 col-md-4 pull-right">
 				 		<div class="input-group-btn">
 					 		<button class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown"><span class="dropdown-text">
@@ -163,8 +179,9 @@
 	function find() {
 		var $show = $('#show').val();
 		var $key = $('#field').val();
+		var $stat = $('#stat').val();
 		var $search = $(searchInputId).val();
-		var $searchUrl = "{{ route('treasury.index') }}" + "?key=" + $key +"&show=" + $show + "&search=" + $search;
+		var $searchUrl = "{{ route('treasury.index') }}" + "?key=" + $key +"&show=" + $show +"&status=" + $stat + "&search=" + $search;
 		window.location.href = $searchUrl;
 	}
 
