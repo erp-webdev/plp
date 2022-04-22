@@ -177,7 +177,7 @@
 	function find() {
 		var $show = $('#show').val();
 		var $key = $('#field').val();
-		var $stat = $('#stat').val();
+		var $stat = $('#status').val();
 		var $search = $(searchInputId).val();
 		var $searchUrl = "{{ route('treasury.index') }}" + "?key=" + $key +"&show=" + $show +"&status=" + $stat + "&search=" + $search;
 		window.location.href = $searchUrl;
