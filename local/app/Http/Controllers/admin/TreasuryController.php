@@ -77,10 +77,12 @@ class TreasuryController extends Controller
                             }
 
                             if(!empty(trim($status))){
-                                if($status == 7)
-                                    $query->whereIn('status', [7, 8]);
+                                if($status != 'all'){
+                                    if($status == 7)
+                                        $query->whereIn('status', [7, 8]);
 
-                                $query->where('status', $status);
+                                    $query->where('status', $status);
+                                }
                             }
 
                     })

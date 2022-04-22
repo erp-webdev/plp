@@ -68,8 +68,6 @@
 								<option value="5"  <?php if($status=='5') echo 'selected'; ?>>For Approval</option>
 								<option value="6"  <?php if($status=='6') echo 'selected'; ?>>Check Releasing</option>
 								<option value="7"  <?php if($status=='7') echo 'selected'; ?>>Released</option>
-
-
 							</select>
 						</div>
 					</div>
