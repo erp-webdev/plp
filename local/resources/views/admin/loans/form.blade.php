@@ -476,7 +476,7 @@
                     <h5>Application Form</h5>
                     <span id="pl-control-number">
                         <p>PL CONTROL NUMBER</p>
-                        <p id="cn">{{ $loan->ctrl_no }}<input type="text">-<input type="text"></p>
+                        <p id="cn">{{ $loan->ctrl_no }}</p>
                     </span>
                 </div>
                 <div class="form-header">
