@@ -506,7 +506,6 @@
                             </div>
                         </div>
                         <div class="nurse-signature">
-                            <input type="text" value="{{ $loan->company_nurse }} - {{ $loan->company_nurse_date }}">
                             <p>Company Nurse's signature over printed name</p>
                         </div>
                     </div>
