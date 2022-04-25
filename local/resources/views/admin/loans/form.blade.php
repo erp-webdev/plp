@@ -611,7 +611,7 @@
                         </div>
                         <div class="approval-row">
                             <span>DISAPPROVED</span>
-                            <input type="text" value="{{ $loan->approved == 0 ? '✓' . . $loan->approved_FullName : '' }}">
+                            <input type="text" value="{{ $loan->approved == 0 ? '✓' . $loan->approved_FullName : '' }}">
                         </div>
                     </div>
                 </div>
