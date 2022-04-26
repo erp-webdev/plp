@@ -310,6 +310,7 @@ class LoanController extends Controller
         Storage::disk('forms')
             ->put($filename, $pdf->output());
 
+        return $filename;
         // maatwebsite
         // $utils = new Utils();
         // Excel::load('plp_form_template.xls', function($excel) use ($loan, $balance, $utils) {
