@@ -105,6 +105,8 @@ $(document).on( 'click', '.btnSave', function(e){
 	var validate = btn.data('validate');
 	startLoading();
 
+	return;
+
 	$(btn).prop({disabled: true});
 
 	if(validate != '' && validate != undefined){
