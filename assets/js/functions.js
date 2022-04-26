@@ -165,6 +165,10 @@ $('.btnSave').on('click', function(event){
 
 });
 
+$(document).on('.btnDelete', 'click', function(e){
+	alert('testing');
+})
+
 $('.btnConfirm').on('click', function(event){
 	var btn = $(this);
 	var title = btn.data('title');
