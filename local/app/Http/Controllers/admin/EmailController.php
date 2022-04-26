@@ -87,7 +87,12 @@ class EmailController extends Controller
                 if(env('APP_ENV') == 'local'){
                     $message->bcc('kayag.global@megaworldcorp.com');
                     // $message->to('kayag.global@megaworldcorp.com');
-                    $message->to($to);
+                    // $message->to($to);
+                    if(!empty($to))
+                        if(count($to) > 0)
+                            foreach($to as $t)
+                                $message->to($t);
+                                
                     $message->from($from);
                     $message->subject($subject . '--testing');
                     
