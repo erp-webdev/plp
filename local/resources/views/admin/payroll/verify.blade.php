@@ -173,8 +173,8 @@
 		<textarea name="payroll_remarks" placeholder="(optional) provide reason of verification/denial" class="form-control" id="" cols="30" rows="3"></textarea>
 		<br>
 		<div class="clearfix"></div>
-		<button type="submit" name="verify" class="btn btn-success btn-sm " onsubmit="startLoading()"><i class="fa fa-check-square-o"></i> Verify</button>
-		<button type="submit" name="deny" class="btn btn-danger btn-sm" onsubmit="startLoading()"><i class="fa fa-thumbs-down"></i> Deny</button>
+		<button type="button" name="verify" class="btn btn-success btn-sm btnSave" onsubmit="startLoading()"><i class="fa fa-check-square-o"></i> Verify</button>
+		<button type="button" name="deny" class="btn btn-danger btn-sm" onsubmit="startLoading()"><i class="fa fa-thumbs-down"></i> Deny</button>
 		@endif
 	   <button type="button" class="btn btn-default btn-sm" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
 	</div>
