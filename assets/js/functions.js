@@ -66,7 +66,6 @@ $(document).on( 'click', '.btnDelete', function(e){
 	var title = btn.data('title');
 	var content = btn.data('content');
 	var url = btn.data('url');
-	startLoading();
 
 	// defaults
 	if(empty(title)){
@@ -84,6 +83,7 @@ $(document).on( 'click', '.btnDelete', function(e){
 	        confirm: {
 	            btnClass: 'btn-red',
 	            action: function(){
+					startLoading();
 	            	location.href = url;
 	            }
 	        },
@@ -103,7 +103,6 @@ $(document).on( 'click', '.btnSave', function(e){
 	var content = btn.data('content');
 	var form = btn.data('form');
 	var validate = btn.data('validate');
-	startLoading();
 
 	$(btn).prop({disabled: true});
 
@@ -152,6 +151,7 @@ $(document).on( 'click', '.btnSave', function(e){
 	        confirm: {
 	            btnClass: 'btn-green',
 	            action: function(){
+					startLoading();
 					$('.loader').removeClass('hidden');
 	            	if(form == undefined || form == null || form == '')
 	            		$(btn).closest('form').submit();
@@ -177,7 +177,6 @@ $(document).on( 'click', '.btnConfirm', function(e){
 	var content = btn.data('content');
 	var url = btn.data('url');
 	var validate = btn.data('validate');
-	startLoading();
 
 	if(validate != '' && validate != undefined){
 		if(!eval(validate + '();'))
@@ -200,7 +199,8 @@ $(document).on( 'click', '.btnConfirm', function(e){
 	        confirm: {
 	            btnClass: 'btn-blue',
 	            action: function(){
-	            	location.href = url;
+					startLoading();
+					location.href = url;
 	            }
 	        },
 	        cancel: function () {
