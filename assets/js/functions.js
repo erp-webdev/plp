@@ -336,3 +336,7 @@ function validate_standard(form) {
 
 	return valid;
 }
+
+$('input[name="release"]').on('click', function(event){
+	startLoading();
+});
