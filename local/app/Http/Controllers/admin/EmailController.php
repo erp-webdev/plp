@@ -122,6 +122,7 @@ class EmailController extends Controller
                         foreach($ccs as $c)
                             if(!empty(trim($c)))
                                 $message->cc = $c; 
+                    }
                 }
 
             });
