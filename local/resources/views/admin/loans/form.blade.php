@@ -557,10 +557,10 @@
                     </div>
                     <div class="type-of-loan">
                         <ul>
-                            <li><input type="checkbox" value="{{ $loan->COMPANY == 'MEGA01' ? 'checked' : '' }}">MEG</li>
-                            <li><input type="checkbox" value="{{ $loan->COMPANY == 'LGMI01' ? 'checked' : '' }}">GLO</li>
-                            <li><input type="checkbox" value="{{ $loan->COMPANY == 'LGMI01' ? 'checked' : '' }}">LUX</li>
-                            <li><input type="checkbox" value="{{ !in_array($loan->COMPANY, ['MEGA01', 'GLOBAL01', 'LGMI01'])  ? 'checked' : '' }}">OTHERS<input type="text" value="{{ $loan->COMPANY }}"></li>
+                            <li><input type="checkbox" {{ $loan->COMPANY == 'MEGA01' ? 'checked' : '' }}>MEG</li>
+                            <li><input type="checkbox" {{ $loan->COMPANY == 'LGMI01' ? 'checked' : '' }}>GLO</li>
+                            <li><input type="checkbox" {{ $loan->COMPANY == 'LGMI01' ? 'checked' : '' }}>LUX</li>
+                            <li><input type="checkbox" {{ !in_array($loan->COMPANY, ['MEGA01', 'GLOBAL01', 'LGMI01'])  ? 'checked' : '' }}>OTHERS<input type="text" value="{{ $loan->COMPANY }}"></li>
                         </ul>
                         <div class="date-of-loan">
                             <label>DATE: <input id="date-input" type="text" value="{{ date('Y-m-d', strtotime($loan->created_at)) }}"></label>
