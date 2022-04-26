@@ -390,13 +390,8 @@ class DashboardController extends Controller
     public function test($id)
     {
 
-        $loan = Loan::find($id);
-        Event::fire(new CheckReleased($loan));
-
-        return;
         $file = new LoanController();
         $filename = $file->printPDFForm($id);
-
 
         $content = Storage::disk('forms')->get($filename);
         
