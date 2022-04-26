@@ -1,4 +1,4 @@
-<form class="form-horizontal table-responsive" style="font-size: 12px" action="{{ route('payroll.verify') }}" method="post">
+<form id="PayrollForm" class="form-horizontal table-responsive" style="font-size: 12px" action="{{ route('payroll.verify') }}" method="post">
 	<div class="modal-header">
 	  <div class="col-xs-12 col-sm-6 col-md-6">
 	  	<h4>Loan Amount Verification 
@@ -173,8 +173,8 @@
 		<textarea name="payroll_remarks" placeholder="(optional) provide reason of verification/denial" class="form-control" id="" cols="30" rows="3"></textarea>
 		<br>
 		<div class="clearfix"></div>
-		<button type="submit" name="verify" data-title="Confirm Verification" data-content="Are you sure you want to verify the loan application of {{ $loan->FullName }}?" class="btn btn-success btn-sm btnSave"><i class="fa fa-check-square-o"></i> Verify</button>
-		<button type="submit" name="deny" data-title="Deny Application" data-content="Are you sure you want to deny the loan application of  {{ $loan->FullName }}?" class="btn btn-danger btn-sm btnSave" ><i class="fa fa-thumbs-down"></i> Deny</button>
+		<button type="submit" name="verify" data-title="Confirm Verification" data-content="Are you sure you want to verify the loan application of {{ $loan->FullName }}?" data-form="#PayrollForm" class="btn btn-success btn-sm btnSave"><i class="fa fa-check-square-o"></i> Verify</button>
+		<button type="submit" name="deny" data-title="Deny Application" data-content="Are you sure you want to deny the loan application of  {{ $loan->FullName }}?" data-form="#PayrollForm" class="btn btn-danger btn-sm btnSave" ><i class="fa fa-thumbs-down"></i> Deny</button>
 		@endif
 	   <button type="button" class="btn btn-default btn-sm" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
 	</div>

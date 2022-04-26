@@ -106,7 +106,10 @@ $(document).on( 'click', '.btnSave', function(e){
 	var validate = btn.data('validate');
 
 	$(btn).prop({disabled: true});
-
+	$('<input>').attr('type','hidden')
+		.attr('name', btn.prop('name'))
+		.attr('value', this.$target.val())
+		.appendTo('form');
 
 	if(validate != '' && validate != undefined){
 
@@ -157,18 +160,8 @@ $(document).on( 'click', '.btnSave', function(e){
 					startLoading();
 					$('.loader').removeClass('hidden');
 	            	if(form == undefined || form == null || form == ''){
-						$('<input>').attr('type','hidden')
-						.attr('name', btn.prop('name'))
-						.attr('value', btn.val())
-						.appendTo($(btn).parent('form'));
 						$(btn).parent('form').submit();
 					}else{
-
-						$('<input>').attr('type','hidden')
-						.attr('name', btn.prop('name'))
-						.attr('value', btn.val())
-						.appendTo(form);
-				
 	            		$(form).submit();
 					}
 	            }
