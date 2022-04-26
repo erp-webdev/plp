@@ -34,6 +34,7 @@ $(function () {
 
 function startLoading() {
   $('#loading-wheel').show();
+  $('.loading-wheel').removeAttr('style');
 }
 
 function stopLoading() {

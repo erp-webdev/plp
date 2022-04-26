@@ -96,12 +96,6 @@
         $('input.datepicker-single').on('cancel.daterangepicker', function(ev, picker) {
             $(this).val('');
         });
-
-        function startLoading(){
-            $('.loading').show();
-            $('.loading').removeAttr('style');
-        }
-
     </script>
     
     <style type="text/css">
