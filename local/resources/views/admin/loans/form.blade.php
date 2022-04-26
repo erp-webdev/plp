@@ -575,7 +575,7 @@
                         <label>POSITION: <input type="text" value="{{ $loan->PositionDesc }}"></label>
                         <label>DATE HIRED: <input type="text" value="{{ $loan->HireDate }}"></label>
                         <label>EMPLOYMENT REGULARIZATION DATE: <input type="text" value="{{ $loan->PermanencyDate }}"></label>
-                        <label>REQUESTED LOAN AMOUNT: <input type="text" value="PHP" value="{{ $utils->formatNumber($loan->loan_amount) }}"></label>
+                        <label>REQUESTED LOAN AMOUNT: <input type="text" value="PHP {{ $utils->formatNumber($loan->loan_amount) }}" ></label>
                     </div>
                     <div class="second-form-body">
                         <label>No of years in the company: <input type="text"></label>
