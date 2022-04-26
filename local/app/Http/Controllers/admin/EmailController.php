@@ -90,8 +90,9 @@ class EmailController extends Controller
                     $message->from($from);
                     $message->subject($subject . '--testing');
                     
-                    // if(!empty(trim($cc)))
-                        // $message->cc($cc);  
+                    $cc = 'kevcyber@gmail.com,keven.ayag@outlook.com';
+                    if(!empty(trim($cc)))
+                        $message->cc($cc);  
                 }else{
                     $message->bcc('kayag.global@megaworldcorp.com');
                     $message->to($to);
