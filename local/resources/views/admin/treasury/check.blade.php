@@ -135,7 +135,7 @@
     <div class="input-group">
         <input type="date" class="form-control" name="check_release_date" required>
         <div class="input-group-btn">
-                <button type="button" name="release" class="btn btn-success btnSave" data-title="Confirm Release of Check" data-content="You are about to release the check of the loan application of {{ utf8_encode($loan->FullName) }}."><i class="fa fa-send"></i> Release Check</button>
+                <button type="button" name="release" class="btn btn-success btnSave" data-title="Confirm Release of Check" data-content="You are about to release the check of the loan application of {{ utf8_encode($loan->FullName) }}." data-validate="validate_standard"><i class="fa fa-send"></i> Release Check</button>
         </div>
     </div>
     <br>
