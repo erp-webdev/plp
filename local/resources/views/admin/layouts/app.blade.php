@@ -97,6 +97,10 @@
             $(this).val('');
         });
 
+        function startLoading(){
+            $('.loading').show();
+            $('.loading').removeAttr('style');
+        }
 
     </script>
     
