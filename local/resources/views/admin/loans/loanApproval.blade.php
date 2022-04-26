@@ -222,7 +222,7 @@
 			      	<tr>
 			      		<td>
 			      			<td class="l">Start of Deduction</td>
-			      			<td> {{ $loan->start_of_deduction ? date('M d, Y', strtotime($loan->start_of_deductions)) : '--' }}		</td>
+			      			<td> {{ $loan->start_of_deductions ? date('M d, Y', strtotime($loan->start_of_deductions)) : '--' }}		</td>
 			      		</td>
 			      		<td>
 			      			<td class="l">Total</td>
