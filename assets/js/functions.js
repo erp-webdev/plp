@@ -165,7 +165,11 @@ $('.btnSave').on('click', function(event){
 
 });
 
-$(document).on('.btnDelete', 'click', function(e){
+$(document).on('.btnSave', 'click', function(e){
+	alert('testing');
+})
+
+$(document).on( 'click', '.btnSave', function(e){
 	alert('testing');
 })
 
