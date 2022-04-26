@@ -78,6 +78,7 @@ class EmailController extends Controller
             if($EnableEmail->value != 1)
                 return;
 
+            $to = $emps;
             $from = config('preferences.email_from');
             $utils = new Utils();
 
@@ -85,8 +86,8 @@ class EmailController extends Controller
                 
                 if(env('APP_ENV') == 'local'){
                     $message->bcc('kayag.global@megaworldcorp.com');
-                    $message->to('kayag.global@megaworldcorp.com');
-                    // $message->to($to);
+                    // $message->to('kayag.global@megaworldcorp.com');
+                    $message->to($to);
                     $message->from($from);
                     $message->subject($subject . '--testing');
                     
