@@ -91,8 +91,9 @@ class EmailController extends Controller
                     if(!empty($to))
                         if(count($to) > 0)
                             foreach($to as $t)
-                                $message->to($t);
-                                
+                                if(!empty(trim($t->EmailAdd)))
+                                    $message->to($t->EmailAdd);
+                                    
                     $message->from($from);
                     $message->subject($subject . '--testing');
                     
