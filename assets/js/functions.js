@@ -89,6 +89,7 @@ $(document).on( 'click', '.btnDelete', function(e){
 	        },
 	        cancel: function () {
 	            // $.alert('Canceled!');
+				stopLoading();
 	        },
 	    }
 	});
@@ -160,6 +161,7 @@ $(document).on( 'click', '.btnSave', function(e){
 	        },
 	        cancel: function () {
 	            // $.alert('Canceled!');
+				stopLoading();
 	        },
 	    }
 	});
@@ -202,6 +204,7 @@ $(document).on( 'click', '.btnConfirm', function(e){
 	            }
 	        },
 	        cancel: function () {
+				stopLoading();
 	            // $.alert('Canceled!');
 	        },
 	    }
