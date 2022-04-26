@@ -108,7 +108,7 @@ $(document).on( 'click', '.btnSave', function(e){
 	$(btn).prop({disabled: true});
 	$('<input>').attr('type','hidden')
 		.attr('name', btn.prop('name'))
-		.attr('value', this.$target.val())
+		.attr('value', btn.val())
 		.appendTo('form');
 
 	if(validate != '' && validate != undefined){
