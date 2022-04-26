@@ -61,7 +61,7 @@ function empty($str) {
 	return false;
 }
 
-$('.btnDelete').on('click', function(event){
+$(document).on( 'click', '.btnDelete', function(e){
 	var btn = $(this);
 	var title = btn.data('title');
 	var content = btn.data('content');
@@ -93,7 +93,7 @@ $('.btnDelete').on('click', function(event){
 	});
 });
 
-$('.btnSave').on('click', function(event){
+$(document).on( 'click', '.btnSave', function(e){
 	var btn = $(this);
 	var title = btn.data('title');
 	var content = btn.data('content');
@@ -165,15 +165,7 @@ $('.btnSave').on('click', function(event){
 
 });
 
-$(document).on('.btnSave', 'click', function(e){
-	alert('testing');
-})
-
-$(document).on( 'click', '.btnSave', function(e){
-	alert('testing');
-})
-
-$('.btnConfirm').on('click', function(event){
+$(document).on( 'click', '.btnConfirm', function(e){
 	var btn = $(this);
 	var title = btn.data('title');
 	var content = btn.data('content');
@@ -344,7 +336,3 @@ function validate_standard(form) {
 
 	return valid;
 }
-
-$('input[name="release"]').on('click', function(event){
-	startLoading();
-});
