@@ -581,8 +581,8 @@
                         <label>No of years in the company: <input type="text"></label>
                         <label>EMPLOYEE NO: <input type="text" value="{{ $loan->EmpID }}"></label>
                         <label>DEPARTMENT: <input type="text" value="{{ $loan->DeptDesc }}"></label>
-                        <label>PURPOSE: <input type="text" value="{{ $loan->purpose }}"></label>
-                        <label><input type="text"></label>
+                        <label>PURPOSE: <input type="text" value=""></label>
+                        <label><input type="text" value="{{ $loan->purpose }}"></label>
                     </div>
                 </div>
                 <div class="applicant-signature-1">
