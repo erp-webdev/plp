@@ -652,11 +652,11 @@
                     <p class="action-officers">APPROVING OFFICERS</p>
                     <div class="approval-wrapper">
                         <div class="approval-row">
-                            <span>APPROVED <input type="checkbox" value="{{ $loan->approved == 1 ? 'checked' : '' }}"></span>
+                            <span>APPROVED <input type="checkbox" {{ $loan->approved == 1 ? 'checked' : '' }}></span>
                             <input type="text" value="{{ $loan->approved == 1 ? $loan->approved_FullName  : '' }}">
                         </div>
                         <div class="approval-row">
-                            <span>DISAPPROVED <input type="checkbox" value="{{ $loan->approved == 1 ? '' : 'checked' }}"></span>
+                            <span>DISAPPROVED <input type="checkbox" {{ $loan->approved == 1 ? '' : 'checked' }}></span>
                             <input type="text" value="{{ $loan->approved == 1 ? $loan->approved_FullName  : '' }}">
                         </div>
                     </div>
