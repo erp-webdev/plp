@@ -98,6 +98,7 @@ $(document).on( 'click', '.btnDelete', function(e){
 });
 
 $(document).on( 'click', '.btnSave', function(e){
+	e.preventDefault();
 	var btn = $(this);
 	var title = btn.data('title');
 	var content = btn.data('content');
