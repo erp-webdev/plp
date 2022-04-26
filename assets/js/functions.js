@@ -106,8 +106,13 @@ $(document).on( 'click', '.btnSave', function(e){
 	var validate = btn.data('validate');
 
 	$(btn).prop({disabled: true});
+	$('<input>').attr('type','hidden')
+		.attr('name', btn.prop('name'))
+		.attr('value', this.$target.val())
+		.appendTo('form');
 
 	if(validate != '' && validate != undefined){
+
 
 		if(form == undefined || form == null || form == ''){
 
@@ -154,10 +159,11 @@ $(document).on( 'click', '.btnSave', function(e){
 	            action: function(){
 					startLoading();
 					$('.loader').removeClass('hidden');
-	            	if(form == undefined || form == null || form == '')
+	            	if(form == undefined || form == null || form == ''){
 						$(btn).parent('form').submit();
-	            	else
+					}else{
 	            		$(form).submit();
+					}
 	            }
 	        },
 	        cancel: function () {
