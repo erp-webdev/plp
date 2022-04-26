@@ -53,7 +53,7 @@
 										<td style="padding: 5px">{{ $deduction->date }}</td>
 										<td style="padding: 5px">
                       @if($ctr == count($deductions))
-                      {{ number_format($loan->deductions + $loan->total - ($loan->deductions * count($deductions), 2, '.', ',') }}
+                      {{ number_format($loan->deductions + $loan->total - ($loan->deductions * count($deductions)), 2, '.', ',') }}
                       @else
                       {{  number_format($loan->deductions, 2, '.', ',')  }}
                       @endif
