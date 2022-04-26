@@ -22,6 +22,7 @@ use Illuminate\Http\Response;
 use eFund\Http\Controllers\Controller;
 use eFund\Http\Controllers\admin\EmailController;
 use eFund\Http\Controllers\admin\LoanController;
+use eFund\Events\CheckReleased;
 
 
 class DashboardController extends Controller
@@ -388,6 +389,11 @@ class DashboardController extends Controller
 
     public function test($id)
     {
+
+        $loan = Loan::find($id);
+        Event::fire(new CheckReleased($loan));
+
+        return;
         $file = new LoanController();
         $filename = $file->printPDFForm($id);
 
