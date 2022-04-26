@@ -253,7 +253,7 @@ class TreasuryController extends Controller
                 }
             }
             // Create Deduction schedule
-            DB::update('EXEC spCreateDeductionSchedule ?, ?, ?, ?, ?', [$loan->start_of_deductions, $loan->terms_month, $loan->id, 0, $records_this_year]);
+            DB::update('EXEC spCreateDeductionSchedule ?, ?, ?, ?, ?, ?', [$loan->start_of_deductions, $loan->terms_month, $loan->id, 0, $records_this_year, $loan->total]);
             // Update Balance
             $deductionId = Deduction::select('id')->where('eFundData_id', $loan->id)->first();
             DB::update('EXEC updateBalance ?', [$deductionId->id]);

@@ -47,10 +47,17 @@
 								<th style="padding: 5px">Deduction</th>
 							</thead>
 							<tbody>
+                <?php $ctr = 1; ?>
 								@foreach($deductions as $deduction)
 									<tr>
 										<td style="padding: 5px">{{ $deduction->date }}</td>
-										<td style="padding: 5px">{{ number_format($loan->deductions, 2, '.', ',') }}</td>
+										<td style="padding: 5px">
+                      @if($ctr == count($deductions))
+                      {{ number_format($loan->deductions + $loan->total - ($loan->deductions * count($deductions), 2, '.', ',') }}
+                      @else
+                      {{  number_format($loan->deductions, 2, '.', ',')  }}
+                      @endif
+                    </td>
 									</tr>
 								@endforeach
 									<tr>
