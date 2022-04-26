@@ -629,7 +629,7 @@
                 <h5>FOR PERSONAL LOAN FUND CUSTODIAN USE</h5>
                 <span class="qualification">
                     <label><input type="checkbox" {{$loan->approved == 1 ? 'checked' : ''}}>Qualified to avail</label>
-                    <label><input type="checkbox" {{$loan->approved == 1 ? 'checked' : ''}}>NOT qualified to avail</label>
+                    <label><input type="checkbox" {{$loan->approved == 1 ? '' : 'checked'}}>NOT qualified to avail</label>
                 </span>
                 <label>Previous loan amount <input type="text"></label>
                 <label>Balance: <input type="text"></label>
