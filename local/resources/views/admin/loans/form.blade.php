@@ -18,7 +18,7 @@
         }
         .container {
             width: 816px;
-            height: 1344px;
+            height: 1248px;
             margin: 25px auto 0;
             border: 2px solid #111;
             background-color: #fff;
