@@ -66,6 +66,7 @@ $(document).on( 'click', '.btnDelete', function(e){
 	var title = btn.data('title');
 	var content = btn.data('content');
 	var url = btn.data('url');
+	startLoading();
 
 	// defaults
 	if(empty(title)){
@@ -91,6 +92,9 @@ $(document).on( 'click', '.btnDelete', function(e){
 	        },
 	    }
 	});
+
+	stopLoading();
+
 });
 
 $(document).on( 'click', '.btnSave', function(e){
@@ -99,6 +103,7 @@ $(document).on( 'click', '.btnSave', function(e){
 	var content = btn.data('content');
 	var form = btn.data('form');
 	var validate = btn.data('validate');
+	startLoading();
 
 	$(btn).prop({disabled: true});
 
@@ -162,6 +167,7 @@ $(document).on( 'click', '.btnSave', function(e){
 	
 	$('.loader').addClass('hidden');
 	$(btn).prop({disabled: false});
+	stopLoading();
 
 });
 
@@ -171,6 +177,7 @@ $(document).on( 'click', '.btnConfirm', function(e){
 	var content = btn.data('content');
 	var url = btn.data('url');
 	var validate = btn.data('validate');
+	startLoading();
 
 	if(validate != '' && validate != undefined){
 		if(!eval(validate + '();'))
@@ -201,6 +208,8 @@ $(document).on( 'click', '.btnConfirm', function(e){
 	        },
 	    }
 	});
+
+	stopLoading();
 });
 
 function validate_required(form) {
