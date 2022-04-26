@@ -1,5 +1,5 @@
 <link rel="stylesheet" type="text/css" href="{{ url('/assets/css/daterangepicker.css') }}">
-<form class="form-horizontal table-responsive" style="font-size: 12px" action="{{ route('treasury.approve') }}" method="post" ng-app="ApprovalApp" ng-controller="ApprovalCtrl">
+<form id="TreasuryForm" class="form-horizontal table-responsive" style="font-size: 12px" action="{{ route('treasury.approve') }}" method="post" ng-app="ApprovalApp" ng-controller="ApprovalCtrl">
   <input type="hidden" name="_token" value="{{ csrf_token() }}">
   <input type="number" name="id" value="{{ $loan->id }}" style="display: none">
   <div class="modal-header">
@@ -135,7 +135,7 @@
     <div class="input-group">
         <input type="date" class="form-control" name="check_release_date" required>
         <div class="input-group-btn">
-                <button type="button" name="release" class="btn btn-success btnSave" data-title="Confirm Release of Check" data-content="You are about to release the check of the loan application of {{ utf8_encode($loan->FullName) }}." data-validate="validate_standard"><i class="fa fa-send"></i> Release Check</button>
+                <button type="button" name="release" class="btn btn-success btnSave" data-title="Confirm Release of Check" data-content="You are about to release the check of the loan application of {{ utf8_encode($loan->FullName) }}." data-form="#TreasuryForm" data-validate="validate_standard"><i class="fa fa-send"></i> Release Check</button>
         </div>
     </div>
     <br>
