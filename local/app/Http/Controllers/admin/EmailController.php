@@ -101,17 +101,27 @@ class EmailController extends Controller
                         $ccs = explode(',', $cc);
                         foreach($ccs as $c)
                             if(!empty(trim($c)))
-                                $message->cc = $c;
+                                $message->cc = $c; 
                     }
                 }else{
 
                     $message->bcc('kayag.global@megaworldcorp.com');
-                    $message->to($to);
+                    // $message->to('kayag.global@megaworldcorp.com');
+                    // $message->to($to);
+                    if(!empty($to))
+                        if(count($to) > 0)
+                            foreach($to as $t)
+                                if(!empty(trim($t->EmailAdd)))
+                                    $message->to($t->EmailAdd);
+
                     $message->from($from);
                     $message->subject($subject);
                     
-                    if(!empty(trim($cc)))
-                        $message->cc($cc);  
+                    if(!empty(trim($cc))){
+                        $ccs = explode(',', $cc);
+                        foreach($ccs as $c)
+                            if(!empty(trim($c)))
+                                $message->cc = $c; 
                 }
 
             });
