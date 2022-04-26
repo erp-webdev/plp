@@ -155,7 +155,7 @@ $(document).on( 'click', '.btnSave', function(e){
 					startLoading();
 					$('.loader').removeClass('hidden');
 	            	if(form == undefined || form == null || form == '')
-						$(this).parent('form').submit();
+						$(btn).parent('form').submit();
 	            	else
 	            		$(form).submit();
 	            }
