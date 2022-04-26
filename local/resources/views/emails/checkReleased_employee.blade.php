@@ -57,6 +57,7 @@
                       @else
                       {{  number_format($loan->deductions, 2, '.', ',')  }}
                       @endif
+                      <?php $ctr++; ?>
                     </td>
 									</tr>
 								@endforeach
