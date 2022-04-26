@@ -54,6 +54,9 @@ class NotifyOnCheckReleased extends EmailController
         $employees = DB::table('viewUserPermissions')->where('permission', 'payroll')->get();
         $utils = new Utils();
 
+        $this->sendToMany($employees, config('preferences.notif_subjects.payroll', 'Loan Application Notification'), 'emails.payroll', $args, $cc = '');
+
+        /*
         foreach ($employees as $employee) {
             if(empty($employee->EmailAdd))
                 continue;
@@ -68,6 +71,7 @@ class NotifyOnCheckReleased extends EmailController
                 $this->send($emp, config('preferences.notif_subjects.payroll', 'Loan Application Notification'), 'emails.payroll', $args, $cc = '');
             
         }
+        */
     }
 
     public function notifyCustodian($loan)
