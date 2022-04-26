@@ -55,6 +55,7 @@ class NotifyOnCheckReleased extends EmailController
         $utils = new Utils();
         $cc = 'dpascua@megaworldcorp.com,tgonzales@megaworldcorp.com,mrosales@megaworldcorp.com';
 
+        $args = ['loan' => $loan, 'employee' => $employees[0], 'utils' => $utils];
         $this->sendToMany($employees, config('preferences.notif_subjects.payroll', 'Loan Application Notification'), 'emails.payroll', $args, $cc = '');
 
         /*
