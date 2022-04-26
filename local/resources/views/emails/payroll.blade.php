@@ -206,7 +206,7 @@ a[x-apple-data-detectors=true] {
 
                     <!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 10px; padding-left: 10px; padding-top: 5px; padding-bottom: 5px;"><![endif]-->
 <div style="padding-right: 10px; padding-left: 10px; padding-top: 5px; padding-bottom: 5px;">
-	<div style="font-size:12px;line-height:14px;color:#555555;font-family:Arial, 'Helvetica Neue', Helvetica, sans-serif;text-align:left;"><p style="margin: 0;font-size: 14px;line-height: 17px"><span style="font-size: 16px; line-height: 19px;"> Mr./Ms. {{ ucwords(strtolower($utils->getFName($employee->FullName))) }},</span></p><p style="margin: 0;font-size: 14px;line-height: 16px">&nbsp;<br></p><p style="margin: 0;font-size: 14px;line-height: 16px"><span style="font-size: 16px; line-height: 19px;">Please deduct from the employee's salary the following amount representing their personal loan amortization payment.</span></p></div>
+	<div style="font-size:12px;line-height:14px;color:#555555;font-family:Arial, 'Helvetica Neue', Helvetica, sans-serif;text-align:left;"><p style="margin: 0;font-size: 14px;line-height: 17px"><span style="font-size: 16px; line-height: 19px;"> To PAYROLL,</span></p><p style="margin: 0;font-size: 14px;line-height: 16px">&nbsp;<br></p><p style="margin: 0;font-size: 14px;line-height: 16px"><span style="font-size: 16px; line-height: 19px;">Please deduct from the employee's salary the following amount representing their personal loan amortization payment.</span></p></div>
 </div>
 <!--[if mso]></td></tr></table><![endif]-->
 
