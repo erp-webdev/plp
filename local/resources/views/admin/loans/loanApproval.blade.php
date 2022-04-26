@@ -241,7 +241,7 @@
 				@if($loan->status == $utils->getStatusIndex('officer'))
 				<div class="clearfix"></div>
 				<button type="button" name="deny" class="btn btn-danger btn-sm pull-right btnSave" data-title="Confirm Disapproval" data-content="Are you sure you want to DISAPPROVE the application of {{ $loan->FullName }}?" data-form="#LoanForm"><i class="fa fa-thumbs-down"></i> Deny</button>
-				<button type="button" name="approve" class="btn btn-success btn-sm pull-right btnSave" data-content="Are you sure you want to APPROVE the application of {{ $loan->FullName }}?"><i class="fa fa-thumbs-up"  data-form="#LoanForm"></i> Approve</button>
+				<button type="button" name="approve" class="btn btn-success btn-sm pull-right btnSave" data-content="Are you sure you want to APPROVE the application of {{ $loan->FullName }}?"><i class="fa fa-thumbs-up" data-form="#LoanForm"></i> Approve</button>
 				<button type="button" name="calculate" class="btn btn-default btn-sm pull-right btnSave" data-title="Confirm Recalculation" data-content="Are you sure you want to recalculate this loan application of {{ $loan->FullName }}?"  data-form="#LoanForm"><i class="fa fa-calculator"></i> Calculate</button>
 				@endif
 				@endif
