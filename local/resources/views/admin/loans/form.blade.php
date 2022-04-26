@@ -558,7 +558,7 @@
                     <div class="type-of-loan">
                         <ul>
                             <li><input type="checkbox" {{ $loan->COMPANY == 'MEGA01' ? 'checked' : '' }}>MEG</li>
-                            <li><input type="checkbox" {{ $loan->COMPANY == 'LGMI01' ? 'checked' : '' }}>GLO</li>
+                            <li><input type="checkbox" {{ $loan->COMPANY == 'GLOBAL01' ? 'checked' : '' }}>GLO</li>
                             <li><input type="checkbox" {{ $loan->COMPANY == 'LGMI01' ? 'checked' : '' }}>LUX</li>
                             <li><input type="checkbox" {{ !in_array($loan->COMPANY, ['MEGA01', 'GLOBAL01', 'LGMI01'])  ? 'checked' : '' }}>OTHERS<input type="text" value="{{ $loan->COMPANY }}"></li>
                         </ul>
