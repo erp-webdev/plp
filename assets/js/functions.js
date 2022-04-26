@@ -93,7 +93,6 @@ $(document).on( 'click', '.btnDelete', function(e){
 	    }
 	});
 
-	stopLoading();
 
 });
 
@@ -104,8 +103,6 @@ $(document).on( 'click', '.btnSave', function(e){
 	var form = btn.data('form');
 	var validate = btn.data('validate');
 	startLoading();
-
-	return;
 
 	$(btn).prop({disabled: true});
 
@@ -169,7 +166,6 @@ $(document).on( 'click', '.btnSave', function(e){
 	
 	$('.loader').addClass('hidden');
 	$(btn).prop({disabled: false});
-	stopLoading();
 
 });
 
@@ -211,7 +207,6 @@ $(document).on( 'click', '.btnConfirm', function(e){
 	    }
 	});
 
-	stopLoading();
 });
 
 function validate_required(form) {
