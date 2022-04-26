@@ -254,7 +254,7 @@
 		    	<fieldset <?php if($loan->status == $utils->getStatusIndex('paid')) echo 'disabled'; ?>>
 	    		<table class="table table-condensed table-hover table-striped" id="dtable">
 		    		<thead>
-		    			<th>Date</th>
+		    			<th width="150px">Date</th>
 		    			<th>Payments AR #</th>
 		    			<th>Amount</th>
 		    			<th>Balance</th>
