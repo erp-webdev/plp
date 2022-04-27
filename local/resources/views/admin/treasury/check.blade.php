@@ -106,22 +106,27 @@
               <br>
             </div>
           @else
-              <div class="col-xs-12 col-sm-12 col-md-12">
+              <div class="col-xs-12 col-sm-12 col-md-12 form-horizontal">
                 <div class="form-group">
-                  <label for="">
-                    Check Voucher No.
-                  </label>
-                  <input type="text" class="form-control input-sm" value="{{ $loan->cv_no }}" readonly>
+                  <label for="" class="col-xs-12 col-sm-4 col-md-4">  Check Voucher No. </label>
+                  <div class="col-xs-12 col-sm-8 col-md-8">
+                    <input type="text" class="form-control input-sm" value="{{ $loan->cv_no }}" readonly>
+                  </div>
                 </div>
                 <div class="form-group">
-                  <label for="">
+                  <label for="" class="col-xs-12 col-sm-4 col-md-4">  Check Voucher No. </label>
                     Check Voucher Date
                   </label>
-                  <input type="text" class="form-control input-sm" value="{{ $loan->cv_date }}" readonly>
+                  <div class="col-xs-12 col-sm-8 col-md-8">
+                    <input type="text" class="form-control input-sm" value="{{ $loan->cv_date }}" readonly>
+                  </div>
                 </div>
                 <div class="form-group">
-                  <label for="">Check No.</label>
-                  <input type="text" class="form-control input-sm" value="{{ $loan->check_no }}" readonly>
+                  <label for="" class="col-xs-12 col-sm-4 col-md-4">  Check Voucher No. </label>
+                    Check No.</label>
+                  <div class="col-xs-12 col-sm-8 col-md-8">
+                    <input type="text" class="form-control input-sm" value="{{ $loan->check_no }}" readonly>
+                  </div>
                 </div>
                 
                 @if(empty($loan->check_released))
