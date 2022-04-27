@@ -116,7 +116,7 @@
                 <div class="form-group">
                   <label for="" class="col-xs-12 col-sm-4 col-md-4">  Check Voucher Date </label>
                   <div class="col-xs-12 col-sm-8 col-md-8">
-                    <input type="text" class="form-control input-sm" value="{{ $loan->cv_date }}" readonly>
+                    <input type="text" class="form-control input-sm" value="{{ date('Y-m-d', strtotime($loan->cv_date)) }}" readonly>
                   </div>
                 </div>
                 <div class="form-group">
@@ -141,7 +141,7 @@
                   <div class="form-group">
                     <label for="" class="col-xs-12 col-sm-4 col-md-4"> Check Date</label>
                     <div class="col-xs-12 col-sm-8 col-md-8">
-                      <input type="text" class="form-control input-sm" value="{{ $loan->check_released }}" readonly>
+                      <input type="text" class="form-control input-sm" value="{{ date('Y-m-d', strtotime($loan->check_released)) }}" readonly>
                     </div>
                   </div>
                 @endif
