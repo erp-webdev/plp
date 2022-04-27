@@ -114,16 +114,13 @@
                   </div>
                 </div>
                 <div class="form-group">
-                  <label for="" class="col-xs-12 col-sm-4 col-md-4">  Check Voucher No. </label>
-                    Check Voucher Date
-                  </label>
+                  <label for="" class="col-xs-12 col-sm-4 col-md-4">  Check Voucher Date </label>
                   <div class="col-xs-12 col-sm-8 col-md-8">
                     <input type="text" class="form-control input-sm" value="{{ $loan->cv_date }}" readonly>
                   </div>
                 </div>
                 <div class="form-group">
-                  <label for="" class="col-xs-12 col-sm-4 col-md-4">  Check Voucher No. </label>
-                    Check No.</label>
+                  <label for="" class="col-xs-12 col-sm-4 col-md-4"> Check No.</label>
                   <div class="col-xs-12 col-sm-8 col-md-8">
                     <input type="text" class="form-control input-sm" value="{{ $loan->check_no }}" readonly>
                   </div>
