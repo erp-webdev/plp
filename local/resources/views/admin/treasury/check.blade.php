@@ -124,7 +124,7 @@
                   <div class="col-xs-12 col-sm-8 col-md-8">
                     @if(!$loan->released)
                     <div class="input-group">
-                      <input type="text" class="form-control input-sm" value="{{ $loan->check_no }}" readonly>
+                      <input type="text" class="form-control input-sm" value="{{ $loan->check_no }}">
                       <div class="input-group-btn">
                         <button type="submit" name="save_checkno" class="btn btn-primary btnSave" data-title="Update Check No" data-content="Are you sure you want to update the check number?" title="Update check no."><i class="fa fa-save"></i></button>
                       </div>
