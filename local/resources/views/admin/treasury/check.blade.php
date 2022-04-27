@@ -122,7 +122,16 @@
                 <div class="form-group">
                   <label for="" class="col-xs-12 col-sm-4 col-md-4"> Check No.</label>
                   <div class="col-xs-12 col-sm-8 col-md-8">
+                    @if(!$loan->released)
+                    <div class="input-group">
+                      <input type="text" class="form-control input-sm" value="{{ $loan->check_no }}" readonly>
+                      <div class="input-group-btn">
+                        <button type="submit" name="save_checkno" class="btn btn-sm btn-primary btnSave" data-title="Update Check No" data-content="Are you sure you want to update the check number?" title="Update checkno"><i class="fa fa-save"></i></button>
+                      </div>
+                    </div>
+                    @else
                     <input type="text" class="form-control input-sm" value="{{ $loan->check_no }}" readonly>
+                    @endif
                   </div>
                 </div>
                 
