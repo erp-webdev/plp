@@ -139,8 +139,10 @@
                   </div>
                 @else
                   <div class="form-group">
-                    <label for="">Check Date</label>
-                    <input type="text" class="form-control input-sm" value="{{ $loan->check_released }}" readonly>
+                    <label for="" class="col-xs-12 col-sm-4 col-md-4"> Check Date</label>
+                    <div class="col-xs-12 col-sm-8 col-md-8">
+                      <input type="text" class="form-control input-sm" value="{{ $loan->check_released }}" readonly>
+                    </div>
                   </div>
                 @endif
               </div>
