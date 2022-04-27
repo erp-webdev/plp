@@ -107,19 +107,39 @@
             </div>
           @else
               <div class="col-xs-12 col-sm-12 col-md-12">
-                Check Voucher No.: <strong>{{ $loan->cv_no }}</strong> <br>
-                Check Voucher Date: <strong>{{ $loan->cv_date }}</strong><br>
-                Check No.: <strong>{{ $loan->check_no }}</strong> <br>
+                <div class="form-group">
+                  <label for="">
+                    Check Voucher No.
+                  </label>
+                  <input type="text" class="form-control input-sm" value="{{ $loan->cv_no }}" readonly>
+                </div>
+                <div class="form-group">
+                  <label for="">
+                    Check Voucher Date
+                  </label>
+                  <input type="text" class="form-control input-sm" value="{{ $loan->cv_date }}" readonly>
+                </div>
+                <div class="form-group">
+                  <label for="">Check No.</label>
+                  <input type="text" class="form-control input-sm" value="{{ $loan->check_no }}" readonly>
+                </div>
+                
                 @if(empty($loan->check_released))
                 <span class="bg-danger help-block">To be filled up only when check is already signed and ready for release.</span>
                  <!--  <div class="col-xs-12 col-sm-6 col-md-6">
                     Check No.: <input type="text" name="check_no" class="form-control input-sm"> 
                   </div> -->
                   <div class="col-xs-12 col-sm-6 col-md-6">
-                    Check Date: <input name="check_released" type="date" id="datep" class="datepicker-range form-control input-sm " type="text" placeholder="mm/dd/yyyy" required>
+                    <div class="form-group">
+                      <label for="">Check Date</label>
+                      <input name="check_released" type="date" id="datep" class="datepicker-range form-control input-sm " type="text" placeholder="mm/dd/yyyy" required>
+                    </div>
                   </div>
                 @else
-                  Check Date: <strong>{{ $loan->check_released }}</strong>
+                  <div class="form-group">
+                    <label for="">Check Date</label>
+                    <input type="text" class="form-control input-sm" value="{{ $loan->check_released }}" readonly>
+                  </div>
                 @endif
               </div>
           @endif
