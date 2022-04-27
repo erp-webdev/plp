@@ -124,7 +124,7 @@
                   <div class="col-xs-12 col-sm-8 col-md-8">
                     @if(!$loan->released)
                     <div class="input-group">
-                      <input type="text" class="form-control input-sm" value="{{ $loan->check_no }}">
+                      <input type="text" name="checkno" class="form-control input-sm" value="{{ $loan->check_no }}">
                       <div class="input-group-btn">
                         <button type="submit" name="save_checkno" class="btn btn-primary btnSave" data-title="Update Check No" data-content="Are you sure you want to update the check number?" title="Update check no."><i class="fa fa-save"></i></button>
                       </div>
@@ -152,7 +152,7 @@
                     <div class="col-xs-12 col-sm-8 col-md-8">
                       @if(!$loan->released)
                       <div class="input-group">
-                        <input type="date" class="form-control input-sm datepicker-range" value="{{ date('Y-m-d', strtotime($loan->check_released)) }}" placeholder="mm/dd/yyyy">
+                        <input type="date" name="checkdate" class="form-control input-sm datepicker-range" value="{{ date('Y-m-d', strtotime($loan->check_released)) }}" placeholder="mm/dd/yyyy">
                         <div class="input-group-btn">
                           <button type="submit" name="save_checkdate" class="btn btn-primary btnSave" data-title="Update Check Date" data-content="Are you sure you want to update the check date?" title="Update check date"><i class="fa fa-save"></i></button>
                         </div>

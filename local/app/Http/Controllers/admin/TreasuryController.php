@@ -271,6 +271,35 @@ class TreasuryController extends Controller
             // DB::commit();
 
             return redirect()->back()->withSuccess(trans('loan.application.cheque'));
+        }else if(isset($request->save_checkno)){
+            DB::beginTransaction();
+    		$treasury = Treasury::where('eFundData_id', $request->id)->first();
+            if(empty($treasury))
+                $treasury = new Treasury();
+
+    		$treasury->eFundData_id = $request->id;
+            $treasury->check_no = $request->checkno;
+    		$treasury->created_by = Auth::user()->id;
+    		$treasury->save();
+
+            DB::commit();
+
+    		return redirect()->back()->withSuccess(trans('loan.application.cheque'));
+        }else if(isset($request->save_checkdate)){
+            DB::beginTransaction();
+    		$treasury = Treasury::where('eFundData_id', $request->id)->first();
+            if(empty($treasury))
+                $treasury = new Treasury();
+
+    		$treasury->eFundData_id = $request->id;
+            $treasury->check_released = $request->checkdate;
+    		$treasury->created_by = Auth::user()->id;
+    		$treasury->save();
+
+            DB::commit();
+
+    		return redirect()->back()->withSuccess(trans('loan.application.cheque'));
+
         }
 
     }
