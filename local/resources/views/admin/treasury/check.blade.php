@@ -126,7 +126,7 @@
                     <div class="input-group">
                       <input type="text" class="form-control input-sm" value="{{ $loan->check_no }}" readonly>
                       <div class="input-group-btn">
-                        <button type="submit" name="save_checkno" class="btn btn-primary btnSave" data-title="Update Check No" data-content="Are you sure you want to update the check number?" title="Update checkno"><i class="fa fa-save"></i></button>
+                        <button type="submit" name="save_checkno" class="btn btn-primary btnSave" data-title="Update Check No" data-content="Are you sure you want to update the check number?" title="Update check no."><i class="fa fa-save"></i></button>
                       </div>
                     </div>
                     @else
