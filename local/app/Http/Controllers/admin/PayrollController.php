@@ -99,7 +99,7 @@ class PayrollController extends Controller
 
         if(isset($_GET['deductionDate'])){
             $date = $_GET['deductionDate'];
-            $empList = Ledger::select('EmpID', 'FullName', 'ctrl_no', 'deductions')->deductionList($date)->get();
+            $empList = Ledger::select('EmpID', 'FullName', 'ctrl_no', 'deductions', 'COMPANY', 'total')->deductionList($date)->get();
         }
 
         return view('admin.loans.deductions')->with('empList', $empList);
