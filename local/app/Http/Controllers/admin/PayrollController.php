@@ -116,4 +116,11 @@ class PayrollController extends Controller
             ->with('empList', $empList);
     }
 
+    public function exportDeductions()
+    {
+        $view = $this->getDeductions();
+
+        
+    }
+
 }
