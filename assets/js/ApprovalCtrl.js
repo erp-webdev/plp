@@ -116,16 +116,9 @@ function loadBatchDeduction($url, event) {
 function exportBatchDeduction($url, event) {
 	var company = $(event).closest('.modal-body').find('#company').val();
 	var deduction = $(event).closest('.modal-body').find('input[name="deductionDate"]').val();
-	$.ajax({
-        type: "GET",
-        url: $url + '?deductionDate=' + deduction +'&company=' + company,
-        success: function(response){
-            // $('#deductionBatch').html(response);
-          },
-        error:function(response){
-           	$('#deductionBatch').html('Something went wrong! Please try again.');
-          },
-    });
+	$url + '?deductionDate=' + deduction +'&company=' + company;
+	
+	window.location.href($url);
 }
 
 function confirm_recalculation($url) {
