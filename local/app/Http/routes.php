@@ -96,6 +96,7 @@ Route::group(['prefix' => '/', 'middleware' => ['auth']], function(){
 	Route::get('payroll', ['as' => 'payroll.index', 'uses' => 'admin\PayrollController@index', 'middleware' => ['permission:payroll']]);
 	Route::post('payroll/verify', ['as' => 'payroll.verify', 'uses' => 'admin\PayrollController@verify', 'middleware' => ['permission:payroll']]);
 	Route::get('payroll/show/{id}', ['as' => 'payroll.show', 'uses' => 'admin\PayrollController@show', 'middleware' => ['permission:payroll']]);
+	Route::post('payroll/deductions', ['as' => 'payroll.deductions', 'uses' => 'admin\PayrollController@getDeductions', 'middleware' => ['permission:payroll']]);
 	
 	Route::get('getEmployee', ['uses' => 'admin\ApplicationController@getEmployee']);
 });

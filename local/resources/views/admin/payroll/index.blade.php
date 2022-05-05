@@ -21,7 +21,7 @@
                         <div class="form-group col-xs-12 col-sm-12 col-md-12">
                                 <span class="col-xs-12 col-sm-3 col-md-3">Deduction Date</span>
                                 <div class="col-xs-12 col-sm-5 col-md-5">
-                                      <input name="deductionDate" class="datepicker form-control" ng-model="deductionDate" onchange="loadBatchDeduction('{{ route('loan.deduction.list') }}', this)" placeholder="YYYY-MM-DD" autocomplete="off" required>
+                                      <input name="deductionDate" class="datepicker form-control" ng-model="deductionDate" onchange="loadBatchDeduction('{{ route('payroll.deductions') }}', this)" placeholder="YYYY-MM-DD" autocomplete="off" required>
                                 </div>
                         </div>
                         <hr>
