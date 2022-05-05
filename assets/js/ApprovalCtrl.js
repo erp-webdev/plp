@@ -99,7 +99,7 @@ app.controller('ApprovalCtrl', function($scope, $http, $filter) {
 function loadBatchDeduction($url, event) {
 	$('#deductionBatch').html("<span class='col-sm-12' style='padding: 10px'><i class='fa fa-spin fa-spinner'></i> Please wait while we retrieve the employee's record...</span>");
 	
-	var company = $(event).parent('.modal-body').find('#company').val();
+	var company = $(event).closest('.modal-body').find('#company').val();
 
 	$.ajax({
         type: "GET",
