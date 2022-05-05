@@ -106,7 +106,7 @@ class PayrollController extends Controller
                 ->get();
         }
 
-        return view('admin.loans.deductions')
+        return view('admin.payroll.deductionlist')
             ->with('empList', $empList);
     }
 
