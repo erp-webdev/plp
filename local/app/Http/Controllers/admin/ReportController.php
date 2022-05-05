@@ -463,6 +463,11 @@ class ReportController extends Controller
         ];
     }
 
+    public function payrollDeductionListReport($args)
+    {
+        
+    }
+
 
     public function formatExcel($loans, $type, $format = 'xlsx', $title = 'Megaworld EFund System', $html = [])
     {

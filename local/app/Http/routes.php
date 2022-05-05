@@ -97,6 +97,7 @@ Route::group(['prefix' => '/', 'middleware' => ['auth']], function(){
 	Route::post('payroll/verify', ['as' => 'payroll.verify', 'uses' => 'admin\PayrollController@verify', 'middleware' => ['permission:payroll']]);
 	Route::get('payroll/show/{id}', ['as' => 'payroll.show', 'uses' => 'admin\PayrollController@show', 'middleware' => ['permission:payroll']]);
 	Route::get('payroll/deductions', ['as' => 'payroll.deductions', 'uses' => 'admin\PayrollController@getDeductions', 'middleware' => ['permission:payroll']]);
+	Route::get('payroll/deductions/excel', ['as' => 'payroll.deductions.excel', 'uses' => 'admin\PayrollController@exportDeductions', 'middleware' => ['permission:payroll']]);
 	
 	Route::get('getEmployee', ['uses' => 'admin\ApplicationController@getEmployee']);
 });
