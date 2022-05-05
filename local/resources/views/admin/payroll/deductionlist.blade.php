@@ -15,8 +15,8 @@
                     <td>{{ $emp->ctrl_no }}</td>
                     <td>{{ $emp->EmpID }}</td>
                     <td>{{ utf8_encode($emp->FullName) }}</td>
-                    <td>{{ number_format($emp->deductions, 2, '.', ',') }}</td>
-                    <td>{{ number_format($emp->total, 2, '.', ',') }}</td>
+                    <td style="text-align: right;">{{ number_format($emp->deductions, 2, '.', ',') }}</td>
+                    <td style="text-align: right;">{{ number_format($emp->total, 2, '.', ',') }}</td>
                 </tr>
             @endforeach
             </tbody>
