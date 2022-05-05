@@ -22,7 +22,7 @@
 	                        <div class="form-group col-xs-12 col-sm-4 col-md-4">
 	                                <span class="col-xs-12 col-sm-3 col-md-3">Date</span>
 	                                <div class="col-xs-12 col-sm-9 col-md-9">
-	                                      <input name="deductionDate" class="datepicker form-control" ng-model="deductionDate" max="<?php //echo date('Y-m-d'); ?>" onchange="loadBatchDeduction('{{ route('loan.deduction.list') }}', this)" placeholder="YYYY-MM-DD" required>
+	                                      <input name="deductionDate" class="datepicker form-control" ng-model="deductionDate" max="<?php //echo date('Y-m-d'); ?>" onchange="loadBatchDeduction('{{ route('loan.deduction.list') }}', this)" placeholder="YYYY-MM-DD" autocomplete="off" required>
 	                                </div>
 	                        </div>
 	                        <div class="form-group col-xs-12 col-sm-4 col-md-4">
