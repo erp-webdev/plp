@@ -9,6 +9,7 @@
                            <th >Employee Name</th>
                            <th style="text-align: center;">Deduction</th>
                            <th style="text-align: center;">Amount Paid</th>
+                           <th>Total Payable</th>
                    </thead>
                    <tbody>
                            @foreach($empList as $emp)
@@ -28,6 +29,7 @@
                                 <td>
                                   <input type="number" name="amount{{ $emp->id }}" class="form-control input-sm amount" value="<?php if(!empty(trim($emp->ar_no))) echo floatval($emp->amount); else echo floatval($emp->deductions); ?>" <?php if(!empty(trim($emp->ar_no))) echo 'disabled'; ?> onchange="updateARAmount()" >
                                 </td>
+                                <td>{{ number_format($emp->total, 2, '.', ',') }}</td>
                             </tr>
                            @endforeach
                            @permission(['custodian'])
