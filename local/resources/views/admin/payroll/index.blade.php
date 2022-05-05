@@ -36,7 +36,7 @@
 							</div>
                         </div>
 						<div class="form-group col-xs-12 col-sm-2 col-md-2">
-							<a class="btn btn-default" title="Download to Excel"><i class="fa fa-excel-o"></i></a>
+							<a class="btn btn-default" title="Download to Excel"><i class="fa fa-excel-o"></i>Excel</a>
                         </div>
                         <hr>
 						<div id="deductionBatch"></div>
