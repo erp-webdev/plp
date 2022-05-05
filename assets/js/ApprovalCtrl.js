@@ -100,10 +100,10 @@ function loadBatchDeduction($url, event) {
 	$('#deductionBatch').html("<span class='col-sm-12' style='padding: 10px'><i class='fa fa-spin fa-spinner'></i> Please wait while we retrieve the employee's record...</span>");
 	
 	var company = $(event).closest('.modal-body').find('#company').val();
-
+	var deduction = $(event).closest('.modal-body').find('input[name="deductionDate"]').val();
 	$.ajax({
         type: "GET",
-        url: $url + '?deductionDate=' + $(event).val() +'&company=' + company,
+        url: $url + '?deductionDate=' + deduction +'&company=' + company,
         success: function(response){
             $('#deductionBatch').html(response);
           },
