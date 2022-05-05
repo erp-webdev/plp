@@ -36,7 +36,7 @@
 							</div>
                         </div>
 						<div class="form-group col-xs-12 col-sm-2 col-md-2">
-							<a class="btn btn-default btn-sm" title="Download to Excel" href="{{ route('payroll.deductions.excel') }}" target="_blank"><i class="fa fa-excel-o"></i>Excel</a>
+							<a class="btn btn-default btn-sm" title="Download to Excel" onclick="exportBatchDeduction('{{ route('payroll.deductions.excel') }}', this)"><i class="fa fa-excel-o"></i>Excel</a>
                         </div>
                         <hr>
 						<div id="deductionBatch"></div>

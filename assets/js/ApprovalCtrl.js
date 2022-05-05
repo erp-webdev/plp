@@ -113,6 +113,21 @@ function loadBatchDeduction($url, event) {
     });
 }
 
+function exportBatchDeduction($url, event) {
+	var company = $(event).closest('.modal-body').find('#company').val();
+	var deduction = $(event).closest('.modal-body').find('input[name="deductionDate"]').val();
+	$.ajax({
+        type: "GET",
+        url: $url + '?deductionDate=' + deduction +'&company=' + company,
+        success: function(response){
+            // $('#deductionBatch').html(response);
+          },
+        error:function(response){
+           	$('#deductionBatch').html('Something went wrong! Please try again.');
+          },
+    });
+}
+
 function confirm_recalculation($url) {
 	if(confirm("Are you sure you want to relcalculate deductions?")){
 		startLoading();
