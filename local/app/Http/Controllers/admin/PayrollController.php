@@ -9,6 +9,7 @@ use Auth;
 use Event;
 use Session;
 use eFund\Loan;
+use eFund\Ledger;
 use eFund\Http\Requests;
 use eFund\Utilities\Utils;
 use eFund\Events\PayrollVerified;
@@ -99,7 +100,6 @@ class PayrollController extends Controller
 
         if(isset($_GET['deductionDate'])){
             $date = $_GET['deductionDate'];
-            echo 'test';
             $empList = Ledger::select('id', 'EmpID', 'FullName', 'ctrl_no', 'deductions', 'amount', 'ar_no', 'total', 'COMPANY')
                 ->deductionList($date)
                 ->get();
