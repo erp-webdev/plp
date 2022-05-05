@@ -99,10 +99,8 @@ class PayrollController extends Controller
 
         if(isset($_GET['deductionDate'])){
             $date = $_GET['deductionDate'];
-            $empList = Ledger::select('EmpID', 'FullName', 'ctrl_no', 'deductions', 'COMPANY', 'total')
+            $empList = Ledger::select('id', 'EmpID', 'FullName', 'ctrl_no', 'deductions', 'amount', 'ar_no', 'total', 'COMPANY')
                 ->deductionList($date)
-                ->orderBy('COMPANY')
-                ->orderBy('FullName')
                 ->get();
         }
 
