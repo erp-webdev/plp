@@ -19,8 +19,8 @@
                     <div class="modal-body">
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                         <div class="form-group col-xs-12 col-sm-5 col-md-5">
-							<span class="col-xs-12 col-sm-4 col-md-4">Deduction Date</span>
-							<div class="col-xs-12 col-sm-8 col-md-8">
+							<span class="col-xs-12 col-sm-6 col-md-6">Deduction Date</span>
+							<div class="col-xs-12 col-sm-6 col-md-6">
 									<input name="deductionDate" class="datepicker form-control" ng-model="deductionDate" onchange="loadBatchDeduction('{{ route('payroll.deductions') }}', this)" placeholder="YYYY-MM-DD" autocomplete="off" required>
 							</div>
                         </div>
@@ -36,7 +36,7 @@
 							</div>
                         </div>
 						<div class="form-group col-xs-12 col-sm-2 col-md-2">
-							<a class="btn btn-default" title="Download to Excel"><i class="fa fa-excel"></i></a>
+							<a class="btn btn-default" title="Download to Excel"><i class="fa fa-file-excel"></i></a>
                         </div>
                         <hr>
 						<div id="deductionBatch"></div>
