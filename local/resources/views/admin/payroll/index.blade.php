@@ -20,13 +20,13 @@
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                         <div class="form-group col-xs-12 col-sm-6 col-md-6">
 							<span class="col-xs-12 col-sm-3 col-md-3">Deduction Date</span>
-							<div class="col-xs-12 col-sm-5 col-md-5">
+							<div class="col-xs-12 col-sm-9 col-md-9">
 									<input name="deductionDate" class="datepicker form-control" ng-model="deductionDate" onchange="loadBatchDeduction('{{ route('payroll.deductions') }}', this)" placeholder="YYYY-MM-DD" autocomplete="off" required>
 							</div>
                         </div>
 						<div class="form-group col-xs-12 col-sm-6 col-md-6">
 							<span class="col-xs-12 col-sm-3 col-md-3">Company</span>
-							<div class="col-xs-12 col-sm-5 col-md-5">
+							<div class="col-xs-12 col-sm-9 col-md-9">
 								<select class="form-control input-sm" id="company" name="company" >
 									<option value="all">Select All</option>
 									@foreach($companies as $company)
