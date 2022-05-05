@@ -118,7 +118,7 @@ function exportBatchDeduction($url, event) {
 	var deduction = $(event).closest('.modal-body').find('input[name="deductionDate"]').val();
 	$url + '?deductionDate=' + deduction +'&company=' + company;
 	
-	window.location.href($url);
+	window.location.href = $url;
 }
 
 function confirm_recalculation($url) {
