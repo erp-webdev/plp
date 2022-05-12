@@ -545,7 +545,10 @@ class ApplicationController extends Controller
 
     public function getEndorser()
     {
-        $endorser = DB::table('viewSignatories')->where('EmpID', Auth::user()->employee_id)->first();
+        $endorser = DB::table('viewSignatories')
+            ->where('EmpID', Auth::user()->employee_id)
+            ->where('DBNAME', Auth::user()->DBNAME)
+            ->first();
         return $endorser;
         $valid_signatories = [];
 
