@@ -568,7 +568,10 @@ class ApplicationController extends Controller
 
     public function getGuarantor()
     {
-        $guarantor = DB::table('viewSignatories')->where('EmpID', Auth::user()->employee_id)->first();
+        $guarantor = DB::table('viewSignatories')
+            ->where('EmpID', Auth::user()->employee_id)
+            ->where('DBNAME', Auth::user()->DBNAME)
+            ->first();
         return $guarantor;
 
         $valid_signatories = [];
