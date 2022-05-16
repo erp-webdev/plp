@@ -10,7 +10,7 @@
 		<p>Manage System configurations, settings, and preferences.</p>
 	</div>
 	<div class="col-md-4" style="border: 1px solid #ccc; padding: 10px; margin: 5px;">
-        <h4>eFund Configuration</h4>
+        <h4>PLP Configuration</h4>
         <hr>
 		<form class="form form-horizontal" action="{{ route('preferences.update') }}" method="post">
             <input type="hidden" name="_token" value="{{ csrf_token() }}">
@@ -70,6 +70,7 @@
     </div>
    <div class="col-md-7" style="border: 1px solid #ccc; padding: 10px; margin: 5px;">
         <h4>Guaranteed Amount</h4>
+        <span class="help-block">Zero (0) means no limit</span>
         <hr>
         <form class="form form-horizontal" action="{{ route('preferences.limits') }}" method="post">
             <input type="hidden" name="_token" value="{{ csrf_token() }}">
