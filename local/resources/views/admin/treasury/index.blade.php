@@ -42,7 +42,7 @@
 				<a class="btn btn-sm btn-primary" data-toggle="modal" data-target="#transmittal" ng-click="loadTransmittalList('{{ route('treasury.email.list') }}')"><i class="fa fa-envelope"></i> Transmittals</a>
 			</div>
 			<div class="col-xs-12 col-sm-4 col-md-4"> 
-				<form action="{{ route('treasury.cv') }}" method="post">
+				<form id="CVForm" action="{{ route('treasury.cv') }}" method="post">
 					<input type="hidden" name="_token" value="{{ csrf_token() }}">
 
 					<div class="input-group">
@@ -51,7 +51,7 @@
 						</div>
 						<input type="number" class="form-control" name="last_voucher_number" value="{{ $voucher }}">
 						<div class="input-group-btn">
-							<button type="button" class="btn btn-default btnSave" data-title="Update Last Generated Check Voucher number?" data-content="Please confirm to continue updating the last generated check voucher number?"><i class="fa fa-save"></i> Save</button>
+							<button type="button" class="btn btn-default btnSave" data-title="Update Last Generated Check Voucher number?" data-content="Please confirm to continue updating the last generated check voucher number?" data-target="#CVForm"><i class="fa fa-save"></i> Save</button>
 						</div>
 					</div>
 
