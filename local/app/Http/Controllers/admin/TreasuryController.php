@@ -368,6 +368,7 @@ class TreasuryController extends Controller
         $setting->value = $request->last_voucher_number; 
         $setting->save();
 
-        return redirect()->back()->withSuccess('The last check voucher number has been successfully updated!');
+        return redirect()->back()
+            ->withSuccess('The last check voucher number has been successfully updated!');
     }
 }
