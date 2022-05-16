@@ -39,7 +39,7 @@
 
 			<a class="btn btn-sm btn-primary" data-toggle="modal" data-target="#transmittal" ng-click="loadTransmittalList('{{ route('treasury.email.list') }}')"><i class="fa fa-envelope"></i> Transmittals</a>
 
-			<form action="{{ }}" method="post">
+			<form action="" method="post">
 				{{ csrf_input() }}
 
 				<div class="input-group">
