@@ -90,6 +90,7 @@ Route::group(['prefix' => '/', 'middleware' => ['auth']], function(){
 	Route::get('treasury/print/voucher/{id}', ['as' => 'treasury.voucher.print', 'uses' => 'admin\TreasuryController@printCheckVoucher', 'middleware' => ['permission:treasurer']]);
 	Route::post('treasury/transmittal/notifs', ['as' => 'tresury.email.notif', 'uses' => 'admin\TreasuryController@sendTransmittal', 'middleware' => ['permission:treasurer']]);
 	Route::get('treasury/transmittal/list', ['as' => 'treasury.email.list', 'uses' => 'admin\TreasuryController@formatTransmittal', 'middleware' => ['permission:treasurer']]);
+	Route::post('treasury/cv', ['as' => 'treasury.cv', 'uses' => 'admin\TreasuryController@updateLastCheckVoucher', 'middleware' => ['permission:treasurer']]);
 	
 
 	// Payroll

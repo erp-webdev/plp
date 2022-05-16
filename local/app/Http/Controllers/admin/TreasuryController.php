@@ -92,8 +92,12 @@ class TreasuryController extends Controller
                     ->orderBy('created_at', 'desc')
                     ->paginate($show); 
 
-    	return view('admin.treasury.index')
+    	
+        $voucher = Preference::name('cv_no')->get();
+        
+        return view('admin.treasury.index')
     		->withUtils($this->utils)
+            ->withVoucher($voucher->value)
     		->withLoans($loans);
     }
 
@@ -356,5 +360,14 @@ class TreasuryController extends Controller
             ->update(['transmittal_date' => date('Y-m-d H:i:s')]);
 
         return redirect()->route('treasury.index')->withSuccess('Email sent!');
+    }
+
+    public function updateLastCheckVoucher(Request $request)
+    {
+    	$setting = Preference::where('name', 'cv_no')->first();
+        $setting->value = $request->last_voucher_number; 
+        $setting->save();
+
+        return redirect()->back()->withSuccess('The last check voucher number has been successfully updated!');
     }
 }
