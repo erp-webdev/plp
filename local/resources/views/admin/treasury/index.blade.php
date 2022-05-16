@@ -34,11 +34,13 @@
 
 		<div class="col-xs-12 col-sm-12 col-md-12">
 			<h1>Treasury</h1>
-			<a class="btn btn-sm btn-default" href="{{ route('treasury.index') }}"><i class="fa fa-refresh"></i> Refresh</a>
-			<a class="btn btn-sm btn-default" href="{{ route('treasury.print') }}?key=<?php if(isset($_GET['key'])) echo $_GET['key']; if(isset($_GET['search'])) echo "&search=" . $_GET['search']; ?>" target="_blank"><i class="fa fa-print"></i> Print</a>
+			
+			<div class="col-xs-12 col-sm-8 col-md-8"> 
+				<a class="btn btn-sm btn-default" href="{{ route('treasury.index') }}"><i class="fa fa-refresh"></i> Refresh</a>
+				<a class="btn btn-sm btn-default" href="{{ route('treasury.print') }}?key=<?php if(isset($_GET['key'])) echo $_GET['key']; if(isset($_GET['search'])) echo "&search=" . $_GET['search']; ?>" target="_blank"><i class="fa fa-print"></i> Print</a>
 
-			<a class="btn btn-sm btn-primary" data-toggle="modal" data-target="#transmittal" ng-click="loadTransmittalList('{{ route('treasury.email.list') }}')"><i class="fa fa-envelope"></i> Transmittals</a>
-
+				<a class="btn btn-sm btn-primary" data-toggle="modal" data-target="#transmittal" ng-click="loadTransmittalList('{{ route('treasury.email.list') }}')"><i class="fa fa-envelope"></i> Transmittals</a>
+			</div>
 			<div class="col-xs-12 col-sm-4 col-md-4"> 
 				<form action="" method="post">
 					<input type="hidden" name="_token" value="{{ csrf_token() }}">
