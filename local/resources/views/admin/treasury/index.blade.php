@@ -44,7 +44,7 @@
 		</div>
 
 		<div class="col-xs-12 col-sm-4 col-md-4">
-			<form id="" action="{{ route('treasury.cv') }}" method="post">
+			<form id="CVForm" action="{{ route('treasury.cv') }}" method="post">
 				<input type="hidden" name="_token" value="{{ csrf_token() }}">
 
 				<div class="input-group">
