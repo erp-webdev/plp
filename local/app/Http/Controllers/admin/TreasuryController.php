@@ -93,7 +93,7 @@ class TreasuryController extends Controller
                     ->paginate($show); 
 
     	
-        $voucher = Preference::name('cv_no')->get();
+        $voucher = Preference::name('cv_no');
         
         return view('admin.treasury.index')
     		->withUtils($this->utils)
