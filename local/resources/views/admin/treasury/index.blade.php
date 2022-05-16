@@ -39,21 +39,22 @@
 
 			<a class="btn btn-sm btn-primary" data-toggle="modal" data-target="#transmittal" ng-click="loadTransmittalList('{{ route('treasury.email.list') }}')"><i class="fa fa-envelope"></i> Transmittals</a>
 
-			<form action="" method="post">
-				<input type="hidden" name="_token" value="{{ csrf_token() }}">
+			<div class="col-xs-12 col-sm-4 col-md-4"> 
+				<form action="" method="post">
+					<input type="hidden" name="_token" value="{{ csrf_token() }}">
 
-				<div class="input-group">
-					<div class="input-group-addon">
-						<span>Last Check Voucher #</span>
+					<div class="input-group">
+						<div class="input-group-addon">
+							<span>Last Check Voucher #</span>
+						</div>
+						<input type="number" class="form-control" name="last_voucher_number" value="">
+						<div class="input-group-btn">
+							<button type="submit" class="btn btn-default">Save</button>
+						</div>
 					</div>
-					<input type="number" class="form-control" name="last_voucher_number" value="">
-					<div class="input-group-btn">
-						<button type="submit" class="btn btn-default">Save</button>
-					</div>
-				</div>
 
-			</form>
-			
+				</form>
+			</div>
 			<hr>
 			<div class="table-responsive" style="height: 100%">
 				<div class="form-horizontal ">
