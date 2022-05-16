@@ -60,7 +60,7 @@
 			<hr>
 			<div class="table-responsive" style="height: 100%">
 				<div class="form-horizontal ">
-					<div class="form-group col-xs-12 col-sm-2 col-md-2">
+					<div class="col-xs-12 col-sm-2 col-md-2">
 						<span class="col-xs-12 col-md-3 col-sm-3">
 							Show
 						</span>
@@ -75,7 +75,7 @@
 							</select>
 						</div>
 					</div>
-					<div class="form-group col-xs-12 col-sm-4 col-md-4">
+					<div class="col-xs-12 col-sm-4 col-md-4">
 						<span class="col-xs-12 col-md-3 col-sm-3">
 							Status
 						</span>
