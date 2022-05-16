@@ -51,7 +51,7 @@
 						</div>
 						<input type="number" class="form-control" name="last_voucher_number" value="{{ $voucher }}">
 						<div class="input-group-btn">
-							<button type="button" class="btn btn-default btnSave" data-title="Update Last Generated Check Voucher number?" data-content="Please confirm to continue updating the last generated check voucher number?" data-target="#CVForm"><i class="fa fa-save"></i> Save</button>
+							<button type="button" class="btn btn-default btnSave" data-title="Update Last Generated Check Voucher number?" data-content="Please confirm to continue updating the last generated check voucher number?" data-form="#CVForm"><i class="fa fa-save"></i> Save</button>
 						</div>
 					</div>
 
