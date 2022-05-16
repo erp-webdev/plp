@@ -38,6 +38,21 @@
 			<a class="btn btn-sm btn-default" href="{{ route('treasury.print') }}?key=<?php if(isset($_GET['key'])) echo $_GET['key']; if(isset($_GET['search'])) echo "&search=" . $_GET['search']; ?>" target="_blank"><i class="fa fa-print"></i> Print</a>
 
 			<a class="btn btn-sm btn-primary" data-toggle="modal" data-target="#transmittal" ng-click="loadTransmittalList('{{ route('treasury.email.list') }}')"><i class="fa fa-envelope"></i> Transmittals</a>
+
+			<form action="{{ }}" method="post">
+				{{ csrf_input() }}
+
+				<div class="input-group">
+					<div class="input-group-addon">
+						<span>Last Check Voucher #</span>
+					</div>
+					<input type="number" class="form-control" name="last_voucher_number" value="{{ }}">
+					<div class="input-group-btn">
+						<button type="submit" class="btn btn-default">Save</button>
+					</div>
+				</div>
+
+			</form>
 			
 			<hr>
 			<div class="table-responsive" style="height: 100%">

@@ -79,6 +79,7 @@ class Guarantor extends Model
         return $scope->where('guarantor_status', 1)
             ->where('EmpID', $EmpID)
             ->where('DBNAME', $DB)
-            ->where('status', '>', 2)->where('status', '<', 8);
+            ->where('status', '>', 2)
+            ->where('status', '<', 8);
     }
 }
