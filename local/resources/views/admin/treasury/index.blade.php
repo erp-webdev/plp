@@ -31,16 +31,34 @@
       			</div><!-- /.modal-content -->
 		    </div><!-- /.modal-dialog -->
 		  </div><!-- /.modal -->
-
+		
 		<div class="col-xs-12 col-sm-12 col-md-12">
 			<h1>Treasury</h1>
-			
-				<a class="btn btn-sm btn-default" href="{{ route('treasury.index') }}"><i class="fa fa-refresh"></i> Refresh</a>
-				<a class="btn btn-sm btn-default" href="{{ route('treasury.print') }}?key=<?php if(isset($_GET['key'])) echo $_GET['key']; if(isset($_GET['search'])) echo "&search=" . $_GET['search']; ?>" target="_blank"><i class="fa fa-print"></i> Print</a>
+		</div>
 
-				<a class="btn btn-sm btn-primary" data-toggle="modal" data-target="#transmittal" ng-click="loadTransmittalList('{{ route('treasury.email.list') }}')"><i class="fa fa-envelope"></i> Transmittals</a>
+		<div class="col-xs-12 col-sm-8 col-md-8">
+			<a class="btn btn-sm btn-default" href="{{ route('treasury.index') }}"><i class="fa fa-refresh"></i> Refresh</a>
+			<a class="btn btn-sm btn-default" href="{{ route('treasury.print') }}?key=<?php if(isset($_GET['key'])) echo $_GET['key']; if(isset($_GET['search'])) echo "&search=" . $_GET['search']; ?>" target="_blank"><i class="fa fa-print"></i> Print</a>
 
-			<hr>
+			<a class="btn btn-sm btn-primary" data-toggle="modal" data-target="#transmittal" ng-click="loadTransmittalList('{{ route('treasury.email.list') }}')"><i class="fa fa-envelope"></i> Transmittals</a>
+		</div>
+
+		<div class="col-xs-12 col-sm-12 col-md-12">
+			<form id="" action="{{ route('treasury.cv') }}" method="post">
+				<input type="hidden" name="_token" value="{{ csrf_token() }}">
+
+				<div class="input-group">
+					<div class="input-group-addon">
+						<span>Last Check Voucher #</span>
+					</div>
+					<input type="number" class="form-control" name="last_voucher_number" value="{{ $voucher }}">
+					<div class="input-group-btn">
+						<button type="button" class="btn btn-default btnSave" data-title="Update Last Generated Check Voucher number?" data-content="Please confirm to continue updating the last generated check voucher number?" data-form="#CVForm"><i class="fa fa-save"></i> Save</button>
+					</div>
+				</div>
+			</form>
+		</div>
+		<div class="col-xs-12 col-sm-12 col-md-12">
 			<div class="table-responsive" style="height: 100%">
 				<div class="form-horizontal ">
 					<div class="form-group col-xs-12 col-sm-2 col-md-2">
