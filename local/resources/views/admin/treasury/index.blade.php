@@ -46,7 +46,7 @@
 					<div class="input-group-addon">
 						<span>Last Check Voucher #</span>
 					</div>
-					<input type="number" class="form-control" name="last_voucher_number" value="{{ }}">
+					<input type="number" class="form-control" name="last_voucher_number" value="">
 					<div class="input-group-btn">
 						<button type="submit" class="btn btn-default">Save</button>
 					</div>
