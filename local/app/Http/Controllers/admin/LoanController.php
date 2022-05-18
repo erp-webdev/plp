@@ -712,12 +712,12 @@ class LoanController extends Controller
                         $deduction->amount = $loan->totalpayable - $loan->balanceamount;
                         $deduction->balance = $loan->balanceamount;
                         $balance = $loan->balanceamount;
-                    }
-
-                    if(date('Y-m-d', strtotime($deductionDate)) <= date('Y-m-d')){
-                        $deduction->ar_no = '-';
-                        $deduction->amount = 0;
-                        $deduction->balance = $loan->balanceamount;
+                    }else{
+                        if(date('Y-m-d', strtotime($deductionDate)) <= date('Y-m-d')){
+                            $deduction->ar_no = '-';
+                            $deduction->amount = 0;
+                            $deduction->balance = $loan->balanceamount;
+                        }
                     }
 
                     $deduction->updated_by = Auth::user()->id;
