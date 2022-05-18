@@ -217,7 +217,7 @@
 					</tbody>
 				</table>
 				{{-- {{ $loans->appends(Input::All())->links() }} --}}
-				{{-- {{ $loans->links() }} --}}
+				{{ $loans->links() }}
 			</div>
 		</div>
 	</div>
