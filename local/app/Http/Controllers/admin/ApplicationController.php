@@ -181,6 +181,7 @@ class ApplicationController extends Controller
         // else
         //     $guarantor = '';
         $approvers = $this->getApprovers();
+        dd($approvers);
 
     	return view('admin.applications.create3')
     	->withEmployee($employee)
