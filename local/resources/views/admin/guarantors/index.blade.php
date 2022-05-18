@@ -16,6 +16,8 @@
 			<h1>Surety/Coborrower </h1>
 			@if($GLimit->Amount > 0)
 			<small>Remaining Amount that can be guaranteed: <strong>Php {{ number_format($GAmount, 2) }}</strong></small>
+			@else
+			<small>You may guarantee any loan amount.</small>
 			@endif
 
 			<hr>
