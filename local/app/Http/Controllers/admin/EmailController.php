@@ -117,16 +117,17 @@ class EmailController extends Controller
                     $message->from($from);
                     $message->subject($subject);
                     $cc = 'dpascua@megaworldcorp.com,tgonzales@megaworldcorp.com,mrosales@megaworldcorp.com';
+
                     dd($cc);
+                    Logger::info('log1:'.$cc);
                     
                     if(!empty(trim($cc))){
-                        dd($cc);
                         $ccs = explode(',', $cc);
-                        dd($ccs);
+                        Logger::info('log2:'.$ccs);
                         foreach($ccs as $c)
                             if(!empty(trim($c)))
                                 // $message->cc = $c; 
-                                dd($c);
+                             Logger::info('log3:'.$c);
                     }
                 }
 
