@@ -215,12 +215,15 @@
 							</tr>
 						@endforeach
 					</tbody>
+					<tfoot>
+						<th colspan="4">
+							Showing {{ $loans->count() }} of {{ $loans->total() }} of page {{ $loans->currentPage() }} of {{ $loans->lastPage() }}
+						</th>
+						<th colspan="9">
+							{{ $loans->links() }}
+						</th>
+					</tfoot>
 				</table>
-				<div>
-				Showing {{ $loans->count() }} of {{ $loans->total() }} of page {{ $loans->currentPage() }} of {{ $loans->lastPage() }}
-				</div>
-				{{-- {{ $loans->appends(Input::All())->links() }} --}}
-				{{ $loans->links() }}
 			</div>
 		</div>
 	</div>
