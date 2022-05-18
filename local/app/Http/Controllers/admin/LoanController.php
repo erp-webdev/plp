@@ -1052,12 +1052,8 @@ class LoanController extends Controller
             $message->subject($subject);
             // $message->cc($cc);  
             // $message->cc('dpascua@megaworldcorp.com');  
-            if(!trim($cc)){
                 $ccs = explode(',', $cc);
-                foreach($ccs as $c)
-                    if(trim($c) != '')
-                        $message->cc = $c; 
-            }
+                        $message->cc = $ccs; 
         });
 
         $log = new Log();
