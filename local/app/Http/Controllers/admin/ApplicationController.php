@@ -128,7 +128,7 @@ class ApplicationController extends Controller
                     ->withGuarantor($guarantor)
                     ->withSpecial($special_loan)
                     ->withMonthsSpecial($months_special->value)
-                    ->withApprovers($approvers)
+                    ->with('approvers', $approvers)
                     ->withUtils(new Utils());
         }else{
             return view('admin.applications.show3')
