@@ -757,7 +757,7 @@ class LoanController extends Controller
                         'eFundData_id' => $eFundData->id,
                         'EmpID' => !empty($loan->guarantoremployeeid) ? $loan->guarantoremployeeid : '2016-06-0457',
                         'signed_at' => date('Y-m-d H:i:s', strtotime($loan->applicationdate)),
-                        'DBNAME' => !empty($loan->guarantorcompanycode) ? $loan->guarantorcompanycode : 'GL',,
+                        'DBNAME' => !empty($loan->guarantorcompanycode) ? $loan->guarantorcompanycode : 'GL',
                         'status' => 1,
                         'guaranteed_amount' => $loan->totalpayable
                     ];
