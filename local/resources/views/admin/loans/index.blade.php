@@ -217,7 +217,9 @@
 					</tbody>
 					<tfoot>
 						<th colspan="4">
-							Showing {{ $loans->count() }} of {{ $loans->total() }} of page {{ $loans->currentPage() }} of {{ $loans->lastPage() }}
+							<div class="pull-left">
+								Showing {{ $loans->count() }} of {{ $loans->total() }} of page {{ $loans->currentPage() }} of {{ $loans->lastPage() }}
+							</div>
 						</th>
 						<th colspan="9" >
 							<div class="pull-right">
