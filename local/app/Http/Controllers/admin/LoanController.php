@@ -732,6 +732,69 @@ class LoanController extends Controller
                         $deductionDate = date('Y-m-15', strtotime("+15 days", strtotime($deductionDate)));
                     }
                 }
+
+                if(!empty($loan->endorseremployeeid)){
+                    // Endorser
+                    $query = [
+                            'refno' => $this->utils->generateReference(),
+                            'eFundData_id' => $eFundData->id,
+                            'EmpID' => $loan->endorseremployeeid,
+                            'signed_at' => date('Y-m-d H:i:s', strtotime($loan->applicationdate)),
+                            'DBNAME' => $loan->endorsercompanycode,
+                            'status' => 1
+                        ];
+
+                    $endorser = DB::table('endorsers')->insertGetId($query);
+    
+                    $log = new Log();
+                    $log->writeOnly('Insert', 'endorsers', $query);
+    
+                    $eFundData->endorser_id = $endorser;
+                    $eFundData->save();
+                }
+    
+                if(!empty($loan->guarantoremployeeid)){
+                    // Guarantor
+                    $query = [
+                            'refno' => $this->utils->generateReference(),
+                            'eFundData_id' => $eFundData->id,
+                            'EmpID' => $loan->guarantoremployeeid,
+                            'signed_at' => date('Y-m-d H:i:s', strtotime($loan->applicationdate)),
+                            'DBNAME' => $eFundData->guarantorcompanycode,
+                            'status' => 1,
+                            'guaranteed_amount' => $loan->totalpayable
+                        ];
+
+                    $guarantor = DB::table('guarantors')->insertGetId($query);
+                    $log->writeOnly('Insert', 'guarantors', $query);
+    
+                    $eFundData->guarantor_id = $guarantor;
+                    $eFundData->save();
+                }
+    
+                // Treasury
+                $treasury = new Treasury();
+                $treasury->eFundData_id = $eFundData->id;
+                $treasury->created_by = Auth::user()->id;
+
+                if(!empty($loan->cvno))
+                    $treasury->cv_no = $loan->cvno;
+                else
+                    $treasury->cv_no = '-';
+    
+                if(!empty($loan->cv_date))
+                    $treasury->cv_date = $loan->cv_date;
+                else
+                    $treasury->cv_date =  date('Y-m-d H:i:s', strtotime($loan->applicationdate));;
+                
+                if(!empty($loan->checkno))
+                    $treasury->check_no = $loan->checkno;
+                else
+                    $treasury->check_no = '-';
+    
+                $treasury->check_released =  date('Y-m-d H:i:s', strtotime($loan->startofdeductions));
+                $treasury->released = date('Y-m-d H:i:s', strtotime($loan->startofdeductions));
+                $treasury->save();
     
             }
     
