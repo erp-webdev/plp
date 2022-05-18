@@ -825,6 +825,10 @@ class ApplicationController extends Controller
         $terms = Terms::getRankLimits($employee);
         $gAmountLimit = GLimits::limit($EmpID, $DB);
 
+        // No limit
+        if($gAmountLimit->Amount == 0)
+            return $valid;
+
         if($totalGuaranteedAmount < $gAmountLimit->Amount){
             // Total guaranteed amount of active accounts
             // is less than the maximum limit of a guarantor's rank
