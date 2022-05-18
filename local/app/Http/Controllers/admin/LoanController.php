@@ -737,6 +737,9 @@ class LoanController extends Controller
     
             DB::commit();
 
+            return redirect()->back()
+                ->withSuccess('Upload Successful!');
+
         }
             
     }
