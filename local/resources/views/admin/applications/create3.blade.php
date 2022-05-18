@@ -29,7 +29,8 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                Search Employee
+                List of Valid Endorsers or Coborrower/surety
+                {{-- Search Employee
                 <span class="">
                     <div class="input-group">
                         <input type="text" class="form-control" id="search" placeholder="Search..." autocomplete="off" class="form-control">
@@ -37,7 +38,7 @@
                             <button id="butotn" onclick="search()" class="btn btn-default"><i class="fa fa-search"></i> Search</button>
                         </span>
                     </div>
-                </span>
+                </span> --}}
             </div>
             <div class="modal-body">
                 <table id="search_employee_table" class="table table-hover table-striped">
@@ -48,6 +49,12 @@
                         </tr>
                     </thead>
                     <tbody>
+                        @foreach($approvers as $approver)
+                        <tr onclick="setApprover(this)" data-empid="{{ $approver->EmpID }}" data-db="{{ $approver->DBNAME }}" data-name="{{ $approver->FullName }}">
+                            <td> {{ $approver->EmpID }} </td> 
+                            <td> {{ $approver->FullName }} </td>
+                        </tr>
+                        @endforeach
                     </tbody>
                 </table>
             </div>

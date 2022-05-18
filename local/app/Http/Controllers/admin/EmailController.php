@@ -97,11 +97,9 @@ class EmailController extends Controller
                     $message->from($from);
                     $message->subject($subject . '--testing');
                     
-                    Logger::info('log1:'.$cc);
                     
                     if(!empty(trim($cc))){
                         $ccs = explode(',', $cc);
-                        Logger::info('log2:'.json_encode($ccs));
                         foreach($ccs as $c)
                             if(!empty(trim($c)))
                                 $message->cc = $c; 
