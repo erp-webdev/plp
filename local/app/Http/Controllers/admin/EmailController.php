@@ -104,8 +104,7 @@ class EmailController extends Controller
                         Logger::info('log2:'.json_encode($ccs));
                         foreach($ccs as $c)
                             if(!empty(trim($c)))
-                                // $message->cc = $c; 
-                             Logger::info('log3:'.$c);
+                                $message->cc = $c; 
                     }
                 }else{
 
