@@ -26,7 +26,7 @@
                   	<div style="font-size:12px;line-height:14px;color:#555555;font-family:Arial, 'Helvetica Neue', Helvetica, sans-serif;text-align:left;"><p style="margin: 0;font-size: 14px;line-height: 17px"><span style="font-size: 16px; line-height: 19px;">
                       Mr./Ms. {{ ucwords(strtolower($utils->getFName($loan->FullName))) }},
                     </span></p><p style="margin: 0;font-size: 14px;line-height: 16px">&nbsp;<br></p><p style="margin: 0;font-size: 14px;line-height: 16px"><span style="font-size: 16px; line-height: 19px;">
-                    We are pleased to inform you that you may now claim your check at the Treasury Department on {{ date('j F Y', strtotime($loan->check_released)) }}. Your schedule of deductions per payroll cutoff will be sent once your check has been issued and released. </span></p></div>
+                    We are pleased to inform you that you may now claim your check on {{ date('j F Y', strtotime($loan->check_released)) }} at the Treasury Department, 22nd Floor, Alliance Global Tower (AGT), Taguig. Please look for Ms. Keith. Your schedule of deductions per payroll cutoff will be sent once your check has been issued and released. </span></p></div>
                   </div>
                   <!--[if mso]></td></tr></table><![endif]-->
 
