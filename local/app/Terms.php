@@ -11,7 +11,7 @@ class Terms extends Model
     protected $table = 'loanable_amount';
     public $timestamps = false;	
 
-    public function scopeGetRankLimits($query, Employee $employee == null)
+    public function scopeGetRankLimits($query, $employee == null)
     {
 		if(!$employee)
 			return $query->first();
