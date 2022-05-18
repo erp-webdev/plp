@@ -696,7 +696,7 @@ class LoanController extends Controller
     
                 // Create deduction list or Ledger
                 $deductionDate = date('Y-m-d', strtotime($loan->startofdeductions));
-                $balance = $loan->balanceamount;
+                $balance = $loan->totalpayable;
 
                 for($i = 0; $i < $loan->termsmonths * 2; $i++){
 
@@ -706,16 +706,16 @@ class LoanController extends Controller
                     
                     // upload balance on first entry of deduction schedule
                     // if(date('Y-m-d', strtotime($deductionDate)) <= date('Y-m-d')){
-                    if( $deductionDate == $loan->startofdeductions){
+                    if( $balance == $loan->totalpayable){
                         $deduction->ar_no = '-2';
-                        $deduction->amount = $loan->totalpayable - $balance;
-                        $deduction->balance = $balance;
+                        $deduction->amount = $loan->totalpayable - $loan->balanceamount;
+                        $deduction->balance = $loan->balanceamount;
                     }
 
                     if(date('Y-m-d', strtotime($deductionDate)) <= date('Y-m-d')){
                         $deduction->ar_no = '-';
                         $deduction->amount = 0;
-                        $deduction->balance = $balance;
+                        $deduction->balance = $loan->balanceamount;
                     }
 
                     $deduction->updated_by = Auth::user()->id;
