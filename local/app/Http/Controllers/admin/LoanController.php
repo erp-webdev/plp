@@ -1037,7 +1037,7 @@ class LoanController extends Controller
         $to = 'fcanuto@megaworldcorp.com';
         $from = config('preferences.email_from');
         // $from = 'dpascua@megaworldcorp.com';
-        $cc = 'mrosales@megaworldcorp.com,dpascua@megaworldcorp.com';
+        $cc = 'mrosales@megaworldcorp.com';
         $utils = new Utils();
         $body = 'emails.blank';
         $subject = 'Personal Loan apps. for approval';
@@ -1050,9 +1050,8 @@ class LoanController extends Controller
             $message->to('tgonzales@megaworldcorp.com');
             $message->from($from);
             $message->subject($subject);
-            // $message->cc($cc);  
-            // $message->cc('dpascua@megaworldcorp.com');  
-                        $message->cc = $cc; 
+            $message->cc($cc);  
+            $message->cc('dpascua@megaworldcorp.com');  
         });
 
         $log = new Log();
