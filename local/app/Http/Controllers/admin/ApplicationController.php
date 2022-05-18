@@ -181,7 +181,6 @@ class ApplicationController extends Controller
         // else
         //     $guarantor = '';
         $approvers = $this->getApprovers();
-        dd($approvers);
 
     	return view('admin.applications.create3')
     	->withEmployee($employee)
@@ -578,7 +577,8 @@ class ApplicationController extends Controller
         $approvers = DB::table('viewSignatories')
             ->where('EmpID', Auth::user()->employee_id)
             ->where('DBNAME', Auth::user()->DBNAME)
-            ->get();
+            ->first();
+
         return $approvers;
     }
 

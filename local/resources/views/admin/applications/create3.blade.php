@@ -49,12 +49,48 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($approvers as $approver)
-                        <tr onclick="setApprover(this)" data-empid="{{ $approver->EmpID }}" data-db="{{ $approver->DBNAME }}" data-name="{{ $approver->FullName }}">
-                            <td> {{ $approver->EmpID }} </td> 
-                            <td> {{ $approver->FullName }} </td>
+                        @if(!empty(trim($approvers->SIGNATORYID1)))
+                        <tr onclick="setApprover(this)" data-empid="{{ $approvers->SIGNATORYID1 }}" data-db="{{ $approvers->SIGNATORYDB1 }}" data-name="{{ $approvers->SIGNATORY1 }}">
+                            <td> {{ $approvers->SIGNATORYID1 }} </td> 
+                            <td> {{ $approvers->SIGNATORY1 }} </td>
                         </tr>
-                        @endforeach
+                        @endif
+
+                        @if(!empty(trim($approvers->SIGNATORYID2)))
+                        <tr onclick="setApprover(this)" data-empid="{{ $approvers->SIGNATORYID2 }}" data-db="{{ $approvers->SIGNATORYDB2 }}" data-name="{{ $approvers->SIGNATORY2 }}">
+                            <td> {{ $approvers->SIGNATORYID2 }} </td> 
+                            <td> {{ $approvers->SIGNATORY2 }} </td>
+                        </tr>
+                        @endif
+
+                        @if(!empty(trim($approvers->SIGNATORYID3)))
+                        <tr onclick="setApprover(this)" data-empid="{{ $approvers->SIGNATORYID3 }}" data-db="{{ $approvers->SIGNATORYDB3 }}" data-name="{{ $approvers->SIGNATORY3 }}">
+                            <td> {{ $approvers->SIGNATORYID3 }} </td> 
+                            <td> {{ $approvers->SIGNATORY3 }} </td>
+                        </tr>
+                        @endif
+
+                        @if(!empty(trim($approvers->SIGNATORYID4)))
+                        <tr onclick="setApprover(this)" data-empid="{{ $approvers->SIGNATORYID4 }}" data-db="{{ $approvers->SIGNATORYDB4 }}" data-name="{{ $approvers->SIGNATORY4 }}">
+                            <td> {{ $approvers->SIGNATORYID4 }} </td> 
+                            <td> {{ $approvers->SIGNATORY4 }} </td>
+                        </tr>
+                        @endif
+
+                        @if(!empty(trim($approvers->SIGNATORYID5)))
+                        <tr onclick="setApprover(this)" data-empid="{{ $approvers->SIGNATORYID5 }}" data-db="{{ $approvers->SIGNATORYDB5 }}" data-name="{{ $approvers->SIGNATORY5 }}">
+                            <td> {{ $approvers->SIGNATORYID5 }} </td> 
+                            <td> {{ $approvers->SIGNATORY5 }} </td>
+                        </tr>
+                        @endif
+
+                        @if(!empty(trim($approvers->SIGNATORYID6)))
+                        <tr onclick="setApprover(this)" data-empid="{{ $approvers->SIGNATORYID6 }}" data-db="{{ $approvers->SIGNATORYDB6 }}" data-name="{{ $approvers->SIGNATORY6 }}">
+                            <td> {{ $approvers->SIGNATORYID6 }} </td> 
+                            <td> {{ $approvers->SIGNATORY6 }} </td>
+                        </tr>
+                        @endif
+
                     </tbody>
                 </table>
             </div>
