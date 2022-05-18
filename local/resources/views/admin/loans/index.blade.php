@@ -171,7 +171,7 @@
 				 	</div>
 		        </div>
 	        <div class="clearfix"></div>
-				<table id="dataTable"  class="table table-striped table-hover table-condensed">
+				<table id=""  class="table table-striped table-hover table-condensed">
 					<thead>
 						<th value="ctrl_no">Control No</th>
 						<th value="type">Type</th>
@@ -216,8 +216,9 @@
 						@endforeach
 					</tbody>
 				</table>
+				Showing {{ $loans->count() }} of {{ $loans->total() }} of page {{ $loans->currentPage() }} of {{ $clearances->lastPage() }}
 				{{-- {{ $loans->appends(Input::All())->links() }} --}}
-				{{-- {{ $loans->links() }} --}}
+				{{ $loans->links() }}
 			</div>
 		</div>
 	</div>
