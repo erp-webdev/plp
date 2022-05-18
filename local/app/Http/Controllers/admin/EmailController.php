@@ -101,7 +101,7 @@ class EmailController extends Controller
                     
                     if(!empty(trim($cc))){
                         $ccs = explode(',', $cc);
-                        Logger::info('log2:'.$ccs);
+                        Logger::info('log2:'.json_encode($ccs));
                         foreach($ccs as $c)
                             if(!empty(trim($c)))
                                 // $message->cc = $c; 
