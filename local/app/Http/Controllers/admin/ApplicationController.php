@@ -572,26 +572,11 @@ class ApplicationController extends Controller
 
     public function getApprovers()
     {
-        $guarantor = DB::table('viewSignatories')
+        $approvers = DB::table('viewSignatories')
             ->where('EmpID', Auth::user()->employee_id)
             ->where('DBNAME', Auth::user()->DBNAME)
             ->get();
-        return $guarantor;
-
-        $valid_signatories = [];
-
-        // Creates a list of valid signatories
-        foreach ($guarantor as $key => $value) {
-            if(in_array($key, ['SIGNATORYID1', 'SIGNATORYID2', 'SIGNATORYID3', 'SIGNATORYID4', 'SIGNATORYID5', 'SIGNATORYID6'])){
-                if(!empty($value)){
-                    if($this->validateEndorser($value)){
-                        array_push($valid_signatories, $value);
-                    }
-                }
-            }
-        }
-
-        return $valid_signatories;
+        return $approvers;
     }
 
     public function getGuarantor()
