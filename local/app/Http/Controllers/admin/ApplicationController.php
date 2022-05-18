@@ -180,6 +180,7 @@ class ApplicationController extends Controller
         //     $guarantor = $guarantor[0];
         // else
         //     $guarantor = '';
+        $approvers = $this->getApprovers();
 
     	return view('admin.applications.create3')
     	->withEmployee($employee)
@@ -193,6 +194,7 @@ class ApplicationController extends Controller
         ->withEndorser($endorser)
         ->withGuarantor($guarantor)
         ->withUtils(new Utils())
+        ->with('approvers', $approvers)
         ->withPreviousLoan($previous_loan)
         ->withSpecial($special_loan)
         ->withMonthsSpecial($months_special->value);
@@ -576,7 +578,6 @@ class ApplicationController extends Controller
             ->where('EmpID', Auth::user()->employee_id)
             ->where('DBNAME', Auth::user()->DBNAME)
             ->get();
-        dd($approvers);
         return $approvers;
     }
 
