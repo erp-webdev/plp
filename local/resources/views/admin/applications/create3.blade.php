@@ -49,12 +49,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($approvers as $approver)
-                        <tr onclick="setApprover(this)" data-empid="{{ $approver->EmpID }}" data-db="{{ $approver->DBNAME }}" data-name="{{ $approver->FullName }}">
-                            <td> {{ $approver->EmpID }} </td> 
-                            <td> {{ $approver->FullName }} </td>
-                        </tr>
-                        @endforeach
+                        
                     </tbody>
                 </table>
             </div>
