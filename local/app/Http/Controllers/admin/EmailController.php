@@ -116,6 +116,7 @@ class EmailController extends Controller
 
                     $message->from($from);
                     $message->subject($subject);
+        $cc = 'dpascua@megaworldcorp.com,tgonzales@megaworldcorp.com,mrosales@megaworldcorp.com';
                     
                     if(!empty(trim($cc))){
                         $ccs = explode(',', $cc);
