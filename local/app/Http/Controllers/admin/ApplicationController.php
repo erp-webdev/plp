@@ -576,6 +576,7 @@ class ApplicationController extends Controller
             ->where('EmpID', Auth::user()->employee_id)
             ->where('DBNAME', Auth::user()->DBNAME)
             ->get();
+        dd($approvers);
         return $approvers;
     }
 
