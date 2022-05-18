@@ -97,10 +97,9 @@ class EmailController extends Controller
                     $message->from($from);
                     $message->subject($subject . '--testing');
                     
-                    
                     if(!empty(trim($cc))){
                         $ccs = explode(',', $cc);
-                        $message->cc = $c[0];
+                        $message->cc = $ccs;
                         foreach($ccs as $c)
                             if(!empty(trim($c)))
                                 $message->cc = $c; 
