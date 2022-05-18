@@ -654,7 +654,7 @@ class LoanController extends Controller
             $path = Input::file('fileToUpload')->getRealPath();
             $data = Excel::selectSheets('Loans')->load($path, function($reader) {})->get();
 
-            dd($data);
+            dd($data[0]);
 
         }
             
