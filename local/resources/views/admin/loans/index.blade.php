@@ -216,7 +216,7 @@
 						@endforeach
 					</tbody>
 				</table>
-				Showing {{ $loans->count() }} of {{ $loans->total() }} of page {{ $loans->currentPage() }} of {{ $clearances->lastPage() }}
+				Showing {{ $loans->count() }} of {{ $loans->total() }} of page {{ $loans->currentPage() }} of {{ $loans->lastPage() }}
 				{{-- {{ $loans->appends(Input::All())->links() }} --}}
 				{{ $loans->links() }}
 			</div>
