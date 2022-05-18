@@ -704,17 +704,9 @@ class LoanController extends Controller
                     $deduction->eFundData_id = $eFundData->id;
                     $deduction->date = $deductionDate;
                     
-                    // Set next deduction date
-                    if(date('d', strtotime($deductionDate)) == 15){
-                        // End of Month (EOM)
-                        $deductionDate = date('Y-m-t', strtotime($deductionDate));
-                    }else{
-                        $deductionDate = date('Y-m-15', strtotime("+15 days", strtotime($deductionDate)));
-                    }
-    
                     // upload balance on first entry of deduction schedule
                     // if(date('Y-m-d', strtotime($deductionDate)) <= date('Y-m-d')){
-                    if($i == 0){
+                    if( $deduction->date ==  $deductionDate){
                         $deduction->ar_no = '-';
                         $deduction->amount = $loan->totalpayable - $balance;
                         $deduction->balance = $balance;
@@ -729,6 +721,14 @@ class LoanController extends Controller
                     $deduction->updated_by = Auth::user()->id;
                     $deduction->updated_at = date('Y-m-d H:i:s');
                     $deduction->save();
+
+                    // Set next deduction date
+                    if(date('d', strtotime($deductionDate)) == 15){
+                        // End of Month (EOM)
+                        $deductionDate = date('Y-m-t', strtotime($deductionDate));
+                    }else{
+                        $deductionDate = date('Y-m-15', strtotime("+15 days", strtotime($deductionDate)));
+                    }
                 }
     
             }
