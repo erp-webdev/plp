@@ -45,7 +45,7 @@ Route::group(['prefix' => '/', 'middleware' => ['auth']], function(){
 
 	// Upload
 	Route::get('loans/upload', ['as' => 'upload.show', 'uses' => 'admin\LoanController@showUpload', 'middleware' => ['permission:custodian']]);
-	Route::post('loans/upload', ['as' => 'loan.upload', 'uses' => 'admin\LoanController@upload', 'middleware' => ['permission:custodian']]);
+	Route::post('loans/upload', ['as' => 'loan.upload', 'uses' => 'admin\LoanController@upload2', 'middleware' => ['permission:custodian']]);
 
 	// Reports
 	Route::get('reports', ['as' => 'report.index', 'uses' => 'admin\ReportController@index', 'middleware' => ['permission:custodian']]);

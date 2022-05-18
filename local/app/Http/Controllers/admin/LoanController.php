@@ -420,6 +420,7 @@ class LoanController extends Controller
             $path = Input::file('fileToUpload')->getRealPath();
             $data = Excel::load($path, function($reader) {})->get();
             $ctr = 0;
+
             if(!empty($data) && $data->count()){
                 foreach ($data as $sheet) {
                     foreach($sheet as $cols){
@@ -470,6 +471,7 @@ class LoanController extends Controller
                 }
             }
         }
+
         if(count($loansWithError) > 0){
             return view('admin.loans.upload')
                 ->withLoans($loans)
@@ -644,6 +646,18 @@ class LoanController extends Controller
         return view('admin.loans.upload')
                 ->withLoans($loansWithError)
                 ->withSuccess('Upload Successful! But, skipped '. count($loansWithError) . ' record(s) with error. '. $successLoans . ' Loans uploaded. ');
+    }
+
+    public function upload2(Request $request)
+    {
+        if(Input::hasFile('fileToUpload')){
+            $path = Input::file('fileToUpload')->getRealPath();
+            $data = Excel::selectSheets('Loans')->load($path, function($reader) {})->get();
+
+            dd($data);
+
+        }
+            
     }
 
     public function createError($error = '', $data)
