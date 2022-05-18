@@ -674,7 +674,8 @@ class LoanController extends Controller
                 $eFundData->deductions = $loan->deductionpercutoff;
                 $eFundData->start_of_deductions = date('Y-m-d H:i:s', strtotime($loan->startofdeductions));
                 $eFundData->approved_by = Auth::user()->employee_id;
-                $eFundData->approved_at =  date('Y-m-d H:i:s', strtotime($loan->appdate));
+                $eFundData->approved_at =  date('Y-m-d H:i:s', strtotime($loan->applicationdate));
+                $eFundData->created_at =  date('Y-m-d H:i:s', strtotime($loan->applicationdate));
                 $eFundData->payroll_verified = 1;
                 $eFundData->total = $loan->totalpayable;
                 $eFundData->approved = 1;
@@ -695,14 +696,12 @@ class LoanController extends Controller
     
                 // Create deduction list or Ledger
                 $deductionDate = date('Y-m-d', strtotime($loan->startofdeductions));
-                $balance = $loan->totalpayable - $loan->deductionpercutoff;
 
                 for($i = 0; $i < $loan->termsmonths * 2; $i++){
 
                     $deduction = new Deduction();
                     $deduction->eFundData_id = $eFundData->id;
                     $deduction->date = $deductionDate;
-                        $balance = $balance - $loan->deductions;
                     
                     // Set next deduction date
                     if(date('d', strtotime($deductionDate)) == 15){
@@ -712,22 +711,20 @@ class LoanController extends Controller
                         $deductionDate = date('Y-m-15', strtotime("+15 days", strtotime($deductionDate)));
                     }
     
+                    // upload balance on first entry of deduction schedule
+                    // if(date('Y-m-d', strtotime($deductionDate)) <= date('Y-m-d')){
+                    if($i == 0){
+                        $deduction->ar_no = '-';
+                        $deduction->amount = $loan->totalpayable - $balance;
+                        $deduction->balance = $balance;
+                    }
+
                     if(date('Y-m-d', strtotime($deductionDate)) <= date('Y-m-d')){
                         $deduction->ar_no = '-';
-                        $deduction->amount = $loan->deductionpercutoff;
+                        $deduction->amount = 0;
                         $deduction->balance = $balance;
-    
-                        if($balance < 0){
-                            $deduction->amount -= abs($balance);
-                            $deduction->balance = 0;
-                            $eFundData->status = $this->utils->getStatusIndex('paid');
-                            $eFundData->save();
-                        }
-    
-                        //Compute balance
-                        $balance = $balance - $loan->deductionpercutoff;
                     }
-                   
+
                     $deduction->updated_by = Auth::user()->id;
                     $deduction->updated_at = date('Y-m-d H:i:s');
                     $deduction->save();
