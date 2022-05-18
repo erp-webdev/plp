@@ -219,7 +219,7 @@
 						<th colspan="4">
 							Showing {{ $loans->count() }} of {{ $loans->total() }} of page {{ $loans->currentPage() }} of {{ $loans->lastPage() }}
 						</th>
-						<th colspan="9">
+						<th colspan="8">
 							{{ $loans->links() }}
 						</th>
 					</tfoot>
