@@ -667,6 +667,7 @@ class LoanController extends Controller
                 }
     
                 $eFundData->EmpID = $loan->employeeid;
+                $eFundData->DBNAME = $loan->companycode;
                 $eFundData->local_dir_line = $loan->localno;
                 $eFundData->terms_month = $loan->termsmonths;
                 $eFundData->loan_amount = $loan->loanamount;
