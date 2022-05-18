@@ -99,7 +99,9 @@ class EmailController extends Controller
                     
                     if(!empty(trim($cc))){
                         $ccs = explode(',', $cc);
-                        $message->cc = $ccs;
+                        foreach($ccs as $c)
+                            if(!empty(trim($c)))
+                                $message->cc($c); 
                     }
                 }else{
 
@@ -117,7 +119,9 @@ class EmailController extends Controller
                     
                     if(!empty(trim($cc))){
                         $ccs = explode(',', $cc);
-                        $message->cc = $ccs;
+                        foreach($ccs as $c)
+                            if(!empty(trim($c)))
+                                $message->cc($c); 
                     }
                 }
 
