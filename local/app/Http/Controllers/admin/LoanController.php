@@ -696,6 +696,7 @@ class LoanController extends Controller
     
                 // Create deduction list or Ledger
                 $deductionDate = date('Y-m-d', strtotime($loan->startofdeductions));
+                $balance = $loan->balanceamount;
 
                 for($i = 0; $i < $loan->termsmonths * 2; $i++){
 
