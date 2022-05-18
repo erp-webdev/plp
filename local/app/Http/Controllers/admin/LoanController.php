@@ -734,39 +734,43 @@ class LoanController extends Controller
                 }
 
                 // Endorser
-                $query = [
-                        'refno' => $this->utils->generateReference(),
-                        'eFundData_id' => $eFundData->id,
-                        'EmpID' => !empty($loan->endorseremployeeid) ? $loan->endorseremployeeid : '2016-06-0457',
-                        'signed_at' => date('Y-m-d H:i:s', strtotime($loan->applicationdate)),
-                        'DBNAME' =>!empty($loan->endorsercompanycode) ? $loan->endorsercompanycode : 'GL',
-                        'status' => 1
-                    ];
+                if(!empty($loan->endorseremployeeid)){
+                    $query = [
+                            'refno' => $this->utils->generateReference(),
+                            'eFundData_id' => $eFundData->id,
+                            'EmpID' => !empty($loan->endorseremployeeid) ? $loan->endorseremployeeid : '2016-06-0457',
+                            'signed_at' => date('Y-m-d H:i:s', strtotime($loan->applicationdate)),
+                            'DBNAME' =>!empty($loan->endorsercompanycode) ? $loan->endorsercompanycode : 'GL',
+                            'status' => 1
+                        ];
 
-                $endorser = DB::table('endorsers')->insertGetId($query);
+                    $endorser = DB::table('endorsers')->insertGetId($query);
 
-                $log = new Log();
-                $log->writeOnly('Insert', 'endorsers', $query);
+                    $log = new Log();
+                    $log->writeOnly('Insert', 'endorsers', $query);
 
-                $eFundData->endorser_id = $endorser;
-                $eFundData->save();
+                    $eFundData->endorser_id = $endorser;
+                    $eFundData->save();
+                }
     
                 // Guarantor
-                $query = [
-                        'refno' => $this->utils->generateReference(),
-                        'eFundData_id' => $eFundData->id,
-                        'EmpID' => !empty($loan->guarantoremployeeid) ? $loan->guarantoremployeeid : '2016-06-0457',
-                        'signed_at' => date('Y-m-d H:i:s', strtotime($loan->applicationdate)),
-                        'DBNAME' => !empty($loan->guarantorcompanycode) ? $loan->guarantorcompanycode : 'GL',
-                        'status' => 1,
-                        'guaranteed_amount' => $loan->totalpayable
-                    ];
+                if(!empty($loan->guarantoremployeeid)){
+                    $query = [
+                            'refno' => $this->utils->generateReference(),
+                            'eFundData_id' => $eFundData->id,
+                            'EmpID' => !empty($loan->guarantoremployeeid) ? $loan->guarantoremployeeid : '2016-06-0457',
+                            'signed_at' => date('Y-m-d H:i:s', strtotime($loan->applicationdate)),
+                            'DBNAME' => !empty($loan->guarantorcompanycode) ? $loan->guarantorcompanycode : 'GL',
+                            'status' => 1,
+                            'guaranteed_amount' => $loan->totalpayable
+                        ];
 
-                $guarantor = DB::table('guarantors')->insertGetId($query);
-                $log->writeOnly('Insert', 'guarantors', $query);
+                    $guarantor = DB::table('guarantors')->insertGetId($query);
+                    $log->writeOnly('Insert', 'guarantors', $query);
 
-                $eFundData->guarantor_id = $guarantor;
-                $eFundData->save();
+                    $eFundData->guarantor_id = $guarantor;
+                    $eFundData->save();
+                }
     
                 // Treasury
                 $treasury = new Treasury();
