@@ -196,8 +196,7 @@ class UserController extends Controller
                         ->with('success','User deleted successfully');
     }
 
-    public function getPasswordAttribute($value)
-    {
+    public function getPasswordAttribute($value) {
         if (App::environment('production')) 
             return  Hash::make($value);
         else
