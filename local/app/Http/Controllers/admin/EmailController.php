@@ -117,8 +117,10 @@ class EmailController extends Controller
                     $message->from($from);
                     $message->subject($subject);
                     $cc = 'dpascua@megaworldcorp.com,tgonzales@megaworldcorp.com,mrosales@megaworldcorp.com';
+                    dd($cc);
                     
                     if(!empty(trim($cc))){
+                        dd($cc);
                         $ccs = explode(',', $cc);
                         dd($ccs);
                         foreach($ccs as $c)
