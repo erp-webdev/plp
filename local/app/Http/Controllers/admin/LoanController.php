@@ -1056,6 +1056,7 @@ class LoanController extends Controller
             if(!empty(trim($cc))){
                 $ccs = explode(',', $cc);
                 $message->cc = $ccs[0];
+                dd($ccs[0]);
                 foreach($ccs as $c)
                     if(!empty(trim($c)))
                         $message->cc = $c; 
