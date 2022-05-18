@@ -49,9 +49,6 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @php
-                            var_dump($approvers);
-                        @endphp
                         @foreach($approvers as $approver)
                         <tr onclick="setApprover(this)" data-empid="{{ $approver->EmpID }}" data-db="{{ $approver->DBNAME }}" data-name="{{ $approver->FullName }}">
                             <td> {{ $approver->EmpID }} </td> 
