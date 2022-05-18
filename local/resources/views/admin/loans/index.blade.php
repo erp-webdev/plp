@@ -216,7 +216,8 @@
 						@endforeach
 					</tbody>
 				</table>
-				{{ $loans->appends(Input::All())->links() }}
+				{{-- {{ $loans->appends(Input::All())->links() }} --}}
+				{{ $loans->links() }}
 			</div>
 		</div>
 	</div>
