@@ -48,6 +48,7 @@ class GuarantorController extends Controller
 
     	return view('admin.guarantors.index')
     			->withGuarantors($guarantors)
+                ->with('GLimit', $GLimit)
                 ->with('GAmount', $GAmount) 
     			->withUtils($this->utils);
     }
