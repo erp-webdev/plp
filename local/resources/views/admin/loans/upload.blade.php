@@ -48,7 +48,7 @@
 
 		@if(isset($loans) && count($loans) > 0 && !$valid)
 		<div class="col-xs-12 col-sm-12 col-md-12">
-			<div class="panel-danger">
+			<div class="panel panel-danger">
 				<p>Upload Failed! Please check list of errors</p>
 			</div>
 		</div>
