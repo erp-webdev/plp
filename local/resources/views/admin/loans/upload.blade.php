@@ -46,10 +46,12 @@
             </div>
         @endif
 
-		@if(isset($loans) && count($loans) > 0 && !$valid)
+		@if(isset($loans) && count($loans) > 0 )
+		@if(!$valid)
 		<div class="bg-danger">
 			<strong>Upload Failed! Please check list of errors</strong>
 		</div>
+		@endif
 		<div class="table-responsive">
 			<table class="table table-condensed table-bordered table-hover">
 				<thead>
