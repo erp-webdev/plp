@@ -661,7 +661,8 @@ class LoanController extends Controller
             foreach ($data as $key => $loan) {
                 // validate
                 // Check required
-                dd($key);                
+                foreach($loan as $key=>$value)              
+                    dd($key);
 
                 // eFundData (Loan)
                 $eFundData = new Loan();
