@@ -58,7 +58,7 @@
 				<tbody>
 					@foreach($loans as $loan)
 					<tr>
-						<td>{{ json_encode($loan->errors) }}</td>
+						<td>{{ implode('<br>', $loan->errors) }}</td>
 						@foreach($loan->data as $key=>$value)
 						<td>{{ $value }}</td>
 						@endforeach
