@@ -50,17 +50,12 @@
 		<table class="table table-condensed table-bordered table-hover">
 			<thead>
 				<th>Errors</th>
-				
+				@foreach($loans[0]->data as $key => $value)
+				<th>{{ $key }}</th>
+				@endforeach
 			</thead>
 			<tbody>
-				@foreach($loans[0] as $loan)
-				<tr>
-					<td>{{ json_encode($loan->errors) }}</td>
-					@foreach($loan->data as $value)
-					<td>{{ $value }}</td>
-					@endforeach
-				</tr>
-				@endforeach
+				
 			</tbody>
 		</table>
 		@endif
