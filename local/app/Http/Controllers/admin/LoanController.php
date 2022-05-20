@@ -708,9 +708,10 @@ class LoanController extends Controller
                     // upload balance on first entry of deduction schedule
                     if(date('Y-m-d', strtotime($deductionDate)) <= date('Y-m-d')){
                         $amount = $loan->deductionpercutoff;
-                        $balance = $balance - $loan->deductionpercutoff;
                         
-                        if($balance - $loan->balanceamount == 0){
+                        if($balance - $loan->balanceamount >= $loan->deductionpercutoff){
+                            $balance = $balance - $loan->deductionpercutoff;
+                        }elseif($balance - $loan->balanceamount == 0){
                             $amount = 0;
                             $balance = $loan->balanceamount;
                         }elseif($balance - $loan->balanceamount < $loan->deductionpercutoff){
