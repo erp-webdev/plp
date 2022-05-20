@@ -839,7 +839,7 @@ class LoanController extends Controller
     
             DB::commit();
 
-            return redirect()->back()
+            return view('admin.loans.upload')
                 ->withSuccess('Upload Successful!')
                 ->withLoans($loans);
 
