@@ -891,6 +891,19 @@ class ApplicationController extends Controller
         $loan->status = 9;
         $loan->save();
 
+        $endorsements = Endorser::where('id', $loan->endorser_id)->first();
+        if($endorsements)  {
+            $endorsements->status = 0; 
+            $endorsements->save();   
+        }
+
+        $guarantors = Guarantor::where('id', $loan->guarantor_id)->first(); 
+        if($guarantors)  {
+            $guarantors->status = 0; 
+            $guarantors->save();   
+        }
+
+
         return redirect()->back()
             ->withSuccess('Loan has been cancelled successfully!');
         
