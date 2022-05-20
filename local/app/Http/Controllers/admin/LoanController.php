@@ -668,8 +668,9 @@ class LoanController extends Controller
                         'applicationdate']) && empty(trim($value))){
                             array_push($errors, $key .' is a required field');
                             $valid = false;
+                            dd($key.'-'.$value);
+
                         }
-                    dd($key.'-'.$value);
 
                 }
 
