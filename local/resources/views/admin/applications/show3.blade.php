@@ -77,6 +77,7 @@
 							<td><label>Surety/Coborrower</label></td>
 							<td>{{ $loan->guarantor_FullName }}</td>
 						</tr>
+						@if($loan->status != 9)
 						<tr>
 							<td>Cancel Application</td>
 							<td>
@@ -87,6 +88,7 @@
 								</form>
 							</td>
 						</tr>
+						@endif
 					</tbody>
 				</table>
 			</div>
