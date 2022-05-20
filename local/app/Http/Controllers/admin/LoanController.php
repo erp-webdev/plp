@@ -650,21 +650,33 @@ class LoanController extends Controller
 
     public function upload2(Request $request)
     {
-        $loans = [];
+        $loans = (object)['data'=>[], 'errors'=>[]];
         $valid = true;
         if(Input::hasFile('fileToUpload')){
             $path = Input::file('fileToUpload')->getRealPath();
             $data = Excel::selectSheets('Loans')->load($path, function($reader) {})->get();
 
             DB::beginTransaction();
-            dd($data);
             // Loans from Excel to Database
             foreach ($data as $loan) {
                 // validate
                 // Check required
                 $errors = [];
                 foreach($loan as $key=>$value)  {
-                }            
+                    if(in_array($key, ['startofdeductions', 'balanceamount', 'deductionpercutoff', 
+                        'totalpayable', 'interestpercent', 'interestpercent', 'loanamount', 'termsmonths', 
+                        'applicationdate']) && empty(trim($value))){
+                            array_push($errors, $key .' is a required field');
+                            $valid = false;
+                        }
+                }
+
+                $loans->data = $loan;
+                $loans->erros = $errors;
+
+                if(!$valid)
+                    return redirect()->back()->withError('Upload failed!')
+                        ->withLoans($loans);
 
                 // eFundData (Loan)
                 $eFundData = new Loan();

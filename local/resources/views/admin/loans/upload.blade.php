@@ -46,7 +46,7 @@
             </div>
         @endif
 
-		@if(isset($loans) && (count($loans) > 0))
+		@if(isset($loans) && (count($loans) > 0) && false)
 		<!-- Nav tabs -->
 			 <ul class="nav nav-tabs" role="tablist">
 			    <li role="presentation" class="active"><a href="#loans" aria-controls="loans" role="tab" data-toggle="tab">Loans</a></li>
