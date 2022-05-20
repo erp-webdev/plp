@@ -67,7 +67,13 @@
 				<tbody>
 					@foreach($loans as $loan)
 					<tr>
-						<td style="width:200px"><? echo ($loan->errors) ? 'required fields ' : 'Ok to upload'; echo implode(', ', $loan->errors); ?> </td>
+						<td style="width:200px">
+							@if($valid)
+								Uploaded
+							@else
+								<? echo ($loan->errors) ? 'required fields ' : 'Ok to upload'; echo implode(', ', $loan->errors); ?> 
+							@endif
+						</td>
 						@foreach($loan->data as $key=>$value)
 						<td class="{{ in_array($key, $loan->errors) ? 'bg-danger' : '' }}">{{ $value }}</td>
 						@endforeach
