@@ -678,7 +678,7 @@ class LoanController extends Controller
                 ]);
 
             }
-            
+
             if(!$valid)
                 return view('admin.loans.upload')
                     ->withError('Upload failed!')
@@ -829,13 +829,19 @@ class LoanController extends Controller
                 $treasury->check_released =  date('Y-m-d H:i:s', strtotime($loan->startofdeductions));
                 $treasury->released = date('Y-m-d H:i:s', strtotime($loan->startofdeductions));
                 $treasury->save();
+
+                array_push($loans, (object)[
+                    'data' => $loan,
+                    'errors' => $errors
+                ]);
     
             }
     
             DB::commit();
 
             return redirect()->back()
-                ->withSuccess('Upload Successful!');
+                ->withSuccess('Upload Successful!')
+                ->withLoans($loans);
 
         }
             
