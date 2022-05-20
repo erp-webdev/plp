@@ -676,6 +676,7 @@ class LoanController extends Controller
 
                 if(!$valid)
                     return redirect()->back()->withError('Upload failed!')
+                        ->withValid($valid)
                         ->withLoans($loans);
 
                 // eFundData (Loan)

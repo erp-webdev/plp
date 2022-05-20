@@ -46,6 +46,26 @@
             </div>
         @endif
 
+		@if(isset($loans) && count($loans) && !$valid)
+		<table class="table table-condensed table-bordered table-hover">
+			<thead>
+				<th>Errors</th>
+				@foreach($loans[0]->data as $key => $value)
+				<th>{{ $key }}</th>
+				@endforeach
+			</thead>
+			<tbody>
+				@foreach($loans[0] as $loan)
+				<tr>
+					<td>{{ print_r($loan->errors) }}</td>
+					@foreach($loan->data as $value)
+					<td>{{ $value }}</td>
+					@endforeach
+				</tr>
+				@endforeach
+			</tbody>
+		</table>
+		@endif
 		@if(isset($loans) && (count($loans) > 0) && false)
 		<!-- Nav tabs -->
 			 <ul class="nav nav-tabs" role="tablist">
