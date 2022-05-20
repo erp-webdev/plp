@@ -47,11 +47,7 @@
         @endif
 
 		@if(isset($loans) && count($loans) > 0 && !$valid)
-		<div class="col-xs-12 col-sm-12 col-md-12">
-			<div class="alert alert-danger">
-				<p>{{ $error }}</p>
-			</div>
-		</div>
+		
 		<div class="table-responsive">
 			<table class="table table-condensed table-bordered table-hover">
 				<thead>
