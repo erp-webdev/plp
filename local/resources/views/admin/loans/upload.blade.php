@@ -61,7 +61,7 @@
 				<tbody>
 					@foreach($loans as $loan)
 					<tr>
-						<td style="width:200px">{{ implode('<br>', $loan->errors) }}</td>
+						<td style="width:200px">{{ implode('(*)<br>', $loan->errors) }}</td>
 						@foreach($loan->data as $key=>$value)
 						<td>{{ $value }}</td>
 						@endforeach
