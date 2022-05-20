@@ -657,12 +657,11 @@ class LoanController extends Controller
             $data = Excel::selectSheets('Loans')->load($path, function($reader) {})->get();
 
             DB::beginTransaction();
+            dd($data);
             // Loans from Excel to Database
             foreach ($data as $loan) {
                 // validate
                 // Check required
-                if($loan->employeeid =='2019-02-0033');
-                dd($loan);
                 foreach($loan as $key=>$value)  {
                 }            
 
