@@ -665,7 +665,7 @@ class LoanController extends Controller
                 foreach($loan->toArray() as $key=>$value)  {
                     if(in_array($key, ['startofdeductions', 'balanceamount', 'deductionpercutoff', 
                         'totalpayable', 'interestpercent', 'interestpercent', 'loanamount', 'termsmonths', 
-                        'applicationdate']) && empty(trim($value))){
+                        'applicationdate']) && empty(trim($value)) && $key != '0'){
                             array_push($errors, $key .' is a required field');
                             $valid = false;
                             dd($key.'-'.$value);
