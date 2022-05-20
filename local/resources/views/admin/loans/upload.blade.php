@@ -50,7 +50,7 @@
 		<div class="table-responsive">
 			<table class="table table-condensed table-bordered table-hover">
 				<thead>
-					<th>Errors</th>
+					<th width="200px">Errors</th>
 					@foreach($loans[0]->data as $key => $value)
 					<th>{{ $key }}</th>
 					@endforeach
