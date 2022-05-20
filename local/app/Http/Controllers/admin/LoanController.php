@@ -841,6 +841,7 @@ class LoanController extends Controller
 
             return view('admin.loans.upload')
                 ->withSuccess('Upload Successful!')
+                ->withValid($valid)
                 ->withLoans($loans);
 
         }
