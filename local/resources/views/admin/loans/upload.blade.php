@@ -53,7 +53,7 @@
 		<div class="table-responsive">
 			<table class="table table-condensed table-bordered table-hover">
 				<thead>
-					<th width="200px">Errors</th>
+					<th style="width:200px">Errors</th>
 					@foreach($loans[0]->data as $key => $value)
 					<th>{{ $key }}</th>
 					@endforeach
@@ -61,7 +61,7 @@
 				<tbody>
 					@foreach($loans as $loan)
 					<tr>
-						<td>{{ implode('<br>', $loan->errors) }}</td>
+						<td style="width:200px">{{ implode('<br>', $loan->errors) }}</td>
 						@foreach($loan->data as $key=>$value)
 						<td>{{ $value }}</td>
 						@endforeach
