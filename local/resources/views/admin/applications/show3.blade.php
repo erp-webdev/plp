@@ -77,7 +77,7 @@
 							<td><label>Surety/Coborrower</label></td>
 							<td>{{ $loan->guarantor_FullName }}</td>
 						</tr>
-						@if($loan->status != 9)
+						@if(in_array($loan->status, [0, 1, 2, 9, 10]))
 						<tr>
 							<td>Cancel Application</td>
 							<td>
