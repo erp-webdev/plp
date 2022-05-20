@@ -708,6 +708,7 @@ class LoanController extends Controller
                     // upload balance on first entry of deduction schedule
                     if(date('Y-m-d', strtotime($deductionDate)) <= date('Y-m-d')){
                         $amount = $loan->deductionpercutoff;
+                        $balance = $balance - $loan->deductionpercutoff;
                         
                         if($balance - $loan->balanceamount == 0){
                             $amount = 0;
@@ -715,8 +716,6 @@ class LoanController extends Controller
                         }elseif($balance - $loan->balanceamount < $loan->deductionpercutoff){
                             $amount = $balance - $loan->balanceamount;
                             $balance = $loan->balanceamount;
-                        }else{
-                            $balance = $balance - $loan->deductionpercutoff;
                         }
 
                         $deduction->ar_no = '-';
