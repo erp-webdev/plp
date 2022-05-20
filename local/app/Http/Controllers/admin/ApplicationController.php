@@ -891,6 +891,15 @@ class ApplicationController extends Controller
         $loan->status = 9;
         $loan->save();
 
+        $endorsement = Endorser::findOrFail($request->id);
+        $endorsement->refno = $this->utils->generateReference();
+        $endorsement->endorser_status = 0;
+        $endorsement->save();
+
+        $loan = Loan::findOrFail($endorsement->eFundData_id);
+        $loan->status = $this->utils->setStatus($this->utils->getStatusIndex('denied'));
+        $loan->save();
+
         $endorsements = Endorser::where('id', $loan->endorser_id)->first();
         if($endorsements)  {
             $endorsements->status = 0; 
@@ -902,7 +911,6 @@ class ApplicationController extends Controller
             $guarantors->status = 0; 
             $guarantors->save();   
         }
-
 
         return redirect()->back()
             ->withSuccess('Loan has been cancelled successfully!');
