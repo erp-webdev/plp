@@ -51,6 +51,10 @@
 		<div class="bg-danger">
 			<strong>Upload Failed! Please check list of errors</strong>
 		</div>
+		@else
+		<div class="bg-danger">
+			<strong>Upload successful</strong>
+		</div>
 		@endif
 		<div class="table-responsive">
 			<table class="table table-condensed table-bordered table-hover">
