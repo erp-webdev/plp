@@ -56,13 +56,7 @@
 			</thead>
 			<tbody>
 				@foreach($loans as $loan)
-				<tr>
-					<td></td>
-					@foreach($loan as $value)
-					<td>{{ dd($value->errors) }}</td>
-					<td>{{ dd($value->data) }}</td>
-					@endforeach
-				</tr>
+				{{ dd($loan) }}
 				@endforeach
 			</tbody>
 		</table>
