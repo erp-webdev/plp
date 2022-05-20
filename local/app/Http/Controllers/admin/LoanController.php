@@ -831,7 +831,7 @@ class LoanController extends Controller
                 $treasury->released = date('Y-m-d H:i:s', strtotime($loan->startofdeductions));
                 $treasury->save();
                 
-                dd($loan->controlno);
+                dd($loan);
 
                 array_push($loans, (object)[
                     'data' => $loan,
