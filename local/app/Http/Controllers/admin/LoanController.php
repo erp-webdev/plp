@@ -675,7 +675,8 @@ class LoanController extends Controller
                 $loans->erros = $errors;
 
                 if(!$valid)
-                    return redirect()->back()->withError('Upload failed!')
+                    return view('admin.loans.upload')
+                        ->withError('Upload failed!')
                         ->withValid($valid)
                         ->withLoans($loans);
 
