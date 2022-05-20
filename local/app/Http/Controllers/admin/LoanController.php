@@ -650,7 +650,7 @@ class LoanController extends Controller
 
     public function upload2(Request $request)
     {
-        $loans = (object)['data'=>[], 'errors'=>[]];
+        $loans = [];
         $valid = true;
         if(Input::hasFile('fileToUpload')){
             $path = Input::file('fileToUpload')->getRealPath();
@@ -671,8 +671,10 @@ class LoanController extends Controller
                         }
                 }
 
-                $loans->data = $loan;
-                $loans->erros = $errors;
+                array_push($loans, object()[
+                    'data' => $loan,
+                    'errors' => $errors
+                ])
 
                 if(!$valid)
                     return view('admin.loans.upload')
