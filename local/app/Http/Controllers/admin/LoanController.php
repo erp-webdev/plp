@@ -832,6 +832,7 @@ class LoanController extends Controller
                 $treasury->save();
                 
                 $loan->item['controlno'] = $eFundData->ctrl_no;
+                dd($loan);
 
                 array_push($loans, (object)[
                     'data' => $loan,
