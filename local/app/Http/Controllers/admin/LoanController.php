@@ -671,7 +671,7 @@ class LoanController extends Controller
                         }
                 }
 
-                array_push($loans, object()[
+                array_push($loans, (object)[
                     'data' => $loan,
                     'errors' => $errors
                 ]);
