@@ -81,7 +81,7 @@
 						<tr>
 							<td>Cancel Application</td>
 							<td>
-								<form action="{{ route('applications.destroy', $loan->id ) }}" method="post">
+								<form action="{{ route('applications.destroy', $loan->id ) }}" method="get">
 									{{ csrf_field() }}
 
 									<button type="submit" class="btn btn-danger">Cancel</button>
