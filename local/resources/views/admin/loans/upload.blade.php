@@ -52,7 +52,7 @@
 			<strong>Upload Failed! Please check list of errors</strong>
 		</div>
 		@else
-		<div class="bg-danger">
+		<div class="bg-success">
 			<strong>Upload successful</strong>
 		</div>
 		@endif
