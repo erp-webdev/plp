@@ -661,6 +661,7 @@ class LoanController extends Controller
             foreach ($data as $loan) {
                 // validate
                 // Check required
+                if($loan->employeeid =='2019-02-0033');
                 dd($loan);
                 foreach($loan as $key=>$value)  {
                 }            
