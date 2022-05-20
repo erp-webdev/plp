@@ -56,7 +56,12 @@
 			</thead>
 			<tbody>
 				@foreach($loans as $loan)
-				{{ dd($loan) }}
+				<tr>
+					<td>{{ json_encode($loan->errors) }}</td>
+					@foreach($loan->data as $key=>$value)
+					<td>{{ $value }}</td>
+					@endforeach
+				</tr>
 				@endforeach
 			</tbody>
 		</table>
