@@ -692,6 +692,7 @@ class LoanController extends Controller
                 if(empty($loan->controlno)){
                     // Create random id (5 chars)
                     $eFundData->ctrl_no = 'upload' . date('YmdHis');
+                    $loan->controlno = $eFundData->ctrl_no;
                 }else{
                     $eFundData->ctrl_no = $loan->controlno;
                 }
@@ -830,8 +831,6 @@ class LoanController extends Controller
                 $treasury->released = date('Y-m-d H:i:s', strtotime($loan->startofdeductions));
                 $treasury->save();
                 
-                $loan->controlno = $eFundData->ctrl_no;
-
                 array_push($loans, (object)[
                     'data' => $loan,
                     'errors' => $errors
