@@ -663,7 +663,6 @@ class LoanController extends Controller
                 // Check required
                 dd(key($loan));
                 foreach($loan as $key=>$value)  {
-                    if(in_array($key, ['']))
                 }            
 
                 // eFundData (Loan)
