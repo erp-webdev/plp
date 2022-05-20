@@ -658,10 +658,10 @@ class LoanController extends Controller
 
             DB::beginTransaction();
             // Loans from Excel to Database
-            foreach ($data as $key => $loan) {
+            foreach ($data as $loan) {
                 // validate
                 // Check required
-                dd(key($loan));
+                dd(key($loan[0]));
                 foreach($loan as $key=>$value)  {
                 }            
 
