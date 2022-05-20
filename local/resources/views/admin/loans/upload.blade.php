@@ -63,7 +63,7 @@
 					<tr>
 						<td style="width:200px">required fields <? echo implode(', ', $loan->errors); ?> *</td>
 						@foreach($loan->data as $key=>$value)
-						<td class="{{ in_array($key, $loan->errors) ? 'bg-warning' : '' }}">{{ $value }}</td>
+						<td class="{{ in_array($key, $loan->errors) ? 'bg-danger' : '' }}">{{ $value }}</td>
 						@endforeach
 					</tr>
 					@endforeach
