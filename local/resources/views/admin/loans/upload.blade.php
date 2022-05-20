@@ -47,24 +47,26 @@
         @endif
 
 		@if(isset($loans) && count($loans) > 0 && !$valid)
-		<table class="table table-condensed table-bordered table-hover">
-			<thead>
-				<th>Errors</th>
-				@foreach($loans[0]->data as $key => $value)
-				<th>{{ $key }}</th>
-				@endforeach
-			</thead>
-			<tbody>
-				@foreach($loans as $loan)
-				<tr>
-					<td>{{ json_encode($loan->errors) }}</td>
-					@foreach($loan->data as $key=>$value)
-					<td>{{ $value }}</td>
+		<div class="table-responsive">
+			<table class="table table-condensed table-bordered table-hover">
+				<thead>
+					<th>Errors</th>
+					@foreach($loans[0]->data as $key => $value)
+					<th>{{ $key }}</th>
 					@endforeach
-				</tr>
-				@endforeach
-			</tbody>
-		</table>
+				</thead>
+				<tbody>
+					@foreach($loans as $loan)
+					<tr>
+						<td>{{ json_encode($loan->errors) }}</td>
+						@foreach($loan->data as $key=>$value)
+						<td>{{ $value }}</td>
+						@endforeach
+					</tr>
+					@endforeach
+				</tbody>
+			</table>
+		</div>
 		@endif
 		@if(isset($loans) && (count($loans) > 0) && false)
 		<!-- Nav tabs -->
