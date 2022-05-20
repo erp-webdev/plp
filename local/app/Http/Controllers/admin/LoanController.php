@@ -666,7 +666,7 @@ class LoanController extends Controller
                     if(in_array($key, ['startofdeductions', 'balanceamount', 'deductionpercutoff', 
                         'totalpayable', 'interestpercent', 'interestpercent', 'loanamount', 'termsmonths', 
                         'applicationdate']) && empty(trim($value)) && $key != '0'){
-                            array_push($errors, $key .' is a required field');
+                            array_push($errors, $key);
                             $valid = false;
                         }
 
