@@ -662,7 +662,6 @@ class LoanController extends Controller
                 // validate
                 // Check required
                 $errors = [];
-                dd($loan->toArray());
                 foreach($loan->toArray() as $key=>$value)  {
                     if(in_array($key, ['startofdeductions', 'balanceamount', 'deductionpercutoff', 
                         'totalpayable', 'interestpercent', 'interestpercent', 'loanamount', 'termsmonths', 
