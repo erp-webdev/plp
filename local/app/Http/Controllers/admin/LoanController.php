@@ -678,7 +678,7 @@ class LoanController extends Controller
                 ]);
 
             }
-            dd($loans);
+
             if(!$valid)
                 return view('admin.loans.upload')
                     ->withError('Upload failed!')
