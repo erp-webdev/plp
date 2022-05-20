@@ -676,11 +676,15 @@ class LoanController extends Controller
                     'errors' => $errors
                 ]);
 
-                if(!$valid)
-                    return view('admin.loans.upload')
-                        ->withError('Upload failed!')
-                        ->withValid($valid)
-                        ->withLoans($loans);
+            }
+
+            if(!$valid)
+                return view('admin.loans.upload')
+                    ->withError('Upload failed!')
+                    ->withValid($valid)
+                    ->withLoans($loans);
+            
+            foreach ($data as $loan) {
 
                 // eFundData (Loan)
                 $eFundData = new Loan();
