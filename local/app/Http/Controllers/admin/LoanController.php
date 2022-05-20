@@ -664,7 +664,6 @@ class LoanController extends Controller
                 // Check required
                 $errors = [];
                 foreach($loan as $key=>$value)  {
-                    if(in_array($key, ['']))
                 }            
 
                 // eFundData (Loan)
