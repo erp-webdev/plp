@@ -59,7 +59,8 @@
 				<tr>
 					<td></td>
 					@foreach($loan as $value)
-					<td>{{ $value }}</td>
+					<td>{{ dd($value->errors) }}</td>
+					<td>{{ dd($value->data) }}</td>
 					@endforeach
 				</tr>
 				@endforeach
