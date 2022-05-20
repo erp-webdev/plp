@@ -55,10 +55,12 @@
 				@endforeach
 			</thead>
 			<tbody>
-				@foreach($loans[0] as $loan)
+				@foreach($loans as $loan)
 				<tr>
 					<td></td>
-					{{ dd($loan)}}
+					@foreach($loan as $value)
+					<td>{{ $value }}</td>
+					@endforeach
 				</tr>
 				@endforeach
 			</tbody>
