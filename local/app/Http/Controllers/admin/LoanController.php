@@ -657,7 +657,6 @@ class LoanController extends Controller
             $data = Excel::selectSheets('Loans')->load($path, function($reader) {})->get();
 
             DB::beginTransaction();
-            dd($data);
             // Loans from Excel to Database
             foreach ($data as $loan) {
                 // validate
