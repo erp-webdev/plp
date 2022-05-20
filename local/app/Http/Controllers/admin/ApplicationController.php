@@ -877,4 +877,23 @@ class ApplicationController extends Controller
         return redirect()->route('applications.index')->with('success', trans('loan.application.delete'));
     }
 
+    public function cancel($id)
+    {
+        $loan = Loan::where('id', $id)->first();
+        
+        if(!$loan)
+            abort(404);
+
+        if($loan->EmpID != Auth()->user()->employee_id)
+            abort(404);
+
+        $loan->setTable('eFundData');
+        $loan->status = 9;
+        $loan->save();
+
+        return redirect()->back()
+            ->withSuccess('Loan has been cancelled successfully!');
+        
+    }
+
 }

@@ -66,6 +66,7 @@ Route::group(['prefix' => '/', 'middleware' => ['auth']], function(){
 	Route::post('applications', ['as' => 'applications.store', 'uses' => 'admin\ApplicationController@store','middleware' => ['permission:application_create']]);
 	Route::post('applications_submit', ['as' => 'applications.store2', 'uses' => 'admin\ApplicationController@store2','middleware' => ['permission:application_create']]);
 	Route::get('applications/destroy/{id}',['as'=>'applications.destroy','uses'=>'admin\ApplicationController@destroy','middleware' => ['permission:application_delete']]);
+	Route::get('applications/cancel/{id}',['as'=>'applications.cancel','uses'=>'admin\ApplicationController@cancel','middleware' => ['permission:application_delete']]);
 
 	Route::get('validation', ['as' => 'validation.index', 'uses' => 'admin\ValidationController@index']);
 	Route::post('validation/approve', ['as' => 'validation.approve', 'uses' => 'admin\ValidationController@approve']);
