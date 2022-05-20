@@ -685,6 +685,7 @@ class LoanController extends Controller
                     ->withValid($valid)
                     ->withLoans($loans);
             
+            $loans=[];
             foreach ($data as $loan) {
 
                 // eFundData (Loan)
