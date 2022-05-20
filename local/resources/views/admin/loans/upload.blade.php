@@ -47,7 +47,9 @@
         @endif
 
 		@if(isset($loans) && count($loans) > 0 && !$valid)
-		
+		<div class="bg-danger">
+			<p>Upload Failed! Please check list of errors</p>
+		</div>
 		<div class="table-responsive">
 			<table class="table table-condensed table-bordered table-hover">
 				<thead>
