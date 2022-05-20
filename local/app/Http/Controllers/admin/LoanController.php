@@ -658,11 +658,11 @@ class LoanController extends Controller
 
             DB::beginTransaction();
             // Loans from Excel to Database
-            foreach ($data as $key => $loan) {
+            foreach ($data as $loan) {
                 // validate
                 // Check required
                 $errors = [];
-                foreach($loan as $key=>$value)  {
+                foreach($loan->items as $key=>$value)  {
                     if(in_array($key, ['startofdeductions', 'balanceamount', 'deductionpercutoff', 
                         'totalpayable', 'interestpercent', 'interestpercent', 'loanamount', 'termsmonths', 
                         'applicationdate']) && empty(trim($value))){
