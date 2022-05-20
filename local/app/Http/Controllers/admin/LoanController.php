@@ -835,6 +835,8 @@ class LoanController extends Controller
                 $loan_ = (object)$loan->toArray();
                 $loan_->ctrl_no = $eFundData->ctrl_no;
 
+                dd($loan_);
+                
                 array_push($loans, (object)[
                     'data' => $loan_,
                     'errors' => $errors
