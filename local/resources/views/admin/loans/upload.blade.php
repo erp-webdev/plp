@@ -58,7 +58,7 @@
 				@foreach($loans[0] as $loan)
 				<tr>
 					<td></td>
-					@foreach($loan->data as $value)
+					@foreach($loan['data'] as $value)
 					<td>{{ $value }}</td>
 					@endforeach
 				</tr>
