@@ -781,7 +781,6 @@ class ApplicationController extends Controller
                     ->first();
 
         // Endorser must not be the same rank of the applicant
-        dd($endorser->RankDesc);
         $endorser_rank = $this->utils->getRank($endorser->RankDesc);
         $applicant_rank = $this->utils->getRank($applicant->RankDesc);
 
