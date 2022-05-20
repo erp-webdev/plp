@@ -46,7 +46,6 @@
             </div>
         @endif
 
-		@if(count($loans) > 0 )
 		<table class="table table-condensed table-bordered table-hover">
 			<thead>
 				<th>Errors</th>
@@ -65,7 +64,6 @@
 				@endforeach
 			</tbody>
 		</table>
-		@endif
 		@if(isset($loans) && (count($loans) > 0) && false)
 		<!-- Nav tabs -->
 			 <ul class="nav nav-tabs" role="tablist">
