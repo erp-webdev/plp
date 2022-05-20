@@ -46,7 +46,7 @@
             </div>
         @endif
 
-		@if(isset($loans) && count($loans) && !$valid)
+		@if(isset($loans) && count($loans) > 0 )
 		<table class="table table-condensed table-bordered table-hover">
 			<thead>
 				<th>Errors</th>
