@@ -674,7 +674,7 @@ class LoanController extends Controller
                 array_push($loans, object()[
                     'data' => $loan,
                     'errors' => $errors
-                ])
+                ]);
 
                 if(!$valid)
                     return view('admin.loans.upload')
