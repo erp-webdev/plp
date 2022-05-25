@@ -96,8 +96,8 @@
 			Refresh</a>
 			@permission('custodian')
 
-			<div class="btn-group btn-sm btn-info" role="group">
-				<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+			<div class="btn-group " role="group">
+				<button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 				  Deductions
 					<span class="caret"></span>
 				</button>
