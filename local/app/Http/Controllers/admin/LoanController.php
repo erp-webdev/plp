@@ -977,7 +977,6 @@ class LoanController extends Controller
                     ->withValid($valid)
                     ->withDeductions($deductions);
             
-            $deductions=[];
             foreach ($data as $deduction) {
 
                 if(empty(trim($deduction->companycode))
@@ -1004,7 +1003,6 @@ class LoanController extends Controller
                 $paydate->updated_at = date('Y-m-d H:i:s');
                 $paydate->save();
 
-                array_push($deductions, $deduction);
                 DB::update('EXEC updateBalance ?', [$paydate->id]);
             }
 

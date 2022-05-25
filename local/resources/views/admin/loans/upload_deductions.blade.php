@@ -87,40 +87,7 @@
 			</table>
 		</div>
 		@endif
-		@if(isset($deductions) && (count($deductions) > 0) && false)
-		<!-- Nav tabs -->
-			 <ul class="nav nav-tabs" role="tablist">
-			    <li role="presentation" class="active"><a href="#loans" aria-controls="loans" role="tab" data-toggle="tab">Deductions</a></li>
-			    <!-- <li role="presentation"><a href="#ledger" aria-controls="ledger" role="tab" data-toggle="tab">Ledger</a></li> -->
-			  </ul>
 
-			  <!-- Tab panes -->
-			  <div class="tab-content">
-			    <div role="tabpanel" class="tab-pane active" id="loans">
-			    	<div class="table-responsive">
-						<table id="dataTable" class="table table-bordered table-hover table-condensed">
-							<thead>
-								<thead>
-								@foreach($deductions[0] as $key => $value)
-									<th>{{ $key }}
-								@endforeach
-								</thead>
-								<tbody>
-									@foreach($deductions as $loan)
-									<tr>
-										@foreach($loan as $key => $value)
-										<td <?php if($key!='loc' && empty($value)) echo 'style="background-color: #F90909"'; ?>>{{ $value }}</td>
-										@endforeach
-									</tr>
-									@endforeach
-								</tbody>
-							</thead>
-						</table>
-					</div>
-			    </div>
-			</div>
-		
-		@endif
 	</div>
 </div>
 @endsection
