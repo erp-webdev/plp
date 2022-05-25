@@ -954,7 +954,7 @@ class LoanController extends Controller
 
                     dd($eFundData);
 
-                if(empty($eFundData->id)){
+                if(!$eFundData->id){
                     array_push($errors->noActiveLoan, ['No active loan']);
                     $valid = false;
                 }
