@@ -2,7 +2,7 @@
 @section('content')
 <div class="row">
 	<div class="col-xs-12 col-sm-12 col-md-12">
-		<h1>Import</h1>
+		<h1>Upload Deductions</h1>
 		<p>To import existing loans, download the excel template <a href="{{ url('/DeductionTemplate.xlsx') }}">HERE</a> and fill up required columns before uploading.</p>
 		<form action="{{ route('loan.deduction.upload') }}" method="post" enctype="multipart/form-data">
 			<input type="hidden" name="_token" value="{{ csrf_token() }}" >
