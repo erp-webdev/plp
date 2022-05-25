@@ -939,8 +939,7 @@ class LoanController extends Controller
                     'noActiveLoan' => []
                 ];
 
-                if(empty(trim($deduction->companycode))
-                    && empty(trim($deduction->employeeid)))
+                if(empty(trim($deduction->employeeid)))
                         continue;
                         
                 foreach($deduction->toArray() as $key=>$value)  {
@@ -985,10 +984,10 @@ class LoanController extends Controller
                     ->status($this->utils->getStatusIndex('inc'))
                     ->first();
                     
-
                 $paydate = Deduction::where('eFundData_id', $eFundData->id)
                     ->where('date', $deduction->paydate)
                     ->first();
+
                 if(!$paydate)
                     $paydate = new Deduction();
 
