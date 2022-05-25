@@ -107,7 +107,7 @@
 				</ul>
 			</div>
 
-			<a class="btn btn-sm btn-info" data-toggle="modal" data-target="#email" ng-click="loadPayrollList('{{ route('loan.email.list') }}')"><i class="fa fa-envelope"></i> Payroll Verifications</a>
+			<a class="btn btn-sm btn-default" data-toggle="modal" data-target="#email" ng-click="loadPayrollList('{{ route('loan.email.list') }}')"><i class="fa fa-envelope"></i> Payroll Verifications</a>
 			<a class="btn btn-sm btn-primary" data-toggle="modal" data-target="#officer" ng-click="loadOfficerList('{{ route('loan.officer.list') }}')"><i class="fa fa-envelope"></i> For Officer's Approval</a>
 			<a class="btn btn-sm btn-primary pull-right" style="margin-right: 10px" href="{{ route('upload.show') }}"><i class="fa fa-upload"></i> Import</a>
 			@endpermission
