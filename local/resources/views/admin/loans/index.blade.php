@@ -103,7 +103,7 @@
 				</button>
 				<ul class="dropdown-menu">
 					<li><a class="" data-toggle="modal" data-target="#deductions" ng-click="loadBatchDeduction('{{ route('loan.deduction.list') }}')"> Batch Deductions</a></li>
-					<li><a href="{{ route('loan.deduction.show') }}"></a>Upload Deductions</li>
+					<li><a href="{{ route('loan.deduction.show') }}"> Upload Deductions</a></li>
 				</ul>
 			</div>
 
