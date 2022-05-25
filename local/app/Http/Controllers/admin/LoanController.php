@@ -999,8 +999,7 @@ class LoanController extends Controller
 
             return view('admin.loans.upload_deductions')
                 ->withValid($valid)
-                ->withDeductions($deductions)
-                ->withSuccess('Deductions were uploaded successfully!');
+                ->withDeductions($deductions);
         }
     }
 
