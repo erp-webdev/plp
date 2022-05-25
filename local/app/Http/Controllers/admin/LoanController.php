@@ -949,9 +949,9 @@ class LoanController extends Controller
                 // eFundData (Loan)
                 $eFundData = Loan::where('EmpID', $deduction->employeeid)
                     ->where('DBNAME', $deduction->companycode)
-                    ->status($this->utils->getStatusIndex('inc'))
+                    ->where('status', $this->utils->getStatusIndex('inc'))
                     ->first();
-                    
+
                     dd($eFundData);
 
                 if(empty($eFundData->id)){
