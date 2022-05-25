@@ -951,6 +951,8 @@ class LoanController extends Controller
                     ->where('DBNAME', $deduction->companycode)
                     ->status($this->utils->getStatusIndex('inc'))
                     ->first();
+                    
+                    dd($eFundData);
 
                 if(empty($eFundData->id)){
                     array_push($errors->noActiveLoan, ['No active loan']);
@@ -977,6 +979,7 @@ class LoanController extends Controller
                     ->where('DBNAME', $deduction->companycode)
                     ->status($this->utils->getStatusIndex('inc'))
                     ->first();
+                    
 
                 $paydate = Deduction::where('eFundData_id', $eFundData->id)
                     ->where('date', $deduction->paydate)
