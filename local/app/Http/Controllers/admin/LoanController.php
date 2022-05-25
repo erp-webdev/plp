@@ -952,7 +952,7 @@ class LoanController extends Controller
                     ->status($this->utils->getStatusIndex('inc'))
                     ->first();
 
-                if(!empty($eFundData)){
+                if(empty($eFundData->id)){
                     array_push($errors->noActiveLoan, ['No active loan']);
                     $valid = false;
                 }
