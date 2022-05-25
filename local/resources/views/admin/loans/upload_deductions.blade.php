@@ -47,15 +47,15 @@
         @endif
 
 		@if(isset($deductions) && count($deductions) > 0 )
-		@if(!$valid)
-		<div class="bg-danger">
-			<strong>Upload Failed! Please check list of errors</strong>
-		</div>
-		@else
-		<div class="bg-success">
-			<strong>Upload successful</strong>
-		</div>
-		@endif
+            @if(!$valid)
+            <div class="bg-danger">
+                <strong>Upload Failed! Please check list of errors</strong>
+            </div>
+            @else
+            <div class="bg-success">
+                <strong>Upload successful</strong>
+            </div>
+            @endif
 		<div class="table-responsive">
 			<table class="table table-condensed table-bordered table-hover">
 				<thead>
@@ -71,8 +71,11 @@
 							@if($valid)
 								Uploaded
 							@else
+                                <? echo (!$loan->errors->noActiveLoan) ? 'No active loan' : ''; echo implode(', ', $loan->errors->required); ?> 
 								<? echo ($loan->errors->required) ? 'required fields ' : 'Ok to upload'; echo implode(', ', $loan->errors->required); ?> 
+                                <br>
 							@endif
+                            
 						</td>
 						@foreach($loan->data as $key=>$value)
 						<td class="{{ in_array($key, $loan->errors->required) ? 'bg-danger' : '' }}">{{ $value }}</td>
