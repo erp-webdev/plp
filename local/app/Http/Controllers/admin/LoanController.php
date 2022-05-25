@@ -992,12 +992,13 @@ class LoanController extends Controller
                 $paydate->updated_by = Auth()->user()->id;
                 $paydate->updated_at = date('Y-m-d H:i:s');
                 $paydate->save();
-
+                dd($paydate);
                 DB::update('EXEC updateBalance ?', [$paydate->id]);
             }
 
             return view('admin.loans.upload_deductions')
                 ->withValid($valid)
+                ->withDeductions($deductions)
                 ->withSuccess('Deductions were uploaded successfully!');
         }
     }
