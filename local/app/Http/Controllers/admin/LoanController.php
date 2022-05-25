@@ -992,7 +992,7 @@ class LoanController extends Controller
                 $paydate->updated_by = Auth()->user()->id;
                 $paydate->updated_at = date('Y-m-d H:i:s');
                 $paydate->save();
-                dd( $deduction->amountpaid );
+                dd( $paydate );
                 DB::update('EXEC updateBalance ?', [$paydate->id]);
             }
 
