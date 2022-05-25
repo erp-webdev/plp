@@ -1003,6 +1003,8 @@ class LoanController extends Controller
                 $paydate->updated_by = Auth()->user()->id;
                 $paydate->updated_at = date('Y-m-d H:i:s');
                 $paydate->save();
+
+                array_push($deductions, $deduction);
                 DB::update('EXEC updateBalance ?', [$paydate->id]);
             }
 
