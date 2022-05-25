@@ -72,7 +72,7 @@
 								Uploaded
 							@else
                                 <? echo (!$loan->errors->noActiveLoan) ? 'No active loan' : ''; echo implode(', ', $loan->errors->required); ?> 
-								<? echo ($loan->errors->required) ? 'required fields ' : 'Ok to upload'; echo implode(', ', $loan->errors->required); ?> 
+								<? echo ($loan->errors->required) ? 'required fields ' : '--'; echo implode(', ', $loan->errors->required); ?> 
                                 <br>
 							@endif
                             
