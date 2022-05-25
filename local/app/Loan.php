@@ -59,9 +59,11 @@ class Loan extends Model
      * 
      *
      */
-    public function scopeBalance($query, $EmpID)
+    public function scopeBalance($query, $EmpID, $DBNAME)
     {
-        return $query->where('EmpID', $EmpID)->sum('balance');
+        return $query->where('EmpID', $EmpID)
+            ->where('DBNAME', $DBNAME)
+            ->sum('balance');
     }
 
     public function getHireDateAttribute($value)

@@ -31,6 +31,9 @@ Route::group(['prefix' => '/', 'middleware' => ['auth']], function(){
 	Route::post('loans', ['as' => 'loan.approve', 'uses' => 'admin\LoanController@approve', 'middleware' => ['permission:officer']]);
 	Route::get('loans/show/{id}', ['as' => 'loan.show', 'uses' => 'admin\LoanController@show', 'middleware' => ['permission:loan_view']]);
 	Route::post('loans/deductions', ['as' => 'loan.deduction', 'uses' => 'admin\LoanController@saveDeduction', 'middleware' => ['permission:custodian']]);
+	Route::post('loans/deduction/upload', ['as' => 'loan.deduction.upload', 'uses' => 'admin\LoanController@uploadDeduction', 'middleware' => ['permission:custodian']]);
+	Route::get('loans/deduction/upload', ['as' => 'loan.deduction.show', 'uses' => 'admin\LoanController@showDeduction', 'middleware' => ['permission:custodian']]);
+	
 	Route::get('loans/complete/{id}', ['as' => 'loan.complete', 'uses' => 'admin\LoanController@complete', 'middleware' => ['permission:custodian']]);
 	Route::get('loans/print/{id}', ['as' => 'loan.print', 'uses' => 'admin\LoanController@printForm', 'middleware' => ['permission:officer|custodian']]);
 	Route::get('loans/deductions/list', ['as' => 'loan.deduction.list', 'uses' => 'admin\LoanController@getDeductions', 'middleware' => ['permission:custodian|payroll']]);

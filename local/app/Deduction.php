@@ -23,4 +23,6 @@ class Deduction extends Model
     	else
     		return $this->attributes['date'];
     }
+	
+	
 }

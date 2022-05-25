@@ -9,7 +9,8 @@
   </div><!-- /.modal -->
 
 	<div class="row" ng-app="ApprovalApp" ng-controller="ApprovalCtrl">
-		  <div class="modal fade" tabindex="-1" role="dialog" id="deductions">
+
+		<div class="modal fade" tabindex="-1" role="dialog" id="deductions">
 		    <div class="modal-dialog modal-lg" role="document">
 		      	<div class="modal-contents" style="background-color: #fff">
 	                <div class="modal-header">
@@ -94,7 +95,18 @@
 			<a id="refreshBtn" class="btn btn-sm btn-default" href="{{ route('admin.loan') }}"><i class="fa fa-refresh"></i> 
 			Refresh</a>
 			@permission('custodian')
-			<a class="btn btn-sm btn-info" data-toggle="modal" data-target="#deductions" ng-click="loadBatchDeduction('{{ route('loan.deduction.list') }}')"> Batch Deductions</a>
+
+			<div class="btn-group" role="group">
+				<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				  Deductions
+					<span class="caret"></span>
+				</button>
+				<ul class="dropdown-menu">
+					<li><a class="btn btn-sm btn-info" data-toggle="modal" data-target="#deductions" ng-click="loadBatchDeduction('{{ route('loan.deduction.list') }}')"> Batch Deductions</a></li>
+					<li><a href="{{ route('loan.deduction.show') }}"></a>Upload Deductions</li>
+				</ul>
+			</div>
+
 			<a class="btn btn-sm btn-info" data-toggle="modal" data-target="#email" ng-click="loadPayrollList('{{ route('loan.email.list') }}')"><i class="fa fa-envelope"></i> Payroll Verifications</a>
 			<a class="btn btn-sm btn-primary" data-toggle="modal" data-target="#officer" ng-click="loadOfficerList('{{ route('loan.officer.list') }}')"><i class="fa fa-envelope"></i> For Officer's Approval</a>
 			<a class="btn btn-sm btn-primary pull-right" style="margin-right: 10px" href="{{ route('upload.show') }}"><i class="fa fa-upload"></i> Import</a>

@@ -913,6 +913,94 @@ class LoanController extends Controller
         return redirect()->route('admin.loan')->withSuccess('Deductions Applied successfully!');
     }
 
+    public function showDeduction()
+    {
+        return view('admin.loans.upload_deductions');
+    }
+
+    /**
+     * Upload back deductions
+     */
+    public function uploadDeductions(Request $request)
+    {
+        $deductions = [];
+        $valid = true;
+        if(Input::hasFile('fileToUpload')){
+
+            $path = Input::file('fileToUpload')->getRealPath();
+            $data = Excel::selectSheets('Deductions')->load($path, function($reader) {})->get();
+
+            DB::beginTransaction();
+            foreach ($data as $deduction) {
+                // validate
+                // Check required
+                $errors = (object)[
+                    'required' => [],
+                    'noActiveLoan' => []
+                ];
+                foreach($deduction->toArray() as $key=>$value)  {
+                    if(in_array($key, ['companycode', 'employeeid', 'paydate', 'amountpaid']) && empty(trim($value)) && $key != '0'){
+                            array_push($errors->required, $key);
+                            $valid = false;
+                        }
+
+                }
+
+                // eFundData (Loan)
+                $eFundData = Loan::where('EmpID', $deduction->employeeid)
+                    ->where('DBNAME', $deduction->companycode)
+                    ->status($this->utils->getStatusIndex('inc'))
+                    ->first();
+
+                if(empty($eFundData)){
+                    array_push($errors->noActiveLoan, ['No active loan']);
+                    $valid = false;
+                }
+
+                array_push($deductions, (object)[
+                    'data' => $deduction,
+                    'errors' => $errors
+                ]);
+
+            }
+
+            if(!$valid)
+                return view('admin.loans.upload_deductions')
+                    ->withError('Upload failed!')
+                    ->withValid($valid)
+                    ->withDeductions($deductions);
+            
+            $deductions=[];
+            foreach ($data as $deduction) {
+
+                $eFundData = Loan::where('EmpID', $deduction->employeeid)
+                    ->where('DBNAME', $deduction->companycode)
+                    ->status($this->utils->getStatusIndex('inc'))
+                    ->first();
+
+                $paydate = Deduction::where('eFundData_id', $eFundData->id)
+                    ->where('date', $deduction->paydate)
+                    ->first();
+                if(!$paydate)
+                    $paydate = new Deduction();
+
+                $paydate->eFundData_id = $eFundData->id;
+                $paydate->date = $deduction->paydate;
+                $paydate->ar_no = $deduction->arnumber;
+                $paydate->amount = $deduction->amountpaid;
+                $paydate->updated_by = Auth()->user()->id;
+                $paydate->updated_at = date('Y-m-d H:i:s');
+                $paydate->save();
+
+                DB::update('EXEC updateBalance ?', [$paydate->id]);
+            }
+
+            return view('admin.loans.upload_deductions')
+                ->withValid($valid)
+                ->withSuccess('Deductions were uploaded successfully!');
+        }
+    }
+
     /*
      *
      * Send list of all loan applications to payroll 
