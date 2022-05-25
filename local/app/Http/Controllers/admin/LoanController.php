@@ -952,7 +952,7 @@ class LoanController extends Controller
                     ->where('status', $this->utils->getStatusIndex('inc'))
                     ->first();
 
-                if(!$eFundData->id){
+                if(!$eFundData){
                     array_push($errors->noActiveLoan, 'No active loan');
                     $valid = false;
                 }
