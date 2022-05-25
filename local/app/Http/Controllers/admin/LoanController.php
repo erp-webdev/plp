@@ -995,7 +995,7 @@ class LoanController extends Controller
                 DB::update('EXEC updateBalance ?', [$paydate->id]);
             }
 
-            DB:commit();
+            DB::commit();
 
             return view('admin.loans.upload_deductions')
                 ->withValid($valid)
