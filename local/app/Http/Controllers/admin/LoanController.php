@@ -939,6 +939,9 @@ class LoanController extends Controller
                     'noActiveLoan' => []
                 ];
                 foreach($deduction->toArray() as $key=>$value)  {
+                    if($key=='companycode' && empty(trim($value)))
+                        continue;
+
                     if(in_array($key, ['companycode', 'employeeid', 'paydate', 'amountpaid']) && empty(trim($value)) && $key != '0'){
                             array_push($errors->required, $key);
                             $valid = false;
