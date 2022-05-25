@@ -921,7 +921,7 @@ class LoanController extends Controller
     /**
      * Upload back deductions
      */
-    public function uploadDeductions(Request $request)
+    public function uploadDeduction(Request $request)
     {
         $deductions = [];
         $valid = true;
