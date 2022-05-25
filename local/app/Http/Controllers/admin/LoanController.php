@@ -952,7 +952,7 @@ class LoanController extends Controller
                     ->where('status', $this->utils->getStatusIndex('inc'))
                     ->first();
 
-                if($eFundData){
+                if(!$eFundData){
                     array_push($errors->noActiveLoan, 'No active loan');
                     $valid = false;
                 }
@@ -964,7 +964,6 @@ class LoanController extends Controller
 
             }
 
-            dd($deductions);
 
             if(!$valid)
                 return view('admin.loans.upload_deductions')
