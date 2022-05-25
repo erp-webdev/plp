@@ -96,13 +96,13 @@
 			Refresh</a>
 			@permission('custodian')
 
-			<div class="btn-group" role="group">
+			<div class="btn-group btn-sm btn-info" role="group">
 				<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 				  Deductions
 					<span class="caret"></span>
 				</button>
 				<ul class="dropdown-menu">
-					<li><a class="btn btn-sm btn-info" data-toggle="modal" data-target="#deductions" ng-click="loadBatchDeduction('{{ route('loan.deduction.list') }}')"> Batch Deductions</a></li>
+					<li><a class="" data-toggle="modal" data-target="#deductions" ng-click="loadBatchDeduction('{{ route('loan.deduction.list') }}')"> Batch Deductions</a></li>
 					<li><a href="{{ route('loan.deduction.show') }}"></a>Upload Deductions</li>
 				</ul>
 			</div>
