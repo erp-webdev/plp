@@ -64,10 +64,8 @@ class GuarantorController extends Controller
 
             $limits = GLimits::limit($guarantor->EmpID, $guarantor->DBNAME);
             
-            if(empty($limits))
-                $limits = 0;
-            else 
-                $limits = $limits->Amount;
+            
+            $limits = $limits->Amount;
 
             if($guarantor->EmpID != Auth::user()->employee_id)
                 abort(403);
