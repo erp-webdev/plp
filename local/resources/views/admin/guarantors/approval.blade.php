@@ -94,16 +94,16 @@
     <p style="text-align: justify;">I hereby consent to act as surety of the applicant and agree to pay the abovenamed applicant's loan up to the amount of 
     @if($loan->guarantor_status == null && $loan->status == $utils->getStatusIndex('guarantor'))
       <?php 
-        $gAmount = $loan->total - $terms->min_amount;
-        $max = 0;
+        // $gAmount = $loan->total - $terms->min_amount;
+        // $max = 0;
 
-        if($gAmount > $limits)
-          $gAmount = $limits;
+        // if($gAmount > $limits)
+        //   $gAmount = $limits;
 
-        if($loan->total > $limits)
-          $max = $limits;
-        else
-          $max = $loan->total;
+        // if($loan->total > $limits)
+        //   $max = $limits;
+        // else
+        //   $max = $loan->total;
       ?>
       Php <input type="hidden" name="guaranteed_amount" style="width: 100px" min="{{ $gAmount }}" value="{{ $gAmount }}" max="" required>
       <strong style="font-size: 14px">{{ number_format($gAmount, 2, '.', ',') }}</strong>
