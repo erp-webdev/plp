@@ -9,6 +9,7 @@ use eFund\Http\Requests;
 use eFund\Preference;
 use eFund\GLimits;
 use eFund\Terms;
+use eFund\SpecialTerm;
 use Session;
 
 class PreferenceController extends Controller
@@ -23,10 +24,13 @@ class PreferenceController extends Controller
     	$settings = Preference::orderBy('data_type', 'desc')->get();
     	$terms = Terms::All();
         $limits = GLimits::All();
+        $special = SpecialTerm::All();
+
     	return view('admin.preferences')
     	->withSettings($settings)
         ->withLimits($limits)
-    	->withTerms($terms);
+    	->withTerms($terms)
+        ->withSpecial($special);
     }
 
     public function update(Request $request)
@@ -47,6 +51,23 @@ class PreferenceController extends Controller
     {
     	for ($i=0; $i < count($request->id); $i++) { 
     		$term = Terms::find($request->id[$i]);
+    		if(!empty($term)){
+    			$term->company = $request->company;
+    			$term->min_tenure_months = $request->min_tenure[$i];
+    			$term->max_tenure_months = $request->max_tenure[$i];
+    			$term->min_loan_amount = $request->min_amount[$i];
+    			$term->max_loan_amount = $request->max_amount[$i];
+    			$term->save();
+    		}
+    	}
+
+    	return redirect()->route('preferences.index');
+    }
+
+    public function updateSpecialTerms(Request $request)
+    {
+    	for ($i=0; $i < count($request->id); $i++) { 
+    		$term = SpecialTerm::find($request->id[$i]);
     		if(!empty($term)){
     			$term->company = $request->company;
     			$term->min_tenure_months = $request->min_tenure[$i];

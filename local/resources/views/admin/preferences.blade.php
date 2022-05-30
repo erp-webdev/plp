@@ -113,16 +113,44 @@
         <hr>
         <h4>Special Loan Terms</h4>
         <hr>
-        <form class="form form-horizontal" action="{{ route('preferences.terms') }}" method="post">
+        @foreach($special->pluck('company')->unique() as $company)
+        <form class="form form-horizontal" action="{{ route('preferences.special') }}" method="post">
             <input type="hidden" name="_token" value="{{ csrf_token() }}">
             <div class="col-md-12">
+                
                 <table class="table table-hover table-striped">
                     <thead>
-
+                        <th colspan="5">
+                            <input type="text" name="company" class="form-control" value="{{ $company }}">
+                            <br>
+                        </th>
                     </thead>
+                    <tr>
+                        <th>Description</th>
+                        <th>Min Tenure (Months)</th>
+                        <th>Max Tenure (Months)</th>
+                        <th>Min Loanable Amount</th>
+                        <th>Max Loanable Amount</th>
+                    </tr>
+                    <tbody>
+                        @foreach($special->where('company', $company) as $term)
+                        <tr>
+                            <td>
+                                <input type="hidden" name="id[]" value="{{ $term->id }}">
+                                {{ $term->description }}
+                            </td>
+                            <td><input class="form-control input-sm" min="0" type="number" step="1" name="min_tenure[]" value="{{ $term->min_tenure_months }}" required></td>
+                            <td><input class="form-control input-sm" min="0" type="number" step="1" name="max_tenure[]" value="{{ $term->max_tenure_months }}" required></td>
+                            <td><input class="form-control input-sm" min="0" type="number" step="500" name="min_amount[]" value="{{ $term->min_loan_amount }}" required></td>
+                            <td><input class="form-control input-sm" min="0" type="number" step="500" name="max_amount[]" value="{{ $term->max_loan_amount }}" required></td>
+                        </tr>
+                        @endforeach
+                    </tbody>
                 </table>
             </div>
+            <button type="submit" class="btn btn-block btn-sm btn-success"><i class="fa fa-save"></i> Save</button>
         </form>
+        @endforeach
     </div>
     <script type="text/javascript">
         function changeValue(name) {
