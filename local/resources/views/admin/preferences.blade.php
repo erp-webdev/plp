@@ -38,7 +38,7 @@
                 </div>
                 @endif
             @endforeach      
-            <button class="btn btn-success btn-block btn-sm" type="submit"><i class="fa fa-save"></i> Save</button>
+            <button class="btn btn-success btn-block" type="submit"><i class="fa fa-save"></i> Save</button>
         </form>
 	</div>
     <div class="col-md-7" style="border: 1px solid #ccc; padding: 10px; margin: 5px;">
