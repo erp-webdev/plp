@@ -79,16 +79,16 @@
             <div class="col-md-6">
                 
                 <table>
-                    <tr>
+                    <thead>
                         <th colspan="3">
                             <input type="text" class="form-control" value="{{ $company }}">
                         </th>
-                    </tr>
-                    <thead>
+                    </thead>
+                    <tr>
                         <th>Rank/Position</th>
                         <th>Minimum</th>
                         <th>Maximum</th>
-                    </thead>
+                    </tr>
                     <tbody>
                         @foreach($terms->where('company', $company) as $term)
                         <tr>
