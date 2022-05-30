@@ -30,7 +30,7 @@
             </div>
         </form>
     </div>
-    <form id="TransmittalForm" action="{{ route('treasury.transmittals.confirm') }}" method="post">
+    <form id="TransmittalForm" action="{{ route('treasury.transmittals.confirm') }}" method="get">
         {{ csrf_field() }}
         
         <div class="col-xs-12 col-sm-12 col-md-12">
