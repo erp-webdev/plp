@@ -78,26 +78,27 @@
             @foreach($terms->pluck('company')->unique() as $company)
             <div class="col-md-6">
                 <input type="text" value="{{ $company }}">
+                <table>
+                    <thead>
+                        <th>Rank/Position</th>
+                        <th>Minimum</th>
+                        <th>Maximum</th>
+                    </thead>
+                    <tbody>
+                        @foreach($terms->where('company', $company) as $term)
+                        <tr>
+                            <td>
+                                <input type="hidden" name="id[]" value="{{ $term->id }}">
+                                {{ $term->rank_position }}
+                            </td>
+                            <td><input class="form-control input-sm" min="0" type="number" step="500" name="min_amount[]" value="{{ $term->min_amount }}" required></td>
+                            <td><input class="form-control input-sm" min="0" type="number" step="500" name="max_amount[]" value="{{ $term->max_amount }}" required></td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
             </div>
-            <table>
-                <thead>
-                    <th>Rank/Position</th>
-                    <th>Minimum</th>
-                    <th>Maximum</th>
-                </thead>
-                <tbody>
-                    @foreach($terms->where('company', $company) as $term)
-                    <tr>
-                        <td>
-                            <input type="hidden" name="id[]" value="{{ $term->id }}">
-                            {{ $term->rank_position }}
-                        </td>
-                        <td><input class="form-control input-sm" min="0" type="number" step="500" name="min_amount[]" value="{{ $term->min_amount }}" required></td>
-                        <td><input class="form-control input-sm" min="0" type="number" step="500" name="max_amount[]" value="{{ $term->max_amount }}" required></td>
-                    </tr>
-                    @endforeach
-                </tbody>
-            </table>
+
             @endforeach
             
             <button type="submit" class="btn btn-block btn-sm btn-success"><i class="fa fa-save"></i> Save</button>
