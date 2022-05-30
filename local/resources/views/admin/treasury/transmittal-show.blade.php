@@ -68,7 +68,7 @@
 @section('scripts')
 <script>
     function checkBoxes(){
-        $('input[name="exclude[]"]').each(function (index, element) {
+        $('input[name="exclude"]').each(function (index, element) {
             $(element).prop({checked: !$(element).prop('checked')})
             
         });
