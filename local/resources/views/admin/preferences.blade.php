@@ -16,7 +16,7 @@
             <input type="hidden" name="_token" value="{{ csrf_token() }}">
             @foreach($settings as $setting)
                 @if($setting->data_type == 'boolean')
-                <div class="form-group">
+                <div class="form-group col-md-6">
                     <span class="col-md-7">
                     {{ $setting->description }}
                     <span class="help-block">{{ $setting->helper }}</span>
@@ -27,7 +27,7 @@
                     </div>
                 </div>
                 @else
-                <div class="form-group">
+                <div class="form-group  col-md-6">
                     <span class="col-md-7">
                         {{ $setting->description }}
                         <span class="help-block">{{ $setting->helper }}</span>
