@@ -325,10 +325,10 @@ class TreasuryController extends Controller
                             $dateRange = explode("-", $request->check_released);
 
                             if(!empty(trim($dateRange[0])) && !empty(trim($dateRange[1]))){
-                                $query->whereBetween('check_released', [ date('Y-m-d', strtotime(trim($dateRange[0]))), date('Y-m-d', strtotime(trim($dateRange[1])))]);
+                                $query->whereBetween('released', [ date('Y-m-d', strtotime(trim($dateRange[0]))), date('Y-m-d', strtotime(trim($dateRange[1])))]);
                             }
                         }
-                    })->orderBy('check_released', 'asc')
+                    })->orderBy('released', 'asc')
                     ->get();
 
         return $loans;
