@@ -150,6 +150,10 @@ class LoanController extends Controller
             
             $loan->status = $this->utils->getStatusIndex('denied');
             $loan->remarks = $request->remarks;
+            $loan->denied_by = Auth::user()->id;
+            $loan->denied_by_name = Auth::user()->name;
+            $loan->denied_date = date('Y-m-d H:i:s');
+            $loan->denied_remarks = '';
             $loan->save();
             
             Event::fire(new LoanDenied($loan));
