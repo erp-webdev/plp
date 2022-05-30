@@ -30,11 +30,11 @@
     </div>
     <div class="col-xs-12 col-sm-12 col-md-12">
     <hr>
-        <p>The list includes all loan applications not yet transmitted. </p>
+        <p>The list includes all loan applications not yet transmitted. All checked items will be included to the email to be sent.</p>
         <div class="table-responsive">
             <table class="table table-sm table-hover table-bordered table-striped table-condensed">
                 <thead>
-                    <th style=""><input type="checkbox" onclick="checkBoxes()" checked> Exclude</th>
+                    <th style=""><input type="checkbox" onclick="checkBoxes()" checked> Include</th>
                     <th style="">Company</th>
                     <th style="">Name</th>
                     <th style="">CV #</th>
@@ -45,7 +45,7 @@
                 <tbody>
                     @foreach($transmittals as $loan)
                     <tr>
-                        <td style=""><input type="checkbox" name="exclude[]" value="{{ $loan->id }}" checked></td>
+                        <td style=""><input type="checkbox" name="include[]" value="{{ $loan->id }}" checked></td>
                         <td style="">{{ $loan->COMPANY }}</td>
                         <td style="">{{ $loan->FullName }}</td>
                         <td style="">{{ $loan->cv_no }}</td>
@@ -68,7 +68,7 @@
 @section('scripts')
 <script>
     function checkBoxes(){
-        $('input[name="exclude[]"]').each(function (index, element) {
+        $('input[name="include[]"]').each(function (index, element) {
             $(element).prop({checked: !$(element).prop('checked')})
             
         });
