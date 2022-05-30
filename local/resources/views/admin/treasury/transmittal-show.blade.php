@@ -19,8 +19,8 @@
                     <div class="input-group">
                         <input class="form-control input-sm datepicker-range" name="check_released" placeholder="mm/dd/yyyy - mm/dd/yyyy" value="{{ $_GET['check_released'] or old('check_released') }}" autocomplete="off">
                         <div class="input-group-btn">
-                            <button class="btn btn-primary" type="submit" name="search"><i class="fa fa-search"></i></button>
                             <a class="btn btn-default btn-sm" href="{{ route('treasury.transmittal') }}">All</a>
+                            <button class="btn btn-primary" type="submit" name="search"><i class="fa fa-search"></i></button>
                         </div>
                         
                     </div>
