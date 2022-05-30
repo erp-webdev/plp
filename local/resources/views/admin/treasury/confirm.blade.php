@@ -46,6 +46,7 @@
                         @endif
                 </table>
             </div>
+            <button type="submit" class="btn btn-primary"><i class="fa fa-send"></i> Send Email</button>
         </div>
     </form>
 
