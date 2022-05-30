@@ -286,14 +286,14 @@
                         <td>
                             <div class="input-group">
                                 <input type="text" class="form-control" id="guarantor_by" name="guarantor_by" 
-                                value="" readonly>
+                                value="{{ $loan->guarantor_EmpID or old('guarantor_by') }}" readonly>
                                 <span class="input-group-btn">
                                     <a class="btn btn-default" data-toggle="modal" data-target="#search_employee" onclick="search_input = 'guarantor'"><i class="fa fa-search"></i> Search</a>
                                 </span>    
                             </div>
                             <input type="hidden" class="form-control" id="guarantor_dbname" name="guarantor_dbname" 
-                                value="">
-                            <span id="guarantor_name"></span>    
+                                value="{{ $loan->guarantor_dbname or old('guarantor_dbname') }}">
+                            <span id="guarantor_name">{{ $loan->guarantor_FullName or old('guarantor_FullName') }}</span>    
                         </td>
                     </tr>
                     <tr>
