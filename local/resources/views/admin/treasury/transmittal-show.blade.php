@@ -10,6 +10,7 @@
         <a href="{{ route('treasury.index') }}" class="btn btn-default btn-sm"><i class="fa fa-arrow-left"></i> Back</a>
         <a href="{{ route('treasury.transmittal') }}" class="btn btn-default btn-sm"><i class="fa fa-refresh"></i> Refresh</a>
     </div>
+    <hr>
     <div class="col-xs-12 col-sm-12 col-md-12">
         
     </div>
