@@ -30,7 +30,7 @@
             </div>
         </form>
     </div>
-    <form id="TransmittalForm" action="{{ route('treasury.transmittals.confirm') }}" method="get">
+    <form id="TransmittalForm" action="{{ route('treasury.transmittals.confirm') }}" method="post">
         {{ csrf_field() }}
         
         <div class="col-xs-12 col-sm-12 col-md-12">
@@ -66,7 +66,7 @@
                         @endif
                 </table>
             </div>
-            <button type="button" class="btn btn-primary btnSave" data-title="View Final List" data-content="Review and confirm the final list of transmittals before sending as an Email."><i class="fa fa-send" data-form="#TransmittalForm"></i> Preview Email</button>
+            <button type="submit" class="btn btn-primary " data-title="View Final List" data-content="Review and confirm the final list of transmittals before sending as an Email."><i class="fa fa-send" data-form="#TransmittalForm"></i> Preview Email</button>
         </div>
     </form>
 
