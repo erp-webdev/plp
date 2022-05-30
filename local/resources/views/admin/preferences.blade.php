@@ -99,8 +99,8 @@
                                 <input type="hidden" name="id[]" value="{{ $term->id }}">
                                 {{ $term->rank_position }}
                             </td>
-                            <td><input class="form-control input-sm" min="0" type="number" step="500" name="min_tenure[]" value="{{ $term->min_tenure_months }}" required></td>
-                            <td><input class="form-control input-sm" min="0" type="number" step="500" name="max_tenure[]" value="{{ $term->max_tenure_months }}" required></td>
+                            <td><input class="form-control input-sm" min="0" type="number" step="1" name="min_tenure[]" value="{{ $term->min_tenure_months }}" required></td>
+                            <td><input class="form-control input-sm" min="0" type="number" step="1" name="max_tenure[]" value="{{ $term->max_tenure_months }}" required></td>
                             <td><input class="form-control input-sm" min="0" type="number" step="500" name="min_amount[]" value="{{ $term->min_loan_amount }}" required></td>
                             <td><input class="form-control input-sm" min="0" type="number" step="500" name="max_amount[]" value="{{ $term->max_loan_amount }}" required></td>
                         </tr>
