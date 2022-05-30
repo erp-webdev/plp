@@ -37,7 +37,7 @@
             <div class="table-responsive">
                 <table class="table table-sm table-hover table-bordered table-striped table-condensed">
                     <thead>
-                        <th style=""><input type="checkbox" onclick="checkBoxes()" title="If checked, include to the email list" checked></th>
+                        {{-- <th style=""><input type="checkbox" onclick="checkBoxes()" title="If checked, include to the email list" checked></th> --}}
                         <th style="">Company</th>
                         <th style="">Name</th>
                         <th style="">CV #</th>
@@ -48,7 +48,7 @@
                     <tbody>
                         @foreach($transmittals as $loan)
                         <tr>
-                            <td style=""><input type="checkbox" name="include[]" value="{{ $loan->id }}" title="If checked, include to the email list" checked></td>
+                            {{-- <td style=""><input type="checkbox" name="include[]" value="{{ $loan->id }}" title="If checked, include to the email list" checked></td> --}}
                             <td style="">{{ $loan->COMPANY }}</td>
                             <td style="">{{ $loan->FullName }}</td>
                             <td style="">{{ $loan->cv_no }}</td>

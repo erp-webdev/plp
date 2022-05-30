@@ -343,7 +343,7 @@ class TreasuryController extends Controller
         dd($transmittals);
 
         return view('admin.treasury.confirm')
-            ->withLoans($transmittals);
+            ->withTransmittals($transmittals);
     }
 
     public function formatTransmittal()
