@@ -6,7 +6,7 @@
         <h1>Treasury Transmittals</h1>
         <h6>Send list of transmittals to PLP Custodian.</h6>
     </div>
-    <div class="col-xs-12 col-sm-12 col-md-12">
+    <div class="col-xs-12 col-sm-12 col-md-12 form-horizontal">
         <a href="{{ route('treasury.index') }}" class="btn btn-default btn-sm"><i class="fa fa-arrow-left"></i> Back</a>
         <a href="{{ route('treasury.transmittal') }}" class="btn btn-default btn-sm"><i class="fa fa-refresh"></i> Refresh</a>
         <form action="{{ route('treasury.transmittal') }}" method="GET">
