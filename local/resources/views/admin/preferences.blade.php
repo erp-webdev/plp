@@ -80,7 +80,7 @@
                 <table class="table table-hover table-striped">
                     <thead>
                         <th colspan="5">
-                            <input type="text" class="form-control" value="{{ $company }}">
+                            <input type="text" name="company" class="form-control" value="{{ $company }}">
                             <br>
                         </th>
                     </thead>

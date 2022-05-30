@@ -48,8 +48,11 @@ class PreferenceController extends Controller
     	for ($i=0; $i < count($request->id); $i++) { 
     		$term = Terms::find($request->id[$i]);
     		if(!empty($term)){
-    			$term->min_amount = $request->min_amount[$i];
-    			$term->max_amount = $request->max_amount[$i];
+    			$term->company = $request->company;
+    			$term->min_tenure_months = $request->min_tenure[$i];
+    			$term->max_tenure_months = $request->max_tenure[$i];
+    			$term->min_loan_amount = $request->min_amount[$i];
+    			$term->max_loan_amount = $request->max_amount[$i];
     			$term->save();
     		}
     	}
