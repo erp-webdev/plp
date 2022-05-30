@@ -82,6 +82,7 @@
                     <thead>
                         <th colspan="3">
                             <input type="text" class="form-control" value="{{ $company }}">
+                            <br>
                         </th>
                     </thead>
                     <tr>
