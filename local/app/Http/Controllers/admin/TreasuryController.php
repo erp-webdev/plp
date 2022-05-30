@@ -322,7 +322,7 @@ class TreasuryController extends Controller
                     ->where('status', $this->utils->getStatusIndex('inc'))
                     ->where(function($query) use ($request){
                         if(isset($request->check_released)){
-                            $dateRange = explode("-", $request->check_released['check_released']);
+                            $dateRange = explode("-", $request->check_released);
 
                             if(!empty(trim($dateRange[0])) && !empty(trim($dateRange[1]))){
                                 $query->whereBetween('check_released', [ date('Y-m-d', strtotime(trim($dateRange[0]))), date('Y-m-d', strtotime(trim($dateRange[1])))]);
