@@ -391,7 +391,6 @@ class ApplicationController extends Controller
             DB::rollback();
             $request->flash();
 
-            dd($loan);
             return redirect()->back()->withError(trans('error.general'))->withLoan($loan)->withInput();
         }
                 
