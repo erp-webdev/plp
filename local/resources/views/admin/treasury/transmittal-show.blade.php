@@ -17,7 +17,7 @@
                 <label class="col-xs-12 col-sm-6 col-md-4">Released date</label>
                 <div class="col-xs-12 col-sm-6 col-md-8">
                     <div class="input-group">
-                        <input class="form-control input-sm datepicker-range" name="check_released" placeholder="mm/dd/yyyy - mm/dd/yyyy" value="{{ old('check_released') }}" autocomplete="off">
+                        <input class="form-control input-sm datepicker-range" name="check_released" placeholder="mm/dd/yyyy - mm/dd/yyyy" value="{{ $_GET['check_released'] or old('check_released') }}" autocomplete="off">
                         <div class="input-group-btn">
                             <button class="btn btn-primary" type="submit" name="search"><i class="fa fa-search"></i></button>
                         </div>
