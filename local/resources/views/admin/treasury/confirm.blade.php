@@ -3,7 +3,7 @@
 
 <div class="row">
     <div class="col-xs-12 col-sm-12 col-md-12">
-        <h1>Treasury Transmittals</h1>
+        <h1>Confirm Treasury Transmittals</h1>
         <h6>Send list of transmittals to PLP Custodian.</h6>
     </div>
     <div class="col-xs-12 col-sm-12 col-md-12 form-horizontal">
@@ -64,7 +64,6 @@
                         @endif
                 </table>
             </div>
-            <button type="submit" class="btn btn-primary"><i class="fa fa-send"></i> Send Transmittal List</button>
         </div>
     </form>
 

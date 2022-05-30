@@ -334,6 +334,18 @@ class TreasuryController extends Controller
         return $loans;
     }
 
+    public function confirmTransmittals(Request $request)           
+    {
+        
+        $transmittals = Loan::whereIn('id', $request->include)
+            ->get();
+
+        dd($transmittals);
+
+        return view('admin.treasury.confirm')
+            ->withLoans($transmittals);
+    }
+
     public function formatTransmittal()
     {
         $loans = $this->getTransmittalList();
