@@ -69,19 +69,24 @@
         </form>
     </div>
 
-    <div class="col-md-7" style="border: 1px solid #ccc; padding: 10px; margin: 5px;">
+    <div class="col-md-12" style="border: 1px solid #ccc; padding: 10px; margin: 5px;">
         <h4>Terms</h4>
         <hr>
+        
         <form class="form form-horizontal" action="{{ route('preferences.terms') }}" method="post">
             <input type="hidden" name="_token" value="{{ csrf_token() }}">
-            <table class="table table-hover table-condensed table-striped">
+            @foreach($terms->pluck('company')->unique() as $company)
+            <div class="col-md-6">
+                <input type="text" value="{{ $company }}">
+            </div>
+            <table>
                 <thead>
                     <th>Rank/Position</th>
                     <th>Minimum</th>
                     <th>Maximum</th>
                 </thead>
                 <tbody>
-                    @foreach($terms as $term)
+                    @foreach($terms->where('company', $company) as $term)
                     <tr>
                         <td>
                             <input type="hidden" name="id[]" value="{{ $term->id }}">
@@ -93,6 +98,8 @@
                     @endforeach
                 </tbody>
             </table>
+            @endforeach
+            
             <button type="submit" class="btn btn-block btn-sm btn-success"><i class="fa fa-save"></i> Save</button>
         </form>
     </div>
