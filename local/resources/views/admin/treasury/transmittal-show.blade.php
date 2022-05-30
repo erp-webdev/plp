@@ -10,6 +10,8 @@
         <div class="col-xs-12 col-sm-6 col-md-6">
             <a href="{{ route('treasury.index') }}" class="btn btn-default btn-sm"><i class="fa fa-arrow-left"></i> Back</a>
             <a href="{{ route('treasury.transmittal') }}" class="btn btn-default btn-sm"><i class="fa fa-refresh"></i> Refresh</a>
+            <a  class="btn btn-primary btnSave" data-title="View Final List" data-content="Review and confirm the final list of transmittals before sending as an Email."><i class="fa fa-send" data-form="#TransmittalForm"></i> View List</a>
+
         </div>
         <form action="{{ route('treasury.transmittal') }}" method="GET">
             {{ csrf_field() }}
@@ -28,14 +30,14 @@
             </div>
         </form>
     </div>
-    <form action="{{ route('treasury.transmittals.confirm') }}" method="GET">
+    <form id="TransmittalForm" action="{{ route('treasury.transmittals.confirm') }}" method="GET">
         {{ csrf_field() }}
         
         <div class="col-xs-12 col-sm-12 col-md-12">
             <hr>
             <p>The list includes all loan applications not yet transmitted. All checked items will be included to the email to be sent.</p>
             <div class="table-responsive">
-                <table class="table table-sm table-hover table-bordered table-striped table-condensed">
+                <table  class="table table-sm table-hover table-bordered table-striped table-condensed">
                     <thead>
                         <th style=""><input type="checkbox" onclick="checkBoxes()" title="If checked, include to the email list" checked></th>
                         <th style="">Company</th>
@@ -64,7 +66,7 @@
                         @endif
                 </table>
             </div>
-            <button type="submit" class="btn btn-primary"><i class="fa fa-send"></i> Send Transmittal List</button>
+            <a class="btn btn-primary btnSave" data-title="View Final List" data-content="Review and confirm the final list of transmittals before sending as an Email."><i class="fa fa-send" data-form="#TransmittalForm"></i> View List</a>
         </div>
     </form>
 
