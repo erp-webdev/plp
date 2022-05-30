@@ -308,19 +308,27 @@ class TreasuryController extends Controller
 
     }
 
-    public function showTransmittal()
+    public function showTransmittal(Request $request)
     {
-        $transmittals = $this->getTransmittalList();
+        $transmittals = $this->getTransmittalList($request);
 
         return view('admin.treasury.transmittal-show') 
             ->withTransmittals($transmittals);
     }
 
-    public function getTransmittalList()
+    public function getTransmittalList(Request $request)
     {
         $loans = Loan::whereNull('transmittal_date')
                     ->where('status', $this->utils->getStatusIndex('inc'))
-                    ->orderBy('check_released', 'asc')
+                    ->where(function($query) use ($request){
+                        if(isset($request->check_released)){
+                            $dateRange = explode("-", $args['check_released']);
+
+                            if(!empty(trim($dateRange[0])) && !empty(trim($dateRange[1]))){
+                                $query->whereBetween('check_released', [ date('Y-m-d', strtotime(trim($dateRange[0]))), date('Y-m-d', strtotime(trim($dateRange[1])))]);
+                            }
+                        }
+                    })->orderBy('check_released', 'asc')
                     ->get();
 
         return $loans;
