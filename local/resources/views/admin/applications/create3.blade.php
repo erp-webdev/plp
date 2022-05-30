@@ -278,6 +278,7 @@
                             </div>
                             <input type="hidden" class="form-control" id="endorsed_dbname" name="endorsed_dbname" 
                                 value="{{ $loan->endorser_dbname or old('endorsed_dbname') }}">
+                            <input type="hidden" name="endorser_FullName" value="{{ $loan->endorser_FullName or old('endorsed_FullName') }}">    
                             <span id="endorsed_name">{{ $loan->endorser_FullName or old('endorsed_FullName') }}</span>    
                         </td>
                     </tr>
@@ -291,8 +292,8 @@
                                     <a class="btn btn-default" data-toggle="modal" data-target="#search_employee" onclick="search_input = 'guarantor'"><i class="fa fa-search"></i> Search</a>
                                 </span>    
                             </div>
-                            <input type="hidden" class="form-control" id="guarantor_dbname" name="guarantor_dbname" 
-                                value="{{ $loan->guarantor_dbname or old('guarantor_dbname') }}">
+                            <input type="hidden" class="form-control" id="guarantor_dbname" name="guarantor_dbname" value="{{ $loan->guarantor_dbname or old('guarantor_dbname') }}">
+                            <input type="hidden" name="guarantor_FullName" value="{{ $loan->guarantor_FullName or old('guarantor_FullName') }}">
                             <span id="guarantor_name">{{ $loan->guarantor_FullName or old('guarantor_FullName') }}</span>    
                         </td>
                     </tr>
@@ -354,6 +355,7 @@
         $('#' + search_input + "_by").val($(event).data('empid'));
         $('#' + search_input + "_name").html($(event).data('name'));
         $('#' + search_input + "_dbname").val($(event).data('db'));
+        $('#' + search_input + "_FullName").val($(event).data('name'));
 
         $('#search_employee').modal('hide');
     }
