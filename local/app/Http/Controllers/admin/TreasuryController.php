@@ -361,7 +361,9 @@ class TreasuryController extends Controller
         }   
 
         $loans = $this->formatTransmittal($request);
-        $loans_list = $loans;
+        $loans_list = Loan::whereIn('id', $request->include)
+        ->get();
+        
         $email = new EmailController;
 
         foreach ($employees as $employee) {
