@@ -45,7 +45,7 @@
                 <tbody>
                     @foreach($transmittals as $loan)
                     <tr>
-                        <td style=""><input type="checkbox" name="excelude[]" value="{{ $loan->id }}" checked></td>
+                        <td style=""><input type="checkbox" name="exclude[]" value="{{ $loan->id }}" checked></td>
                         <td style="">{{ $loan->COMPANY }}</td>
                         <td style="">{{ $loan->FullName }}</td>
                         <td style="">{{ $loan->cv_no }}</td>
@@ -68,7 +68,7 @@
 @section('scripts')
 <script>
     function checkBoxes(){
-        $('input[name="exclude"]').each(function (index, element) {
+        $('input[name="exclude[]"]').each(function (index, element) {
             $(element).prop({checked: !$(element).prop('checked')})
             
         });
