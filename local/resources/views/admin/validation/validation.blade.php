@@ -102,7 +102,8 @@
     <div class="modal-footer">
       <button type="button" class="btn btn-default btn-sm" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
       @if($loan->status == $utils->getStatusIndex('nurse'))
-      <button type="submit" name="deny" class="btn btn-danger btn-sm" onsubmit="startLoading()"><i class="fa fa-thumbs-down"></i> Invalid</button>
+      {{-- <button type="submit" name="deny" class="btn btn-danger btn-sm" onsubmit="startLoading()"><i class="fa fa-thumbs-down"></i> Invalid</button> --}}
+      <button class="btn btn-danger" data-toggle="modal" data-target="#denial">Invalid</button>
       <button type="submit" name="approve" class="btn btn-success btn-sm" onsubmit="startLoading()"><i class="fa fa-thumbs-up"></i> Valid</button>
       @endif
     </div>
