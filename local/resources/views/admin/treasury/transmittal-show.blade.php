@@ -66,7 +66,7 @@
                         @endif
                 </table>
             </div>
-            <button type="submit" class="btn btn-primary btnSave" data-title="View Final List" data-content="Review and confirm the final list of transmittals before sending as an Email."><i class="fa fa-send" data-form="#TransmittalForm"></i> Preview Email</button>
+            <button type="button" class="btn btn-primary btnSave" data-title="View Final List" data-content="Review and confirm the final list of transmittals before sending as an Email."><i class="fa fa-send" data-form="#TransmittalForm"></i> Preview Email</button>
         </div>
     </form>
 
