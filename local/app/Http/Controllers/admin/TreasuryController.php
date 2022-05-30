@@ -308,11 +308,19 @@ class TreasuryController extends Controller
 
     }
 
+    public function showTransmittal()
+    {
+        $transmittals = $this->getTransmittalList();
+
+        return view('admin.treasury.transmittal-show') 
+            ->withTransmittals($transmittals);
+    }
+
     public function getTransmittalList()
     {
         $loans = Loan::whereNull('transmittal_date')
                     ->where('status', $this->utils->getStatusIndex('inc'))
-                    ->orderBy('FullName', 'asc')
+                    ->orderBy('check_released', 'asc')
                     ->get();
 
         return $loans;
