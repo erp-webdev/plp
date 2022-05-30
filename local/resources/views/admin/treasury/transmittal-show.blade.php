@@ -10,7 +10,7 @@
         <div class="col-xs-12 col-sm-6 col-md-6">
             <a href="{{ route('treasury.index') }}" class="btn btn-default btn-sm"><i class="fa fa-arrow-left"></i> Back</a>
             <a href="{{ route('treasury.transmittal') }}" class="btn btn-default btn-sm"><i class="fa fa-refresh"></i> Refresh</a>
-            <a  class="btn btn-primary btnSave" data-title="View Final List" data-content="Review and confirm the final list of transmittals before sending as an Email."><i class="fa fa-send" data-form="#TransmittalForm"></i> View List</a>
+            <a  class="btn btn-primary btn-sm btnSave" data-title="View Final List" data-content="Review and confirm the final list of transmittals before sending as an Email."><i class="fa fa-send" data-form="#TransmittalForm"></i> View List</a>
 
         </div>
         <form action="{{ route('treasury.transmittal') }}" method="GET">
