@@ -72,10 +72,9 @@
     <div class="col-md-12" style="border: 1px solid #ccc; padding: 10px; margin: 5px;">
         <h4>Terms</h4>
         <hr>
-        
+        @foreach($terms->pluck('company')->unique() as $company)
         <form class="form form-horizontal" action="{{ route('preferences.terms') }}" method="post">
             <input type="hidden" name="_token" value="{{ csrf_token() }}">
-            @foreach($terms->pluck('company')->unique() as $company)
             <div class="col-md-12">
                 
                 <table class="table table-hover table-striped">
@@ -108,11 +107,10 @@
                     </tbody>
                 </table>
             </div>
-
-            @endforeach
-            
             <button type="submit" class="btn btn-block btn-sm btn-success"><i class="fa fa-save"></i> Save</button>
         </form>
+        @endforeach
+            
     </div>
     <script type="text/javascript">
         function changeValue(name) {
