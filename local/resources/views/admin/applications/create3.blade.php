@@ -278,7 +278,7 @@
                             </div>
                             <input type="hidden" class="form-control" id="endorsed_dbname" name="endorsed_dbname" 
                                 value="{{ $loan->endorser_dbname or old('endorsed_dbname') }}">
-                            <input type="hidden" name="endorser_FullName" value="{{ $loan->endorser_FullName or old('endorsed_FullName') }}">    
+                            <input type="hidden" name="endorsed_FullName" value="{{ $loan->endorser_FullName or old('endorsed_FullName') }}">    
                             <span id="endorsed_name">{{ $loan->endorser_FullName or old('endorsed_FullName') }}</span>    
                         </td>
                     </tr>
