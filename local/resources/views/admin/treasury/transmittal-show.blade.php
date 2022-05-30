@@ -34,7 +34,7 @@
         <div class="table-responsive">
             <table class="table table-sm table-hover table-bordered table-striped table-condensed">
                 <thead>
-                    <th style="">Exclude</th>
+                    <th style=""><input type="checkbox" onclick="checkBoxes()"> Exclude</th>
                     <th style="">Company</th>
                     <th style="">Name</th>
                     <th style="">CV #</th>
@@ -64,4 +64,13 @@
     </div>
 </div>
 
+@endsection
+@section('scripts')
+<script>
+    function checkBoxes(){
+        $('input[name="exclude[]"]').forEach(element => {
+            $(this).prop({checked: !$(this).prop('checked')})
+        });
+    }
+</script>
 @endsection
