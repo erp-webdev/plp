@@ -1,15 +1,5 @@
 @extends('admin.layouts.app')
 @section('content')
-<div class="modal fade" role="dialog" id="denial">
-    <div class="modal-dialog" role="document">
-      	<div class="modal-content">
-        	
-			<textarea name="denied_remarks" id="denied_remarks" cols="5" rows="4"></textarea>
-
-  		</div><!-- /.modal-content -->
-	</div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
-
 <div class="modal fade" tabindex="-1" role="dialog" id="loan">
     <div class="modal-dialog" role="document">
       	<div class="modal-content">
