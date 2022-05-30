@@ -278,7 +278,7 @@
                             </div>
                             <input type="hidden" class="form-control" id="endorsed_dbname" name="endorsed_dbname" 
                                 value="{{ $loan->endorser_dbname or old('endorsed_dbname') }}">
-                            <input type="hidden" name="endorsed_FullName" value="{{ $loan->endorser_FullName or old('endorsed_FullName') }}">    
+                            <input type="hidden" id="endorsed_FullName" name="endorsed_FullName" value="{{ $loan->endorser_FullName or old('endorsed_FullName') }}">    
                             <span id="endorsed_name">{{ $loan->endorser_FullName or old('endorsed_FullName') }}</span>    
                         </td>
                     </tr>
@@ -293,7 +293,7 @@
                                 </span>    
                             </div>
                             <input type="hidden" class="form-control" id="guarantor_dbname" name="guarantor_dbname" value="{{ $loan->guarantor_dbname or old('guarantor_dbname') }}">
-                            <input type="hidden" name="guarantor_FullName" value="{{ $loan->guarantor_FullName or old('guarantor_FullName') }}">
+                            <input type="hidden" id="guarantor_FullName" name="guarantor_FullName" value="{{ $loan->guarantor_FullName or old('guarantor_FullName') }}">
                             <span id="guarantor_name">{{ $loan->guarantor_FullName or old('guarantor_FullName') }}</span>    
                         </td>
                     </tr>
