@@ -110,7 +110,19 @@
             <button type="submit" class="btn btn-block btn-sm btn-success"><i class="fa fa-save"></i> Save</button>
         </form>
         @endforeach
-            
+        <hr>
+        <h4>Special Loan Terms</h4>
+        <hr>
+        <form class="form form-horizontal" action="{{ route('preferences.terms') }}" method="post">
+            <input type="hidden" name="_token" value="{{ csrf_token() }}">
+            <div class="col-md-12">
+                <table class="table table-hover table-striped">
+                    <thead>
+
+                    </thead>
+                </table>
+            </div>
+        </form>
     </div>
     <script type="text/javascript">
         function changeValue(name) {
