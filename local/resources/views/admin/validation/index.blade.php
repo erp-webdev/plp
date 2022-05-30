@@ -1,13 +1,5 @@
 @extends('admin.layouts.app')
 @section('content')
-<div class="modal fade" tabindex="-1" role="dialog" id="loan">
-    <div class="modal-dialog" role="document">
-      	<div class="modal-content">
-        	
-  		</div><!-- /.modal-content -->
-	</div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
-
 <div class="modal fade" role="dialog" id="denial">
     <div class="modal-dialog" role="document">
       	<div class="modal-content">
@@ -17,6 +9,16 @@
   		</div><!-- /.modal-content -->
 	</div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+
+<div class="modal fade" tabindex="-1" role="dialog" id="loan">
+    <div class="modal-dialog" role="document">
+      	<div class="modal-content">
+        	
+  		</div><!-- /.modal-content -->
+	</div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
 
 <div ng-app="ApprovalApp" ng-controller="ApprovalCtrl">
 	@include('admin.loan')
