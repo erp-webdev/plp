@@ -271,13 +271,13 @@
                         <td>
                             <div class="input-group">
                                 <input type="text" class="form-control" id="endorsed_by" name="endorsed_by" 
-                                value="" readonly>
+                                value="{{ $loan->endorser_EmpID or old('endorsed_by') }}" readonly>
                                 <span class="input-group-btn">
                                     <a class="btn btn-default" data-toggle="modal" data-target="#search_employee" onclick="search_input = 'endorsed'"><i class="fa fa-search"></i> Search</a>
                                 </span>    
                             </div>
                             <input type="hidden" class="form-control" id="endorsed_dbname" name="endorsed_dbname" 
-                                value="">
+                                value="{{ $loan->endorser_dbname or old('endorsed_dbname') }}">
                             <span id="endorsed_name"></span>    
                         </td>
                     </tr>
