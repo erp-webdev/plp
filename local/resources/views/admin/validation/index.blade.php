@@ -8,7 +8,7 @@
 	</div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
-<div class="modal fade" tabindex="-1" role="dialog" id="denial">
+<div class="modal fade" role="dialog" id="denial">
     <div class="modal-dialog" role="document">
       	<div class="modal-content">
         	
