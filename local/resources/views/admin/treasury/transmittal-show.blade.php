@@ -7,6 +7,13 @@
         <h6>Send list of transmittals to PLP Custodian.</h6>
     </div>
     <div class="col-xs-12 col-sm-12 col-md-12 form-horizontal">
+        <div class="col-xs-12 col-sm-6 col-md-6">
+            <a href="{{ route('treasury.index') }}" class="btn btn-default btn-sm"><i class="fa fa-arrow-left"></i> Back</a>
+            <a href="{{ route('treasury.transmittal') }}" class="btn btn-default btn-sm"><i class="fa fa-refresh"></i> Refresh</a>
+        </div>
+      
+    </div>
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
         <form action="{{ route('treasury.transmittal') }}" method="GET">
             {{ csrf_field() }}
             <div class="col-xs-12 col-sm-6 col-md-6">
@@ -23,11 +30,6 @@
                 </div>
             </div>
         </form>
-
-        <div class="col-xs-12 col-sm-6 col-md-6">
-            <a href="{{ route('treasury.index') }}" class="btn btn-default btn-sm"><i class="fa fa-arrow-left"></i> Back</a>
-            <a href="{{ route('treasury.transmittal') }}" class="btn btn-default btn-sm"><i class="fa fa-refresh"></i> Refresh</a>
-        </div>
     </div>
     <div class="col-xs-12 col-sm-12 col-md-12">
     <hr>
