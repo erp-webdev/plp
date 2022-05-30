@@ -9,6 +9,11 @@
     <div class="col-xs-12 col-sm-12 col-md-12">
         <a href="{{ route('treasury.index') }}" class="btn btn-default btn-sm"><i class="fa fa-arrow-left"></i> Back</a>
         <a href="{{ route('treasury.transmittal') }}" class="btn btn-default btn-sm"><i class="fa fa-refresh"></i> Refresh</a>
+        <form action="{{ route('treasury.transmittal') }}" method="GET">
+            {{ csrf_field() }}
+            Released date
+            <input class="form-control input-sm datepicker-range" name="check_released" placeholder="mm/dd/yyyy">
+        </form>
     </div>
     <div class="col-xs-12 col-sm-12 col-md-12">
     <hr>
