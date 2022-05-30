@@ -76,19 +76,21 @@
         <form class="form form-horizontal" action="{{ route('preferences.terms') }}" method="post">
             <input type="hidden" name="_token" value="{{ csrf_token() }}">
             @foreach($terms->pluck('company')->unique() as $company)
-            <div class="col-md-6">
+            <div class="col-md-12">
                 
                 <table>
                     <thead>
-                        <th colspan="3">
+                        <th colspan="5">
                             <input type="text" class="form-control" value="{{ $company }}">
                             <br>
                         </th>
                     </thead>
                     <tr>
                         <th>Rank/Position</th>
-                        <th>Minimum</th>
-                        <th>Maximum</th>
+                        <th>Min Tenure (Months)</th>
+                        <th>Max Tenure (Months)</th>
+                        <th>Min Loanable Amount</th>
+                        <th>Max Loanable Amount</th>
                     </tr>
                     <tbody>
                         @foreach($terms->where('company', $company) as $term)
@@ -97,8 +99,10 @@
                                 <input type="hidden" name="id[]" value="{{ $term->id }}">
                                 {{ $term->rank_position }}
                             </td>
-                            <td><input class="form-control input-sm" min="0" type="number" step="500" name="min_amount[]" value="{{ $term->min_amount }}" required></td>
-                            <td><input class="form-control input-sm" min="0" type="number" step="500" name="max_amount[]" value="{{ $term->max_amount }}" required></td>
+                            <td><input class="form-control input-sm" min="0" type="number" step="500" name="min_tenure[]" value="{{ $term->min_tenure_months }}" required></td>
+                            <td><input class="form-control input-sm" min="0" type="number" step="500" name="max_tenure[]" value="{{ $term->max_tenure_months }}" required></td>
+                            <td><input class="form-control input-sm" min="0" type="number" step="500" name="min_amount[]" value="{{ $term->min_loan_amount }}" required></td>
+                            <td><input class="form-control input-sm" min="0" type="number" step="500" name="max_amount[]" value="{{ $term->max_loan_amount }}" required></td>
                         </tr>
                         @endforeach
                     </tbody>
