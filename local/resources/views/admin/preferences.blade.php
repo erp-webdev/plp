@@ -78,7 +78,7 @@
             @foreach($terms->pluck('company')->unique() as $company)
             <div class="col-md-12">
                 
-                <table>
+                <table class="table table-hover table-striped">
                     <thead>
                         <th colspan="5">
                             <input type="text" class="form-control" value="{{ $company }}">
