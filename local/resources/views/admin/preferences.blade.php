@@ -41,34 +41,8 @@
             <button class="btn btn-success btn-block" type="submit"><i class="fa fa-save"></i> Save</button>
         </form>
 	</div>
-    <div class="col-md-7" style="border: 1px solid #ccc; padding: 10px; margin: 5px;">
-        <h4>Terms</h4>
-        <hr>
-        <form class="form form-horizontal" action="{{ route('preferences.terms') }}" method="post">
-            <input type="hidden" name="_token" value="{{ csrf_token() }}">
-            <table class="table table-hover table-condensed table-striped">
-                <thead>
-                    <th>Rank/Position</th>
-                    <th>Minimum</th>
-                    <th>Maximum</th>
-                </thead>
-                <tbody>
-                    @foreach($terms as $term)
-                    <tr>
-                        <td>
-                            <input type="hidden" name="id[]" value="{{ $term->id }}">
-                            {{ $term->rank_position }}
-                        </td>
-                        <td><input class="form-control input-sm" min="0" type="number" step="500" name="min_amount[]" value="{{ $term->min_amount }}" required></td>
-                        <td><input class="form-control input-sm" min="0" type="number" step="500" name="max_amount[]" value="{{ $term->max_amount }}" required></td>
-                    </tr>
-                    @endforeach
-                </tbody>
-            </table>
-            <button type="submit" class="btn btn-block btn-sm btn-success"><i class="fa fa-save"></i> Save</button>
-        </form>
-    </div>
-   <div class="col-md-7" style="border: 1px solid #ccc; padding: 10px; margin: 5px;">
+  
+    <div class="col-md-12" style="border: 1px solid #ccc; padding: 10px; margin: 5px;">
         <h4>Guaranteed Amount</h4>
         <span class="help-block">Zero (0) means no limit</span>
         <hr>
@@ -94,6 +68,8 @@
             <button type="submit" class="btn btn-block btn-sm btn-success"><i class="fa fa-save"></i> Save</button>
         </form>
     </div>
+
+    
     <script type="text/javascript">
         function changeValue(name) {
             if($(name).val() == 0){
