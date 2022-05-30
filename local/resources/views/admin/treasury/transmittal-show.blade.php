@@ -34,7 +34,7 @@
         <div class="table-responsive">
             <table class="table table-sm table-hover table-bordered table-striped table-condensed">
                 <thead>
-                    <th style=""><input type="checkbox" onclick="checkBoxes()"> Exclude</th>
+                    <th style=""><input type="checkbox" onclick="checkBoxes()" checked> Exclude</th>
                     <th style="">Company</th>
                     <th style="">Name</th>
                     <th style="">CV #</th>
