@@ -98,6 +98,7 @@ Route::group(['prefix' => '/', 'middleware' => ['auth']], function(){
 	Route::get('treasury/transmittal/list', ['as' => 'treasury.email.list', 'uses' => 'admin\TreasuryController@formatTransmittal', 'middleware' => ['permission:treasurer']]);
 	Route::get('treasury/transmittal', ['as' => 'treasury.transmittal', 'uses' => 'admin\TreasuryController@showTransmittal', 'middleware' => ['permission:treasurer']]);
 	Route::post('treasury/transmittal/confirm', ['as' => 'treasury.transmittals.confirm', 'uses' => 'admin\TreasuryController@confirmTransmittals', 'middleware' => ['permission:treasurer']]);
+	Route::post('treasury/transmittal/send', ['as' => 'treasury.transmittals.send', 'uses' => 'admin\TreasuryController@sendTransmittal', 'middleware' => ['permission:treasurer']]);
 
 
 	// Payroll

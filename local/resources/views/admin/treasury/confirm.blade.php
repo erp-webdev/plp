@@ -11,9 +11,8 @@
             <a href="{{ route('treasury.transmittal') }}" class="btn btn-default btn-sm"><i class="fa fa-arrow-left"></i> Back</a>
         </div>
     </div>
-    <form action="{{ route('treasury.transmittals.confirm') }}" method="post">
+    <form action="{{ route('treasury.transmittals.send') }}" method="post">
         {{ csrf_field() }}
-        
         <div class="col-xs-12 col-sm-12 col-md-12">
             <hr>
             <p>The list includes all loan applications not yet transmitted. All checked items will be included to the email to be sent.</p>

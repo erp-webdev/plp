@@ -336,17 +336,17 @@ class TreasuryController extends Controller
 
     public function confirmTransmittals(Request $request)           
     {
-        
         $transmittals = Loan::whereIn('id', $request->include)
             ->get();
 
         return view('admin.treasury.confirm')
             ->withTransmittals($transmittals);
     }
-
-    public function formatTransmittal()
+    
+    public function formatTransmittal(Request $request)
     {
-        $loans = $this->getTransmittalList();
+        $loans = Loan::whereIn('id', $request->include)
+            ->get();
 
         return view('admin.treasury.transmittal')
             ->withLoans($loans);
@@ -360,12 +360,8 @@ class TreasuryController extends Controller
             return redirect()->route('treasury.index')->withError('Email was not sent! No user tagged with officer roles was found!');
         }   
 
-        $loans = $this->getTransmittalList();
+        $loans = $this->formatTransmittal($request);
         $loans_list = $loans;
-        if(count($loans) == 0)
-            return redirect()->route('treasury.index')->withError('Email was not sent! There are no loan applications for transmittal');
-
-        $loans = $this->formatTransmittal($loans);
         $email = new EmailController;
 
         foreach ($employees as $employee) {
@@ -379,7 +375,7 @@ class TreasuryController extends Controller
                 ->first();
 
             if(isset($emp->EmailAdd))
-                $email->send($emp, config('preferences.notif_subjects.treasury_transmittal', 'Released Check Transmittal'), 'emails.treasury_transmittal', $args, $cc = '');
+                $email->send($emp, config('preferences.notif_subjects.treasury_transmittal', 'Released Check Transmittal'), 'emails.treasury_transmittal', $args, $cc = Auth::user()->email);
         }
 
         Treasury::whereIn('eFundData_id', $loans_list->pluck('id'))
