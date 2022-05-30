@@ -44,7 +44,7 @@
                 <tbody>
                     @foreach($transmittals as $loan)
                     <tr>
-                        <td style=""><input type="checkbox" name="excelude[]" value="{{ $loan->id }}"></td>
+                        <td style=""><input type="checkbox" name="excelude[]" value="{{ $loan->id }}" checked></td>
                         <td style="">{{ $loan->COMPANY }}</td>
                         <td style="">{{ $loan->FullName }}</td>
                         <td style="">{{ $loan->cv_no }}</td>
