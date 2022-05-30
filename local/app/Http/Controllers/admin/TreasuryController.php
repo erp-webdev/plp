@@ -340,8 +340,6 @@ class TreasuryController extends Controller
         $transmittals = Loan::whereIn('id', $request->include)
             ->get();
 
-        dd($transmittals);
-
         return view('admin.treasury.confirm')
             ->withTransmittals($transmittals);
     }
