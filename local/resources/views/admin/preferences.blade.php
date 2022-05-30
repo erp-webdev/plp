@@ -77,7 +77,7 @@
             <input type="hidden" name="_token" value="{{ csrf_token() }}">
             @foreach($terms->pluck('company')->unique() as $company)
             <div class="col-md-6">
-                <input type="text" class="form-control" value="{{ $company }}">
+                
                 <table>
                     <thead>
                         <th>Rank/Position</th>
@@ -85,6 +85,9 @@
                         <th>Maximum</th>
                     </thead>
                     <tbody>
+                        <tr>
+                            <td colspan="3"><input type="text" class="form-control" value="{{ $company }}"></td>
+                        </tr>
                         @foreach($terms->where('company', $company) as $term)
                         <tr>
                             <td>
