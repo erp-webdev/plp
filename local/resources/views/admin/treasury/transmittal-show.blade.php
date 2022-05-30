@@ -19,7 +19,7 @@
                     <div class="input-group">
                         <input class="form-control input-sm datepicker-range" name="check_released" placeholder="mm/dd/yyyy">
                         <div class="input-group-btn">
-                            <button class="btn btn-primary btn-sm" type="submit" name="search"><i class="fa fa-search"></i></button>
+                            <button class="btn btn-primary" type="submit" name="search"><i class="fa fa-search"></i></button>
                         </div>
                         
                     </div>
