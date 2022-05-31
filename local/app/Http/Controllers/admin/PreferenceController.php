@@ -12,6 +12,7 @@ use eFund\Terms;
 use eFund\SpecialTerm;
 use eFund\AllowedAboveMaxLoan;
 use Session;
+use Auth;
 
 class PreferenceController extends Controller
 {
