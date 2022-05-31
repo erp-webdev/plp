@@ -31,7 +31,7 @@
                             <td><button type="submit" name="save" class="btn btn-primary" title="Save"><i class="fa fa-save"></i></button></td>
                         </tr>
                         @foreach($employees as $employee)
-                        <tr>
+                        <tr {{ date('Y-m-d', strtotime($employee->ExpiredAt)) >= date('Y-m-d') ? 'bg-red' : '' }}>
                             <td>
                                 <input type="hidden" name="id" value="{{ $employee->ID }}">
                                 {{ $employee->ID }}</td>
