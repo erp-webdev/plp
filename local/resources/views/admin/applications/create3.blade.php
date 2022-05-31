@@ -280,7 +280,7 @@
                                 <input type="text" class="form-control" id="endorsed_by" name="endorsed_by" 
                                 value="{{ $loan->endorser_EmpID or old('endorsed_by') }}" readonly>
                                 <span class="input-group-btn">
-                                    <a id="searchbtn" class="btn btn-default" data-toggle="modal" data-target="#search_employee" onclick="search_input = 'endorsed'"><i class="fa fa-search"></i> Search</a>
+                                    <a id="searchbtn" class="btn btn-default {{ isset($loan->special) ? 'hidden' : '' }}" data-toggle="modal" data-target="#search_employee" onclick="search_input = 'endorsed'"><i class="fa fa-search"></i> Search</a>
                                 </span>    
                             </div>
                             <input type="hidden" class="form-control" id="endorsed_dbname" name="endorsed_dbname" 
@@ -296,7 +296,7 @@
                                 <input type="text" class="form-control" id="guarantor_by" name="guarantor_by" 
                                 value="{{ $loan->guarantor_EmpID or old('guarantor_by') }}" readonly>
                                 <span class="input-group-btn">
-                                    <a id="searchbtn" class="btn btn-default" data-toggle="modal" data-target="#search_employee" onclick="search_input = 'guarantor'"><i class="fa fa-search"></i> Search</a>
+                                    <a id="searchbtn" class="btn btn-default {{ isset($loan->special) ? 'hidden' : '' }}" data-toggle="modal" data-target="#search_employee" onclick="search_input = 'guarantor'"><i class="fa fa-search"></i> Search</a>
                                 </span>    
                             </div>
                             <input type="hidden" class="form-control" id="guarantor_dbname" name="guarantor_dbname" value="{{ $loan->guarantor_dbname or old('guarantor_dbname') }}">
