@@ -127,7 +127,7 @@ class PreferenceController extends Controller
 		}else{
 
 			$D = DB::table('allowed_above_max_loan')->where('ID', $request->delete)
-				->first();
+				->delete();
 
 			return redirect()->back()
 				->withSuccess("Employee has been deleted successfully!");
