@@ -10,6 +10,7 @@ use eFund\Preference;
 use eFund\GLimits;
 use eFund\Terms;
 use eFund\SpecialTerm;
+use eFund\AllowedAboveMaxLoan;
 use Session;
 
 class PreferenceController extends Controller
@@ -93,4 +94,39 @@ class PreferenceController extends Controller
 
         return redirect()->route('preferences.index');
     }
+
+	public function showAboveMaxLoan(Request $request)
+	{
+		$list = AllowedAboveMaxLoan::all();
+
+		return view('admin.overmaxloan')
+			->withEmployees($list);
+	}
+
+	public function updateAboveMaxLoan(Request $request)
+	{
+		if(isset($request->save)){
+			$item = new AllowedAboveMaxLoan();
+			$item->EmpID = $request->EmpID;
+			$item->DBName = $request->DBName;
+			$item->FullName = $request->FullName;
+			$item->ExpiredAt = $request->ExpiredAt;
+			$item->CreatedAt = date('Y-m-d H:i:s');
+			$item->CreatedBy = Auth::user()->id;
+			$item->save();
+
+			return redirect()->back()
+			->withSuccess('Employee has been added successfully!');
+		}else{
+
+			$item = AllowedAboveMaxLoan::find($request->id);
+			$item->delete();
+
+			return redirect()->back()
+				->withSuccess("Employee has been deleted successfully!");
+
+		}
+
+		
+	}
 }

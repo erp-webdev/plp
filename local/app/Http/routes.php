@@ -146,6 +146,10 @@ Route::group(['middleware' => ['auth']], function() {
 	Route::post('preferences/special',['as'=>'preferences.special','uses'=>'admin\PreferenceController@updateSpecialTerms', 'middleware' => ['permission:Preferences']]);
 	Route::post('preferences/limits',['as'=>'preferences.limits','uses'=>'admin\PreferenceController@updateGLimits', 'middleware' => ['permission:Preferences']]);
 
+	Route::get('preferences/loan',['as'=>'preferences.loan','uses'=>'admin\PreferenceController@showAboveMaxLoan', 'middleware' => ['permission:Preferences']]);
+	Route::post('preferences/loan',['as'=>'preferences.loan','uses'=>'admin\PreferenceController@updateAboveMaxLoan', 'middleware' => ['permission:Preferences']]);
+	
+
 	// FAQ
 	Route::get('admin/documentation', function () {
 		Session::set('menu', 'faq');
