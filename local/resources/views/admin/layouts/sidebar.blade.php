@@ -95,6 +95,10 @@ function setWrapperStatus(){
 						<i class="fa fa-sliders pull-right"></i>
 					    Maintenance
 					</a>
+					<a id="prefMenu2" class="btn btn-primary sidebar-submenu <?php if(Session::get('menu')=='above') echo 'active'?>" href="{{ route('preferences.loan') }}">
+						<i class="fa fa-sliders pull-right"></i>
+					    Above Max Loan
+					</a>
 				@endpermission
 					<!-- <a id="docMenu" class="btn btn-primary sidebar-submenu <?php if(Session::get('menu')=='faq') echo 'active'?>" href="{{ url('admin/documentation') }}">
 						<i class="fa fa-question pull-right"></i>
