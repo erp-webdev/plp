@@ -67,7 +67,7 @@
                 </span>
             </div>
             <div class="modal-body">
-                <table id="search_employee_table" class="table table-hover table-striped">
+                <table id="search_employee_table" class="table table-hover table-striped table-bordered">
                     <thead>
                         <tr>
                             <th>EmpID</th>
