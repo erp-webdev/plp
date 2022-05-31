@@ -296,7 +296,7 @@
                                 <input type="text" class="form-control" id="guarantor_by" name="guarantor_by" 
                                 value="{{ $loan->guarantor_EmpID or old('guarantor_by') }}" readonly>
                                 <span class="input-group-btn">
-                                    <a id="searchbtn" class="btn btn-default {{ isset($loan->special) ? 'hidden' : '' }}" data-toggle="modal" data-target="#search_employee" onclick="search_input = 'guarantor'"><i class="fa fa-search"></i> Search</a>
+                                    <a id="searchbtn2" class="btn btn-default {{ isset($loan->special) ? 'hidden' : '' }}" data-toggle="modal" data-target="#search_employee" onclick="search_input = 'guarantor'"><i class="fa fa-search"></i> Search</a>
                                 </span>    
                             </div>
                             <input type="hidden" class="form-control" id="guarantor_dbname" name="guarantor_dbname" value="{{ $loan->guarantor_dbname or old('guarantor_dbname') }}">
@@ -408,9 +408,8 @@
         $('input[name="terms"]').removeAttr('readonly');
         $('input[name="purpose"]').removeAttr('readonly');
 
-        $('#searchbtn').each(function (index, element) {
-            $(element).removeClass('hidden');
-        });
+        $('#searchbtn').removeClass('hidden');
+        $('#searchbtn2').removeClass('hidden');
 
         $('button[#edit]').removeClass('hidden');
         $('button[name="verify"]').removeClass('hidden');
