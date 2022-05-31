@@ -400,13 +400,13 @@
     function editForm(){
         
         $('input[name="special"]').each(function (index, element) {
-            $(element).prop({"readonly":"readonly"});
+            $(element).removeAttr('readonly')
         });
 
-        $('input[name="local"]').prop({"readonly":"readonly"});
-        $('input[name="loan_amount"]').prop({"readonly":"readonly"});
-        $('input[name="terms"]').prop({"readonly":"readonly"});
-        $('input[name="purpose"]').prop({"readonly":"readonly"});
+        $('input[name="local"]').removeAttr('readonly');
+        $('input[name="loan_amount"]').removeAttr('readonly');
+        $('input[name="terms"]').removeAttr('readonly');
+        $('input[name="purpose"]').removeAttr('readonly');
 
         $('#searchbtn').each(function (index, element) {
             $(element).removeClass('hidden');
