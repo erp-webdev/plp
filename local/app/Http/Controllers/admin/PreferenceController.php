@@ -13,6 +13,7 @@ use eFund\SpecialTerm;
 use eFund\AllowedAboveMaxLoan;
 use Session;
 use Auth;
+use DB;
 
 class PreferenceController extends Controller
 {
@@ -125,8 +126,8 @@ class PreferenceController extends Controller
 			->withSuccess('Employee has been added successfully!');
 		}else{
 
-			$item = AllowedAboveMaxLoan::where('ID', $request->id)->first();
-			$item->delete();
+			DB::table('allowed_above_max_loan')->where('ID', $request->id)
+				->delete();
 
 			return redirect()->back()
 				->withSuccess("Employee has been deleted successfully!");
