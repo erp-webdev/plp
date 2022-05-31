@@ -761,7 +761,7 @@ class ApplicationController extends Controller
             ->where('ExpiredAt', '>=', date('Y-m-d'))
             ->first();
 
-        if($allow_max_ex)
+        if(!empty($allow_max_ex))
             return false;
 
         if($special == 0){
