@@ -134,7 +134,7 @@ class ApplicationController extends Controller
                     ->withSpecial($special_loan)
                     ->withMonthsSpecial($months_special->value)
                     ->with('approvers', $approvers)
-                    ->with('allowed_above_max', $allow_max_ex);
+                    ->with('allowed_above_max', $allow_max_ex)
                     ->withUtils(new Utils());
         }else{
             return view('admin.applications.show3')
