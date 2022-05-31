@@ -97,7 +97,7 @@ class PreferenceController extends Controller
 
 	public function showAboveMaxLoan(Request $request)
 	{
-		$list = AllowedAboveMaxLoan::all();
+		$list = AllowedAboveMaxLoan::orderBy('CreatedDate', 'desc')->get();
 
 		return view('admin.overmaxloan')
 			->withEmployees($list);
