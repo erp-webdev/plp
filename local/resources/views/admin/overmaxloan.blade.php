@@ -8,7 +8,7 @@
             <h1>Above Maximum Loanable Amount</h1>
             <p>The list allows employee to submit PLP applications with loanable amount above their maximum limit. Each entry is applicable for one time use only and must be applied on or before the expiration date.</p>
             <div class="table-responsive">
-                <table class="table table-sm table-hover table-striped DataTable table-bordered">
+                <table class="table table-sm table-hover DataTable table-bordered">
                     <thead>
                         <th>ID</th>
                         <th>EmpID</th>
