@@ -339,7 +339,7 @@ class ApplicationController extends Controller
     {
         $msg = '';
         $errors = $this->checkValidity($request);
-
+        dd($errors);
         if(count($errors) > 0){
             $request->flash();
             return redirect()->back()->withErrors($errors)->withInput();
@@ -762,6 +762,7 @@ class ApplicationController extends Controller
             ->first();
 
         if(!empty($allow_max_ex)){
+            dd($allow_max_ex);
             return false;
         }
 
