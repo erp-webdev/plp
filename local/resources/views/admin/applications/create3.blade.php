@@ -388,6 +388,7 @@
 </script>
 @endsection
 @section('scripts')
+@if(!empty($allowed_above_max))
 <script>
     $(document).on('click', '#special', function(event){
         if($(this).val() == 0){
@@ -426,4 +427,5 @@
         }
     });
 </script>
+@endif
 @endsection
