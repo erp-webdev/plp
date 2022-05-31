@@ -189,6 +189,13 @@ class ApplicationController extends Controller
         //     $guarantor = '';
         $approvers = $this->getApprovers();
 
+        $allow_max_ex = AllowedAboveMaxLoan::where('employee_id', Auth::user()->EmpID)
+            ->where('DBName', Auth::user()->DBNAME)
+            ->where('ExpiredAt', '>=', date('Y-m-d'))
+            ->first();
+
+        dd($allow_max_ex);
+
     	return view('admin.applications.create3')
     	->withEmployee($employee)
     	->withRecords($records)
