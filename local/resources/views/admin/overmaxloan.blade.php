@@ -19,7 +19,7 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td><a class="btn btn"></a></td>
+                            <td><a class="btn btn-default" data-target="#SearchModal" data-toggle="modal"><i class="fa fa-search"></i></a></td>
                             <td><input type="text" class="form-control" name="EmpID" readonly></td>
                             <td><input type="text" class="form-control" name="DBName" readonly></td>
                             <td><input type="text" class="form-control" name="FullName" readonly></td>
