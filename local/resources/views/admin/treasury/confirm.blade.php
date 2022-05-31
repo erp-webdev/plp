@@ -15,7 +15,7 @@
         {{ csrf_field() }}
         <div class="col-xs-12 col-sm-12 col-md-12">
             <hr>
-            <p>Transmittals list to be sent</p>
+            <p>The list below includes all selected PLP applications for transmittal to PLP custodian. </p>
             <div class="table-responsive">
                 <table class="table table-sm table-hover table-bordered table-striped table-condensed">
                     <thead>
