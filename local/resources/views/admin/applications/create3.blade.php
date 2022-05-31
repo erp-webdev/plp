@@ -208,11 +208,12 @@
                                     min="<?php echo $terms->min_loan_amount; ?>" 
                                     max="@if(empty($allowed_above_max))
                                             @if(isset($loan->special)) 
-                                                {{ number_format($special->max_loan_amount, 2, '.', ',') }}
+                                                {{ $special->max_loan_amount }}
                                             @else
-                                                {{ number_format($terms->max_loan_amount, 2, '.', ',') }}
+                                                {{ $terms->max_loan_amount }}
                                             @endif 
                                         @endif" 
+
                                     value="<?php 
                                         if(!empty($loan->loan_amount)){
                                             echo $loan->loan_amount;
