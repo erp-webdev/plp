@@ -87,8 +87,8 @@
 
 function setApprover(event){
     $('input[name="EmpID"]').val($(event).data('empid'));
-    $('input[name="DBName"]').html($(event).data('db'));
     $('input[name="FullName"]').val($(event).data('name'));
+    $('input[name="DBName"]').val($(event).data('db'));
 
     $('#SearchModal').modal('hide');
 }
