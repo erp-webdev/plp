@@ -409,7 +409,7 @@
         $('input[name="purpose"]').prop({"disabled":"disabled"});
 
         $('#searchbtn').each(function (index, element) {
-            $(element)..removeClass('hidden');
+            $(element).removeClass('hidden');
         });
 
         $('button[#edit]').removeClass('hidden');
