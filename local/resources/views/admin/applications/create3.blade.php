@@ -411,7 +411,7 @@
         $('#searchbtn').removeClass('hidden');
         $('#searchbtn2').removeClass('hidden');
 
-        $('button[#edit]').removeClass('hidden');
+        $('#edit').removeClass('hidden');
         $('button[name="verify"]').removeClass('hidden');
         $('button[name="submit"]').addClass('hidden');
 
