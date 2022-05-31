@@ -107,6 +107,11 @@ class PreferenceController extends Controller
 	public function updateAboveMaxLoan(Request $request)
 	{
 		if(isset($request->save)){
+
+			$this->validate($request, [
+				'required'=>'EmpID|DBName|FullName|ExpiredAt'
+			]);
+
 			$item = new AllowedAboveMaxLoan();
 			$item->EmpID = $request->EmpID;
 			$item->DBName = $request->DBName;
