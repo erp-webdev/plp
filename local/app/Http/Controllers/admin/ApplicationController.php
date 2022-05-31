@@ -189,7 +189,7 @@ class ApplicationController extends Controller
         //     $guarantor = '';
         $approvers = $this->getApprovers();
 
-        $allow_max_ex = AllowedAboveMaxLoan::where('employee_id', Auth::user()->EmpID)
+        $allow_max_ex = AllowedAboveMaxLoan::where('EmpID', Auth::user()->employee_id)
             ->where('DBName', Auth::user()->DBNAME)
             ->where('ExpiredAt', '>=', date('Y-m-d'))
             ->first();
