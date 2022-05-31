@@ -15,7 +15,7 @@
         {{ csrf_field() }}
         <div class="col-xs-12 col-sm-12 col-md-12">
             <hr>
-            <p>The list includes all loan applications not yet transmitted. All checked items will be included to the email to be sent.</p>
+            <p>Transmittals list to be sent</p>
             <div class="table-responsive">
                 <table class="table table-sm table-hover table-bordered table-striped table-condensed">
                     <thead>
