@@ -309,7 +309,8 @@
                         <td colspan="2" class="">
                             
                             <button type="button" class="btn btn-default" onclick="editForm()"><i class="fa fa-pencil"></i> Edit</button>
-                            <button type="submit" class="btn btn-primary hidden" name="submit" data-title="Verify and Continue Application!" data-content="Are you sure you want to verify and continue application?" data-form="#loanform">Continue</button>
+
+                            <button type="submit" class="btn btn-primary hidden" name="verify" data-title="Verify and Continue Application!" data-content="Are you sure you want to verify and continue application?" data-form="#loanform">Continue</button>
 
                             <button type="submit" name="submit" class="btn btn-primary pull-right " data-validate="validate_standard" data-title="Submit Application!" data-content="Are you sure you want to submit application?"  data-form="#loanform">Submit</button>
                         
