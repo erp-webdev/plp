@@ -300,7 +300,7 @@
                                 </span>    
                             </div>
                             <input type="hidden" class="form-control" id="guarantor_dbname" name="guarantor_dbname" value="{{ $loan->guarantor_dbname or old('guarantor_dbname') }}">
-                            <input type="hidden" id="guarantor_FullName" name="guarantor_FullName" value="{{ $loan->guarantor_FullName or old('guarantor_FullName') }}">
+                            <input type="hidden" id="guarantor_FullName" name="guarantor_FullName" value="{{ $loan->guarantor_FullName or old('guarant') }}">
                             <span id="guarantor_name">{{ $loan->guarantor_FullName or old('guarantor_FullName') }}</span>    
                         </td>
                     </tr>
@@ -398,15 +398,21 @@
     }
 
     function editForm(){
-        $('input[name="type"]').prop({"disabled":"disabled"});
-        $('input[name="special"]').prop({"disabled":"disabled"});
+        
+        $('input[name="special"]').each(function (index, element) {
+            $(element).prop({"disabled":"disabled"});
+        });
+
         $('input[name="local"]').prop({"disabled":"disabled"});
         $('input[name="loan_amount"]').prop({"disabled":"disabled"});
         $('input[name="terms"]').prop({"disabled":"disabled"});
         $('input[name="purpose"]').prop({"disabled":"disabled"});
 
-        $('#searchbtn').removeClass('hidden');
-        $('button[name="edit"]').removeClass('hidden');
+        $('#searchbtn').each(function (index, element) {
+            $(element)..removeClass('hidden');
+        });
+
+        $('button[#edit]').removeClass('hidden');
         $('button[name="verify"]').removeClass('hidden');
         $('button[name="submit"]').addClass('hidden');
 
