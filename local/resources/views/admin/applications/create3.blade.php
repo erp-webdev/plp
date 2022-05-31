@@ -172,7 +172,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td><label for=""><input type="radio" id="special" name="special" 
+                        <td><label for=""><input type="radio" id="special" name="special" class="{{ isset($loan->special) ? 'readonly' : '' }}" 
                             value="0" 
                             <?php
                                 
@@ -187,7 +187,7 @@
                                 }
                             ?>
                             required> REGULAR</label></td>
-                        <td><label for=""><input type="radio" id="special" name="special" 
+                        <td><label for=""><input type="radio" id="special" name="special" class="{{ isset($loan->special) ? 'readonly' : '' }}" 
                             value="1" <?php
                                 if(isset($loan->special)){
                                     if($loan->special == 1)
@@ -199,12 +199,12 @@
                     </tr>
                     <tr>
                         <th>LOCAL / DIRECT LINE</th>
-                        <td><input type="text" name="local" class="form-control" value="{{ $loan->local_dir_line or old('local') }}" required></td>
+                        <td><input type="text" name="local" class="form-control {{ isset($loan->special) ? 'readonly' : '' }}" value="{{ $loan->local_dir_line or old('local') }}" required></td>
                     </tr>
                     <tr>
                         <th>LOAN AMOUNT</th>
                         <td>
-                            <input type="number" name="loan_amount" class="form-control" 
+                            <input type="number" name="loan_amount" class="form-control {{ isset($loan->special) ? 'readonly' : '' }}" 
                                     min="<?php echo $terms->min_loan_amount; ?>" 
                                     max="{{ empty($allowed_above_max) ? isset($loan->special) ? $special->max_loan_amount :  $terms->max_loan_amount : '' }}"
 
@@ -240,7 +240,7 @@
                     <tr>
                         <th>Terms (Months)</th>
                         <td>
-                            <input type="number" name="terms" class="form-control" min="1" max="{{ isset($loan->id) ? $loan->special == 1 ? $months_special : $months : $months}}" value="<?php
+                            <input type="number" name="terms" class="form-control {{ isset($loan->special) ? 'readonly' : '' }}" min="1" max="{{ isset($loan->id) ? $loan->special == 1 ? $months_special : $months : $months}}" value="<?php
                                     if(isset($loan->id))
                                         echo $loan->terms_month;
                                     else{
@@ -271,7 +271,7 @@
                     @endif
                     <tr>
                         <th>PURPOSE</th>
-                        <td><input type="text" class="form-control" name="purpose" value="{{ $loan->purpose or old('purpose') }}" required></td>
+                        <td><input type="text" class="form-control {{ isset($loan->special) ? 'readonly' : '' }}" name="purpose" value="{{ $loan->purpose or old('purpose') }}" required></td>
                     </tr>
                     <tr>
                         <th>ENDORSED BY</th>
@@ -400,13 +400,13 @@
     function editForm(){
         
         $('input[name="special"]').each(function (index, element) {
-            $(element).prop({"disabled":"disabled"});
+            $(element).prop({"readonly":"readonly"});
         });
 
-        $('input[name="local"]').prop({"disabled":"disabled"});
-        $('input[name="loan_amount"]').prop({"disabled":"disabled"});
-        $('input[name="terms"]').prop({"disabled":"disabled"});
-        $('input[name="purpose"]').prop({"disabled":"disabled"});
+        $('input[name="local"]').prop({"readonly":"readonly"});
+        $('input[name="loan_amount"]').prop({"readonly":"readonly"});
+        $('input[name="terms"]').prop({"readonly":"readonly"});
+        $('input[name="purpose"]').prop({"readonly":"readonly"});
 
         $('#searchbtn').each(function (index, element) {
             $(element).removeClass('hidden');
