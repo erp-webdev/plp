@@ -18,6 +18,7 @@ use eFund\Endorser;
 use eFund\Guarantor;
 use eFund\Employee;
 use eFund\Preference;
+use eFund\AllowedAboveMaxLoan;
 use eFund\Http\Requests;
 use eFund\Utilities\Utils;
 use eFund\Events\LoanCreated;
@@ -111,6 +112,12 @@ class ApplicationController extends Controller
         
 
         $allow_max = Preference::name('allow_over_max');
+        $allow_max_ex = AllowedAboveMaxLoan::where('employee_id', Auth::user()->EmpID)
+            ->where('DBName', Auth::user()->DBNAME)
+            ->where('ExpiredAt', '>=', date('Y-m-d'))
+            ->first();
+
+        dd($allow_max_ex);
 
         if($loan->status < 1)
         {
