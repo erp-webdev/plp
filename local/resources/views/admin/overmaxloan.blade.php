@@ -102,12 +102,11 @@ function search(){
             $('#search_employee_table tbody').html('');
 
             $.each(response, function (index, item) { 
-
                 $('#search_employee_table tbody').append(
                 '<tr onclick="setApprover(this)" data-empid="'+ item['EmpID'] +'" data-db="'+ item['DBNAME'] +'" data-name="'+ item['FullName'] +'">' +
                     "<td>" + item['EmpID'] + "</td>" +
                     "<td>" + item['FullName'] + "</td>" +
-                    "<td>" + item['DBName'] + "</td>" +
+                    "<td>" + item['DBNAME'] + "</td>" +
                 "</tr>"
                 );
             });                 
