@@ -32,7 +32,9 @@
                         </tr>
                         @foreach($employees as $employee)
                         <tr>
-                            <td>{{ $employee->id }}</td>
+                            <td>
+                                <input type="hidden" name="id" value="{{ $employee->id }}">
+                                {{ $employee->id }}</td>
                             <td>{{ $employee->EmpID }}</td>
                             <td>{{ $employee->DBName }}</td>
                             <td>{{ $employee->FullName }}</td>
