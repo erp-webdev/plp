@@ -430,7 +430,7 @@ class LoanController extends Controller
                     foreach($sheet as $cols){
                         $ctr++;
 
-                        if(!empty($cols->empid))
+                        if(!empty(trim($cols->empid)))
                         foreach ($cols as $key => $value) {
                             // Sheet columns
                             if($key == 'ctrlno')
