@@ -206,15 +206,13 @@
                         <td>
                             <input type="number" name="loan_amount" class="form-control" 
                                     min="<?php echo $terms->min_loan_amount; ?>" 
-                                    max="
-                                        @if(!$allowed_above_max)
+                                    max="@if(!$allowed_above_max)
                                             @if(isset($loan->special)) 
                                                 {{ number_format($special->max_loan_amount, 2, '.', ',') }}
                                             @else
                                                 {{ number_format($terms->max_loan_amount, 2, '.', ',') }}
                                             @endif 
-                                        @endif
-                                        " 
+                                        @endif" 
                                     value="<?php 
                                         if(!empty($loan->loan_amount)){
                                             echo $loan->loan_amount;
