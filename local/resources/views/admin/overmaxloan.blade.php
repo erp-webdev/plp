@@ -41,7 +41,7 @@
                             <td>{{ $employee->ExpiredAt }}</td>
                             <td>{{ $employee->CreatedAt }}</td>
                             <td>{{ $employee->CreatedBy }}</td>
-                            <td><button class="btn btn-danger" type="submit" name="delete" value="{{ $employee->id }}" title="Delete"><i class="fa fa-trash"></i></button></td>
+                            <td><button class="btn btn-danger" type="submit" name="delete" value="{{ $employee->ID }}" title="Delete"><i class="fa fa-trash"></i></button></td>
                         </tr>
                         @endforeach
                     </tbody>
