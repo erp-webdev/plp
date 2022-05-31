@@ -22,10 +22,10 @@
                     <tbody>
                         <tr>
                             <td><a class="btn btn-default" data-target="#SearchModal" data-toggle="modal"><i class="fa fa-search"></i></a></td>
-                            <td><input type="text" class="form-control" name="EmpID" readonly></td>
-                            <td><input type="text" class="form-control" name="DBName" readonly></td>
-                            <td><input type="text" class="form-control" name="FullName" readonly></td>
-                            <td><input type="date" class="form-control" name="ExpiredAt"></td>
+                            <td><input type="text" class="form-control" name="EmpID" required readonly></td>
+                            <td><input type="text" class="form-control" name="DBName" required readonly></td>
+                            <td><input type="text" class="form-control" name="FullName" required readonly></td>
+                            <td><input type="date" class="form-control" name="ExpiredAt" required autocomplete="off"></td>
                             <td>&nbsp;</td>
                             <td>{{ Auth::user()->name }}</td>
                             <td><button type="submit" name="save" class="btn btn-primary"><i class="fa fa-save"></i></button></td>
@@ -56,7 +56,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                Search Employee
+                <h1>Search Employee</h1>
                 <span class="">
                     <div class="input-group">
                         <input type="text" class="form-control" id="search" placeholder="Search..." autocomplete="off" class="form-control">
