@@ -117,8 +117,6 @@ class ApplicationController extends Controller
             ->where('ExpiredAt', '>=', date('Y-m-d'))
             ->first();
 
-        dd($allow_max_ex);
-
         if($loan->status < 1)
         {
         	return view('admin.applications.create3')->withLoan($loan)
@@ -756,7 +754,7 @@ class ApplicationController extends Controller
     public function validateMaxAmount($amount, $special = 0)
     {
         $employee = Employee::select('RankDesc')->current()->first();
-        dd(Auth::user());
+        
         $allow_max_ex = AllowedAboveMaxLoan::where('EmpID', Auth::user()->employee_id)
             ->where('DBName', Auth::user()->DBNAME)
             ->where('ExpiredAt', '>=', date('Y-m-d'))
