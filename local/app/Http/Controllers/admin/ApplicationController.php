@@ -749,7 +749,6 @@ class ApplicationController extends Controller
             ->first();
 
         if(!empty($allow_max_ex)){
-            dd($allow_max_ex);
             return false;
         }
 
