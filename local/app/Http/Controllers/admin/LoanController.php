@@ -695,6 +695,9 @@ class LoanController extends Controller
             $loans=[];
             foreach ($data as $loan) {
 
+                if(empty(trim($loan->employeeid)))
+                    continue;
+
                 // eFundData (Loan)
                 $eFundData = new Loan();
                 if(empty($loan->controlno)){
