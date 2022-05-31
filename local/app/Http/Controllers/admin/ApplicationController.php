@@ -112,7 +112,7 @@ class ApplicationController extends Controller
         
 
         $allow_max = Preference::name('allow_over_max');
-        $allow_max_ex = AllowedAboveMaxLoan::where('employee_id', Auth::user()->EmpID)
+        $allow_max_ex = AllowedAboveMaxLoan::where('EmpID', Auth::user()->employee_id)
             ->where('DBName', Auth::user()->DBNAME)
             ->where('ExpiredAt', '>=', date('Y-m-d'))
             ->first();
@@ -754,7 +754,7 @@ class ApplicationController extends Controller
     public function validateMaxAmount($amount, $special = 0)
     {
         $employee = Employee::select('RankDesc')->current()->first();
-        
+
         $allow_max_ex = AllowedAboveMaxLoan::where('EmpID', Auth::user()->employee_id)
             ->where('DBName', Auth::user()->DBNAME)
             ->where('ExpiredAt', '>=', date('Y-m-d'))
