@@ -194,8 +194,6 @@ class ApplicationController extends Controller
             ->where('ExpiredAt', '>=', date('Y-m-d'))
             ->first();
 
-        dd($allow_max_ex);
-
     	return view('admin.applications.create3')
     	->withEmployee($employee)
     	->withRecords($records)
@@ -211,7 +209,8 @@ class ApplicationController extends Controller
         ->with('approvers', $approvers)
         ->withPreviousLoan($previous_loan)
         ->withSpecial($special_loan)
-        ->withMonthsSpecial($months_special->value);
+        ->withMonthsSpecial($months_special->value)
+        ->with('allowed_above_max', $allow_max_ex);
     }
 
 

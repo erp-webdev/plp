@@ -206,11 +206,15 @@
                         <td>
                             <input type="number" name="loan_amount" class="form-control" 
                                     min="<?php echo $terms->min_loan_amount; ?>" 
-                                    max="@if(isset($loan->special)) 
-                                            {{ number_format($special->max_loan_amount, 2, '.', ',') }}
-                                        @else
-                                            {{ number_format($terms->max_loan_amount, 2, '.', ',') }}
-                                        @endif  " 
+                                    max="
+                                        @if(!$allowed_above_max)
+                                            @if(isset($loan->special)) 
+                                                {{ number_format($special->max_loan_amount, 2, '.', ',') }}
+                                            @else
+                                                {{ number_format($terms->max_loan_amount, 2, '.', ',') }}
+                                            @endif 
+                                        @endif
+                                        " 
                                     value="<?php 
                                         if(!empty($loan->loan_amount)){
                                             echo $loan->loan_amount;
@@ -220,6 +224,7 @@
                                             echo round($terms->max_loan_amount, 0); ?>" 
                                     step="500"
                                     required>
+                            @if(!$allowed_above_max)
                             <span class="help-block">You are qualified up to 
                                 @if(isset($loan->special)) 
                                     {{ number_format($special->max_loan_amount, 2, '.', ',') }}
@@ -227,6 +232,11 @@
                                     {{ number_format($terms->max_loan_amount, 2, '.', ',') }}
                                 @endif                                
                             </span>
+                            @else
+                            <span class="help-block">
+                                You may apply for loan above your maximum limit until {{ date('j F Y', strtotime($allowed_above_max->ExpiredAt))}}
+                            </span>
+                            @endif
 
                         </td>
                     </tr>
