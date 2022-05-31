@@ -280,7 +280,7 @@
                                 <input type="text" class="form-control" id="endorsed_by" name="endorsed_by" 
                                 value="{{ $loan->endorser_EmpID or old('endorsed_by') }}" readonly>
                                 <span class="input-group-btn">
-                                    <a class="btn btn-default" data-toggle="modal" data-target="#search_employee" onclick="search_input = 'endorsed'"><i class="fa fa-search"></i> Search</a>
+                                    <a id="searchbtn" class="btn btn-default" data-toggle="modal" data-target="#search_employee" onclick="search_input = 'endorsed'"><i class="fa fa-search"></i> Search</a>
                                 </span>    
                             </div>
                             <input type="hidden" class="form-control" id="endorsed_dbname" name="endorsed_dbname" 
@@ -296,7 +296,7 @@
                                 <input type="text" class="form-control" id="guarantor_by" name="guarantor_by" 
                                 value="{{ $loan->guarantor_EmpID or old('guarantor_by') }}" readonly>
                                 <span class="input-group-btn">
-                                    <a class="btn btn-default" data-toggle="modal" data-target="#search_employee" onclick="search_input = 'guarantor'"><i class="fa fa-search"></i> Search</a>
+                                    <a id="searchbtn" class="btn btn-default" data-toggle="modal" data-target="#search_employee" onclick="search_input = 'guarantor'"><i class="fa fa-search"></i> Search</a>
                                 </span>    
                             </div>
                             <input type="hidden" class="form-control" id="guarantor_dbname" name="guarantor_dbname" value="{{ $loan->guarantor_dbname or old('guarantor_dbname') }}">
@@ -308,9 +308,9 @@
                         @if(isset($loan->id))
                         <td colspan="2" class="">
                             
-                            <button type="button" class="btn btn-default" onclick="editForm()"><i class="fa fa-pencil"></i> Edit</button>
+                            <button type="button" id="edit" class="btn btn-default" onclick="editForm()"><i class="fa fa-pencil"></i> Edit</button>
                             
-                            <button type="submit" class="btn btn-primary pull-right hidden" name="submit" data-title="Verify and Continue Application!" data-content="Are you sure you want to verify and continue application?" data-form="#loanform">Continue</button>
+                            <button type="submit" class="btn btn-primary pull-right hidden" name="verify" data-title="Verify and Continue Application!" data-content="Are you sure you want to verify and continue application?" data-form="#loanform">Continue</button>
 
                             <button type="submit" name="submit" class="btn btn-primary pull-right " data-validate="validate_standard" data-title="Submit Application!" data-content="Are you sure you want to submit application?"  data-form="#loanform">Submit</button>
                         
@@ -372,6 +372,7 @@
         $('#' + search_input + "_dbname").val($(event).data('db'));
         $('#' + search_input + "_FullName").val($(event).data('name'));
 
+
         $('#search_employee').modal('hide');
     }
 
@@ -396,7 +397,21 @@
         });
     }
 
-    
+    function editForm(){
+        $('input[name="type"]').prop({"disabled":"disabled"});
+        $('input[name="special"]').prop({"disabled":"disabled"});
+        $('input[name="local"]').prop({"disabled":"disabled"});
+        $('input[name="loan_amount"]').prop({"disabled":"disabled"});
+        $('input[name="terms"]').prop({"disabled":"disabled"});
+        $('input[name="purpose"]').prop({"disabled":"disabled"});
+
+        $('#searchbtn').removeClass('hidden');
+        $('button[name="edit"]').removeClass('hidden');
+        $('button[name="verify"]').removeClass('hidden');
+        $('button[name="submit"]').addClass('hidden');
+
+    }
+
 </script>
 @endsection
 @section('scripts')
