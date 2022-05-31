@@ -126,7 +126,7 @@ class PreferenceController extends Controller
 		}else{
 
 			$item = AllowedAboveMaxLoan::find($request->id);
-			$item->delete();
+			$item->destroy();
 
 			return redirect()->back()
 				->withSuccess("Employee has been deleted successfully!");
