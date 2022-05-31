@@ -339,7 +339,7 @@ class ApplicationController extends Controller
     {
         $msg = '';
         $errors = $this->checkValidity($request);
-        dd($errors);
+
         if(count($errors) > 0){
             $request->flash();
             return redirect()->back()->withErrors($errors)->withInput();
