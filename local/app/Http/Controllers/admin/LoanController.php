@@ -429,6 +429,8 @@ class LoanController extends Controller
                 foreach ($data as $sheet) {
                     foreach($sheet as $cols){
                         $ctr++;
+
+                        if(!empty($cols->empid))
                         foreach ($cols as $key => $value) {
                             // Sheet columns
                             if($key == 'ctrlno')
@@ -438,10 +440,6 @@ class LoanController extends Controller
 
                             //Process not empty column
                             if(!empty(trim($key)) && $value != null){
-
-                                if($key == 'empid' && empty(trim($value))){
-                                    continue;
-                                }
 
                                 if(in_array($key, ['empid', 'mos', 'principal', 'deductions', 'startofdeductions', 'type', 'status']) && empty($value)){
                                     array_push($loansWithError, $this->createError('Required Field. '.$sheet->getTitle().'.row['. $ctr .'].column[' . $key .'].value[' . $value .']' , $cols));
