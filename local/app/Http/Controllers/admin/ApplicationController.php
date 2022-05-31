@@ -761,8 +761,11 @@ class ApplicationController extends Controller
             ->where('ExpiredAt', '>=', date('Y-m-d'))
             ->first();
 
-        if(!empty($allow_max_ex))
+        if(!empty($allow_max_ex)){
+
+            dd($allow_max_ex)
             return false;
+        }
 
         if($special == 0){
             $terms = Terms::getRankLimits($employee);
