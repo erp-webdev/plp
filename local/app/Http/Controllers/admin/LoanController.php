@@ -702,7 +702,7 @@ class LoanController extends Controller
                 $eFundData = new Loan();
                 if(empty($loan->controlno)){
                     // Create random id (5 chars)
-                    $eFundData->ctrl_no = 'upload' . date('YmdHis');
+                    $eFundData->ctrl_no = 'upload' . date('YmdHisu');
                     $loan->controlno = $eFundData->ctrl_no;
                 }else{
                     $eFundData->ctrl_no = $loan->controlno;
