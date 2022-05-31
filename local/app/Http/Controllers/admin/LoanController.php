@@ -435,8 +435,13 @@ class LoanController extends Controller
                                 if(!empty($value))
                                    if(Loan::where('ctrl_no', $value)->count() > 0)
                                         array_push($loansWithError, $this->createError('Loan Ctrl No Exists from the database. '.$sheet->getTitle().'.row['. $ctr .'].column[' . $key .'].value[' . $value .']' , $cols));
+
                             //Process not empty column
                             if(!empty(trim($key)) && $value != null){
+
+                                if($key == 'empid' && empty(trim($value))){
+                                    continue;
+                                }
 
                                 if(in_array($key, ['empid', 'mos', 'principal', 'deductions', 'startofdeductions', 'type', 'status']) && empty($value)){
                                     array_push($loansWithError, $this->createError('Required Field. '.$sheet->getTitle().'.row['. $ctr .'].column[' . $key .'].value[' . $value .']' , $cols));
