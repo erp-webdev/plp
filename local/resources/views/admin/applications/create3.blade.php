@@ -219,8 +219,12 @@
                                     required>
                             @if(!$allowed_above_max)
                             <span class="help-block">You are qualified up to 
-                                @if(isset($loan->special)) 
+                                @if(isset($loan->special))
+                                    @if($loan->special) 
                                     {{ number_format($special->max_loan_amount, 2, '.', ',') }}
+                                    @else
+                                    {{ number_format($terms->max_loan_amount, 2, '.', ',') }}
+                                    @endif
                                 @else
                                     {{ number_format($terms->max_loan_amount, 2, '.', ',') }}
                                 @endif                                

@@ -94,22 +94,9 @@ class ApplicationController extends Controller
             
         $months_special = Preference::name('payment_term_special');
         
-        $allow_max = Preference::name('allow_over_max');
-
         $endorser = $this->getEndorser();
-        // if(count($endorser) > 0)
-        //     $endorser = $endorser[0];
-        // else
-        //     $endorser = '';
-
         $guarantor = $this->getGuarantor();
-        // if(count($guarantor) > 0)
-        //     $guarantor = $guarantor[0];
-        // else
-        //     $guarantor = '';
-
         $approvers = $this->getApprovers();
-        
 
         $allow_max = Preference::name('allow_over_max');
         $allow_max_ex = AllowedAboveMaxLoan::where('EmpID', Auth::user()->employee_id)
