@@ -796,6 +796,7 @@ class ApplicationController extends Controller
         $endorser_rank = $this->utils->getRank($endorser->RankDesc);
         $applicant_rank = $this->utils->getRank($applicant->RankDesc);
 
+        if(Auth::user()->employee_id == '2017-05-1016')
         dd($endorser);
 
         if($endorser_rank <= $applicant_rank)
