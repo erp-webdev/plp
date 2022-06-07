@@ -102,6 +102,7 @@ class ValidationController extends Controller
             $loan_validation->company_nurse_status = 'INVALID';
             $loan_validation->save();
 
+            dd(Auth::user()->id);
             $loan_validation->status = $this->utils->setStatus($this->utils->getStatusIndex('denied'));
             $loan->denied_by = Auth::user()->id;
             $loan->denied_by_name = Auth::user()->name;
