@@ -97,13 +97,13 @@ class ValidationController extends Controller
             if(!empty(trim($loan_validation->company_nurse)))
                 return redirect()->back()->withSuccess(trans('loan.application.denied2'));
 
-            $loan_validation->company_nurse = Auth()->user()->name;
+            $loan_validation->company_nurse = Auth::user()->name;
             $loan_validation->company_nurse_date = date('Y-m-d H:i:s');
             $loan_validation->company_nurse_status = 'INVALID';
             $loan_validation->save();
 
             $loan_validation->status = $this->utils->setStatus($this->utils->getStatusIndex('denied'));
-            $loan->denied_by = 0;
+            $loan->denied_by = Auth::user()->id;
             $loan->denied_by_name = Auth::user()->name;
             $loan->denied_date = date('Y-m-d H:i:s');
             $loan->denied_remarks = '';
