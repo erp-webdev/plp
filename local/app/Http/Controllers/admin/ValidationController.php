@@ -103,7 +103,7 @@ class ValidationController extends Controller
             $loan_validation->save();
 
             $loan_validation->status = $this->utils->setStatus($this->utils->getStatusIndex('denied'));
-            $loan->denied_by = Auth::user()->id;
+            $loan->denied_by = 0;
             $loan->denied_by_name = Auth::user()->name;
             $loan->denied_date = date('Y-m-d H:i:s');
             $loan->denied_remarks = '';
