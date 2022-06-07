@@ -102,12 +102,11 @@ class ValidationController extends Controller
             $loan_validation->company_nurse_status = 'INVALID';
             $loan_validation->save();
 
-            dd($loan);
             $loan_validation->status = $this->utils->setStatus($this->utils->getStatusIndex('denied'));
-            $loan->denied_by = Auth::user()->id;
-            $loan->denied_by_name = Auth::user()->name;
-            $loan->denied_date = date('Y-m-d H:i:s');
-            $loan->denied_remarks = '';
+            $loan_validation->denied_by = Auth::user()->id;
+            $loan_validation->denied_by_name = Auth::user()->name;
+            $loan_validation->denied_date = date('Y-m-d H:i:s');
+            $loan_validation->denied_remarks = '';
             $loan_validation->save();
 
             Event::fire(new LoanDenied($loan_validation));
