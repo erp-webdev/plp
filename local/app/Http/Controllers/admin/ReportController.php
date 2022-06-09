@@ -407,6 +407,8 @@ class ReportController extends Controller
                         $query->where('status', $this->utils->getStatusIndex('denied'));
                 }
 
+                $query->where('status', '<>', $this->utils->getStatusIndex('denied'));
+
             })->orderBy($args['sort'], 'asc')->get();
     }
 
