@@ -801,7 +801,7 @@ class LoanController extends Controller
     
                 // Guarantor
                 if(!empty($loan->guarantoremployeeid) || !empty($loan->guarantorfullname)){
-                    $guarantor_name_based_on_name = '';
+                    $guarantor_empid_based_on_name = '';
                     $guarantor_db_based_on_name = '';
 
                     if(empty($loan->guarantoremployeeid) && !empty($loan->guarantorfullname)){
@@ -810,7 +810,7 @@ class LoanController extends Controller
                                 ->first();
 
                         if(!empty($guarantor_based_on_name)){
-                            $guarantor_name_based_on_name = $guarantor_based_on_name->FullName;
+                            $guarantor_empid_based_on_name = $guarantor_based_on_name->EmpID;
                             $guarantor_db_based_on_name = $guarantor_based_on_name->DBNAME;
                         }
                     }
@@ -818,7 +818,7 @@ class LoanController extends Controller
                     $query = [
                             'refno' => $this->utils->generateReference(),
                             'eFundData_id' => $eFundData->id,
-                            'EmpID' => !empty($loan->guarantoremployeeid) ? $loan->guarantoremployeeid : $guarantor_name_based_on_name,
+                            'EmpID' => !empty($loan->guarantoremployeeid) ? $loan->guarantoremployeeid : $guarantor_empid_based_on_name,
                             'signed_at' => date('Y-m-d H:i:s', strtotime($loan->applicationdate)),
                             'DBNAME' => !empty($loan->guarantorcompanycode) ? $loan->guarantorcompanycode : $guarantor_db_based_on_name,
                             'status' => 1,
