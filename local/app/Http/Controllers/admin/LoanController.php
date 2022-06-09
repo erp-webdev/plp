@@ -800,13 +800,27 @@ class LoanController extends Controller
                 }
     
                 // Guarantor
-                if(!empty($loan->guarantoremployeeid)){
+                if(!empty($loan->guarantoremployeeid) || !empty($loan->guarantorfullname)){
+                    $guarantor_name_based_on_name = '';
+                    $guarantor_db_based_on_name = '';
+
+                    if(empty($loan->guarantoremployeeid) && !empty($loan->guarantorfullname)){
+                        $guarantor_based_on_name = 
+                            Employee::where('FullName', 'LIKE', '%'. str_replace(' ', '%', $loan->guarantorfullname).'%')
+                                ->first();
+
+                        if(!empty($guarantor_based_on_name)){
+                            $guarantor_name_based_on_name = $guarantor_based_on_name->FullName;
+                            $guarantor_db_based_on_name = $guarantor_based_on_name->DBNAME;
+                        }
+                    }
+
                     $query = [
                             'refno' => $this->utils->generateReference(),
                             'eFundData_id' => $eFundData->id,
-                            'EmpID' => !empty($loan->guarantoremployeeid) ? $loan->guarantoremployeeid : '2016-06-0457',
+                            'EmpID' => !empty($loan->guarantoremployeeid) ? $loan->guarantoremployeeid : $guarantor_name_based_on_name,
                             'signed_at' => date('Y-m-d H:i:s', strtotime($loan->applicationdate)),
-                            'DBNAME' => !empty($loan->guarantorcompanycode) ? $loan->guarantorcompanycode : 'GL',
+                            'DBNAME' => !empty($loan->guarantorcompanycode) ? $loan->guarantorcompanycode : $guarantor_db_based_on_name,
                             'status' => 1,
                             'guaranteed_amount' => $loan->totalpayable
                         ];
