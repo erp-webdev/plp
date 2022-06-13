@@ -263,6 +263,7 @@ class DashboardController extends Controller
             '#fff8b6',
             '#20655f',
         ];
+        return $colors[$rand];
 
         $rand = rand(0, count($colors) - 1);
 
