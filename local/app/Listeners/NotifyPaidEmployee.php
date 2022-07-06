@@ -5,6 +5,7 @@ use eFund\Http\Controllers\admin\EmailController;
 use eFund\Http\Controllers\admin\NotificationController;
 
 use DB;
+use eFund\Employee;
 use eFund\Preference;
 use eFund\Events\LoanPaid;
 use Illuminate\Queue\InteractsWithQueue;
