@@ -785,7 +785,7 @@ class ApplicationController extends Controller
                     ->active()->regular()->first();
 
         if(empty($endorser))
-            $valid = false;
+            return false;
 
         // Endorser must not be the employee him/herself
         if($EmpID == Auth::user()->employee_id)
@@ -798,9 +798,6 @@ class ApplicationController extends Controller
         // Endorser must not be the same rank of the applicant
         $endorser_rank = $this->utils->getRank($endorser->RankDesc);
         $applicant_rank = $this->utils->getRank($applicant->RankDesc);
-
-        if(Auth::user()->employee_id == '2017-05-1016')
-        dd($endorser_rank . '==' . $applicant_rank);
 
         if($endorser_rank <= $applicant_rank)
             $valid = false;
