@@ -197,7 +197,7 @@
 					</div>
 				</div>
 				<div class="alert alert-info">
-					*Terms applied are subject to changes by the eFund Custodian, 
+					*Terms applied are subject to changes by the PLP Custodian, 
 					thus the *no. of payments and *payroll deductions may change as well. <br>
 				</div>
 			</div>

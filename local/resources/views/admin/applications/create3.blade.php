@@ -205,7 +205,7 @@
                         <td>
                             <input type="number" name="loan_amount" class="form-control " {{ isset($loan->special) ? 'readonly' : '' }}
                                     min="<?php echo $terms->min_loan_amount; ?>" 
-                                    max="{{ empty($allowed_above_max) ? isset($loan->special) ? $special->max_loan_amount :  $terms->max_loan_amount : '' }}"
+                                    max="{{ empty($allowed_above_max) ? isset($loan->special)  && $loan->special <> 0 ? $special->max_loan_amount :  $terms->max_loan_amount : '' }}"
 
                                     value="<?php 
                                         if(!empty($loan->loan_amount)){
@@ -264,7 +264,7 @@
                         <th>PAYROLL DEDUCTION*</th>
                         <td>
                             <strong>{{ $loan->terms_month * 2 }}</strong> terms x <strong>{{ number_format($loan->deductions, 2, '.', ',') }} </strong> per pay day <br>
-                            <i>*Terms applied are subject to changes by the eFund Custodian, thus the *no. of payments and *payroll deductions may change as well.</i>
+                            <i>*Terms applied are subject to changes by the PLP Custodian, thus the *no. of payments and *payroll deductions may change as well.</i>
                         </td>
                     </tr>
                     @endif

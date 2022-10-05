@@ -42,7 +42,7 @@ class EmailController extends Controller
 
             $mail = Mail::send($body, ['employee' => $emp, 'args' => $args, 'utils' => $utils], function($message) use ($to, $subject, $from, $cc){
                 
-                if(env('APP_ENV') == 'local'){
+                if(env('APP_ENV') == 'local1'){
                     $message->bcc('kayag.global@megaworldcorp.com');
                     $message->to('kayag.global@megaworldcorp.com');
                     // $message->to($to);
@@ -52,7 +52,7 @@ class EmailController extends Controller
                     // if(!empty(trim($cc)))
                         // $message->cc($cc);  
                 }else{
-                    $message->bcc('kayag.global@megaworldcorp.com');
+                    // $message->bcc('kayag.global@megaworldcorp.com');
                     $message->to($to);
                     $message->from($from);
                     $message->subject($subject);

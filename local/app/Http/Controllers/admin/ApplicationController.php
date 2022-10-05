@@ -506,10 +506,10 @@ class ApplicationController extends Controller
             array_push($errors, trans('loan.validation.minimum'));
 
         // Maximum Loan amount
-        $allow_over_max = Preference::name('allow_over_max');
-        if($allow_over_max->value != 1)
-            if($this->validateMaxAmount($request->loan_amount, $request->special))
-                array_push($errors, trans('loan.validation.maximum'));
+        // $allow_over_max = Preference::name('allow_over_max');
+        // if($allow_over_max->value != 1)
+        if($this->validateMaxAmount($request->loan_amount, $request->special))
+            array_push($errors, trans('loan.validation.maximum'));
 
         // Endorser
         $endorsers = $this->getEndorser();
@@ -744,7 +744,7 @@ class ApplicationController extends Controller
 
     public function validateMaxAmount($amount, $special = 0)
     {
-        $employee = Employee::select('RankDesc')->current()->first();
+        $employee = Employee::current()->first();
 
         $allow_max_ex = AllowedAboveMaxLoan::where('EmpID', Auth::user()->employee_id)
             ->where('DBName', Auth::user()->DBNAME)
@@ -754,21 +754,15 @@ class ApplicationController extends Controller
         if(!empty($allow_max_ex)){
             return false;
         }
-
-
-
         if($special == 0){
             $terms = Terms::getRankLimits($employee);
-
-            
+        
             if($amount > $terms->max_loan_amount)
                 return true;
             else
                 return false;
         }else{
             $terms = SpecialTerm::getRankLimits($employee);
-
-
             if($amount > $terms->max_loan_amount)
                 return true;
             else
