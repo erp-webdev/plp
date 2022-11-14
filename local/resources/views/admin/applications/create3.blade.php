@@ -126,7 +126,7 @@
                                                 if(old('type') == 0) echo 0;
                                                 else echo 1;
                                             } else {
-                                                if($records == 0 ) echo 0;
+                                                if($records_this_year == 0 ) echo 0;
                                                 else echo 1;
                                             }
                                         }
@@ -142,7 +142,7 @@
                                             if(!empty(old('type'))){
                                                 if(old('type') == 0)
                                                     echo 'checked';
-                                            } elseif($records == 0 )
+                                            } elseif($records_this_year == 0 )
                                                 echo 'checked';
                                         }
                                             
@@ -160,7 +160,7 @@
                                     if(!empty(old('type'))){
                                         if(old('type') == 1)
                                             echo 'checked';
-                                    } elseif($records != 0 )
+                                    } elseif($records_this_year != 0 )
                                         echo 'checked';
                                 }
                                     
