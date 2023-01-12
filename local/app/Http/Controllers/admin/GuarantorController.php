@@ -100,10 +100,6 @@ class GuarantorController extends Controller
 
             $loan = Loan::findOrFail($guarantor->eFundData_id);
             $loan->status = $this->utils->setStatus($this->utils->getStatusIndex('guarantor'));
-            $loan->denied_by = Auth::user()->id;
-            $loan->denied_by_name = Auth::user()->name;
-            $loan->denied_date = date('Y-m-d H:i:s');
-            $loan->denied_remarks = '';
             $loan->save();
 
             Event::fire(new GuarantorApproved($loan));
@@ -125,9 +121,12 @@ class GuarantorController extends Controller
                 $guarantor->signed_at = date('Y-m-d H:i:s');
                 $guarantor->save();
 
-
                 $loan = Loan::findOrFail($guarantor->eFundData_id);
                 $loan->status = $this->utils->setStatus($this->utils->getStatusIndex('denied'));
+                $loan->denied_by = Auth::user()->id;
+                $loan->denied_by_name = Auth::user()->name;
+                $loan->denied_date = date('Y-m-d H:i:s');
+                $loan->denied_remarks = '';
                 $loan->save();
 
                 Event::fire(new LoanDenied($loan));
