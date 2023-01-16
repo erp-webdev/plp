@@ -48,7 +48,7 @@
 					{{ $loan->start_of_deductions }}
 				@endif
 				</td>
-				<td style="text-align: left; ">{!! $utils->getStatus($loan->status) !!} by {{ $loan->denied_by_name }}</td>
+				<td style="text-align: left; ">{!! $utils->getStatus($loan->status) !!}   {{ $utils->getStatus($loan->status) == 'Denied' ? ' by ' . $loan->denied_by_name : '' }}</td>
 			</tr>
 			@endforeach
 		</tbody>
