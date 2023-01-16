@@ -98,6 +98,9 @@ class AuthController extends Controller
 			return 0;
 		}
 
+        if(empty($employee->EmailAdd))
+            return 0;
+
 		foreach($employees as $employee){
 			if(empty($employee)){
 	            $employee = DB::table('viewHREmpMasterGL')->where('EmpID', $_GET['employee_id'])
