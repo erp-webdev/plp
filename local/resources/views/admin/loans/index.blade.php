@@ -217,7 +217,13 @@
 								<!-- <td style="text-align: right">{ { number_format($loan->deductions, 2, '.', ',') }}</td> -->
 								<td style="text-align: right">{{ number_format($loan->paid_amount, 2, '.', ',') }}</td>
 								<td style="text-align: right">{{ number_format(round($loan->balance,2), 2, '.', ',') }}</td>
-								<td>{!! $utils->formatStatus($loan->status) !!}</td>
+								<td>
+									@if($loan->status == $utils->getStatusIndex('denied'))
+									{!! $utils->formatStatus($loan->status) !!} by {{ $loan->denied_by_name }}
+									@else
+									{!! $utils->formatStatus($loan->status) !!}
+									@endif
+								</td>
 								<td>
 									<a data-toggle="modal" data-target="#loan" ng-click="loadLoan({{ $loan->id }})" class="btn btn-sm btn-info" title="View Loan Application" data-toggle="tooltip"><i class="fa fa-eye"></i></a>
 									@if(in_array($loan->status, [$utils->getStatusIndex('inc'), $utils->getStatusIndex('paid')]))
