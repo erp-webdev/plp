@@ -130,7 +130,7 @@
                 }else if(response.data == 3){
                     $("#pwd").attr("style", "display:none");
                     $("#submitBtn").attr('disabled', 'disabled');
-                    $("#submitBtn").html('<i class="fa fa-btn fa-times"></i> Incorrect Email Address! Please contact your HR BP!');
+                    $("#submitBtn").html('<i class="fa fa-btn fa-times"></i> Incorrect Email! Contact your HR BP!');
                     $("#submitBtn").removeClass('btn-default');
                     $("#submitBtn").addClass('btn-danger');
                 }else{
