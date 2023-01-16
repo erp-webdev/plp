@@ -56,7 +56,7 @@
                             <div class="col-md-12">
                                 <div class="input-group">
                                   <span class="input-group-addon" id="basic-addon1"><i class="fa fa-user"></i></span>
-                                  <input id="username" class="form-control" name="employee_id" placeholder="Employee ID" value="{{ old('employee_id') }}" aria-describedby="basic-addon1" style="text-transform:uppercase" ng-change="check_employee()" ng-model="EmpID">
+                                  <input id="username" class="form-control" name="employee_id" placeholder="Employee ID" value="{{ old('employee_id') }}" aria-describedby="basic-addon1" style="text-transform:uppercase" ng-change="check_employee()" autocomplete="off" ng-model="EmpID">
                                 </div>
                                 @if ($errors->has('employee_id'))
                                     <span class="help-block">
