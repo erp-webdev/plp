@@ -99,7 +99,7 @@ class AuthController extends Controller
 		}
 
         if(empty($employee->EmailAdd))
-            return 0;
+            return 3; // no email add
 
 		foreach($employees as $employee){
 			if(empty($employee)){
@@ -110,7 +110,7 @@ class AuthController extends Controller
 
 	            // Employee not found or deactivated
 	            if(empty($employee))
-	                return 3; // no email add
+	                return 0; 
 	        }
 
 	        $user = User::where('employee_id', $employee->EmpID)->get();
