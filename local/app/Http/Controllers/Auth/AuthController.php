@@ -110,7 +110,7 @@ class AuthController extends Controller
 
 	            // Employee not found or deactivated
 	            if(empty($employee))
-	                return 0;
+	                return 3; // no email add
 	        }
 
 	        $user = User::where('employee_id', $employee->EmpID)->get();
