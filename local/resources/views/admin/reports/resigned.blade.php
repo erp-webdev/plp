@@ -43,6 +43,7 @@
 		<td style="text-align: left">{{ $employee->guarantor_FullName }}</td>
 	</tr>
 	@endforeach
+	@if(count($data->employees))
 	<tr style="border-top: 1px solid; border-bottom-style: double; border-color: black; font-weight: bold">
 		<td colspan="2">Total</td>
 		<td style="text-align: right">{{ number_format($data->total[0]->total, 2) }}</td>
@@ -50,4 +51,5 @@
 		<td style="text-align: right">{{ number_format($data->total[0]->balance, 2) }}</td>
 		<td>&nbsp;</td>
 	</tr>
+	@endif
 </table>
