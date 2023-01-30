@@ -108,8 +108,8 @@ class ReportController extends Controller
 
             case 'monthly':
                 if(empty($args['created_at']))
-                    $args['created_at'] = date('m/d/Y');
-
+                    $args['created_at'] = date('Y-m-d');
+                
                $data = $this->monthlyReport($args);
                 $view = view('admin.reports.monthly')->withData($data)->withArgs($args);
             break;
@@ -430,8 +430,8 @@ class ReportController extends Controller
 
         // $records = DB::table('viewMonthlyReport')->get();
         $dateRange = explode("-", $args['created_at']);
-        
         $records = DB::select('EXEC spMonthlyReport ?, ?', ['1900-01-01', $dateRange[0]]);
+
         return $records;
 
         return (object)[
