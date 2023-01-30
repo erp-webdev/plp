@@ -38,7 +38,7 @@
 
 			foreach ($data as $record) {
 				if( $record->app_year < date('Y', strtotime($args['created_at']))){
-					$previous_year->total_count = $record->total_count;
+					$previous_year->total_count += 1;
 					$previous_year->principal += $record->principal;
 					$previous_year->interest += $record->interest;
 					$previous_year->total += $record->total;

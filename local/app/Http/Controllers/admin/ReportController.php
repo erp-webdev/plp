@@ -108,7 +108,7 @@ class ReportController extends Controller
 
             case 'monthly':
                 if(empty($args['created_at']))
-                    $args['created_at'] = date('Y-m-d');
+                    $args['created_at'] = date('m/d/Y');
                 
                $data = $this->monthlyReport($args);
                 $view = view('admin.reports.monthly')->withData($data)->withArgs($args);
