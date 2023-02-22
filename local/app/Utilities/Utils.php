@@ -134,11 +134,11 @@ class Utils
    	 * @return string 
    	 * 
    	 */
-   	public function generateCtrlNo()
+   	public function generateCtrlNo($inc = 1)
     {
         // Ctrl No: YYYY-MM-XXXX
         $loans = Loan::yearly()->count();
-        $loans = $loans + 1;
+        $loans = $loans + $inc;
 
         return date('Y') . '-' . date('m') . '-' . str_pad($loans, 4, '0', STR_PAD_LEFT);
     }

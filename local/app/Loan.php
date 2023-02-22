@@ -30,7 +30,8 @@ class Loan extends Model
 
     public function scopeYearly($query)
     {
-    	return $query->whereRaw('YEAR(created_at) = ' . date('Y'))->where('status', '>', $this->utils->getStatusIndex('saved'));
+    	return $query->whereRaw('YEAR(created_at) = ' . date('Y'))
+            ->where('status', '>', $this->utils->getStatusIndex('saved'));
     }
 
     public function scopeView($query, $id)

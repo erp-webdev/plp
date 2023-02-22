@@ -8,6 +8,7 @@ use DB;
 use Auth;
 use Event;
 use Session;
+use Log as Logger;
 use eFund\Log;
 use eFund\Loan;
 use eFund\Terms;
@@ -287,7 +288,15 @@ class ApplicationController extends Controller
 
                     // Save and Submit
                     $loan = Loan::find($request->id);
-                    $loan->ctrl_no = $this->utils->generateCtrlNo();
+
+
+                    $ctr = 1;
+                    do{
+                        $loan->ctrl_no = $this->utils->generateCtrlNo($ctr);
+                        $exists = Loan::where('ctrl_no', $loan->ctrl_no)->count();
+                        $ctr++;
+                    }while($exists > 0);
+
                     $loan->status = $this->utils->setStatus($loan->status, $loan->endorser_id);
                     $loan->created_at = date('Y-m-d H:i:s');
                     $loan->save();
@@ -363,7 +372,15 @@ class ApplicationController extends Controller
 
                 // Save and Submit
                 // $loan = Loan::find($request->id);
-                $loan->ctrl_no = $this->utils->generateCtrlNo();
+                // $loan->ctrl_no = $this->utils->generateCtrlNo();
+                $ctr = 1;
+                    do{
+                        $loan->ctrl_no = $this->utils->generateCtrlNo($ctr);
+                        $exists = Loan::where('ctrl_no', $loan->ctrl_no)->count();
+                        $ctr++;
+                    }while($exists > 0);
+
+
                 if($loan->special == 1)
                     $loan->status = 10;
                 else
