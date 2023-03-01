@@ -793,7 +793,13 @@ class ApplicationController extends Controller
 
         $endorser = Employee::where('EmpID', $EmpID)
                     ->where('DBNAME', $DB)
-                    ->active()->regular()->first();
+                    ->active()
+                    ->where(function($query) use ($DB){
+                        if($DB != 'MARKETING')
+                            return $query->where('EmpStatus', 'RG');
+                    })
+                    // ->regular()
+                    ->first();
 
         if(empty($endorser))
             return false;
