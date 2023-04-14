@@ -441,8 +441,15 @@ class ApplicationController extends Controller
 
         if($request->special == 1){
             // Special Loan, no interest at 2 years payment
-            $loan->interest = 0;
             $loan->terms_month = $request->terms;
+
+            // April 14 2023; As of January 23, 2023
+            // Interest 1% if more than 6 months loan term
+            // no interest if 6 months less than
+            $loan->interest = 0;
+            if($loan->terms_month > 6)
+                $loan->interest = 1;
+                
         }else{
             $loan->interest = $interest->value;
             // count remaining months until december
