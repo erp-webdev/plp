@@ -26,6 +26,7 @@
 		<td colspan="6">&nbsp;</td>
 	</tr>
 	<tr style="border-top: 1px solid black; border-bottom: 1px solid black">
+		<th>RESIGNATION DATE</th>
 		<th>EMPLOYEE ID NO.:</th>
 		<th>EMPLOYEE <br>NAME</th>
 		<th>TOTAL <br>AMOUNT</th>
@@ -35,6 +36,7 @@
 	</tr>
 	@foreach($data->employees as $employee)
 	<tr>
+		<td>{{ date('Y-m-d',strtotime($employee->DateResigned))  }}</td>
 		<td>{{ $employee->EmpID }}</td>
 		<td>{{ $employee->FullName }}</td>
 		<td style="text-align: right">{{ number_format($employee->total, 2) }}</td>
