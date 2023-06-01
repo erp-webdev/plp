@@ -5,6 +5,7 @@
             <th>Control #</th>
             <th>EmpID</th>
             <th >Employee Name</th>
+            <th >Start of Deduction</th>
             <th style="text-align: right;">Deduction</th>
             <th style="text-align: right;">Total Payable</th>
         </thead>
