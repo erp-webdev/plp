@@ -101,7 +101,7 @@ class PayrollController extends Controller
         if(isset($_GET['deductionDate'])){
             $date = $_GET['deductionDate'];
             $company = $_GET['company'];
-            $empList = Ledger::select('id', 'EmpID', 'FullName', 'ctrl_no', 'deductions', 'amount', 'ar_no', 'total', 'COMPANY')
+            $empList = Ledger::select('id', 'EmpID', 'FullName', 'ctrl_no', 'deductions', 'amount', 'ar_no', 'total', 'COMPANY', 'start_of_deductions')
                 ->deductionList($date)
                 ->where(function($query) use ($company){
                     if($company != 'all')
