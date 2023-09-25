@@ -15,7 +15,7 @@ class EventServiceProvider extends ServiceProvider
     protected $listen = [
         
         'eFund\Events\LoanCreated' => [
-            // 'eFund\Listeners\NotifyCompanyNurse',
+            'eFund\Listeners\NotifyCompanyNurse',
             'eFund\Listeners\NotifyEndorser',
         ],
         'eFund\Events\GuarantorApproved' => [
