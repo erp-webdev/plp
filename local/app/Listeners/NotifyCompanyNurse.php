@@ -33,6 +33,7 @@ class NotifyCompanyNurse extends EmailController
     {
         if($event->loan->special == 0){
             return;
+        }
 
         if($event->loan->special == 1){
             if(!empty($event->loan->company_nurse))
