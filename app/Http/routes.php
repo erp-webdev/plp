@@ -28,7 +28,7 @@ Route::group(['prefix' => '/', 'middleware' => ['auth']], function(){
 
 	// Loans
 	Route::get('loans', ['as' => 'admin.loan', 'uses' => 'admin\LoanController@index', 'middleware' => ['permission:loan_list']]);
-	Route::post('loans', ['as' => 'loan.approve', 'uses' => 'admin\LoanController@approve', 'middleware' => ['permission:officer']]);
+	Route::post('loans', ['as' => 'loan.approve', 'uses' => 'admin\LoanController@approve', 'middleware' => ['permission:officer|custodian']]);
 	Route::get('loans/show/{id}', ['as' => 'loan.show', 'uses' => 'admin\LoanController@show', 'middleware' => ['permission:loan_view']]);
 	Route::post('loans/deductions', ['as' => 'loan.deduction', 'uses' => 'admin\LoanController@saveDeduction', 'middleware' => ['permission:custodian']]);
 	Route::post('loans/deduction/upload', ['as' => 'loan.deduction.upload', 'uses' => 'admin\LoanController@uploadDeduction', 'middleware' => ['permission:custodian']]);

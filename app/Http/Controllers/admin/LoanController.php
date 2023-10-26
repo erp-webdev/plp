@@ -179,6 +179,22 @@ class LoanController extends Controller
 
             DB::commit();
             return redirect()->route('admin.loan')->withSuccess(trans('loan.application.calculated'));   
+        }elseif(isset($request->updateterm)){
+            $loan->terms_month = $request->terms;
+            $loan->deductions = $this->utils->computeDeductions($request->terms, $request->loan_amount, $loan->interest);
+            $loan->total = $this->utils->getTotalLoan($request->loan_amount, $loan->interest, $request->terms);
+            $loan->save();
+
+            $records_this_year = Loan::yearly()->notDenied()->count();
+            // Create Deduction schedule
+            DB::update('EXEC spCreateDeductionSchedule ?, ?, ?, ?, ?, ?', [$loan->start_of_deductions, $loan->terms_month, $loan->id, 0, $records_this_year, $loan->total]);
+
+              // Update Balance
+            $deductionId = Deduction::select('id')->where('eFundData_id', $loan->id)->first();
+            DB::update('EXEC updateBalance ?', [$deductionId->id]);
+
+            DB::commit();
+            return redirect()->route('admin.loan')->withSuccess('Terms and deduction schedule has been updated.');   
         }
 
 
@@ -1246,4 +1262,5 @@ class LoanController extends Controller
         return redirect()->route('admin.loan')->withSuccess('Email sent!');
 
     }
+
 }

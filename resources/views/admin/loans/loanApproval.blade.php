@@ -1,5 +1,5 @@
 
-	<div class="modal-header">
+<div class="modal-header">
 	  <div class="col-xs-12 col-sm-6 col-md-6">
 	  	<h4>Personal Loan Program 
 	  		<span style="font-size: 14px; font-weight: normal">{!! $utils->formatStatus($loan->status) !!}</span>
@@ -179,22 +179,26 @@
 			      	</tr>	
 		      		<tr>
 			      		<td>
-			      			<td class="l">Terms</td>
+			      			<td class="l">Terms (mos)</td>
 			      			<td>
-			      			@if($loan->status == $utils->getStatusIndex('officer'))
+			      			@if($loan->status == $utils->getStatusIndex('officer') ||  
+								$loan->status == $utils->getStatusIndex('inc'))
 			      				<input type="number" name="terms" min="1" max="" value="{{ $loan->terms_month }}" class="form-control input-sm">
 			      			@else
-			      				{{ $loan->terms_month }} (mos)
+
+			      				{{ $loan->terms_month }}
 			      			@endif
 			      			</td>
 			      		</td>
 			      		<td>
 			      			<td class="l">Loan Amount</td>
 			      			<td style="text-align: right">
-			      			@if($loan->status == $utils->getStatusIndex('officer'))
+			      			@if($loan->status == $utils->getStatusIndex('officer') )
 			      				<input type="number" name="loan_amount" value="{{ $loan->loan_amount }}" class="form-control input-sm" max="{{ $loan->loan_amount
 			      				 }}">
 			      			@else
+							  <input type="hidden" name="loan_amount" value="{{ $loan->loan_amount }}" class="form-control input-sm" max="{{ $loan->loan_amount
+			      				 }}">
 			      				Php {{ number_format($loan->loan_amount, 2, '.', ',') }}
 			      			@endif
 			      			</td>
@@ -238,13 +242,19 @@
 			      	@endif
 		      	</table>
 		     	@permission(['officer'])
-				@if($loan->status == $utils->getStatusIndex('officer'))
-				<div class="clearfix"></div>
-				<button type="submit" name="deny" class="btn btn-danger btn-sm pull-right btnSave" data-title="Confirm Disapproval" data-content="Are you sure you want to DISAPPROVE the application of {{ $loan->FullName }}?" data-form="#LoanForm"><i class="fa fa-thumbs-down"></i> Deny</button>
-				<button type="submit" name="approve" class="btn btn-success btn-sm pull-right btnSave" data-title="Confirm APPROVAL" data-content="Are you sure you want to APPROVE the application of {{ $loan->FullName }}?" data-form="#LoanForm"><i class="fa fa-thumbs-up" ></i> Approve</button>
-				<button type="submit" name="calculate" class="btn btn-default btn-sm pull-right btnSave" data-title="Confirm Recalculation" data-content="Are you sure you want to recalculate this loan application of {{ $loan->FullName }}?" data-form="#LoanForm"><i class="fa fa-calculator"></i> Calculate</button>
+					@if($loan->status == $utils->getStatusIndex('officer'))
+					<div class="clearfix"></div>
+					<button type="submit" name="deny" class="btn btn-danger btn-sm pull-right btnSave" data-title="Confirm Disapproval" data-content="Are you sure you want to DISAPPROVE the application of {{ $loan->FullName }}?" data-form="#LoanForm"><i class="fa fa-thumbs-down"></i> Deny</button>
+					<button type="submit" name="approve" class="btn btn-success btn-sm pull-right btnSave" data-title="Confirm APPROVAL" data-content="Are you sure you want to APPROVE the application of {{ $loan->FullName }}?" data-form="#LoanForm"><i class="fa fa-thumbs-up" ></i> Approve</button>
+
+					<button type="submit" name="calculate" class="btn btn-default btn-sm pull-right btnSave" data-title="Confirm Recalculation" data-content="Are you sure you want to recalculate this loan application of {{ $loan->FullName }}?" data-form="#LoanForm"><i class="fa fa-calculator"></i> Calculate</button>
+					@endif
 				@endif
-				@endif
+				@permission(['custodian'])
+					@if($loan->status == $utils->getStatusIndex('inc'))
+						<button type="submit" name="updateterm" class="btn btn-primary btn-sm btnSave" data-title="Confirm Updating of Terms" data-content="Are you sure you want to update the terms of this loan application of {{ $loan->FullName }}?" data-form="#LoanForm"><i class="fa fa-calculator"></i> Update Terms</button>
+					@endif
+				@endpermission
 			</form>
 	    </div>
 	    <div role="tabpanel" class="tab-pane table-responsive" id="scheds">
@@ -305,9 +315,9 @@
 	</div>
 	<div class="modal-footer">
 		@permission(['custodian'])
-		@if($loan->status == $utils->getStatusIndex('inc'))
-	    <a type="button" class="btn btn-success btn-sm" href="{{ route('loan.complete', $loan->id) }}" onsubmit="startLoading()">Paid</a>
-	    @endif
+			@if($loan->status == $utils->getStatusIndex('inc'))
+				<a type="button" class="btn btn-success btn-sm " href="{{ route('loan.complete', $loan->id) }}" onsubmit="startLoading()">Paid</a>
+			@endif
 	    @endpermission
 	   <a type="button" class="btn btn-default btn-sm" href="{{ route('loan.print', $loan->id) }}" target="_blank"><i class="fa fa-print"></i> Print</a>
 	   <button type="button" class="btn btn-default btn-sm" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
