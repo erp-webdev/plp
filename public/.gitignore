@@ -11,8 +11,6 @@ storage/
 .env.php
 .env
 /uploads
-public/uploads
-
 
 # Rocketeer PHP task runner and deployment package. https://github.com/rocketeers/rocketeer
 .rocketeer/
@@ -67,5 +65,3 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
-
-.env
