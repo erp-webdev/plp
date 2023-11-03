@@ -811,6 +811,9 @@ class ApplicationController extends Controller
         if(empty($endorser))
             return false;
 
+        if($endorser->DBNAME == 'MARKETING')
+            return true;
+
         // Endorser must not be the employee him/herself
         if($EmpID == Auth::user()->employee_id)
             $valid = false;
@@ -846,6 +849,9 @@ class ApplicationController extends Controller
             $valid = false;
             return $valid;
         }
+
+        if($endorser->DBNAME == 'MARKETING')
+            return true;
 
         // Guarantor must not be the employee him/herself
         if($EmpID == Auth::user()->employee_id)
