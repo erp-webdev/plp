@@ -850,7 +850,7 @@ class ApplicationController extends Controller
             return $valid;
         }
 
-        if($endorser->DBNAME == 'MARKETING')
+        if($guarantor->DBNAME == 'MARKETING')
             return true;
 
         // Guarantor must not be the employee him/herself
