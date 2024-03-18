@@ -16,7 +16,13 @@ class GLimits extends Model
             ->where('DBNAME', $DB)
             ->first();
 
-    	if(str_contains(strtolower($guarantor->RankDesc), 'supervisor'))
+    	if(str_contains(strtolower($guarantor->RankDesc), 'rank')){
+            // Rank and File cannot be co-borrower
+            $d = new $this;
+            $d->Amount = -1;
+
+            return $d;
+        }else if(str_contains(strtolower($guarantor->RankDesc), 'supervisor'))
             return $this->where('RankDesc','like', '%supervisor%')->first();
         else if(str_contains(strtolower($guarantor->RankDesc), 'manager'))
             return $this->where('RankDesc','like', '%manager%')->first();

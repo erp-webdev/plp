@@ -72,6 +72,10 @@
 					<input name="startDeduction" class="form-control  input-sm datepicker-range" placeholder="mm/dd/yyyy">
 				</div>	
 				<div class="form-group  col-xs-12 col-sm-4 col-md-4 col-lg-4">
+					End of Deductions
+					<input name="endDeduction" class="form-control  input-sm datepicker" placeholder="mm/dd/yyyy">
+				</div>	
+				<div class="form-group  col-xs-12 col-sm-4 col-md-4 col-lg-4">
 					Application Date <input class="form-control input-sm datepicker-range" name="created_at" placeholder="mm/dd/yyyy">
 				</div>
 				<div class="form-group  col-xs-12 col-sm-4 col-md-4 col-lg-4">
@@ -118,6 +122,7 @@
 				        <li><a onclick="$type = 'monthly'; showReport(this, 'view')">Monthly Summary</a></li>
 				        <li><a onclick="$type = 'deduction'; showReport(this, 'view')">Cutoff Without Deduction </a></li>
 				        <li><a onclick="$type = 'resigned'; showReport(this, 'view')">Resigned Employees with Balance </a></li>
+				        <li><a onclick="$type = 'fullypaid'; showReport(this, 'view')">Last Amortization Schedule </a></li>
 				     </ul>
 				</div><!-- /btn-group -->
 				<input type="text" class="form-control" id="reportTypeDisp" readonly>

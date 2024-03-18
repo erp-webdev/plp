@@ -186,7 +186,7 @@
                                 }
                             ?>
                             required> REGULAR</label></td>
-                        <td><label for=""><input type="radio" id="special" name="special" {{ isset($loan->special) ? 'readonly' : '' }} 
+                        <td><label for=""><input type="radio" id="special" name="special" disabled {{ isset($loan->special) ? 'readonly' : '' }} 
                             value="1" <?php
                                 if(isset($loan->special)){
                                     if($loan->special == 1)

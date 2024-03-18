@@ -17,7 +17,7 @@
 		<td colspan="6" style="font-weight: bold">PERSONAL LOAN PROGRAM REPORT</td>	
 	</tr>
 	<tr>
-		<td colspan="6">As of <u>{{ date('j F Y', strtotime($args['created_at'])) }}</u></td>	
+		<td colspan="6">As of <u>{{ date('j F Y', strtotime(explode("-", $args['created_at'])[1])) }}</u></td>	
 	</tr>
 	<tr>
 		<td colspan="6">&nbsp;</td>
@@ -37,7 +37,7 @@
 			$previous_year = (object)['total_count' => 0, 'principal' => 0, 'interest' => 0, 'total' => 0, 'paid' => 0, 'balance' => 0];
 
 			foreach ($data as $record) {
-				if( $record->app_year < date('Y', strtotime($args['created_at']))){
+				if( $record->app_year < date('Y', strtotime(explode("-", $args['created_at'])[1]))){
 					$previous_year->total_count += 1;
 					$previous_year->principal += $record->principal;
 					$previous_year->interest += $record->interest;
@@ -50,7 +50,7 @@
 
 	@if(count($previous_year) && isset($args['created_at']))
 	<tr>
-		<td>As of December 31, {{ date('Y', strtotime($args['created_at'])) - 1 }}</td>
+		<td>As of December 31, {{ date('Y', strtotime(explode("-", $args['created_at'])[1]))  - 1 }}</td>
 		<td style="text-align: center;">{{ $previous_year->total_count }}</td>
 		<td style="text-align: right">{{ number_format($previous_year->principal,2) }}</td>
 		<td style="text-align: right">{{ number_format($previous_year->interest,2) }}</td>
@@ -58,18 +58,18 @@
 		<td style="text-align: right">{{ number_format($previous_year->balance,2) }}</td>
 	</tr>
 	<tr>
-		<td style="text-align: center">Y{{ date('Y', strtotime($args['created_at'])) }}</td>
+		<td style="text-align: center">Y{{ date('Y', strtotime(explode("-", $args['created_at'])[1])) }}</td>
 		<td colspan="5">&nbsp;</td>
 	</tr>
 	@endif
 
 	@for($i = 1; $i <= 12; $i++)
-		@if(date('n', strtotime($args['created_at'])) < $i)
+		@if(date('n', strtotime(explode("-", $args['created_at'])[1])) < $i)
 			<?php break; ?>
 		@endif
 		<?php $with_records = false; ?>
 		@foreach($data as $row)
-			@if($row->app_year != date('Y', strtotime($args['created_at'])))
+			@if($row->app_year != date('Y', strtotime(explode("-", $args['created_at'])[1])))
 				<?php continue; ?>
 			@endif
 
@@ -116,7 +116,7 @@
 	$total = $previous_year;
 
 	foreach ($data as $record) {
-		if($record->app_year == date('Y', strtotime($args['created_at']))){
+		if($record->app_year == date('Y', strtotime(explode("-", $args['created_at'])[1]))){
 			$total->total_count += $record->total_count;
 			$total->principal += $record->principal;
 			$total->interest += $record->interest;

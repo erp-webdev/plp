@@ -56,6 +56,7 @@ class ReportController extends Controller
             'totalDeduction',
             'deductionPerPayday',
             'startDeduction',
+            'endDeduction',
             'created_at',
             'sort',
             'guarantor',
@@ -110,7 +111,7 @@ class ReportController extends Controller
                 if(empty($args['created_at']))
                     $args['created_at'] = date('m/d/Y');
                 
-               $data = $this->monthlyReport($args);
+                $data = $this->monthlyReport($args);
                 $view = view('admin.reports.monthly')->withData($data)->withArgs($args);
             break;
 
@@ -124,6 +125,11 @@ class ReportController extends Controller
 
                $data = $this->resignedReport($args);
                 $view = view('admin.reports.resigned')->withData($data);
+            break;
+
+            case 'fullypaid':
+                $data = $this->fullypaidReport($args);
+                $view = view('admin.reports.fullypaid')->withData($data);
             break;
 
     		default:
@@ -172,7 +178,7 @@ class ReportController extends Controller
         $status = '';
         $format = 'html';
         $sort = 'FullName';
-        $title = 'Megaworld Efund System';
+        $title = 'Megaworld PLP System';
 
         $filters = [
             'control',
@@ -183,6 +189,7 @@ class ReportController extends Controller
             'totalDeduction',
             'deductionPerPayday',
             'startDeduction',
+            'endDeduction',
             'fromDate',
             'toDate',
             'sort',
@@ -216,27 +223,30 @@ class ReportController extends Controller
         // Get loan  data
         if($type == 'payroll'){
             $loans = $this->payrollReport($args);
-            $title = 'Efund Payroll Deduction List';
+            $title = 'PLP Payroll Deduction List';
         }
         elseif($type == 'summary'){
             $loans = $this->summaryReport($args);
-            $title = 'Efund Summary Report - ' . date('Ymd');
+            $title = 'PLP Summary Report - ' . date('Ymd');
         }
         elseif($type == 'ledger'){
             $ledger = $this->ledgerReport($args);
-            $title = 'Efund Ledger - ' . $EmpID;
+            $title = 'PLP Ledger - ' . $EmpID;
         }
         elseif($type == 'monthly'){
             $data = $this->monthlyReport($args);
-            $title = "EMPLOYEES' EFUND REPORT" . $EmpID;
+            $title = "EMPLOYEES' PLP REPORT" . $EmpID;
         }
         elseif($type == 'deduction'){
             $data = $this->deductionReport($args);
-            $title = "EMPLOYEES' EFUND REPORT" . $EmpID;
+            $title = "EMPLOYEES' PLP REPORT" . $EmpID;
         }
         elseif($type == 'resigned'){
             $data = $this->resignedReport($args);
-            $title = "EMPLOYEES' EFUND REPORT" . $EmpID;
+            $title = "EMPLOYEES' PLP REPORT" . $EmpID;
+        }elseif($type == 'fullypaid'){
+            $data = $this->fullypaidReport($args);
+            $title = "EMPLOYEES' PLP REPORT" . $EmpID;
         }
 
         // format loan data to table
@@ -264,6 +274,10 @@ class ReportController extends Controller
         }elseif(in_array($type, ['ledger'])){
             $html = view('admin.ledger.ledger')
                     ->withLedgers($ledger)
+                    ->withUtils($this->utils);
+        }elseif($type == 'fullypaid'){
+            $html = view('admin.reports.fullypaid')
+                    ->withData($data)
                     ->withUtils($this->utils);
         }
 
@@ -430,8 +444,7 @@ class ReportController extends Controller
 
         // $records = DB::table('viewMonthlyReport')->get();
         $dateRange = explode("-", $args['created_at']);
-        $records = DB::select('EXEC spMonthlyReport ?, ?', ['1900-01-01', $dateRange[0]]);
-
+        $records = DB::select('EXEC spMonthlyReport ?, ?', [date('Y-m-d', strtotime($dateRange[0])), date('Y-m-d', strtotime($dateRange[1]))]);
         return $records;
 
         return (object)[
@@ -465,13 +478,24 @@ class ReportController extends Controller
         ];
     }
 
+    public function fullypaidReport($args)
+    {
+        $employees = DB::table('LastAmortizationSchedule')
+            ->where('LastDeduction', $args['endDeduction'])
+            ->get();
+        
+        return (object)[
+            'employees' => $employees
+        ];
+    }
+
     public function payrollDeductionListReport($args)
     {
         
     }
 
 
-    public function formatExcel($loans, $type, $format = 'xlsx', $title = 'Megaworld EFund System', $html = [])
+    public function formatExcel($loans, $type, $format = 'xlsx', $title = 'Megaworld PLP System', $html = [])
     {
         $utils = new Utils();
         if($type == 'payroll'){
@@ -526,7 +550,7 @@ class ReportController extends Controller
             }
         }else{
             header('Content-type: application/excel');
-            $filename = 'EFUND REPORT.xls';
+            $filename = 'PLP REPORT.xls';
             header('Content-Disposition: attachment; filename='.$filename);
 
             $data = '<html xmlns:x="urn:schemas-microsoft-com:office:excel">
@@ -559,7 +583,7 @@ class ReportController extends Controller
         $this->downloadExcel($data, $title, $format);
     }
 
-    public function downloadExcel($data, $title = 'Megaworld EFund System', $type = 'xlsx')
+    public function downloadExcel($data, $title = 'Megaworld PLP System', $type = 'xlsx')
     {
         return Excel::create($title, function($excel) use ($data) {
             $excel->sheet('Sheet1', function($sheet) use ($data)
@@ -591,6 +615,6 @@ class ReportController extends Controller
         $html = view('admin.charts')
                 ->with('data', $data);
 
-        return $this->stream($html, 'html', 'letter', 'landscape', 'Megaworld EFund Statistics');
+        return $this->stream($html, 'html', 'letter', 'landscape', 'Megaworld PLP Statistics');
     }
 }

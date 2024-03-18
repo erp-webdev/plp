@@ -71,7 +71,7 @@
                             <input type="radio" name="special" value="0" ng-checked="type == 0" readonly> REGULAR
                         </label>
                         <label style="font-weight: normal">
-                            <input type="radio" name="special" value="1" ng-checked="type == 1" readonly> SPECIAL
+                            <input type="radio" name="special" value="1" disabled ng-checked="type == 1" readonly> SPECIAL
                         </label> <br>
                     </div>
 				</div>

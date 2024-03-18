@@ -9,6 +9,11 @@ function showReport(event, format) {
 				$('#reportView').html('<div class="alert alert-danger">Please specify payroll cutoff at the filter menu.</div>');
 				return;
 			}
+		}else if($type == 'fullypaid'){
+			if($('input[name="endDeduction"]').val() == ''){
+				$('#reportView').html('<div class="alert alert-danger">Please specify end of amortization schedule.</div>');
+				return;
+			}
 		}
 
 		startLoading();
@@ -90,6 +95,10 @@ function showReport(event, format) {
 			],
 
 			resigned:[
+			],
+
+			fullypaid:[
+				'endDeduction', 
 			]
 		};
 
@@ -113,6 +122,9 @@ function showReport(event, format) {
 		}else if(type == 'resigned'){
 			$('#reportTypeDisp').val('Resigned Employees with Balance')
 			filter = filters.resigned
+		}else if(type == 'fullypaid'){
+			$('#reportTypeDisp').val('Last Amortization Schedule')
+			filter = filters.fullypaid
 		}
 
 		if(filter.length > 0){
