@@ -447,7 +447,8 @@ class ReportController extends Controller
 
         // set maximum execution time
         ini_set('max_execution_time', 60000);
-
+        set_time_limit(0);
+        
         $records = DB::select('EXEC spMonthlyReport ?, ?', [date('Y-m-d', strtotime($dateRange[0])), date('Y-m-d', strtotime($dateRange[1]))]);
         
         return $records;
