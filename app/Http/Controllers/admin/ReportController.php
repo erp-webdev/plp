@@ -450,8 +450,6 @@ class ReportController extends Controller
 
         $records = DB::select('EXEC spMonthlyReport ?, ?', [date('Y-m-d', strtotime($dateRange[0])), date('Y-m-d', strtotime($dateRange[1]))]);
         
-        dd($records);
-
         return $records;
 
         return (object)[
