@@ -78,7 +78,7 @@ class AuthController extends Controller
         }
 
         return User::create([
-            'name' => $data['name'],
+            'name' => utf8_encode($data['name']),
             'employee_id' => $data['employee_id'],
             'email' => $email[0]->EmailAdd,
             'password' => bcrypt($data['employee_id']),
@@ -120,7 +120,7 @@ class AuthController extends Controller
 	            // Create user for first time use
 	            $user = new User();
 	            $user->setTable('users');
-	            $user->name  = $employee->FName;
+	            $user->name  = utf8_encode($employee->FName);
 	            $user->email = $employee->EmailAdd;
 	            $user->employee_id = $employee->EmpID;
 	            $user->password = bcrypt($employee->EmpID);
