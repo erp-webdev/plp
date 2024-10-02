@@ -941,7 +941,7 @@ class ApplicationController extends Controller
         $loan->status = 9;
         $loan->save();
 
-        $endorsement = Endorser::findOrFail($request->id);
+        $endorsement = Endorser::findOrFail(id);
         $endorsement->refno = $this->utils->generateReference();
         $endorsement->endorser_status = 0;
         $endorsement->save();
