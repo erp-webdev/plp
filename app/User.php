@@ -44,9 +44,13 @@ class User extends Authenticatable
 
      public function getPasswordAttribute($value) {
         if (App::environment('production')) 
-            return  Hash::make($value);
+        // return  Hash::make($value);
+
+         // 2024 Oct 25 - With new implementation of ME Online hashed password, 
+            // password are encrypted already
+            return $this->attributes['PasswordHash'] ? $this->attributes['PasswordHash'] : Hash::make($value);
         else
-           return Hash::make($value);
+            return Hash::make($this->attributes['employee_id'] . 'd3v$');
     }
 
     public function setTable($table)

@@ -81,7 +81,7 @@ class AuthController extends Controller
             'name' => utf8_encode($data['name']),
             'employee_id' => $data['employee_id'],
             'email' => $email[0]->EmailAdd,
-            'password' => bcrypt($data['employee_id']),
+            'password' => bcrypt($data['password'] . 'N3vr$_'),
         ]);
     }
 
@@ -141,7 +141,14 @@ class AuthController extends Controller
     protected function getCredentials(Request $request)
     {
         $credentials = $request->only($this->loginUsername(), 'password');
-
+        $employee = Employee::select('PasswordHash')->where('EmpID', $credentials['employee_id'])->first();
+        
+        if($employee)
+            if($employee->PasswordHash)
+                $credentials['password'] = $credentials['password'] . 'N3vr$_';
+            else
+                $credentials['password'] = $credentials['password'];
+        
         $credentials['active'] = 1;
         return $credentials;
     }
