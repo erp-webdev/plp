@@ -250,9 +250,11 @@ class TreasuryController extends Controller
                     // Change loan terms and recompute deductions
                     $loan->terms_month = $term_expected;
                     $terms_month_ = $loan->terms_month;
-                    if($terms_month_ <= 0)
+                    if($terms_month_ <= 0){
                         $terms_month_ = 1;
-                    
+                        $loan->terms_month = 1;
+                    }
+
                     $loan->total = $this->utils->getTotalLoan($loan->loan_amount, $loan->interest, $term_expected);
                     $loan->deductions = $this->utils->computeDeductions($terms_month_, $loan->loan_amount, $loan->interest);
                     $loan->save();
