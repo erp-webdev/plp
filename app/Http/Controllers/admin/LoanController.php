@@ -32,13 +32,13 @@ use eFund\Http\Controllers\admin\EmailController;
 
 class LoanController extends Controller
 {
-	private $utils;
+    private $utils;
 
-	function __construct()
-	{
+    function __construct()
+    {
         Session::set('menu', 'loans');
         $this->utils = new Utils();
-	}
+    }
 
     public function index()
     {
@@ -48,78 +48,78 @@ class LoanController extends Controller
         $sortBy = 'desc';
         $status = 'all';
 
-        if(isset($_GET['show']))
+        if (isset($_GET['show']))
             $show = $_GET['show'];
 
-        if(isset($_GET['search']))
+        if (isset($_GET['search']))
             $search = $_GET['search'];
 
-        if(isset($_GET['sort']))
+        if (isset($_GET['sort']))
             $sort = $_GET['sort'];
 
-        if(isset($_GET['by']))
+        if (isset($_GET['by']))
             $sortBy = $_GET['by'];
-        
-        if(isset($_GET['status']))
+
+        if (isset($_GET['status']))
             $status = $_GET['status'];
 
-        if($status == $this->utils->getStatusIndex('denied')){
+        if ($status == $this->utils->getStatusIndex('denied')) {
             $loans = Loan::where('status', $this->utils->getStatusIndex('denied'))
-                ->where(function($query) use ($status){
-                    if($status != 'all')
+                ->where(function ($query) use ($status) {
+                    if ($status != 'all')
                         return $query->where('status', $status);
-                    if($status == 'all')
+                    if ($status == 'all')
                         return $query->where('status', '>', $this->utils->getStatusIndex('guarantor'));
                 })
                 ->orderBy($sort, $sortBy)
                 ->search($search)
                 ->paginate($show);
-        }else{
+        } else {
 
             $loans = Loan::where('status', '<', $this->utils->getStatusIndex('denied'))
-                        ->where(function($query) use ($status){
-                            if($status != 'all')
-                                return $query->where('status', $status);
-                            if($status == 'all')
-                                return $query->where('status', '>', $this->utils->getStatusIndex('guarantor'));
-                        })
-                        ->orderBy($sort, $sortBy)
-                        ->search($search)
-                        ->paginate($show);
+                ->where(function ($query) use ($status) {
+                    if ($status != 'all')
+                        return $query->where('status', $status);
+                    if ($status == 'all')
+                        return $query->where('status', '>', $this->utils->getStatusIndex('guarantor'));
+                })
+                ->orderBy($sort, $sortBy)
+                ->search($search)
+                ->paginate($show);
         }
 
-    	return view('admin.loans.index')
-    			->withLoans($loans)
-    			->withUtils($this->utils);
+        return view('admin.loans.index')
+            ->withLoans($loans)
+            ->withUtils($this->utils);
     }
 
     public function show($id)
     {
         try {
-            $loan = Loan::findOrFail((int)($id));
+            $loan = Loan::findOrFail((int) ($id));
             $deductions = Deduction::where('eFundData_id', $loan->id)->orderBy('date')->get();
             $balance = Loan::where('EmpID', Auth::user()->employee_id)
-                        ->where('DBNAME', Auth::user()->DBNAME)
-                        ->whereNotIn('status', [0,8])
-                        ->where('id', '<>', $id)
-                        ->sum('balance');
+                ->where('DBNAME', Auth::user()->DBNAME)
+                ->whereNotIn('status', [0, 8])
+                ->where('id', '<>', $id)
+                ->sum('balance');
 
             // Loan Application Counts within the current year
             $records_this_year = Loan::where('EmpID', $loan->EmpID)
-                                    ->where('DBNAME', $loan->DBNAME)
-                                    ->where('id', '<>', $loan->id)
-                                    ->yearly()
-                                    ->notDenied()
-                                    ->count();
+                ->where('DBNAME', $loan->DBNAME)
+                ->where('id', '<>', $loan->id)
+                ->yearly()
+                ->notDenied()
+                ->count();
             // Employee Info
             $employee = Employee::where('EmpID', $loan->EmpID)
-                            ->where('DBNAME', $loan->DBNAME)
-                            ->first();
+                ->where('DBNAME', $loan->DBNAME)
+                ->first();
             // Employee Term Limits
             $terms = Terms::getRankLimits($employee);
             // Allowable # of months
             $months = $this->utils->getTermMonths($loan->type, $loan->special);
-            if($records_this_year == 0)
+            if ($records_this_year == 0)
                 $months = 12;
 
             return view('admin.loans.loanApproval')
@@ -133,7 +133,7 @@ class LoanController extends Controller
         } catch (Exception $e) {
             abort(500);
         }
-        
+
     }
 
     public function approve(Request $request)
@@ -144,12 +144,12 @@ class LoanController extends Controller
         $loan->terms_month = $request->terms;
         $loan->loan_amount = $request->loan_amount;
         $loan->interest = $request->interest;
-        
+
         $loan->deductions = $this->utils->computeDeductions($request->terms, $request->loan_amount, $loan->interest);
         $loan->total = $this->utils->getTotalLoan($request->loan_amount, $loan->interest, $request->terms);
 
-        if(isset($request->approve)){
-            
+        if (isset($request->approve)) {
+
             $loan->approved = 1;
             $loan->approved_by = Auth::user()->employee_id;
             $loan->approved_at = date('Y-m-d H:i:s');
@@ -159,9 +159,9 @@ class LoanController extends Controller
 
             Event::fire(new LoanApproved($loan));
             DB::commit();
-            return redirect()->route('admin.loan')->withSuccess(trans('loan.application.approved'));   
-        }elseif(isset($request->deny)){
-            
+            return redirect()->route('admin.loan')->withSuccess(trans('loan.application.approved'));
+        } elseif (isset($request->deny)) {
+
             $loan->status = $this->utils->getStatusIndex('denied');
             $loan->remarks = $request->remarks;
             $loan->denied_by = Auth::user()->id;
@@ -169,17 +169,17 @@ class LoanController extends Controller
             $loan->denied_date = date('Y-m-d H:i:s');
             $loan->denied_remarks = '';
             $loan->save();
-            
+
             Event::fire(new LoanDenied($loan));
             DB::commit();
-            return redirect()->route('admin.loan')->withSuccess(trans('loan.application.denied'));   
-        }elseif(isset($request->calculate)){
-           
+            return redirect()->route('admin.loan')->withSuccess(trans('loan.application.denied'));
+        } elseif (isset($request->calculate)) {
+
             $loan->save();
 
             DB::commit();
-            return redirect()->route('admin.loan')->withSuccess(trans('loan.application.calculated'));   
-        }elseif(isset($request->updateterm)){
+            return redirect()->route('admin.loan')->withSuccess(trans('loan.application.calculated'));
+        } elseif (isset($request->updateterm)) {
             $loan->terms_month = $request->terms;
             $loan->deductions = $this->utils->computeDeductions($request->terms, $request->loan_amount, $loan->interest);
             $loan->total = $this->utils->getTotalLoan($request->loan_amount, $loan->interest, $request->terms);
@@ -189,12 +189,12 @@ class LoanController extends Controller
             // Create Deduction schedule
             DB::update('EXEC spCreateDeductionSchedule ?, ?, ?, ?, ?, ?', [$loan->start_of_deductions, $loan->terms_month, $loan->id, 0, $records_this_year, $loan->total]);
 
-              // Update Balance
+            // Update Balance
             $deductionId = Deduction::select('id')->where('eFundData_id', $loan->id)->first();
             DB::update('EXEC updateBalance ?', [$deductionId->id]);
 
             DB::commit();
-            return redirect()->route('admin.loan')->withSuccess('Terms and deduction schedule has been updated.');   
+            return redirect()->route('admin.loan')->withSuccess('Terms and deduction schedule has been updated.');
         }
 
 
@@ -204,13 +204,13 @@ class LoanController extends Controller
     {
         DB::beginTransaction();
 
-        $loan = []; 
-        if(count($request->eFundData_id) > 0)
+        $loan = [];
+        if (count($request->eFundData_id) > 0)
             $loan = Loan::where('id', $request->eFundData_id[0])->first();
 
         // Save deductions on Schedule
-        for($i = 0; $i < count($request->id); $i++){
-            if(!empty(trim($request->ar_no[$i]))){
+        for ($i = 0; $i < count($request->id); $i++) {
+            if (!empty(trim($request->ar_no[$i]))) {
                 $deduction = Deduction::find($request->id[$i]);
                 $deduction->ar_no = $request->ar_no[$i];
                 $deduction->amount = $request->amount[$i];
@@ -219,8 +219,8 @@ class LoanController extends Controller
 
                 // If the amount is less than the expected deduction amount per cutoff, 
                 // make adjustment on deductions.
-                if($request->amount[$i] < $loan->deductions){
-                   $this->updateBalance($loan->id, $deduction->date, $loan->interest, $loan->total);
+                if ($request->amount[$i] < $loan->deductions) {
+                    $this->updateBalance($loan->id, $deduction->date, $loan->interest, $loan->total);
                 }
 
                 // Update Balance
@@ -230,8 +230,8 @@ class LoanController extends Controller
         }
 
         // Save manually added deductions; deductions not specified in the schedule
-        for($i = 0; $i < count($request->date); $i++){
-            if(!empty(trim($request->date[$i])) || !empty($request->amount1[$i])){
+        for ($i = 0; $i < count($request->date); $i++) {
+            if (!empty(trim($request->date[$i])) || !empty($request->amount1[$i])) {
                 $deduction = new Deduction();
                 $deduction->eFundData_id = $loan->id;
                 $deduction->date = $request->date[$i];
@@ -242,15 +242,15 @@ class LoanController extends Controller
 
                 // If the amount is less than the expected deduction amount per cutoff, 
                 // make adjustment on deductions.
-                if($request->amount1[$i] < $loan->deductions){
-                   $this->updateBalance($loan->id, $deduction->date, $loan->interest, $loan->total);
+                if ($request->amount1[$i] < $loan->deductions) {
+                    $this->updateBalance($loan->id, $deduction->date, $loan->interest, $loan->total);
                 }
 
                 // Update Balance
                 DB::update('EXEC updateBalance ?', [$deduction->id]);
             }
         }
-        
+
         DB::commit();
 
         return redirect()->route('admin.loan');//->withSuccess(trans('loan.application.deduction'));
@@ -262,20 +262,20 @@ class LoanController extends Controller
      */
     public function updateBalance($loan_id, $deduction_date, $interest, $total)
     {
-         $total_paid = Deduction::where('eFundData_id', $loan_id)
+        $total_paid = Deduction::where('eFundData_id', $loan_id)
             ->sum('amount');
         $balance = $total - $total_paid;
         $remaining_months_to_pay = Deduction::where('date', '>', $deduction_date)
             ->where('eFundData_id', $loan_id)
             ->count();
-        
-        $adjusted_balance = $balance * (1 + ($interest/100));
+
+        $adjusted_balance = $balance * (1 + ($interest / 100));
         $new_deduction = $adjusted_balance / $remaining_months_to_pay;
         $new_total = $total_paid + $adjusted_balance;
         Loan::where('id', $loan_id)->update([
             'total' => round($new_total, 2),
             'deductions' => round($new_deduction, 2)
-            ]);
+        ]);
 
     }
 
@@ -290,7 +290,7 @@ class LoanController extends Controller
         DB::beginTransaction();
         $loan = Loan::findOrFail($id);
 
-        if(round($loan->balance, 2) > 0)
+        if (round($loan->balance, 2) > 0)
             return redirect()->back()
                 ->withError(trans('loan.application.balance'));
 
@@ -309,36 +309,36 @@ class LoanController extends Controller
     {
         $loan = Loan::findOrFail($id);
         $balance = Loan::where('EmpID', Auth::user()->employee_id)
-                        ->where('DBNAME', Auth::user()->DBNAME)
-                        ->whereNotIn('status', [0,8])
-                        ->where('id', '<>', $id)
-                        ->sum('balance');
+            ->where('DBNAME', Auth::user()->DBNAME)
+            ->whereNotIn('status', [0, 8])
+            ->where('id', '<>', $id)
+            ->sum('balance');
 
         return view('admin.loans.form')
-                ->withLoan($loan)
-                ->withBalance($balance)
-                ->withUtils(new Utils());
-        
+            ->withLoan($loan)
+            ->withBalance($balance)
+            ->withUtils(new Utils());
+
     }
 
     public function printPDFForm($id)
     {
         $loan = Loan::findOrFail($id);
         $balance = Loan::where('EmpID', $loan->EmpID)
-                        ->where('DBNAME',$loan->DBNAME)
-                        ->whereNotIn('status', [0,8])
-                        ->where('id', '<>', $id)
-                        ->sum('balance');
+            ->where('DBNAME', $loan->DBNAME)
+            ->whereNotIn('status', [0, 8])
+            ->where('id', '<>', $id)
+            ->sum('balance');
 
         $view = view('admin.loans.form')
-                ->withLoan($loan)
-                ->withBalance($balance)
-                ->withUtils(new Utils());
+            ->withLoan($loan)
+            ->withBalance($balance)
+            ->withUtils(new Utils());
 
         $pdf = PDF::loadHTML($view)
             ->setPaper('legal', 'portrait')
             ->setWarnings(false);
-            // ->save($loan->FullName . '_' . $loan->ctrl_no . '.pdf');
+        // ->save($loan->FullName . '_' . $loan->ctrl_no . '.pdf');
 
         $filename = $loan->ctrl_no . '_' . $loan->FullName . '.pdf';
         Storage::disk('forms')
@@ -366,7 +366,7 @@ class LoanController extends Controller
         //             $sheet->cell('B7', '✓');
         //         else
         //             $sheet->cell('F7', '✓');
-                
+
         //         if($loan->special == 0)
         //             $sheet->cell('B9', '✓');
         //         else
@@ -377,7 +377,7 @@ class LoanController extends Controller
         //         $sheet->cell('H13', $loan->HireDate);
         //         $sheet->cell('H14', $loan->PermanencyDate);
         //         $sheet->cell('H15', $loan->loan_amount);
-                
+
         //         $sheet->cell('V6', $loan->created_at);
         //         $sheet->cell('V7', $loan->loc_direct_line);
 
@@ -397,7 +397,7 @@ class LoanController extends Controller
         //         $sheet->cell('G40', $loan->loan_amount);
         //         $sheet->cell('G41', $loan->interest . '% x ' . $loan->terms_month . ' months');
         //         $sheet->cell('G43', $loan->total);
-                
+
         //         $sheet->cell('R37', $loan->remarks);
 
         //         $sheet->cell('G45', empty($loan->start_of_deductions) ? '' : $loan->start_of_deductions);
@@ -417,15 +417,15 @@ class LoanController extends Controller
         //         $sheet->cell('G56', $loan->FullName);
         //         $sheet->cell('U56', $loan->loan_amount);
         //         $sheet->cell('C64', $loan->FullName);
-                
+
         //         $sheet->cell('E66', date('Y-m-d H:i:s'));
         //         $sheet->cell('W66', '(' . Auth::user()->id . ') ' . strtolower(Auth::user()->name));
-                
+
         //     });
-        
+
         // })->store('xls', storage_path('app/forms'));//->export('pdf');
         //end of maat
-        
+
         //return $filename;
     }
 
@@ -440,8 +440,8 @@ class LoanController extends Controller
         $ledgers = [];
 
         return view('admin.loans.upload')
-                ->withLoans($loans)
-                ->withLedgers($ledgers);
+            ->withLoans($loans)
+            ->withLedgers($ledgers);
     }
 
     public function upload(Request $request)
@@ -450,28 +450,28 @@ class LoanController extends Controller
         $ledgers = [];
         $loansWithError = [];
 
-        if(Input::hasFile('fileToUpload')){
+        if (Input::hasFile('fileToUpload')) {
             $path = Input::file('fileToUpload')->getRealPath();
-            $data = Excel::load($path, function($reader) {})->get();
+            $data = Excel::load($path, function ($reader) {})->get();
             $ctr = 0;
 
-            if(!empty($data) && $data->count()){
+            if (!empty($data) && $data->count()) {
                 foreach ($data as $sheet) {
-                    foreach($sheet as $cols){
+                    foreach ($sheet as $cols) {
                         $ctr++;
 
                         foreach ($cols as $key => $value) {
                             // Sheet columns
-                            if($key == 'ctrlno')
-                                if(!empty($value))
-                                   if(Loan::where('ctrl_no', $value)->count() > 0)
-                                        array_push($loansWithError, $this->createError('Loan Ctrl No Exists from the database. '.$sheet->getTitle().'.row['. $ctr .'].column[' . $key .'].value[' . $value .']' , $cols));
+                            if ($key == 'ctrlno')
+                                if (!empty($value))
+                                    if (Loan::where('ctrl_no', $value)->count() > 0)
+                                        array_push($loansWithError, $this->createError('Loan Ctrl No Exists from the database. ' . $sheet->getTitle() . '.row[' . $ctr . '].column[' . $key . '].value[' . $value . ']', $cols));
 
                             //Process not empty column
-                            if(!empty(trim($key)) && $value != null){
+                            if (!empty(trim($key)) && $value != null) {
 
-                                if(in_array($key, ['empid', 'mos', 'principal', 'deductions', 'startofdeductions', 'type', 'status']) && empty($value)){
-                                    array_push($loansWithError, $this->createError('Required Field. '.$sheet->getTitle().'.row['. $ctr .'].column[' . $key .'].value[' . $value .']' , $cols));
+                                if (in_array($key, ['empid', 'mos', 'principal', 'deductions', 'startofdeductions', 'type', 'status']) && empty($value)) {
+                                    array_push($loansWithError, $this->createError('Required Field. ' . $sheet->getTitle() . '.row[' . $ctr . '].column[' . $key . '].value[' . $value . ']', $cols));
                                 }
 
                                 // if($key == 'status'){
@@ -479,9 +479,9 @@ class LoanController extends Controller
                                 //         array_push($loansWithError, $this->createError('Invalid Status. '.$sheet->getTitle().'.row['. $ctr .'].column[' . $key .'].value[' . $value .']', $cols));
                                 // }
 
-                                if(strtoupper(trim($value)) == 'type')
-                                    if($value != 'NEW' || $value != 'REAVAILMENT')
-                                        array_push($loansWithError, $this->createError('Invalid Type. '.$sheet->getTitle().'.row['. $ctr .'].column[' . $key .'].value[' . $value .']', $cols));
+                                if (strtoupper(trim($value)) == 'type')
+                                    if ($value != 'NEW' || $value != 'REAVAILMENT')
+                                        array_push($loansWithError, $this->createError('Invalid Type. ' . $sheet->getTitle() . '.row[' . $ctr . '].column[' . $key . '].value[' . $value . ']', $cols));
                             }
                             // Check column data type if it matches required corresponding column
                             $dates = ['appdate', 'startofdeductions'];
@@ -491,16 +491,16 @@ class LoanController extends Controller
                             //     if(date('Y-m-d H:i:s', strtotime($value)) != $value)
                             //         array_push($loansWithError, $this->createError('Invalid Date. '.$sheet->getTitle().'.row['. $ctr .'].column[' . $key .'].value[' . $value .']', $cols));
 
-                             
+
                             // Check numeric values
-                            if(in_array($key, $numbers))
-                                if(!is_numeric($value))
-                                    array_push($loansWithError, $this->createError('Invalid Number. '.$sheet->getTitle().'.row['. $ctr .'].column[' . $key .'].value[' . $value .']', $cols));
+                            if (in_array($key, $numbers))
+                                if (!is_numeric($value))
+                                    array_push($loansWithError, $this->createError('Invalid Number. ' . $sheet->getTitle() . '.row[' . $ctr . '].column[' . $key . '].value[' . $value . ']', $cols));
 
                         }
-                        
+
                         // Sheets 
-                        if($sheet->getTitle() == 'Loans'){
+                        if ($sheet->getTitle() == 'Loans') {
                             array_push($loans, $cols);
                         }
                     }
@@ -508,7 +508,7 @@ class LoanController extends Controller
             }
         }
 
-        if(count($loansWithError) > 0){
+        if (count($loansWithError) > 0) {
             return view('admin.loans.upload')
                 ->withLoans($loans)
                 ->withLedgers($ledgers)
@@ -516,17 +516,18 @@ class LoanController extends Controller
                 ->withError('Import Failed! Failed to validate records. Please check fields with red background and re-upload the file (or refresh this page).');
         }
 
-        $successLoans = 0; $successLedger = 0;
-        
+        $successLoans = 0;
+        $successLedger = 0;
+
         DB::beginTransaction();
         // Loans from Excel to Database
         foreach ($loans as $loan) {
             // eFundData (Loan)
             $eFundData = new Loan();
-            if(empty($loan->ctrlno)){
+            if (empty($loan->ctrlno)) {
                 // Create random id (5 chars)
                 $eFundData->ctrl_no = uniqid();
-            }else{
+            } else {
                 $eFundData->ctrl_no = $loan->ctrlno;
             }
 
@@ -538,35 +539,32 @@ class LoanController extends Controller
             $eFundData->deductions = $loan->deductions;
             $eFundData->start_of_deductions = date('Y-m-d H:i:s', strtotime($loan->startofdeductions));
             $eFundData->approved_by = Auth::user()->employee_id;
-            $eFundData->approved_at =  date('Y-m-d H:i:s', strtotime($loan->appdate));
+            $eFundData->approved_at = date('Y-m-d H:i:s', strtotime($loan->appdate));
             $eFundData->payroll_verified = 1;
             $eFundData->total = round($loan->principal + ($loan->principal * 0.01 * $loan->mos), 2);
 
             // Type
-            if(strtoupper(trim($loan->type)) == 'NEW')
+            if (strtoupper(trim($loan->type)) == 'NEW')
                 $eFundData->type = 0;
-            elseif(strtoupper(trim($loan->type)) == 'REAVAILMENT')
+            elseif (strtoupper(trim($loan->type)) == 'REAVAILMENT')
                 $eFundData->type = 1;
-            else{
+            else {
                 $eFundData->type = 1;
                 // array_push($loansWithError, $this->createError('Invalid Type', $loan));
                 // continue;
             }
 
             // Status
-            if(strtoupper($loan->status) == 'PAID'){
+            if (strtoupper($loan->status) == 'PAID') {
                 $eFundData->status = $this->utils->getStatusIndex('paid');
                 $eFundData->approved = 1;
-            }
-            elseif(strtoupper($loan->status) == 'DENIED'){
+            } elseif (strtoupper($loan->status) == 'DENIED') {
                 $eFundData->status = $this->utils->getStatusIndex('denied');
                 $eFundData->approved = 0;
-            }
-            elseif(strtoupper($loan->status) == 'INC'){
+            } elseif (strtoupper($loan->status) == 'INC') {
                 $eFundData->status = $this->utils->getStatusIndex('inc');
                 $eFundData->approved = 1;
-            }
-            else{
+            } else {
                 $eFundData->status = $this->utils->getStatusIndex('inc');
                 $eFundData->approved = 1;
             }
@@ -575,15 +573,15 @@ class LoanController extends Controller
             $log = new Log();
             $log->writeToLog(json_encode($eFundData));
 
-            if(!empty($loan->endorserempid)){
+            if (!empty($loan->endorserempid)) {
                 // Endorser
                 $query = [
-                        'refno' => $this->utils->generateReference(),
-                        'eFundData_id' => $eFundData->id,
-                        'EmpID' => $loan->endorserempid,
-                        'signed_at' => $loan->approvedat,
-                        'status' => 1
-                    ];
+                    'refno' => $this->utils->generateReference(),
+                    'eFundData_id' => $eFundData->id,
+                    'EmpID' => $loan->endorserempid,
+                    'signed_at' => $loan->approvedat,
+                    'status' => 1
+                ];
                 $endorser = DB::table('endorsers')->insertGetId($query);
 
                 $log = new Log();
@@ -593,16 +591,16 @@ class LoanController extends Controller
                 $eFundData->save();
             }
 
-            if(!empty($loan->guarantorempid)){
+            if (!empty($loan->guarantorempid)) {
                 // Guarantor
                 $query = [
-                        'refno' => $this->utils->generateReference(),
-                        'eFundData_id' => $eFundData->id,
-                        'EmpID' => $loan->guarantorempid,
-                        'signed_at' => $eFundData->approvedat,
-                        'status' => 1,
-                        'guaranteed_amount' => $loan->guaranteedamount
-                    ];
+                    'refno' => $this->utils->generateReference(),
+                    'eFundData_id' => $eFundData->id,
+                    'EmpID' => $loan->guarantorempid,
+                    'signed_at' => $eFundData->approvedat,
+                    'status' => 1,
+                    'guaranteed_amount' => $loan->guaranteedamount
+                ];
                 $guarantor = DB::table('guarantors')->insertGetId($query);
                 $log->writeOnly('Insert', 'guarantors', $query);
 
@@ -614,52 +612,53 @@ class LoanController extends Controller
             $treasury = new Treasury();
             $treasury->eFundData_id = $eFundData->id;
             $treasury->created_by = Auth::user()->id;
-            if(!empty($loan->cvno))
+            if (!empty($loan->cvno))
                 $treasury->cv_no = $loan->cvno;
             else
                 $treasury->cv_no = '-';
 
-            if(!empty($loan->cv_date))
+            if (!empty($loan->cv_date))
                 $treasury->cv_date = $loan->cv_date;
             else
-                $treasury->cv_date =  date('Y-m-d H:i:s', strtotime($loan->appdate));;
-            
-            if(!empty($loan->checkno))
+                $treasury->cv_date = date('Y-m-d H:i:s', strtotime($loan->appdate));
+            ;
+
+            if (!empty($loan->checkno))
                 $treasury->check_no = $loan->checkno;
             else
                 $treasury->check_no = '-';
 
-            $treasury->check_released =  date('Y-m-d H:i:s', strtotime($loan->startofdeductions));
+            $treasury->check_released = date('Y-m-d H:i:s', strtotime($loan->startofdeductions));
             $treasury->released = date('Y-m-d H:i:s', strtotime($loan->startofdeductions));
             $treasury->save();
 
             $treasury->cv_date = $loan->cv_date;
             $eFundData->created_at = date('Y-m-d H:i:s', strtotime($loan->appdate));
-            $eFundData->remarks = '[Uploaded: '. date('ymdHis') .']';
+            $eFundData->remarks = '[Uploaded: ' . date('ymdHis') . ']';
             $eFundData->save();
             $successLoans++;
 
             // Create deduction list or Ledger
             $deductionDate = date('Y-m-d', strtotime($loan->startofdeductions));
             $balance = $eFundData->total - $loan->deductions;
-            for($i = 0; $i < $loan->mos * 2; $i++){
+            for ($i = 0; $i < $loan->mos * 2; $i++) {
                 $deduction = new Deduction();
                 $deduction->eFundData_id = $eFundData->id;
                 $deduction->date = $deductionDate;
                 // Set next deduction date
-                if(date('d', strtotime($deductionDate)) == 15){
+                if (date('d', strtotime($deductionDate)) == 15) {
                     // End of Month (EOM)
                     $deductionDate = date('Y-m-t', strtotime($deductionDate));
-                }else{
+                } else {
                     $deductionDate = date('Y-m-15', strtotime("+15 days", strtotime($deductionDate)));
                 }
 
-                if(date('Y-m-d', strtotime($deductionDate)) <= date('Y-m-d')){
+                if (date('Y-m-d', strtotime($deductionDate)) <= date('Y-m-d')) {
                     $deduction->ar_no = '-';
                     $deduction->amount = $loan->deductions;
                     $deduction->balance = $balance;
 
-                    if($balance < 0){
+                    if ($balance < 0) {
                         $deduction->amount -= abs($balance);
                         $deduction->balance = 0;
                         $eFundData->status = $this->utils->getStatusIndex('paid');
@@ -669,7 +668,7 @@ class LoanController extends Controller
                     //Compute balance
                     $balance = $balance - $loan->deductions;
                 }
-               
+
                 $deduction->updated_by = Auth::user()->id;
                 $deduction->updated_at = date('Y-m-d H:i:s');
                 $deduction->save();
@@ -680,17 +679,17 @@ class LoanController extends Controller
         DB::commit();
 
         return view('admin.loans.upload')
-                ->withLoans($loansWithError)
-                ->withSuccess('Upload Successful! But, skipped '. count($loansWithError) . ' record(s) with error. '. $successLoans . ' Loans uploaded. ');
+            ->withLoans($loansWithError)
+            ->withSuccess('Upload Successful! But, skipped ' . count($loansWithError) . ' record(s) with error. ' . $successLoans . ' Loans uploaded. ');
     }
 
     public function upload2(Request $request)
     {
         $loans = [];
         $valid = true;
-        if(Input::hasFile('fileToUpload')){
+        if (Input::hasFile('fileToUpload')) {
             $path = Input::file('fileToUpload')->getRealPath();
-            $data = Excel::selectSheets('Loans')->load($path, function($reader) {})->get();
+            $data = Excel::selectSheets('Loans')->load($path, function ($reader) {})->get();
 
             DB::beginTransaction();
             // Loans from Excel to Database
@@ -698,46 +697,54 @@ class LoanController extends Controller
                 // validate
                 // Check required
                 $errors = [];
-                if(!empty(trim($loan->employeeid)))
-                foreach($loan->toArray() as $key=>$value)  {
-                    if(in_array($key, ['startofdeductions', 'balanceamount', 'deductionpercutoff', 
-                        'totalpayable', 'loanamount', 'termsmonths', 
-                        'applicationdate']) && empty(trim($value)) && $key != '0'){
+                if (!empty(trim($loan->employeeid)))
+                    foreach ($loan->toArray() as $key => $value) {
+                        if (
+                            in_array($key, [
+                                'startofdeductions',
+                                'balanceamount',
+                                'deductionpercutoff',
+                                'totalpayable',
+                                'loanamount',
+                                'termsmonths',
+                                'applicationdate'
+                            ]) && empty(trim($value)) && $key != '0'
+                        ) {
                             array_push($errors, $key);
                             $valid = false;
                         }
 
-                }
+                    }
 
-                array_push($loans, (object)[
+                array_push($loans, (object) [
                     'data' => $loan,
                     'errors' => $errors
                 ]);
 
             }
 
-            if(!$valid)
+            if (!$valid)
                 return view('admin.loans.upload')
                     ->withError('Upload failed!')
                     ->withValid($valid)
                     ->withLoans($loans);
-            
-            $loans=[];
+
+            $loans = [];
             foreach ($data as $loan) {
 
-                if(empty(trim($loan->employeeid)))
+                if (empty(trim($loan->employeeid)))
                     continue;
 
                 // eFundData (Loan)
                 $eFundData = new Loan();
-                if(empty($loan->controlno)){
+                if (empty($loan->controlno)) {
                     // Create random id (5 chars)
                     $eFundData->ctrl_no = uniqid('up');
                     $loan->controlno = $eFundData->ctrl_no;
-                }else{
+                } else {
                     $eFundData->ctrl_no = $loan->controlno;
                 }
-    
+
                 $eFundData->EmpID = $loan->employeeid;
                 $eFundData->DBNAME = $loan->companycode;
                 $eFundData->local_dir_line = $loan->localno;
@@ -747,18 +754,18 @@ class LoanController extends Controller
                 $eFundData->deductions = $loan->deductionpercutoff;
                 $eFundData->start_of_deductions = date('Y-m-d H:i:s', strtotime($loan->startofdeductions));
                 $eFundData->approved_by = Auth::user()->employee_id;
-                $eFundData->approved_at =  date('Y-m-d H:i:s', strtotime($loan->applicationdate));
-                $eFundData->created_at =  date('Y-m-d H:i:s', strtotime($loan->applicationdate));
+                $eFundData->approved_at = date('Y-m-d H:i:s', strtotime($loan->applicationdate));
+                $eFundData->created_at = date('Y-m-d H:i:s', strtotime($loan->applicationdate));
                 $eFundData->payroll_verified = 1;
                 $eFundData->total = $loan->totalpayable;
                 $eFundData->approved = 1;
-                
+
                 // NEW
                 $eFundData->type = 0;
-    
-                if($loan->balanceamount > 0 ){
+
+                if ($loan->balanceamount > 0) {
                     $eFundData->status = $this->utils->getStatusIndex('inc');
-                }else{
+                } else {
                     $eFundData->status = $this->utils->getStatusIndex('paid');
                 }
 
@@ -766,27 +773,27 @@ class LoanController extends Controller
 
                 $log = new Log();
                 $log->writeToLog(json_encode($eFundData));
-    
+
                 // Create deduction list or Ledger
                 $deductionDate = date('Y-m-d', strtotime($loan->startofdeductions));
                 $balance = $loan->totalpayable;
 
-                for($i = 0; $i < $loan->termsmonths * 2; $i++){
+                for ($i = 0; $i < $loan->termsmonths * 2; $i++) {
 
                     $deduction = new Deduction();
                     $deduction->eFundData_id = $eFundData->id;
                     $deduction->date = $deductionDate;
-                    
+
                     // upload balance on first entry of deduction schedule
-                    if(date('Y-m-d', strtotime($deductionDate)) <= date('Y-m-d')){
+                    if (date('Y-m-d', strtotime($deductionDate)) <= date('Y-m-d')) {
                         $amount = $loan->deductionpercutoff;
-                        
-                        if($balance - $loan->balanceamount >= $loan->deductionpercutoff){
+
+                        if ($balance - $loan->balanceamount >= $loan->deductionpercutoff) {
                             $balance = $balance - $loan->deductionpercutoff;
-                        }elseif($balance - $loan->balanceamount == 0){
+                        } elseif ($balance - $loan->balanceamount == 0) {
                             $amount = 0;
                             $balance = $loan->balanceamount;
-                        }elseif($balance - $loan->balanceamount < $loan->deductionpercutoff){
+                        } elseif ($balance - $loan->balanceamount < $loan->deductionpercutoff) {
                             $amount = $balance - $loan->balanceamount;
                             $balance = $loan->balanceamount;
                         }
@@ -801,24 +808,24 @@ class LoanController extends Controller
                     $deduction->save();
 
                     // Set next deduction date
-                    if(date('d', strtotime($deductionDate)) == 15){
+                    if (date('d', strtotime($deductionDate)) == 15) {
                         // End of Month (EOM)
                         $deductionDate = date('Y-m-t', strtotime($deductionDate));
-                    }else{
+                    } else {
                         $deductionDate = date('Y-m-15', strtotime("+15 days", strtotime($deductionDate)));
                     }
                 }
 
                 // Endorser
-                if(!empty($loan->endorseremployeeid)){
+                if (!empty($loan->endorseremployeeid)) {
                     $query = [
-                            'refno' => $this->utils->generateReference(),
-                            'eFundData_id' => $eFundData->id,
-                            'EmpID' => !empty($loan->endorseremployeeid) ? $loan->endorseremployeeid : '2016-06-0457',
-                            'signed_at' => date('Y-m-d H:i:s', strtotime($loan->applicationdate)),
-                            'DBNAME' =>!empty($loan->endorsercompanycode) ? $loan->endorsercompanycode : 'GL',
-                            'status' => 1
-                        ];
+                        'refno' => $this->utils->generateReference(),
+                        'eFundData_id' => $eFundData->id,
+                        'EmpID' => !empty($loan->endorseremployeeid) ? $loan->endorseremployeeid : '2016-06-0457',
+                        'signed_at' => date('Y-m-d H:i:s', strtotime($loan->applicationdate)),
+                        'DBNAME' => !empty($loan->endorsercompanycode) ? $loan->endorsercompanycode : 'GL',
+                        'status' => 1
+                    ];
 
                     $endorser = DB::table('endorsers')->insertGetId($query);
 
@@ -828,32 +835,32 @@ class LoanController extends Controller
                     $eFundData->endorser_id = $endorser;
                     $eFundData->save();
                 }
-    
+
                 // Guarantor
-                if(!empty($loan->guarantoremployeeid) || !empty($loan->guarantorfullname)){
+                if (!empty($loan->guarantoremployeeid) || !empty($loan->guarantorfullname)) {
                     $guarantor_empid_based_on_name = '';
                     $guarantor_db_based_on_name = '';
 
-                    if(empty($loan->guarantoremployeeid) && !empty($loan->guarantorfullname)){
-                        $guarantor_based_on_name = 
-                            Employee::where('FullName', 'LIKE', '%'. str_replace(' ', '%', $loan->guarantorfullname).'%')
+                    if (empty($loan->guarantoremployeeid) && !empty($loan->guarantorfullname)) {
+                        $guarantor_based_on_name =
+                            Employee::where('FullName', 'LIKE', '%' . str_replace(' ', '%', $loan->guarantorfullname) . '%')
                                 ->first();
 
-                        if(!empty($guarantor_based_on_name)){
+                        if (!empty($guarantor_based_on_name)) {
                             $guarantor_empid_based_on_name = $guarantor_based_on_name->EmpID;
                             $guarantor_db_based_on_name = $guarantor_based_on_name->DBNAME;
                         }
                     }
 
                     $query = [
-                            'refno' => $this->utils->generateReference(),
-                            'eFundData_id' => $eFundData->id,
-                            'EmpID' => !empty($loan->guarantoremployeeid) ? $loan->guarantoremployeeid : $guarantor_empid_based_on_name,
-                            'signed_at' => date('Y-m-d H:i:s', strtotime($loan->applicationdate)),
-                            'DBNAME' => !empty($loan->guarantorcompanycode) ? $loan->guarantorcompanycode : $guarantor_db_based_on_name,
-                            'status' => 1,
-                            'guaranteed_amount' => $loan->totalpayable
-                        ];
+                        'refno' => $this->utils->generateReference(),
+                        'eFundData_id' => $eFundData->id,
+                        'EmpID' => !empty($loan->guarantoremployeeid) ? $loan->guarantoremployeeid : $guarantor_empid_based_on_name,
+                        'signed_at' => date('Y-m-d H:i:s', strtotime($loan->applicationdate)),
+                        'DBNAME' => !empty($loan->guarantorcompanycode) ? $loan->guarantorcompanycode : $guarantor_db_based_on_name,
+                        'status' => 1,
+                        'guaranteed_amount' => $loan->totalpayable
+                    ];
 
                     $guarantor = DB::table('guarantors')->insertGetId($query);
                     $log->writeOnly('Insert', 'guarantors', $query);
@@ -861,42 +868,43 @@ class LoanController extends Controller
                     $eFundData->guarantor_id = $guarantor;
                     $eFundData->save();
                 }
-    
+
                 // Treasury
                 $treasury = new Treasury();
                 $treasury->eFundData_id = $eFundData->id;
                 $treasury->created_by = Auth::user()->id;
 
-                if(!empty($loan->cvno))
+                if (!empty($loan->cvno))
                     $treasury->cv_no = $loan->cvno;
                 else
                     $treasury->cv_no = '-';
-    
-                if(!empty($loan->cv_date))
+
+                if (!empty($loan->cv_date))
                     $treasury->cv_date = $loan->cv_date;
                 else
-                    $treasury->cv_date =  date('Y-m-d H:i:s', strtotime($loan->applicationdate));;
-                
-                if(!empty($loan->checkno))
+                    $treasury->cv_date = date('Y-m-d H:i:s', strtotime($loan->applicationdate));
+                ;
+
+                if (!empty($loan->checkno))
                     $treasury->check_no = $loan->checkno;
                 else
                     $treasury->check_no = '-';
-    
-                $treasury->check_released =  date('Y-m-d H:i:s', strtotime($loan->startofdeductions));
+
+                $treasury->check_released = date('Y-m-d H:i:s', strtotime($loan->startofdeductions));
                 $treasury->released = date('Y-m-d H:i:s', strtotime($loan->startofdeductions));
                 $treasury->save();
-                
+
                 // $loan->item['controlno'] = $eFundData->ctrl_no;
-                $loan_ = (object)$loan->toArray();
+                $loan_ = (object) $loan->toArray();
                 $loan_->controlno = $eFundData->ctrl_no;
 
-                array_push($loans, (object)[
+                array_push($loans, (object) [
                     'data' => $loan_,
                     'errors' => $errors
                 ]);
-    
+
             }
-    
+
             DB::commit();
 
             return view('admin.loans.upload')
@@ -904,12 +912,12 @@ class LoanController extends Controller
                 ->withLoans($loans);
 
         }
-            
+
     }
 
     public function createError($error = '', $data)
     {
-        return (object)['error' => $error, 'loan' => $data];
+        return (object) ['error' => $error, 'loan' => $data];
     }
 
     /**
@@ -923,7 +931,7 @@ class LoanController extends Controller
     {
         $empList = [];
 
-        if(isset($_GET['deductionDate'])){
+        if (isset($_GET['deductionDate'])) {
             $date = $_GET['deductionDate'];
             $empList = Ledger::select('id', 'EmpID', 'FullName', 'ctrl_no', 'deductions', 'amount', 'ar_no', 'total', 'COMPANY')->deductionList($date)->get();
         }
@@ -934,27 +942,28 @@ class LoanController extends Controller
     public function applyBatchDeductions(Request $request)
     {
         DB::beginTransaction();
-        for($i = 0; $i < count($request->id); $i++){
+        for ($i = 0; $i < count($request->id); $i++) {
             $id = 'id' . $request->id[$i];
             $amount = 'amount' . $request->id[$i];
             $deduction = 'deduction' . $request->id[$i];
 
-            if(isset($request->$id)){
+            if (isset($request->$id)) {
 
                 // $emp = Ledger::find($request->$id)->first();
 
                 // if(empty($emp))
                 //     continue;
 
-                if(isset($request->$amount)){
+                if (isset($request->$amount)) {
 
                     Deduction::where('id', $request->id[$i])
-                        ->update([
-                            'ar_no'         => $request->d_arno,
-                            'amount'        => $request->$amount,
-                            'updated_by'    => Auth::user()->id
-                        ]
-                    );
+                        ->update(
+                            [
+                                'ar_no' => $request->d_arno,
+                                'amount' => $request->$amount,
+                                'updated_by' => Auth::user()->id
+                            ]
+                        );
 
                     // Update Balance
                     DB::update('EXEC updateBalance ?', [$request->$id]);
@@ -979,31 +988,33 @@ class LoanController extends Controller
     {
         $deductions = [];
         $valid = true;
-        if(Input::hasFile('fileToUpload')){
+        if (Input::hasFile('fileToUpload')) {
 
             $path = Input::file('fileToUpload')->getRealPath();
-            $data = Excel::selectSheets('Deductions')->load($path, function($reader) {})->get();
+            $data = Excel::selectSheets('Deductions')->load($path, function ($reader) {})->get();
 
             DB::beginTransaction();
             foreach ($data as $deduction) {
                 // validate
                 // Check required
-                $errors = (object)[
+                $errors = (object) [
                     'required' => [],
                     'noActiveLoan' => []
                 ];
 
-                if(empty(trim($deduction->companycode))
-                    && empty(trim($deduction->employeeid)))
-                        continue;
-                        
-                foreach($deduction->toArray() as $key=>$value)  {
-                    
+                if (
+                    empty(trim($deduction->companycode))
+                    && empty(trim($deduction->employeeid))
+                )
+                    continue;
 
-                    if(in_array($key, ['companycode', 'employeeid', 'paydate', 'amountpaid']) && empty(trim($value)) && $key != '0'){
-                            array_push($errors->required, $key);
-                            $valid = false;
-                        }
+                foreach ($deduction->toArray() as $key => $value) {
+
+
+                    if (in_array($key, ['companycode', 'employeeid', 'paydate', 'amountpaid']) && empty(trim($value)) && $key != '0') {
+                        array_push($errors->required, $key);
+                        $valid = false;
+                    }
 
                 }
 
@@ -1013,40 +1024,42 @@ class LoanController extends Controller
                     ->where('status', $this->utils->getStatusIndex('inc'))
                     ->first();
 
-                if(!$eFundData){
+                if (!empty($eFundData)) {
                     array_push($errors->noActiveLoan, 'No active loan');
                     $valid = false;
                 }
 
-                array_push($deductions, (object)[
+                array_push($deductions, (object) [
                     'data' => $deduction,
                     'errors' => $errors
                 ]);
 
             }
 
-            if(!$valid)
+            if (!$valid)
                 return view('admin.loans.upload_deductions')
                     ->withError('Upload failed!')
                     ->withValid($valid)
                     ->withDeductions($deductions);
-            
+
             foreach ($data as $deduction) {
 
-                if(empty(trim($deduction->companycode))
-                    && empty(trim($deduction->employeeid)))
-                        continue;
+                if (
+                    empty(trim($deduction->companycode))
+                    && empty(trim($deduction->employeeid))
+                )
+                    continue;
 
                 $eFundData = Loan::where('EmpID', $deduction->employeeid)
                     ->where('DBNAME', $deduction->companycode)
                     ->status($this->utils->getStatusIndex('inc'))
                     ->first();
-                    
+
                 $paydate = Deduction::where('eFundData_id', $eFundData->id)
                     ->where('date', $deduction->paydate)
                     ->first();
-                    
-                if(!$paydate)
+
+                if (!$paydate)
                     $paydate = new Deduction();
 
                 $paydate->eFundData_id = $eFundData->id;
@@ -1078,28 +1091,28 @@ class LoanController extends Controller
     {
         $employees = DB::table('viewUserPermissions')->where('permission', 'payroll')->get();
 
-        if(empty($employees)){
+        if (empty($employees)) {
             return redirect()->route('admin.loan')->withError('Email was not sent! No user tagged with payroll roles was found!');
-        }   
+        }
 
         $loans = $this->getPayrollList();
-        if(count($loans) == 0)
+        if (count($loans) == 0)
             return redirect()->route('admin.loan')->withError('Email was not sent! There are no loan applications for payroll verifications');
 
         $loans = $this->getFormattedPayrollList();
         $email = new EmailController;
 
         foreach ($employees as $employee) {
-            if(empty($employee->EmailAdd))
+            if (empty($employee->EmailAdd))
                 continue;
-            
+
             $args = ['employee' => $employee, 'loansHtml' => $loans];
 
             $emp = Employee::where('EmpID', $employee->employee_id)
                 ->where('DBNAME', $employee->DBNAME)
                 ->first();
 
-            if(isset($emp->EmailAdd))
+            if (isset($emp->EmailAdd))
                 $email->send($emp, config('preferences.notif_subjects.created', 'Loan Application Notification'), 'emails.payroll_verify_list', $args, $cc = '');
         }
 
@@ -1117,9 +1130,9 @@ class LoanController extends Controller
         // $today = date('Y-m-d 17:00:00');
 
         // $loans = Loan::where('status', $this->utils->getStatusIndex('payroll'))
-                    // ->where('created_at', '<' ,date('Y-m-d 17:00:00'))
-                    // ->orderBy('ctrl_no')
-                    // ->get();
+        // ->where('created_at', '<' ,date('Y-m-d 17:00:00'))
+        // ->orderBy('ctrl_no')
+        // ->get();
 
         // All unverified loans
         $loans = Loan::where('status', $this->utils->getStatusIndex('payroll'))->orderBy('ctrl_no')->get();
@@ -1134,11 +1147,11 @@ class LoanController extends Controller
     {
         $loans = $this->getPayrollList();
 
-        if(count($loans) == 0)
+        if (count($loans) == 0)
             return 'No loan applications for payroll verifications was found!';
 
-        $html = 
-        '<table class="table table-hover table-condensed">
+        $html =
+            '<table class="table table-hover table-condensed">
             <thead >
                 <th style="padding: 10px">Ctrl #</th>
                 <th style="padding: 10px">Company</th>
@@ -1149,8 +1162,8 @@ class LoanController extends Controller
             <tbody>
         ';
 
-        foreach($loans as $loan){
-            $html .= 
+        foreach ($loans as $loan) {
+            $html .=
                 '<tr>
                     <td style="padding: 10px">' . $loan->ctrl_no . '</td>
                     <td style="padding: 10px">' . $loan->COMPANY . '</td>
@@ -1181,18 +1194,18 @@ class LoanController extends Controller
         $utils = new Utils();
 
         foreach ($employees as $employee) {
-            if(empty($employee->EmailAdd))
+            if (empty($employee->EmailAdd))
                 continue;
-            
+
             $args = ['loan' => $loan, 'employee' => $employee, 'utils' => $utils];
 
             $emp = Employee::where('EmpID', $employee->employee_id)
                 ->where('DBNAME', $employee->DBNAME)
                 ->first();
 
-            if(isset($emp->EmailAdd))
+            if (isset($emp->EmailAdd))
                 (new EmailController())->send($emp, config('preferences.notif_subjects.payroll', 'Loan Application Notification'), 'emails.payroll', $args, $cc = '');
-            
+
         }
 
         // TODO: send to payroll new sched
@@ -1206,11 +1219,11 @@ class LoanController extends Controller
     {
 
         return $loan = Loan::where('status', $this->utils->getStatusIndex('officer'))
-                ->where(function($query) use ($ids){
-                    if(!empty($ids))
-                        $query->whereIn('id', $ids);
+            ->where(function ($query) use ($ids) {
+                if (!empty($ids))
+                    $query->whereIn('id', $ids);
 
-                })->orderBy('ctrl_no')->get();
+            })->orderBy('ctrl_no')->get();
 
     }
 
@@ -1243,7 +1256,7 @@ class LoanController extends Controller
         $body = 'emails.blank';
         $subject = 'Personal Loan apps. for approval';
 
-        $mail = Mail::send($body, ['args' => $args, 'utils' => $utils], function($message) use ($to, $subject, $from, $cc){
+        $mail = Mail::send($body, ['args' => $args, 'utils' => $utils], function ($message) use ($to, $subject, $from, $cc) {
             $message->bcc('kayag.global@megaworldcorp.com');
             // $message->to('kayag.global@megaworldcorp.com');
 
@@ -1251,14 +1264,14 @@ class LoanController extends Controller
             $message->to('tgonzales@megaworldcorp.com');
             $message->from($from);
             $message->subject($subject);
-            $message->cc($cc);  
-            $message->cc('dpascua@megaworldcorp.com');  
-            $message->cc('iluego.global@megaworldcorp.com');  
+            $message->cc($cc);
+            $message->cc('dpascua@megaworldcorp.com');
+            $message->cc('iluego.global@megaworldcorp.com');
         });
 
         $log = new Log();
         $log->writeOnly('Info', 'email', ['email' => $to, 'subject' => $subject, 'response' => $mail]);
-        
+
         return redirect()->route('admin.loan')->withSuccess('Email sent!');
 
     }
