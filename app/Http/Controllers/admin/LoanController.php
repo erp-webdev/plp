@@ -1010,7 +1010,6 @@ class LoanController extends Controller
 
                 foreach ($deduction->toArray() as $key => $value) {
 
-
                     if (in_array($key, ['companycode', 'employeeid', 'paydate', 'amountpaid']) && empty(trim($value)) && $key != '0') {
                         array_push($errors->required, $key);
                         $valid = false;
@@ -1019,12 +1018,12 @@ class LoanController extends Controller
                 }
 
                 // eFundData (Loan)
-                $eFundData = Loan::where('EmpID', $deduction->employeeid)
+                $eFundData_count = Loan::where('EmpID', $deduction->employeeid)
                     ->where('DBNAME', $deduction->companycode)
                     ->where('status', $this->utils->getStatusIndex('inc'))
-                    ->first();
+                    ->count();
 
-                if (!isset($eFundData->EmpID)) {
+                if ($eFundData_count == 0) {
                     array_push($errors->noActiveLoan, 'No active loan');
                     $valid = false;
                 }
