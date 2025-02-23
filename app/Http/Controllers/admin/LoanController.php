@@ -1023,7 +1023,7 @@ class LoanController extends Controller
                     ->where('status', $this->utils->getStatusIndex('inc'))
                     ->count();
 
-                if ($eFundData_count == 0) {
+                if ($eFundData_count !== 0) {
                     array_push($errors->noActiveLoan, 'No active loan');
                     $valid = false;
                 }
