@@ -1042,6 +1042,8 @@ class LoanController extends Controller
                     ->withValid($valid)
                     ->withDeductions($deductions);
 
+            dd('ok');
+
             foreach ($data as $deduction) {
 
                 if (
