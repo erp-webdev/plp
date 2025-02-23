@@ -1024,7 +1024,7 @@ class LoanController extends Controller
                     ->where('status', $this->utils->getStatusIndex('inc'))
                     ->first();
 
-                if (empty($eFundData)) {
+                if (!isset($eFundData->EmpID)) {
                     array_push($errors->noActiveLoan, 'No active loan');
                     $valid = false;
                 }
@@ -1041,8 +1041,6 @@ class LoanController extends Controller
                     ->withError('Upload failed!')
                     ->withValid($valid)
                     ->withDeductions($deductions);
-
-            dd('ok');
 
             foreach ($data as $deduction) {
 
