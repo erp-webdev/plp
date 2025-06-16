@@ -164,18 +164,30 @@ class TreasuryController extends Controller
 
     public function generateCheckVoucher($id){
         try{
+            DB::beginTransaction();
+            
             $treasury = Treasury::where('eFundData_id', $id)->first();
             if(empty($treasury))
                 $treasury = new Treasury();
 
+            $last_cv_no = Preference::name('cv_no');
+            $last_cv_no->value += 1;
+            $last_cv_no->save();
+
             $treasury->eFundData_id = $id;
-            $treasury->cv_no = $this->utils->generateCheckVoucherNumber();
+            // $treasury->cv_no = $this->utils->generateCheckVoucherNumber();
+            $treasury->cv_no = $last_cv_no->value;
+            
             $treasury->cv_date = date('Y-m-d');
             $treasury->check_no = $_GET['cn'];
             $treasury->created_by = Auth::user()->id;
             $treasury->save();
+
+            DB::commit();
             
         } catch (Exception $e){
+            DB::rollback();
+            Log::error('Error generating check voucher: ' . $e->getMessage());
             abort(500);
         }
     }
