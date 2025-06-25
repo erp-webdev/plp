@@ -107,6 +107,7 @@ class PayrollController extends Controller
                     if($company != 'all')
                         return $query->where('COMPANY', $company);
                 })
+                ->where('status', $this->utils->getStatusIndex('inc'))
                 ->orderBy('COMPANY')
                 ->orderBy('FullName')
                 ->get();
