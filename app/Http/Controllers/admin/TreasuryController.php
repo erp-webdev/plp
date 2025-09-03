@@ -69,6 +69,14 @@ class TreasuryController extends Controller
                                          $query->where('check_released', '>=', date('Y-m-d', strtotime($searchRange[0])))
                                         ->where('check_released', '<=', date('Y-m-d', strtotime($searchRange[1])));
                                     }
+                            }elseif(in_array($key, ['ctrl'])){
+                                $query->where('ctrl_no', 'LIKE', '%' . $search . '%');
+                            }elseif(in_array($key, ['name'])){
+                                $query->where('FullName', 'LIKE', '%' . $search . '%');
+                            }elseif(in_array($key, ['cv'])){
+                                $query->where('cv_no', 'LIKE', '%' . $search . '%');
+                            }elseif(in_array($key, ['check'])){
+                                $query->where('check_no', 'LIKE', '%' . $search . '%');
                             }else{
                                 $query->where('ctrl_no', 'LIKE', '%' . $search . '%')
                                     ->orWhere('cv_no', 'LIKE', '%' . $search . '%')
