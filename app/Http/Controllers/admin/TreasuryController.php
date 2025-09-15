@@ -260,7 +260,8 @@ class TreasuryController extends Controller
             $records_this_year = Loan::yearly()->notDenied()->count();
 
             // Check validity of terms based on Actual Start of Deduction on 2nd availment
-            $term_expected = $this->utils->getTermMonths($loan->type, $loan->special);
+            // $term_expected = $this->utils->getTermMonths($loan->type, $loan->special);
+            $term_expected = $this->utils->getTermMonthsByReleaseDate(date('Y-m-d'), $loan->type, $loan->special);
             // if($loan->special == 1)
             //     $term_expected = 24;
             

@@ -404,7 +404,7 @@ class Utils
      * @return int
      *
      */
-    public function getTermMonths($application_type = 0, $special = 0, $terms = null)
+    public function getTermMonths_old($application_type = 0, $special = 0, $terms = null)
     {
     	$mos = Preference::name('payment_term');
         $mos = $mos->value;
@@ -448,6 +448,107 @@ class Utils
             return $mos - date('n');
         }
 
+    }
+
+    public function getTermMonthsByReleaseDate($releaseDate, $application_type = 0, $special = 0, $terms = null)
+    {
+    	$mos = Preference::name('payment_term');
+        $mos = $mos->value;
+    	$special_mos = Preference::name('payment_term_special');
+        $special_mos = $special_mos->value;
+
+        if($special == 1){
+            // Special Loan
+            if($terms != null)
+                if($terms > $special_mos)
+                    return $special_mos;
+                else   
+                    return $terms;
+
+            return $special_mos;
+        }
+
+        if($application_type == 0){
+            // New application
+            if($terms == null)
+                return $mos;
+                            
+            if($terms > $mos)
+                return $mos;
+            
+            return $terms;
+        }
+
+        $day = date('d');
+
+        // if($day >= 6 && $day <= 20){
+
+        //     // End Of Month 
+        //     // Get number of months remaining till December 31st. 
+        //     // Usually ends with 15th of the month. 
+        //     return $mos - date('n')  - 1;
+        // }
+        // else if($day >= 21 || $day <= 5){
+        //     // 15th of the month
+        //     // Get number of months remaining till December 31st.
+        //     return $mos - date('n');
+        // }
+
+        // --- Rule Constants ---
+        $maxTermInMonths = $mos;
+        $endOfYearMonth = 12;
+
+        // --- Date Initialization ---
+        try {
+            $releaseDate = new DateTime($releaseDateString);
+        } catch (Exception $e) {
+            // Handle invalid date format
+            return [];
+        }
+
+        $releaseDay = (int) $releaseDate->format('d');
+        $firstDeductionDate = clone $releaseDate;
+
+        // 1. Determine the first deduction date based on the release day
+        // Rules:
+        // - Released by the 5th -> Deduction starts on the 15th of the same month.
+        // - Released after 5th but by the 20th -> Deduction starts on the End of Month.
+        // - Released after the 20th -> Deduction starts on the 15th of the NEXT month.
+        if ($releaseDay <= 5) {
+            $firstDeductionDate->setDate(
+                (int) $releaseDate->format('Y'),
+                (int) $releaseDate->format('m'),
+                15
+            );
+        } elseif ($releaseDay <= 20) {
+            $firstDeductionDate->modify('last day of this month');
+        } else {
+            $firstDeductionDate->modify('first day of next month');
+            $firstDeductionDate->setDate(
+                (int) $firstDeductionDate->format('Y'),
+                (int) $firstDeductionDate->format('m'),
+                15
+            );
+        }
+
+        // 2. Calculate the maximum number of months from the first deduction until December
+        $startMonth = (int) $firstDeductionDate->format('m');
+        $monthsUntilEoY = ($endOfYearMonth - $startMonth) + 1;
+
+        // If calculation results in a negative number (e.g., release in late Dec), set to 0.
+        $monthsUntilEoY = max(0, $monthsUntilEoY);
+
+        // 3. The final max term is the lesser of 12 months or the months remaining in the year
+        $finalMaxTerm = min($maxTermInMonths, $monthsUntilEoY);
+
+        // 4. Generate the list of available terms (e.g., [1, 2, 3...])
+        if ($finalMaxTerm < 1) {
+            // return [];
+            return 0;
+        }
+
+        // return range(1, $finalMaxTerm);
+        return $finalMaxTerm;
     }
 
     /**
