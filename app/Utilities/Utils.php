@@ -450,7 +450,7 @@ class Utils
 
     }
 
-    public function getTermMonthsByReleaseDate($releaseDate, $application_type = 0, $special = 0, $terms = null)
+    public function getTermMonthsByReleaseDate($releaseDateString, $application_type = 0, $special = 0, $terms = null)
     {
     	$mos = Preference::name('payment_term');
         $mos = $mos->value;
