@@ -500,7 +500,7 @@ class Utils
 
         // --- Date Initialization ---
         try {
-            $releaseDate = new DateTime($releaseDateString);
+            $releaseDate = new \DateTime($releaseDateString);
         } catch (Exception $e) {
             // Handle invalid date format
             return [];
